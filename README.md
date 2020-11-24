@@ -45,6 +45,10 @@ Os clientes assinantes podem a qualquer momento podem personalizar suas cestas d
 
 #### Modelagem do sistema
 
+##### Arquitetura da aplicação
+
+![](./readme/Arquitetura.png)
+
 ##### Casos de uso admin
 
 ![](./readme/AdminUseCase.png)
