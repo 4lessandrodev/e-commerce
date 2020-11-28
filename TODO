@@ -1,3 +1,57 @@
+# Atalhos extensão Todo+ from Fabio Spampinato
+# alt + c = Marca uma tarefa como cancelada
+# alt + d = Marca como concluido
+# alt + s = Marca como iniciado
+# ctrl + enter = Cria uma nova tarefa
 
 Todo:
-  ☐ Item
+  ✔ Criar Monetary - Value Object @started(20-11-28 17:50) @done(20-11-28 19:29) @lasted(1h39m23s)
+  ☐ Criar Email - Value Object
+  ☐ Criar Image - Value Object
+  ☐ Criar Password - Value Object
+  ☐ Criar Id - Value Object
+  ☐ Criar City - Entity
+  ☐ Criar State - Entity
+  ☐ Criar Region - Entity
+  ☐ Criar Client - Entity
+  ☐ Criar Item - Entity
+  ☐ Criar Plan - Entity
+  ☐ Criar Basket - Entity
+  ☐ Criar Basket-Category - Entity
+  ☐ Criar Product-Category
+  ☐ Criar Cart - Aggregate-Root
+  ☐ Criar Product - Aggregate-Root
+  ☐ Criar Request - Aggregate-Root
+  ☐ Criar Delivery - Aggregate-Root
+  ☐ Criar Subscription - Aggregate-Root
+  ☐ Criar Message - Aggregate-Root
+  ☐ Criar User - Aggregate-Root
+  ☐ Criar Generic-Domain - Aggregate-Root
+  ☐ Criar caso de uso - Cadastrar nova categoria de produto
+  ☐ Criar caso de uso - Atualizar categoria de produto
+  ☐ Criar caso de uso - Desabilitar categoria de produto
+  ☐ Criar caso de uso - Cadastrar empresa
+  ☐ Criar caso de uso - Atualizar dados da empresa
+  ☐ Criar caso de uso - Cadastrar categoria de cestas
+  ☐ Criar caso de uso - Atualizar categoria de cestas
+  ☐ Criar caso de uso - Excluir categoria de cestas
+  ☐ Criar caso de uso - Cadastrar nova região de atuação
+  ☐ Criar caso de uso - Desabilitar região de atuação
+  ☐ Criar caso de uso - Renomear região de atuação
+  ☐ Criar caso de uso - Definir frete para região de atuação
+  ☐ Criar caso de uso - Cadastrar novo produto
+  ☐ Criar caso de uso - Atualizar produto
+  ☐ Criar caso de uso - Lançar estoque para produto
+  ☐ Criar caso de uso - Dar baixa em estoque para produto
+  ☐ Criar caso de uso - Cadastrar novo usuário 
+  ☐ Criar caso de uso - Criar perfil para usuário
+  ☐ Criar caso de uso - Atualizar perfil para usuário
+  ☐ Criar caso de uso - Desabilitar usuário 
+  ☐ Criar caso de uso - Realizar Login 
+  ☐ Criar caso de uso - Assinar plano 
+  ☐ Criar caso de uso - Cancelar assinutura de plano
+  ☐ Criar caso de uso - Cadastrar cesta
+  ☐ Criar caso de uso - Adicionar produto na cesta
+  ☐ Criar caso de uso - Remover produto da cesta
+  ☐ Criar caso de uso - Desabilitar cesta
+  ☐ Criar caso de uso - Desabilitar todas as cestas
