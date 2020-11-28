@@ -49,6 +49,10 @@ Os clientes assinantes podem a qualquer momento podem personalizar suas cestas d
 
 ![](./readme/Arquitetura-pastas.png)
 
+##### Mapa de artefatos da aplicação
+
+![](./readme/Artefatos.png)
+
 ##### Casos de uso admin
 
 ![](./readme/AdminUseCase.png)
