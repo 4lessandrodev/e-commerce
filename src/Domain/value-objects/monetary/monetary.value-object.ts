@@ -27,7 +27,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
 
   /**
    * Returns type from an instance of MonetaryValueObject
-   * POSITIVE or NEGATIVE
+   * "POSITIVE" or "NEGATIVE" as string
    */
   getType(): string {
     return this.props.type;
@@ -35,7 +35,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
 
   /**
    * Returns a string currency format value always positive
-   * R$ 20,00
+   * "R$ 20,00"
    */
   getCurrencyStringValue(): string {
     return formatNumberToCurrency(this.props.value);
