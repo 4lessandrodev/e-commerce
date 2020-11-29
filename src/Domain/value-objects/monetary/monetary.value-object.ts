@@ -17,10 +17,14 @@ interface MonetaryProps {
   type: MonetaryType;
 }
 
+/**
+ * @extends ValueObject
+ */
 export class MonetaryValueObject extends ValueObject<MonetaryProps> {
   private constructor(props: MonetaryProps) {
     super(props);
   }
+
   /**
    * Returns always positive value
    */

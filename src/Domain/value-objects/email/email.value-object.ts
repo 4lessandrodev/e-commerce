@@ -6,8 +6,11 @@ export interface EmailValueObjectProps {
   value: string;
 }
 
+/**
+ * @extends ValueObject
+ */
 export class EmailValueObject extends ValueObject<EmailValueObjectProps> {
-  constructor(props: EmailValueObjectProps) {
+  private constructor(props: EmailValueObjectProps) {
     super(props);
   }
 
