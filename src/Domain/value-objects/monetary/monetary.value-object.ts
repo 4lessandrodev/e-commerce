@@ -1,8 +1,11 @@
-import { convertPositiveNumberToNegative } from '../../utils/convert-positive-number-to-negative.domain.util';
 import { Result } from '../../../Shared/Result';
-import { convertNegativeNumberToPositive } from '../../utils/convert-negative-number-to-positive.domain.util';
-import { formatNumberToCurrency } from '../../utils/format-number-to-currency.domain.util';
 import { ValueObject } from '../value-object';
+import {
+  convertPositiveNumberToNegative,
+  convertNegativeNumberToPositive,
+  formatNumberToCurrency,
+  transformMonetaryValueInTwoDecimalsValue,
+} from '../../utils';
 
 export enum MonetaryType {
   POSITIVE = 'POSITIVE',
@@ -27,7 +30,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
 
   /**
    * Returns type from an instance of MonetaryValueObject
-   * "POSITIVE" or "NEGATIVE" as string
+   * `"POSITIVE"` or `"NEGATIVE"` as string
    */
   getType(): string {
     return this.props.type;
@@ -35,7 +38,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
 
   /**
    * Returns a string currency format value always positive
-   * "R$ 20,00"
+   * `"R$ 20,00"`
    */
   getCurrencyStringValue(): string {
     return formatNumberToCurrency(this.props.value);
@@ -43,7 +46,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
 
   /**
    * Returns a real string currency format value
-   * "R$ 20,00" or "-R$ 20,00"
+   * `"R$ 20,00"` or `"-R$ 20,00"`
    */
   getRealCurrencyStringValuePositiveOrNegative(): string {
     const value = this.getRealValuePositiveOrNegative();
@@ -51,7 +54,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
   }
 
   /**
-   * Returns a real number value, if negative -20.00 or positive 20.00
+   * Returns a real number value, if negative `-20.00` or positive `20.00`
    */
   getRealValuePositiveOrNegative(): number {
     if (this.props.type === MonetaryType.NEGATIVE) {
@@ -61,8 +64,9 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
   }
 
   /**
-   * Returns an instance of monetary value Result
-   * @param value type number
+   * Returns `Result.ok`with an instance of `MonetaryValueObject`
+   * @param value type number.
+   * If provided an invalid email will returns `Result.fail`
    */
   public static create(value: number): Result<MonetaryValueObject> {
     let type = MonetaryType.POSITIVE;
@@ -70,7 +74,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
       type = MonetaryType.NEGATIVE;
       value = convertNegativeNumberToPositive(value);
     }
-    value = Number.parseFloat(value.toFixed(2));
+    value = transformMonetaryValueInTwoDecimalsValue(value);
     return Result.ok(new MonetaryValueObject({ type, value }));
   }
 }
