@@ -23,7 +23,9 @@ export class Result<T> {
 
     Object.freeze(this);
   }
-
+  /**
+   * If success returns an instance of provided class.
+   */
   public getResult(): T {
     if (!this.isSuccess) {
       console.log(this.error);
