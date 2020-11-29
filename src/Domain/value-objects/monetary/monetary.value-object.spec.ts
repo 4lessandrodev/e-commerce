@@ -27,4 +27,22 @@ describe('monetary.value-object.ts', () => {
     expect(MonetaryCreateResult.getCurrencyStringValue()).toBeDefined();
     expect(MonetaryCreateResult.getCurrencyStringValue()).toBe('R$ 10,00');
   });
+
+  it('Should return a negative value in currency string format', () => {
+    const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
+    const textResult = MonetaryCreateResult.getRealCurrencyStringValuePositiveOrNegative();
+    expect(textResult).toBe('-R$ 10,00');
+  });
+
+  it('Should return a real negative number value', () => {
+    const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
+    const textResult = MonetaryCreateResult.getRealValuePositiveOrNegative();
+    expect(textResult).toBe(-10);
+  });
+
+  it('Should return a real positive number value', () => {
+    const MonetaryCreateResult = MonetaryValueObject.create(10).getResult();
+    const textResult = MonetaryCreateResult.getRealValuePositiveOrNegative();
+    expect(textResult).toBe(10);
+  });
 });
