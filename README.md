@@ -77,7 +77,7 @@ O sistema deve aceitar pagamentos em cartão de crédito ou boleto via PayPal.
 
 - `$ git clone https://github.com/ALESSANDROLMENEZES/e-commerce.git`
 
-- `$ cd e-comerce `
+- `$ cd e-commerce `
 
 - `$ yarn `
 
