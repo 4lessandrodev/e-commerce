@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Instalar dependências
+        run: yarn install
+      
+      - name: Compilar para javascript
+        run: yarn tsc
+
+      - name: Rodar os testes 
+        run: yarn test
