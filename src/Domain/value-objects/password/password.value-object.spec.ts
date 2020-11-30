@@ -74,4 +74,15 @@ describe('password.value-object', () => {
     expect(matchPass).toBe(true);
     expect(notMatchPass).toBe(false);
   });
+
+  it('Shoud do nothing on try encripty a password already encrypted ', async () => {
+    const password = PasswordValueObject.create('valid_password').getResult();
+    await password.encryptPassword();
+    const passwordBefore = password.getValue();
+    await password.encryptPassword();
+    const passwordAfter = password.getValue();
+
+    expect(password.isAlreadyEncrypted()).toBe(true);
+    expect(passwordBefore).toBe(passwordAfter);
+  });
 });

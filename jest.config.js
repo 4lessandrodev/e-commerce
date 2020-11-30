@@ -1,11 +1,13 @@
 module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/**',
-    '!<rootDir>/src/**/*spec.ts',
-    '!<rootDir>/src/**/*test.ts',
-    '!**/tests/**',
-    '!**/test/**',
+    '**/tests/**',
+    '<rootDir>/src/**/*.spec.ts',
+    '<rootDir>/src/**/*.test.ts',
+    '!<rootDir>/src/**/*index.ts',
+    '!<rootDir>/src/**/*app.module.ts',
+    '!<rootDir>/src/**/*main.ts',
+    '!<rootDir>/src/**/*Result.ts',
   ],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['\\\\node_modules\\\\'],
@@ -14,7 +16,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: ['\\\\node_modules\\\\'],
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.ts$': 'ts-jest',
   },
   testRegex: '.*\\.spec\\.ts$',
   moduleFileExtensions: ['js', 'json', 'ts'],
