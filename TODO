@@ -8,7 +8,7 @@ Todo:
   ✔ Criar Monetary - Value Object @started(20-11-28 17:50) @done(20-11-28 19:29) @lasted(1h39m23s)
   ✔ Criar Email - Value Object @started(20-11-29 11:46) @done(20-11-29 13:30) @lasted(1h44m22s)
   ✔ Criar Image - Value Object @started(20-11-29 15:21) @done(20-11-29 16:22) @lasted(1h1m59s)
-  ☐ Criar Password - Value Object
+  ✔ Criar Password - Value Object @started(20-11-29 16:37) @done(20-11-29 21:14) @lasted(4h37m6s)
   ☐ Criar Id - Value Object
   ☐ Criar City - Entity
   ☐ Criar State - Entity
