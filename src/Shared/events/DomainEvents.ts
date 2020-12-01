@@ -1,9 +1,16 @@
-import { IDomainEvent } from './IDomainEvent';
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+/* eslint-disable  */
+
 import { AggregateRoot } from '../AggregateRoot';
 import { UniqueEntityID } from '../UniqueEntityID';
 
+export interface IDomainEvent {
+  dateTimeOccurred: Date;
+  getAggregateId: () => UniqueEntityID;
+}
+
 export class DomainEvents {
-  private static handlersMap = {};
+  private static handlersMap: any = {};
   private static markedAggregates: AggregateRoot<any>[] = [];
 
   /**
@@ -23,23 +30,37 @@ export class DomainEvents {
   }
 
   private static dispatchAggregateEvents(aggregate: AggregateRoot<any>): void {
+    this.logDomainEventDispatch(aggregate);
+
     aggregate.domainEvents.forEach((event: IDomainEvent) =>
       this.dispatch(event),
     );
   }
 
+  private static logDomainEventDispatch(aggregate: AggregateRoot<any>): void {
+    const thisClass = Reflect.getPrototypeOf(this);
+    const domainEventClass = Reflect.getPrototypeOf(aggregate);
+
+    console.info(
+      '[Domain Event Dispatched]:',
+      thisClass.constructor.name,
+      '==>',
+      domainEventClass.constructor.name,
+    );
+  }
   private static removeAggregateFromMarkedDispatchList(
     aggregate: AggregateRoot<any>,
   ): void {
+    // console.log('removing aggreagete from marked', JSON.stringify(aggregate));
     const index = this.markedAggregates.findIndex((a) => a.equals(aggregate));
     this.markedAggregates.splice(index, 1);
   }
 
   private static findMarkedAggregateByID(
     id: UniqueEntityID,
-  ): AggregateRoot<any> {
-    let found: AggregateRoot<any> = null;
-    for (const aggregate of this.markedAggregates) {
+  ): AggregateRoot<any> | null {
+    let found = null;
+    for (let aggregate of this.markedAggregates) {
       if (aggregate.id.equals(id)) {
         found = aggregate;
       }
@@ -81,7 +102,7 @@ export class DomainEvents {
 
     if (this.handlersMap.hasOwnProperty(eventClassName)) {
       const handlers: any[] = this.handlersMap[eventClassName];
-      for (const handler of handlers) {
+      for (let handler of handlers) {
         handler(event);
       }
     }
