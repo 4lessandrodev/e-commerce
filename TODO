@@ -9,7 +9,7 @@ Todo:
   ✔ Criar Email - Value Object @started(20-11-29 11:46) @done(20-11-29 13:30) @lasted(1h44m22s)
   ✔ Criar Image - Value Object @started(20-11-29 15:21) @done(20-11-29 16:22) @lasted(1h1m59s)
   ✔ Criar Password - Value Object @started(20-11-29 16:37) @done(20-11-29 21:14) @lasted(4h37m6s)
-  ☐ Criar Id - Value Object
+  ✔ Criar Id - Value Object @started(20-11-30 21:15) @done(20-11-30 22:36) @lasted(1h21m31s)
   ☐ Criar City - Entity
   ☐ Criar State - Entity
   ☐ Criar Region - Entity
