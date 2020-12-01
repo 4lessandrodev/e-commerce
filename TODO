@@ -18,7 +18,7 @@ Todo:
   ☐ Criar Plan - Entity
   ☐ Criar Basket - Entity
   ☐ Criar Basket-Category - Entity
-  ☐ Criar Product-Category
+  ☐ Criar Product-Category - Entity
   ☐ Criar Cart - Aggregate-Root
   ☐ Criar Product - Aggregate-Root
   ☐ Criar Request - Aggregate-Root
@@ -33,6 +33,7 @@ Todo:
   ☐ Criar caso de uso - Cadastrar empresa
   ☐ Criar caso de uso - Atualizar dados da empresa
   ☐ Criar caso de uso - Cadastrar categoria de cestas
+  ☐ Criar caso de uso - Atualizar categoria de produtos
   ☐ Criar caso de uso - Atualizar categoria de cestas
   ☐ Criar caso de uso - Excluir categoria de cestas
   ☐ Criar caso de uso - Cadastrar nova região de atuação

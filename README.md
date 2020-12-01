@@ -4,7 +4,7 @@
 
 #### Resumo
 
-Uma aplicação para comercialização de produtos orgânicos
+Uma aplicação para comercialização de produtos orgânicos.
 O sistema deve permitir cadastro e gestão de produtos orgânigos,
 os produtos devem ser categorizados.
 
@@ -24,7 +24,7 @@ com peso 2 e outro com peso 1, até que o peso total seja atingido.
 O usuário deve se cadastrar apenas com email e senha.
 O usuário só pode personalizar uma cesta se estiver devidamente cadastrado na plataforma.
 Além das cestas o usuário pode adicionar produtos avulsos ao carrinho, desde
-que estes produtos seja do tipo especial.
+que estes produtos sejam do tipo especial.
 
 O usuário cadastrado pode acessar o seu painel de pedidos e a qualquer momento
 cancelar um pedido que esteja com o status aberto.
@@ -41,11 +41,14 @@ Ao concluir um novo pedido o sistema deve realizar a baixa de estoque.
 Assinaturas devem agendar baixas de estoque. Assim que lançado estoque a baixa dos
 produtos devem ocorrer automaticamente.
 
-Os clientes assinantes podem a qualquer momento podem personalizar suas cestas da semana.
+Os clientes assinantes podem a qualquer momento personalizar suas cestas da semana.
 
 O admin pode aprovar ou reprovar qualquer pedido.
 
 O sistema deve aceitar pagamentos em cartão de crédito ou boleto via PayPal.
+
+Cada pedido é enviado com uma ecobag retornável, o sistema deve realizar o rastreamento
+das mesmas e indicar se um cliente realizou a devolução ou não.
 
 #### Modelagem do sistema
 
