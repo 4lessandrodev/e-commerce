@@ -1,7 +1,7 @@
-import { ERROR_INVALID_EMAIL_FORMAT } from './email-errors.domain';
-import { EmailValueObject } from './email.value-object';
+import { ERROR_INVALID_EMAIL_FORMAT } from './Email-errors.domain';
+import { EmailValueObject } from './Email.value-object';
 
-describe('email.value-object', () => {
+describe('Email.value-object', () => {
   it('Should return a valid email ', () => {
     const emailCreateResult = EmailValueObject.create('valid_email@domain.com');
     expect(emailCreateResult.getResult().getValue()).toBe(
