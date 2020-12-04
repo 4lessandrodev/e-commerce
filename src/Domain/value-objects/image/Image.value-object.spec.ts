@@ -1,7 +1,7 @@
-import { ERROR_INVALID_URL } from './image-errors.domain';
-import { ImageValueObject } from './image.value-object';
+import { ERROR_INVALID_URL } from './Image-errors.domain';
+import { ImageValueObject } from './Image.value-object';
 
-describe('image.value-object', () => {
+describe('Image.value-object', () => {
   it('Should return a valid image url', () => {
     const createImageResult = ImageValueObject.create(
       'https://localhost.com.br/images',

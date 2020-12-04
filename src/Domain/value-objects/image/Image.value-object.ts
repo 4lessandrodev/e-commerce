@@ -1,7 +1,7 @@
 import { Result } from '../../../Shared/Result';
 import { validateLink } from '../../utils/validate-link.domain.util';
 import { ValueObject } from '../value-object';
-import { ERROR_INVALID_URL } from './image-errors.domain';
+import { ERROR_INVALID_URL } from './Image-errors.domain';
 
 interface ImageValueObjectProps {
   value: string;
