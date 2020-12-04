@@ -4,7 +4,7 @@ import { hashSync, compareSync } from 'bcrypt';
 import {
   ERROR_INVALID_PASSWORD_MAX_LENGTH,
   ERROR_INVALID_PASSWORD_MIN_LENGTH,
-} from './password-errors.domain';
+} from './Password-errors.domain';
 import { isBcryptHash } from '../../utils/validate-bcrypt-hash.domain.util';
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 21;

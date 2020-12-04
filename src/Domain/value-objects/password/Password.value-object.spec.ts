@@ -1,10 +1,10 @@
 import {
   ERROR_INVALID_PASSWORD_MAX_LENGTH,
   ERROR_INVALID_PASSWORD_MIN_LENGTH,
-} from './password-errors.domain';
-import { PasswordValueObject } from './password.value-object';
+} from './Password-errors.domain';
+import { PasswordValueObject } from './Password.value-object';
 
-describe('password.value-object', () => {
+describe('Password.value-object', () => {
   it('Should return a valid password ', () => {
     const createdPassword = PasswordValueObject.create('valid_password');
     expect(createdPassword.isFailure).toBe(false);
