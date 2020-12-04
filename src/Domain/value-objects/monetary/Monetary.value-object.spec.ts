@@ -1,6 +1,6 @@
-import { MonetaryValueObject, MonetaryType } from './monetary.value-object';
+import { MonetaryValueObject, MonetaryType } from './Monetary.value-object';
 
-describe('monetary.value-object.ts', () => {
+describe('Monetary.value-object.ts', () => {
   it('Should create a valid monetary value ', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(10).getResult();
     expect(MonetaryCreateResult.getValue()).toBeDefined();
