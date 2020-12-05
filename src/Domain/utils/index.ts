@@ -4,3 +4,4 @@ export * from './format-number-to-currency.domain.util';
 export * from './transform-monetary-two-digits.domain.utils';
 export * from './validate-email.domain.util';
 export * from './transform-string-to-lowercase.domain.util';
+export * from './validate-string-length.domain.util';

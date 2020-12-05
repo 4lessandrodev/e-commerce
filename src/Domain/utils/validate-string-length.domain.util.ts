@@ -1,4 +1,9 @@
 import IsLength from 'validator/lib/isLength';
+interface validateParams {
+  text: string;
+  maxLength: number;
+  minLength?: number;
+}
 /**
  *
  * @param text string to validate
@@ -6,9 +11,10 @@ import IsLength from 'validator/lib/isLength';
  * @param min min value as number to chack string length `default is 1`
  */
 export const validateStringLengthBetweenMaxAndMin = (
-  text: string,
-  max: number,
-  min?: number,
+  props: validateParams,
 ): boolean => {
-  return IsLength(text, { max, min: min ?? 1 });
+  return IsLength(props.text, {
+    max: props.maxLength,
+    min: props.minLength ?? 1,
+  });
 };
