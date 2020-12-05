@@ -3,11 +3,7 @@
 
 import { AggregateRoot } from '../AggregateRoot';
 import { UniqueEntityID } from '../UniqueEntityID';
-
-export interface IDomainEvent {
-  dateTimeOccurred: Date;
-  getAggregateId: () => UniqueEntityID;
-}
+import { IDomainEvent } from './IDomainEvent';
 
 export class DomainEvents {
   private static handlersMap: any = {};
