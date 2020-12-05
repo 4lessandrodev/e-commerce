@@ -12,20 +12,20 @@ Todo:
   ✔ Criar Id - Value Object @started(20-11-30 21:15) @done(20-11-30 22:36) @lasted(1h21m31s)
   ✔ Criar City - Entity @done(20-12-04 00:41)
   ✔ Criar State - Entity @started(20-12-04 22:51) @done(20-12-05 18:22) @lasted(19h31m58s)
+  ☐ Criar Product-Category - Entity @started(20-12-05 19:27)
+  ☐ Criar Basket-Category - Entity
   ☐ Criar Region - Entity
   ☐ Criar Client - Entity
   ☐ Criar Item - Entity
   ☐ Criar Plan - Entity
-  ☐ Criar Basket - Entity
-  ☐ Criar Basket-Category - Entity
-  ☐ Criar Product-Category - Entity
-  ☐ Criar Cart - Aggregate-Root
+  ☐ Criar Basket - Aggregate-Root
+  ☐ Criar User - Aggregate-Root
   ☐ Criar Product - Aggregate-Root
+  ☐ Criar Cart - Aggregate-Root
   ☐ Criar Request - Aggregate-Root
   ☐ Criar Delivery - Aggregate-Root
   ☐ Criar Subscription - Aggregate-Root
   ☐ Criar Message - Aggregate-Root
-  ☐ Criar User - Aggregate-Root
   ☐ Criar Generic-Domain - Aggregate-Root
   ☐ Criar caso de uso - Cadastrar nova categoria de produto
   ☐ Criar caso de uso - Atualizar categoria de produto

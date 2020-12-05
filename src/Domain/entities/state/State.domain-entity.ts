@@ -1,4 +1,5 @@
 import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { transformStringToUpperCase } from '../../utils';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import {
   InitialStates,
@@ -39,10 +40,12 @@ export class State extends Entity<StateProps> {
     if (initial.isFailure) {
       return Result.fail<State>(initial.error.toString());
     }
+
+    const uppercaseDescription = transformStringToUpperCase(props.description);
     return Result.ok<State>(
       new State(
         {
-          description: props.description.toUpperCase(),
+          description: uppercaseDescription,
           initial: initial.getResult().value,
         },
         id,

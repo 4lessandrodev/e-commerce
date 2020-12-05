@@ -1,7 +1,4 @@
-import { Entity } from '../../../Shared/Entity';
-import { Result } from '../../../Shared/Result';
-import { UniqueEntityID } from '../../../Shared/UniqueEntityID';
-
+import { Entity, Result, UniqueEntityID } from '../../../Shared';
 export class IdValueObject extends Entity<any> {
   private constructor(id?: UniqueEntityID) {
     super(null, id);
