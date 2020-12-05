@@ -10,8 +10,8 @@ Todo:
   ✔ Criar Image - Value Object @started(20-11-29 15:21) @done(20-11-29 16:22) @lasted(1h1m59s)
   ✔ Criar Password - Value Object @started(20-11-29 16:37) @done(20-11-29 21:14) @lasted(4h37m6s)
   ✔ Criar Id - Value Object @started(20-11-30 21:15) @done(20-11-30 22:36) @lasted(1h21m31s)
-  ☐ Criar City - Entity
-  ☐ Criar State - Entity
+  ✔ Criar City - Entity @done(20-12-04 00:41)
+  ✔ Criar State - Entity @started(20-12-04 22:51) @done(20-12-05 18:22) @lasted(19h31m58s)
   ☐ Criar Region - Entity
   ☐ Criar Client - Entity
   ☐ Criar Item - Entity

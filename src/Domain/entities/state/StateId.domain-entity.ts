@@ -1,5 +1,4 @@
-import { Entity } from '../../../Shared/Entity';
-import { UniqueEntityID } from '../../../Shared/UniqueEntityID';
+import { Entity, UniqueEntityID } from '../../../Shared';
 
 export class StateId extends Entity<any> {
   get id(): UniqueEntityID {
