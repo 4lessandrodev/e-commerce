@@ -7,7 +7,7 @@ describe('City.domain-entity', () => {
     const stateId = StateId.create();
     const validCity = City.create({ name: 'Santa Catarina', stateId });
     expect(validCity.isFailure).toBe(false);
-    expect(validCity.getResult().getName()).toBe('Santa Catarina');
+    expect(validCity.getResult().name).toBe('Santa Catarina');
   });
 
   it('Should fail if not provide a city name', () => {
