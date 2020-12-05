@@ -6,7 +6,7 @@ describe('Image.value-object', () => {
     const createImageResult = ImageValueObject.create(
       'https://localhost.com.br/images',
     );
-    expect(createImageResult.getResult().getUrl()).toBe(
+    expect(createImageResult.getResult().value).toBe(
       'https://localhost.com.br/images',
     );
     expect(createImageResult.isFailure).toBe(false);

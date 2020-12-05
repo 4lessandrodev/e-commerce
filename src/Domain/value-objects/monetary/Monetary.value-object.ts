@@ -1,5 +1,4 @@
-import { Result } from '../../../Shared/Result';
-import { ValueObject } from '../value-object';
+import { Result, ValueObject } from '../../../Shared';
 import {
   convertPositiveNumberToNegative,
   convertNegativeNumberToPositive,
@@ -28,7 +27,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
   /**
    * Returns always positive value
    */
-  getValue(): number {
+  get value(): number {
     return this.props.value;
   }
 
@@ -36,7 +35,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * Returns type from an instance of MonetaryValueObject
    * `"POSITIVE"` or `"NEGATIVE"` as string
    */
-  getType(): string {
+  get type(): string {
     return this.props.type;
   }
 

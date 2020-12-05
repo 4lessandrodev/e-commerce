@@ -8,7 +8,7 @@ describe('Password.value-object', () => {
   it('Should return a valid password ', () => {
     const createdPassword = PasswordValueObject.create('valid_password');
     expect(createdPassword.isFailure).toBe(false);
-    expect(createdPassword.getResult().getValue()).toBe('valid_password');
+    expect(createdPassword.getResult().value).toBe('valid_password');
     expect(createdPassword.getResult().isAlreadyEncrypted()).toBe(false);
   });
 
@@ -44,13 +44,13 @@ describe('Password.value-object', () => {
     createdPassword.getResult().isAlreadyEncrypted();
 
     const generateEncriptedValue = PasswordValueObject.create(
-      createdPassword.getResult().getValue(),
+      createdPassword.getResult().value,
     );
 
     expect(generateEncriptedValue.isFailure).toBe(false);
     expect(createdPassword.isFailure).toBe(false);
-    expect(generateEncriptedValue.getResult().getValue()).toBe(
-      createdPassword.getResult().getValue(),
+    expect(generateEncriptedValue.getResult().value).toBe(
+      createdPassword.getResult().value,
     );
     expect(generateEncriptedValue.getResult().isAlreadyEncrypted()).toBe(true);
   });
@@ -78,9 +78,9 @@ describe('Password.value-object', () => {
   it('Shoud do nothing on try encripty a password already encrypted ', async () => {
     const password = PasswordValueObject.create('valid_password').getResult();
     await password.encryptPassword();
-    const passwordBefore = password.getValue();
+    const passwordBefore = password.value;
     await password.encryptPassword();
-    const passwordAfter = password.getValue();
+    const passwordAfter = password.value;
 
     expect(password.isAlreadyEncrypted()).toBe(true);
     expect(passwordBefore).toBe(passwordAfter);

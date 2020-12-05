@@ -1,6 +1,5 @@
 import { isValidEmail, transformStringToLowerCase } from '../../utils';
-import { Result } from '../../../Shared/Result';
-import { ValueObject } from '../value-object';
+import { Result, ValueObject } from '../../../Shared';
 import { ERROR_INVALID_EMAIL_FORMAT } from './Email-errors.domain';
 export interface EmailValueObjectProps {
   value: string;
@@ -17,7 +16,7 @@ export class EmailValueObject extends ValueObject<EmailValueObjectProps> {
   /**
    * Returns a email string
    */
-  getValue(): string {
+  get value(): string {
     return this.props.value;
   }
 

@@ -1,5 +1,4 @@
-import { Result } from '../../../Shared/Result';
-import { ValueObject } from '../value-object';
+import { Result, ValueObject } from '../../../Shared';
 import { hashSync, compareSync } from 'bcrypt';
 import {
   ERROR_INVALID_PASSWORD_MAX_LENGTH,
@@ -26,7 +25,7 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
   /**
    * Return password value as string
    */
-  getValue(): string {
+  get value(): string {
     return this.props.value;
   }
 

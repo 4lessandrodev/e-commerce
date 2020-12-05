@@ -1,6 +1,5 @@
-import { Result } from '../../../Shared/Result';
+import { Result, ValueObject } from '../../../Shared';
 import { validateLink } from '../../utils/validate-link.domain.util';
-import { ValueObject } from '../value-object';
 import { ERROR_INVALID_URL } from './Image-errors.domain';
 
 interface ImageValueObjectProps {
@@ -18,7 +17,7 @@ export class ImageValueObject extends ValueObject<ImageValueObjectProps> {
   /**
    * Return url string
    */
-  getUrl(): string {
+  get value(): string {
     return this.props.value;
   }
 

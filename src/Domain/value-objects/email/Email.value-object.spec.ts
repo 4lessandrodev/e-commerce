@@ -4,9 +4,7 @@ import { EmailValueObject } from './Email.value-object';
 describe('Email.value-object', () => {
   it('Should return a valid email ', () => {
     const emailCreateResult = EmailValueObject.create('valid_email@domain.com');
-    expect(emailCreateResult.getResult().getValue()).toBe(
-      'valid_email@domain.com',
-    );
+    expect(emailCreateResult.getResult().value).toBe('valid_email@domain.com');
     expect(emailCreateResult.isSuccess).toBe(true);
   });
 
@@ -18,9 +16,7 @@ describe('Email.value-object', () => {
 
   it('Should return lowercase email string', () => {
     const emailCreateResult = EmailValueObject.create('Valid_Email@Domain.COM');
-    expect(emailCreateResult.getResult().getValue()).toBe(
-      'valid_email@domain.com',
-    );
+    expect(emailCreateResult.getResult().value).toBe('valid_email@domain.com');
     expect(emailCreateResult.isSuccess).toBe(true);
   });
 });
