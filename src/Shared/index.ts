@@ -7,3 +7,4 @@ export * from './events/DomainEvents';
 export * from './events/IDomainEvent';
 export * from './events/IHandle';
 export * from './value-object';
+export * from './BaseDomainEntity';
