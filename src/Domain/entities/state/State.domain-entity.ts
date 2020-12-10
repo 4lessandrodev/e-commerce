@@ -1,4 +1,9 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import {
+  BaseDomainEntity,
+  Entity,
+  Result,
+  UniqueEntityID,
+} from '../../../Shared';
 import { transformStringToUpperCase } from '../../utils';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import {
@@ -8,7 +13,7 @@ import {
 import { ERROR_STATE_DESCRIPTION_LENGTH } from './StateErrors.domain.entity';
 export const STATE_NAME_MIN_STRING_LENGTH = 3;
 export const STATE_NAME_MAX_STRING_LENGTH = 27;
-interface StateProps {
+interface StateProps extends BaseDomainEntity {
   description: string;
   initial: InitialStates;
 }
@@ -45,6 +50,7 @@ export class State extends Entity<StateProps> {
     return Result.ok<State>(
       new State(
         {
+          ...props,
           description: uppercaseDescription,
           initial: initial.getResult().value,
         },
