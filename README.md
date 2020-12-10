@@ -54,11 +54,11 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ##### Arquitetura da aplicação
 
-![](./readme/Arquitetura-pastas.png)
+![](./readme/Arquitetura.png)
 
 ##### Mapa de artefatos da aplicação
 
-![](./readme/Artefatos.png)
+![](./readme/Artefatos-domain.png)
 
 ##### Casos de uso admin
 
