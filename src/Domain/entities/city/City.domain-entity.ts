@@ -1,11 +1,16 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import {
+  BaseDomainEntity,
+  Entity,
+  Result,
+  UniqueEntityID,
+} from '../../../Shared';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import { StateId } from '../state/StateId.domain-entity';
-import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain.entity';
+import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain-entity';
 export const CITY_NAME_MAX_STRING_LENGTH = 50;
 export const CITY_NAME_MIN_STRING_LENGTH = 3;
 
-interface CityProps {
+interface CityProps extends BaseDomainEntity {
   stateId: StateId;
   name: string;
 }
