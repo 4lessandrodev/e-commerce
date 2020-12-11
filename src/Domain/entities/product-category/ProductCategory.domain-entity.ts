@@ -9,7 +9,7 @@ import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErro
 export const PRODUCT_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const PRODUCT_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH = 3;
 
-interface ProductCategoryProps extends BaseDomainEntity {
+export interface ProductCategoryProps extends BaseDomainEntity {
   description: string;
 }
 

@@ -735,6 +735,13 @@
   resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.2.tgz#66ad9331f63fe8a3d3d9d8c6e3906dd10f6446e8"
   integrity sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
 
+"@types/delay@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/delay/-/delay-3.1.0.tgz#c7ff788bf0d9b85f923b12182e6fbfaa65edcbdb"
+  integrity sha512-Mt16D+JxuzA2iu5VTnGS1ziGoaSAD2SZJF4Os3rxUnMk7sBSOkdH43yxoZVxSEud6t1V1JScFBaZA8r6ByjYMw==
+  dependencies:
+    delay "*"
+
 "@types/eslint-scope@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.0.tgz#4792816e31119ebd506902a482caec4951fabd86"
@@ -2124,6 +2131,11 @@ define-property@^2.0.2:
   dependencies:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
+
+delay@*, delay@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/delay/-/delay-4.4.0.tgz#71abc745f3ce043fe7f450491236541edec4ad0c"
+  integrity sha512-txgOrJu3OdtOfTiEOT2e76dJVfG/1dz2NZ4F0Pyt4UGZJryssMRp5vdM5wQoLwSOBNdrJv3F9PAhp/heqd7vrA==
 
 delayed-stream@~1.0.0:
   version "1.0.0"
