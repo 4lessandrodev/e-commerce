@@ -61,6 +61,6 @@ describe('ProductCategory', () => {
     productCategoryResult.delete();
     expect(productCategoryResult.isDeleted).toBe(true);
     const dateUpdatedAtAfterDelete = productCategoryResult.updatedAt.getMilliseconds();
-    expect(dateUpdatedAtAfterDelete).toBeGreaterThan(dateUpdatedAtBeforeDelete);
+    expect(dateUpdatedAtAfterDelete).not.toEqual(dateUpdatedAtBeforeDelete);
   });
 });
