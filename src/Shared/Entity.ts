@@ -22,6 +22,15 @@ export abstract class Entity<T extends BaseDomainEntity> {
     return this.props.updatedAt ?? new Date();
   }
 
+  get isDeleted(): boolean {
+    return this.props.isDeleted ?? false;
+  }
+
+  public delete(): void {
+    this.props.updatedAt = new Date();
+    this.props.isDeleted = true;
+  }
+
   public equals(object?: Entity<T>): boolean {
     if (object == null || object == undefined) {
       return false;
