@@ -54,19 +54,15 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ##### Arquitetura da aplicação
 
-![](./readme/Arquitetura.png)
+![](./readme/Api-architecture.png)
 
 ##### Mapa de artefatos da aplicação
 
-![](./readme/Artefatos-domain.png)
+![](./readme/Domain-artifacts.png)
 
-##### Casos de uso admin
+##### Casos de uso
 
-![](./readme/AdminUseCase.png)
-
-##### Casos de uso cliente
-
-![](./readme/ClientUseCase.png)
+![](./readme/UseCases.png)
 
 ##### Diagrama de classe
 

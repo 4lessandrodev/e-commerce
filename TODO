@@ -15,6 +15,8 @@ Todo:
   ✔ Criar Product-Category - Entity @started(20-12-05 19:27) @done(20-12-10 00:16) @lasted(4d4h49m22s)
   ✔ Criar Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
   ☐ Criar Region - Entity
+  ☐ Criar Rating - Value Object
+  ☐ Criar Tag - Entity
   ☐ Criar Client - Entity
   ☐ Criar Item - Entity
   ☐ Criar Plan - Entity
