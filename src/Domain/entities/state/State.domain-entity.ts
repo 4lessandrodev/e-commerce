@@ -23,6 +23,10 @@ export class State extends Entity<StateProps> {
     super(props, id);
   }
 
+  get id(): UniqueEntityID {
+    return this._id;
+  }
+
   get description(): string {
     return this.props.description;
   }
