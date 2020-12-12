@@ -18,6 +18,10 @@ export class ProductCategory extends Entity<ProductCategoryProps> {
     super(props, id);
   }
 
+  get id(): UniqueEntityID {
+    return this._id;
+  }
+
   get description(): string {
     return this.props.description;
   }
