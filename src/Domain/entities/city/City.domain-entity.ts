@@ -10,7 +10,7 @@ import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain-entity';
 export const CITY_NAME_MAX_STRING_LENGTH = 50;
 export const CITY_NAME_MIN_STRING_LENGTH = 3;
 
-interface CityProps extends BaseDomainEntity {
+export interface CityProps extends BaseDomainEntity {
   stateId: StateId;
   name: string;
 }
@@ -18,6 +18,10 @@ interface CityProps extends BaseDomainEntity {
 export class City extends Entity<CityProps> {
   private constructor(props: CityProps, id?: UniqueEntityID) {
     super(props, id);
+  }
+
+  get id(): UniqueEntityID {
+    return this._id;
   }
 
   get name(): string {

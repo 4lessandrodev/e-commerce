@@ -1,5 +1,4 @@
 import { Entity, UniqueEntityID } from '../../../Shared';
-
 export class CityId extends Entity<any> {
   get id(): UniqueEntityID {
     return this._id;
