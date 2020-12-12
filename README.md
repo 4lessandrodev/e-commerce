@@ -54,25 +54,37 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ##### Arquitetura da aplicação
 
+---
+
 ![](./readme/Api-architecture.png)
 
 ##### Mapa de artefatos da aplicação
+
+---
 
 ![](./readme/Domain-artifacts.png)
 
 ##### Casos de uso
 
+---
+
 ![](./readme/UseCases.png)
 
 ##### Diagrama de classe
+
+---
 
 ![](./readme/ClassDiagram.png)
 
 ##### Diagrama do core da aplicação
 
+---
+
 ![](./readme/Diagrama.core.png)
 
 ##### Como usar esse projeto
+
+---
 
 - `$ git clone https://github.com/ALESSANDROLMENEZES/e-commerce.git`
 
