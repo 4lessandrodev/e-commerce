@@ -74,7 +74,7 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ---
 
-![](./readme/ClassDiagram.png)
+![](./readme/ClassesDiagram.png)
 
 ##### Diagrama do core da aplicação
 
