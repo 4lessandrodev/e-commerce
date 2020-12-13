@@ -1,11 +1,9 @@
-import {
-  ProductCategory,
-  ProductCategoryProps,
-} from './ProductCategory.domain-entity';
+import { ProductCategory } from './ProductCategory.domain-entity';
 import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErrors.domain-entity';
 import delay from 'delay';
 import { UniqueEntityID } from '../../../Shared';
 import { ProductCategoryId } from './ProductCategoryId.domain-entity';
+import { ProductCategoryProps } from './ProductCategory.domain-entity-interface';
 
 describe('ProductCategory', () => {
   const makeSut = (props?: ProductCategoryProps, id?: UniqueEntityID) => {

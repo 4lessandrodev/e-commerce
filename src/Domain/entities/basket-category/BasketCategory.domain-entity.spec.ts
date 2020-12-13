@@ -1,7 +1,4 @@
-import {
-  BasketCategory,
-  BasketCategoryProps,
-} from './BasketCategory.domain-entity';
+import { BasketCategory } from './BasketCategory.domain-entity';
 import {
   ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
   ERROR_BASKET_CATEGORY_MAX_VALUE,
@@ -9,6 +6,7 @@ import {
 import delay from 'delay';
 import { UniqueEntityID } from '../../../Shared';
 import { BasketCategoryId } from './BasketCategoryId.domain-entity';
+import { BasketCategoryProps } from './BasketCategory.domain-entity-interface';
 
 describe('BasketCategory', () => {
   const makeSut = (props?: BasketCategoryProps, id?: UniqueEntityID) => {

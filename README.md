@@ -56,13 +56,13 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ---
 
-![](./readme/Api-architecture.png)
+![](./readme/ApiArchitecture.png)
 
 ##### Mapa de artefatos da aplicação
 
 ---
 
-![](./readme/Domain-artifacts.png)
+![](./readme/DomainArtifacts.png)
 
 ##### Casos de uso
 

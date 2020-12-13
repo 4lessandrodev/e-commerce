@@ -1,13 +1,9 @@
-import {
-  BaseDomainEntity,
-  Entity,
-  Result,
-  UniqueEntityID,
-} from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from '../../../Shared';
 import {
   convertNegativeNumberToPositive,
   validateStringLengthBetweenMaxAndMin,
 } from '../../utils';
+import { BasketCategoryProps } from './BasketCategory.domain-entity-interface';
 import {
   ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
   ERROR_BASKET_CATEGORY_MAX_VALUE,
@@ -15,11 +11,6 @@ import {
 export const BASKET_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH = 3;
 export const BASKET_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE = 20;
-
-export interface BasketCategoryProps extends BaseDomainEntity {
-  description: string;
-  changesLimit: number;
-}
 
 export class BasketCategory extends Entity<BasketCategoryProps> {
   private constructor(props: BasketCategoryProps, id?: UniqueEntityID) {

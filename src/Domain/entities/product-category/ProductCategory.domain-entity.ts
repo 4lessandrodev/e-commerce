@@ -1,17 +1,9 @@
-import {
-  BaseDomainEntity,
-  Entity,
-  Result,
-  UniqueEntityID,
-} from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from '../../../Shared';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import { ProductCategoryProps } from './ProductCategory.domain-entity-interface';
 import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErrors.domain-entity';
 export const PRODUCT_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const PRODUCT_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH = 3;
-
-export interface ProductCategoryProps extends BaseDomainEntity {
-  description: string;
-}
 
 export class ProductCategory extends Entity<ProductCategoryProps> {
   private constructor(props: ProductCategoryProps, id?: UniqueEntityID) {
