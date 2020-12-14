@@ -14,7 +14,7 @@ Todo:
   ✔ Create State - Entity @started(20-12-04 22:51) @done(20-12-05 18:22) @lasted(19h31m58s)
   ✔ Create Product-Category - Entity @started(20-12-05 19:27) @done(20-12-10 00:16) @lasted(4d4h49m22s)
   ✔ Create Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
-  ☐ Create Region - Entity
+  ✔ Create Region - Entity @started(20-12-13 23:11) @done(20-12-14 00:14) @lasted(1h3m17s)
   ☐ Create Rating - Value Object
   ☐ Create Tag - Entity
   ☐ Create Coupon - Entity
