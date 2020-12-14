@@ -15,16 +15,17 @@ Todo:
   ✔ Create Product-Category - Entity @started(20-12-05 19:27) @done(20-12-10 00:16) @lasted(4d4h49m22s)
   ✔ Create Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
   ✔ Create Region - Entity @started(20-12-13 23:11) @done(20-12-14 00:14) @lasted(1h3m17s)
-  ☐ Create Rating - Value Object
   ☐ Create Tag - Entity
+  ☐ Create Rating - Value Object
+  ☐ Create Product - Aggregate-Root
   ☐ Create Coupon - Entity
   ☐ Create Delivery-Status - Entity
+  ☐ Create Product-Comment - Entity
   ☐ Create Client - Entity
   ☐ Create Item - Entity
-  ☐ Create Plan - Entity
+  ☐ Create Plan - Entity0
   ☐ Create Basket - Aggregate-Root
   ☐ Create User - Aggregate-Root
-  ☐ Create Product - Aggregate-Root
   ☐ Create Cart - Aggregate-Root
   ☐ Create Order - Aggregate-Root
   ☐ Create Delivery - Aggregate-Root
@@ -86,3 +87,4 @@ Todo:
   ☐ Create use case - ActivateProduct [ADMIN]
   ☐ Create use case - AddProductOnCustomBasket [CLIENT]
   ☐ Create use case - RemoveProductFromCustomBasket [CLIENT]
+  ☐ Create use case - ReportAnComment [CLIENT]
