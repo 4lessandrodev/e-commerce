@@ -5,56 +5,84 @@
 # ctrl + enter = Cria uma nova tarefa
 
 Todo:
-  ✔ Criar Monetary - Value Object @started(20-11-28 17:50) @done(20-11-28 19:29) @lasted(1h39m23s)
-  ✔ Criar Email - Value Object @started(20-11-29 11:46) @done(20-11-29 13:30) @lasted(1h44m22s)
-  ✔ Criar Image - Value Object @started(20-11-29 15:21) @done(20-11-29 16:22) @lasted(1h1m59s)
-  ✔ Criar Password - Value Object @started(20-11-29 16:37) @done(20-11-29 21:14) @lasted(4h37m6s)
-  ✔ Criar Id - Value Object @started(20-11-30 21:15) @done(20-11-30 22:36) @lasted(1h21m31s)
-  ✔ Criar City - Entity @done(20-12-04 00:41)
-  ✔ Criar State - Entity @started(20-12-04 22:51) @done(20-12-05 18:22) @lasted(19h31m58s)
-  ✔ Criar Product-Category - Entity @started(20-12-05 19:27) @done(20-12-10 00:16) @lasted(4d4h49m22s)
-  ✔ Criar Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
-  ☐ Criar Region - Entity
-  ☐ Criar Rating - Value Object
-  ☐ Criar Tag - Entity
-  ☐ Criar Client - Entity
-  ☐ Criar Item - Entity
-  ☐ Criar Plan - Entity
-  ☐ Criar Basket - Aggregate-Root
-  ☐ Criar User - Aggregate-Root
-  ☐ Criar Product - Aggregate-Root
-  ☐ Criar Cart - Aggregate-Root
-  ☐ Criar Request - Aggregate-Root
-  ☐ Criar Delivery - Aggregate-Root
-  ☐ Criar Subscription - Aggregate-Root
-  ☐ Criar Message - Aggregate-Root
-  ☐ Criar Generic-Domain - Aggregate-Root
-  ☐ Criar caso de uso - Cadastrar nova categoria de produto
-  ☐ Criar caso de uso - Atualizar categoria de produto
-  ☐ Criar caso de uso - Desabilitar categoria de produto
-  ☐ Criar caso de uso - Cadastrar empresa
-  ☐ Criar caso de uso - Atualizar dados da empresa
-  ☐ Criar caso de uso - Cadastrar categoria de cestas
-  ☐ Criar caso de uso - Atualizar categoria de produtos
-  ☐ Criar caso de uso - Atualizar categoria de cestas
-  ☐ Criar caso de uso - Excluir categoria de cestas
-  ☐ Criar caso de uso - Cadastrar nova região de atuação
-  ☐ Criar caso de uso - Desabilitar região de atuação
-  ☐ Criar caso de uso - Renomear região de atuação
-  ☐ Criar caso de uso - Definir frete para região de atuação
-  ☐ Criar caso de uso - Cadastrar novo produto
-  ☐ Criar caso de uso - Atualizar produto
-  ☐ Criar caso de uso - Lançar estoque para produto
-  ☐ Criar caso de uso - Dar baixa em estoque para produto
-  ☐ Criar caso de uso - Cadastrar novo usuário 
-  ☐ Criar caso de uso - Criar perfil para usuário
-  ☐ Criar caso de uso - Atualizar perfil para usuário
-  ☐ Criar caso de uso - Desabilitar usuário 
-  ☐ Criar caso de uso - Realizar Login 
-  ☐ Criar caso de uso - Assinar plano 
-  ☐ Criar caso de uso - Cancelar assinutura de plano
-  ☐ Criar caso de uso - Cadastrar cesta
-  ☐ Criar caso de uso - Adicionar produto na cesta
-  ☐ Criar caso de uso - Remover produto da cesta
-  ☐ Criar caso de uso - Desabilitar cesta
-  ☐ Criar caso de uso - Desabilitar todas as cestas
+  ✔ Create Monetary - Value Object @started(20-11-28 17:50) @done(20-11-28 19:29) @lasted(1h39m23s)
+  ✔ Create Email - Value Object @started(20-11-29 11:46) @done(20-11-29 13:30) @lasted(1h44m22s)
+  ✔ Create Image - Value Object @started(20-11-29 15:21) @done(20-11-29 16:22) @lasted(1h1m59s)
+  ✔ Create Password - Value Object @started(20-11-29 16:37) @done(20-11-29 21:14) @lasted(4h37m6s)
+  ✔ Create Id - Value Object @started(20-11-30 21:15) @done(20-11-30 22:36) @lasted(1h21m31s)
+  ✔ Create City - Entity @done(20-12-04 00:41)
+  ✔ Create State - Entity @started(20-12-04 22:51) @done(20-12-05 18:22) @lasted(19h31m58s)
+  ✔ Create Product-Category - Entity @started(20-12-05 19:27) @done(20-12-10 00:16) @lasted(4d4h49m22s)
+  ✔ Create Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
+  ☐ Create Region - Entity
+  ☐ Create Rating - Value Object
+  ☐ Create Tag - Entity
+  ☐ Create Coupon - Entity
+  ☐ Create Delivery-Status - Entity
+  ☐ Create Client - Entity
+  ☐ Create Item - Entity
+  ☐ Create Plan - Entity
+  ☐ Create Basket - Aggregate-Root
+  ☐ Create User - Aggregate-Root
+  ☐ Create Product - Aggregate-Root
+  ☐ Create Cart - Aggregate-Root
+  ☐ Create Order - Aggregate-Root
+  ☐ Create Delivery - Aggregate-Root
+  ☐ Create Subscription - Aggregate-Root
+  ☐ Create Message - Aggregate-Root
+  ☐ Create Generic-Domain - Aggregate-Root
+  ☐ Create use case - RegisterNoteOnDelivery [ADMIN, CLIENT, DELIVERYMAN]
+  ☐ Create use case - RegisterDelivery [ADMIN, DELIVERYMAN]
+  ☐ Create use case - RegisterDeliveryDevolution [DELIVERYMAN, ADMIN]
+  ☐ Create use case - RegisterEcobagDevolution [DELIVERYMAN, ADMIN]
+  ☐ Create use case - RegisterEcobagPrice [ADMIN]
+  ☐ Create use case - RegisterCompany [ADMIN]
+  ☐ Create use case - RegisterRegion [ADMIN]
+  ☐ Create use case - RegisterOrder [ADMIN, CLIENT]
+  ☐ Create use case - RegisterProductCategory [ADMIN]
+  ☐ Create use case - RegisterProduct [ADMIN]
+  ☐ Create use case - RegisterBasketCategory [ADMIN]
+  ☐ Create use case - RegisterBasket [ADMIN]
+  ☐ Create use case - ChangeRegionFreigthPrice [ADMIN]
+  ☐ Create use case - UpdateRegion [ADMIN]
+  ☐ Create use case - DeactivateDeliveryStatus [ADMIN]
+  ☐ Create use case - ActivateDeliveryStatus [ADMIN]
+  ☐ Create use case - CancelSubscription [CLIENT, ADMIN]
+  ☐ Create use case - RatePlan [CLIENT]
+  ☐ Create use case - CustomizeBasket [ADMIN, CLIENT]
+  ☐ Create use case - DeactivatePlan [ADMIN]
+  ☐ Create use case - ActivatePlan [ADMIN]
+  ☐ Create use case - SubscribeOnPlan [CLIENT]
+  ☐ Create use case - DeactivateRegion [ADMIN]
+  ☐ Create use case - ActivateRegion [ADMIN]
+  ☐ Create use case - AddProductOnCart [CLIENT]
+  ☐ Create use case - RemoveProductFromCart [CLIENT]
+  ☐ Create use case - AddCustomBasketOnCart [CLIENT]
+  ☐ Create use case - RemoveCustomBasketfromCart [CLIENT]
+  ☐ Create use case - SignUp [ADMIN, DELIVERYMAN, CLIENT]
+  ☐ Create use case - DefineAnUserAsDeliveryMan [ADMIN]
+  ☐ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT]
+  ☐ Create use case - ResetPassword [ADMIN, DELIVERYMAN, CLIENT]
+  ☐ Create use case - SendEmailWithResetPasswordToken [ADMIN, DELIVERYMAN, CLIENT]
+  ☐ Create use case - DeactivateUser [ADMIN]
+  ☐ Create use case - CancelAnOrder [CLIENT, ADMIN]
+  ☐ Create use case - DeleteAccount [CLIENT, DELIVERYMAN]
+  ☐ Create use case - DeactivateBasketCategory [ADMIN]
+  ☐ Create use case - ActivateBasketCategory [ADMIN]
+  ☐ Create use case - IncrementBasketChangeLimit [ADMIN]
+  ☐ Create use case - DecrementBasketChangeLimit [ADMIN]
+  ☐ Create use case - DeactivateProductCategory [ADMIN]
+  ☐ Create use case - ActivateProductCategory [ADMIN]
+  ☐ Create use case - ClearCart [CLIENT]
+  ☐ Create use case - ApplyDiscountCoupon [CLIENT]
+  ☐ Create use case - ApproveOrder [ADMIN]
+  ☐ Create use case - DeactivateBasket [ADMIN]
+  ☐ Create use case - ActivateBasket [ADMIN]
+  ☐ Create use case - AddProductOnBasket [ADMIN]
+  ☐ Create use case - RemoveProductFromBasket [ADMIN]
+  ☐ Create use case - LaunchProductStock [ADMIN]
+  ☐ Create use case - DimiurProductStock [ADMIN]
+  ☐ Create use case - DeactivateProduct [ADMIN]
+  ☐ Create use case - ActivateProduct [ADMIN]
+  ☐ Create use case - AddProductOnCustomBasket [CLIENT]
+  ☐ Create use case - RemoveProductFromCustomBasket [CLIENT]
