@@ -16,14 +16,14 @@ Todo:
   ✔ Create Basket-Category - Entity @started(20-12-11 21:53) @done(20-12-11 23:47) @lasted(1h54m5s)
   ✔ Create Region - Entity @started(20-12-13 23:11) @done(20-12-14 00:14) @lasted(1h3m17s)
   ✔ Create Tag - Entity @started(20-12-14 23:15) @done(20-12-15 00:14) @lasted(59m18s)
-  ☐ Create Rating - Value Object
-  ☐ Create Product - Aggregate-Root
+  ✔ Create Delivery-Status - Entity @started(20-12-15 22:17) @done(20-12-16 00:13) @lasted(1h56m52s)
   ☐ Create Coupon - Entity
-  ☐ Create Delivery-Status - Entity
-  ☐ Create Product-Comment - Entity
   ☐ Create Client - Entity
+  ☐ Create Product-Comment - Entity
   ☐ Create Item - Entity
-  ☐ Create Plan - Entity0
+  ☐ Create Plan - Entity
+  ☐ Create Rating - Aggregate-Root
+  ☐ Create Product - Aggregate-Root
   ☐ Create Basket - Aggregate-Root
   ☐ Create User - Aggregate-Root
   ☐ Create Cart - Aggregate-Root
