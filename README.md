@@ -62,13 +62,13 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ---
 
-![](./readme/DomainArtifacts.png)
+![](./readme/Artifacts.png)
 
 ##### Casos de uso
 
 ---
 
-![](./readme/UseCases.png)
+![](./readme/UseCase.png)
 
 ##### Diagrama de classe
 

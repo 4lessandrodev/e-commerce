@@ -6,3 +6,5 @@ export * from './validate-email.domain.util';
 export * from './transform-string-to-lowercase.domain.util';
 export * from './validate-string-length.domain.util';
 export * from './transform-string-to-uppercase.domain.util';
+export * from './validate-number-between-max-and-min.domain.util';
+export * from './get-difference-in-days-from-date-and-current-day.domain.util';
