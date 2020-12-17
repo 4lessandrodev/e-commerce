@@ -17,11 +17,11 @@ Todo:
   ✔ Create Region - Entity @started(20-12-13 23:11) @done(20-12-14 00:14) @lasted(1h3m17s)
   ✔ Create Tag - Entity @started(20-12-14 23:15) @done(20-12-15 00:14) @lasted(59m18s)
   ✔ Create Delivery-Status - Entity @started(20-12-15 22:17) @done(20-12-16 00:13) @lasted(1h56m52s)
-  ☐ Create Coupon - Entity
+  ✔ Create Coupon - Entity @started(20-12-16 23:29) @done(20-12-17 01:48) @lasted(2h19m53s)
   ☐ Create Client - Entity
-  ☐ Create Product-Comment - Entity
   ☐ Create Item - Entity
   ☐ Create Plan - Entity
+  ☐ Create Comment - Entity
   ☐ Create Rating - Aggregate-Root
   ☐ Create Product - Aggregate-Root
   ☐ Create Basket - Aggregate-Root
@@ -67,7 +67,7 @@ Todo:
   ☐ Create use case - SendEmailWithResetPasswordToken [ADMIN, DELIVERYMAN, CLIENT]
   ☐ Create use case - DeactivateUser [ADMIN]
   ☐ Create use case - CancelAnOrder [CLIENT, ADMIN]
-  ☐ Create use case - DeleteAccount [CLIENT, DELIVERYMAN]
+  ☐ Create use case - DeleteAccount [CLIENT, DELIVERYMAN, CLIENT]
   ☐ Create use case - DeactivateBasketCategory [ADMIN]
   ☐ Create use case - ActivateBasketCategory [ADMIN]
   ☐ Create use case - IncrementBasketChangeLimit [ADMIN]
@@ -76,6 +76,10 @@ Todo:
   ☐ Create use case - ActivateProductCategory [ADMIN]
   ☐ Create use case - ClearCart [CLIENT]
   ☐ Create use case - ApplyDiscountCoupon [CLIENT]
+  ☐ Create use case - RegisterDiscountCoupon [ADMIN]
+  ☐ Create use case - DeactivateDiscountCoupon [ADMIN]
+  ☐ Create use case - ActivateDiscountCoupon [ADMIN]
+  ☐ Create use case - ChangeDiscountCouponAvaliableQuantity [ADMIN]
   ☐ Create use case - ApproveOrder [ADMIN]
   ☐ Create use case - DeactivateBasket [ADMIN]
   ☐ Create use case - ActivateBasket [ADMIN]
@@ -88,3 +92,4 @@ Todo:
   ☐ Create use case - AddProductOnCustomBasket [CLIENT]
   ☐ Create use case - RemoveProductFromCustomBasket [CLIENT]
   ☐ Create use case - ReportAnComment [CLIENT]
+  ☐ Create use case - RegisterAnComment [CLIENT]
