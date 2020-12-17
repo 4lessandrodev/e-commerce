@@ -11,6 +11,7 @@ import {
 export const BASKET_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH = 3;
 export const BASKET_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE = 20;
+const ZERO = 0;
 
 export class BasketCategory extends Entity<BasketCategoryProps> {
   private constructor(props: BasketCategoryProps, id?: UniqueEntityID) {
@@ -39,7 +40,7 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
       maxLength: BASKET_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH,
     });
 
-    if (props.changesLimit < 0) {
+    if (props.changesLimit < ZERO) {
       props.changesLimit = convertNegativeNumberToPositive(props.changesLimit);
     }
 
