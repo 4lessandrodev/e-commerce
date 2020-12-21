@@ -6,7 +6,7 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=12"
+    "node": ">12.9.1"
   },
   "scripts": {
     "prebuild": "yarn && rimraf dist",
