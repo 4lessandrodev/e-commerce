@@ -80,7 +80,7 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ---
 
-- `$ git clone https://github.com/ALESSANDROLMENEZES/e-commerce.git`
+- `$ git clone https://github.com/4lessandrodev/e-commerce.git`
 
 - `$ cd e-commerce `
 
