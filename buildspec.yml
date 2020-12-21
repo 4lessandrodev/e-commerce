@@ -7,15 +7,18 @@ phases:
   pre_build:
     commands:
       - echo Installing source yarn dependencies...
-      - yarn
+      - yarn --production
   build:
     commands:
-      - echo Build started on `date`
+      - echo Build started
       - echo Compiling the dist folder
       - yarn build
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Build completed
+      - echo Run all tests
+      - yarn test
+      - echo All tests passed
 # Include only the files required for your application to run.
 artifacts:
   files:
