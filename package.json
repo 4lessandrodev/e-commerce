@@ -9,7 +9,7 @@
     "node": ">=12"
   },
   "scripts": {
-    "prebuild": "rimraf dist && yarn",
+    "prebuild": "yarn && rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:server": "nest start",
