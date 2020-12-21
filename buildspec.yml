@@ -7,7 +7,7 @@ phases:
   pre_build:
     commands:
       - echo Pre-build Installing source yarn dependencies...
-      - yarn install
+      - yarn install:all
       - echo All installed
   build:
     commands:

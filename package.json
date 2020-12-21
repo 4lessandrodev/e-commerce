@@ -10,6 +10,7 @@
   },
   "scripts": {
     "prebuild": "yarn --production && rimraf dist",
+    "install:all": "yarn",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:server": "nest start",
