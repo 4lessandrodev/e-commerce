@@ -9,7 +9,7 @@
     "node": "12.16.1"
   },
   "scripts": {
-    "prebuild": "yarn --production && rimraf dist",
+    "prebuild": "yarn && rimraf dist",
     "install:all": "yarn",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
