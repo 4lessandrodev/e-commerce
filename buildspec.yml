@@ -6,16 +6,14 @@ phases:
       nodejs: 12
   pre_build:
     commands:
-      - echo Installing source yarn dependencies...
-      - yarn --production
+      - echo Pre-build Installing source yarn dependencies...
+      - yarn build
+      - echo Builded and all dependencies installed
   build:
     commands:
-      - echo Build started
-      - echo Compiling the dist folder
-      - yarn build
+      - echo Check tests
   post_build:
     commands:
-      - echo Build completed
       - echo Run all tests
       - yarn test
       - echo All tests passed
