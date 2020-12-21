@@ -7,16 +7,18 @@ phases:
   pre_build:
     commands:
       - echo Pre-build Installing source yarn dependencies...
-      - yarn build
-      - echo Builded and all dependencies installed
+      - yarn
+      - echo All installed
   build:
     commands:
-      - echo Check tests
+      - echo Build
+      - yarn build
+      - echo All builded
   post_build:
     commands:
       - echo Run all tests
       - yarn test
-      - echo All tests passed
+      - echo All tests has passed
 # Include only the files required for your application to run.
 artifacts:
   files:
