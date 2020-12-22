@@ -25,13 +25,18 @@ describe('Monetary.value-object.ts', () => {
   it('Should return a string currency format', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
     expect(MonetaryCreateResult.getCurrencyStringValue()).toBeDefined();
-    expect(MonetaryCreateResult.getCurrencyStringValue()).toContain('R$');
+    expect(
+      MonetaryCreateResult.getCurrencyStringValue()
+        .toString()
+        .trim()
+        .replace(/\s/g, ''),
+    ).toBe('R$10,00');
   });
 
   it('Should return a negative value in currency string format', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
     const textResult = MonetaryCreateResult.getRealCurrencyStringValuePositiveOrNegative();
-    expect(textResult).toContain('-R$');
+    expect(textResult.toString().trim().replace(/\s/g, '')).toBe('-R$10,00');
   });
 
   it('Should return a real negative number value', () => {
