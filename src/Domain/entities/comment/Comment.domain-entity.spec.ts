@@ -29,7 +29,7 @@ describe('Comment.domain-entity', () => {
   });
 
   it('Should fail if provide a long comment', async () => {
-    const text = lorem.text(3);
+    const text = 'lorem ipsum a comment invalid comment'.repeat(10);
     const createdComment = makeSut({
       text,
     });

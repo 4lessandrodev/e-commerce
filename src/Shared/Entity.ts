@@ -15,7 +15,7 @@ export abstract class Entity<T extends BaseDomainEntity> {
   }
 
   get createdAt(): Date {
-    return this.props.criatedAt ?? new Date();
+    return this.props.createdAt ?? new Date();
   }
 
   get updatedAt(): Date {
