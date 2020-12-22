@@ -18,10 +18,10 @@ Todo:
   ✔ Create Tag - Entity @started(20-12-14 23:15) @done(20-12-15 00:14) @lasted(59m18s)
   ✔ Create Delivery-Status - Entity @started(20-12-15 22:17) @done(20-12-16 00:13) @lasted(1h56m52s)
   ✔ Create Coupon - Entity @started(20-12-16 23:29) @done(20-12-17 01:48) @lasted(2h19m53s)
+  ✔ Create Comment - Entity @started(20-12-21 23:49) @done(20-12-22 01:02) @lasted(1h13m2s)
   ☐ Create Client - Entity
   ☐ Create Item - Entity
   ☐ Create Plan - Entity
-  ☐ Create Comment - Entity
   ☐ Create Rating - Aggregate-Root
   ☐ Create Product - Aggregate-Root
   ☐ Create Basket - Aggregate-Root
