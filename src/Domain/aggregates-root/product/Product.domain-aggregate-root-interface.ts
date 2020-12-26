@@ -11,4 +11,6 @@ export interface ProductProps extends BaseDomainEntity {
   isActive: boolean;
   info: string;
   quantityAvaliable: number;
+  numberOfRatings?: number;
+  ratingAverage?: number;
 }

@@ -19,6 +19,7 @@ import {
 } from './ProductErrors.domain-aggregate-root';
 export const MAX_DESCRIPTION_LENGTH = 80;
 export const MIN_DESCRIPTION_LENGTH = 3;
+export const MAX_RATING_AVERAGE = 5;
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -55,6 +56,30 @@ export class Product extends AggregateRoot<ProductProps> {
 
   get images(): ImageValueObject[] {
     return this.props.images;
+  }
+
+  get isActive(): boolean {
+    return this.props.isActive;
+  }
+
+  get numberOfRatings(): number {
+    return this.props.numberOfRatings ?? 0;
+  }
+
+  get ratingAverage(): number {
+    return this.props.ratingAverage ?? 0;
+  }
+
+  updateProductRating(props: {
+    numberOfRatings: number;
+    ratingAverage: number;
+  }): void {
+    if (props.ratingAverage > MAX_RATING_AVERAGE) {
+      return;
+    }
+    this.props.ratingAverage = props.ratingAverage;
+    this.props.numberOfRatings = props.numberOfRatings;
+    this.props.updatedAt = new Date();
   }
 
   changePrice(price: MonetaryValueObject): Result<void> {
@@ -115,6 +140,16 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.description = value;
     this.props.updatedAt = new Date();
     return Result.ok<void>();
+  }
+
+  deactivate(): void {
+    this.props.isActive = false;
+    this.props.updatedAt = new Date();
+  }
+
+  activate(): void {
+    this.props.isActive = true;
+    this.props.updatedAt = new Date();
   }
 
   public static create(

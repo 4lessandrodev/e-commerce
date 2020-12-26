@@ -155,4 +155,37 @@ describe('Product.domain-aggregate-root', () => {
     ).getResult();
     expect(createdProductCustom.id.toString()).toBe(id.toString());
   });
+
+  it('Should deactivate and reactivate a product with success', () => {
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.isActive).toBe(true);
+    createdProduct.deactivate();
+    expect(createdProduct.isActive).toBe(false);
+    createdProduct.activate();
+    expect(createdProduct.isActive).toBe(true);
+  });
+
+  it('Should rating a product with success', () => {
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.ratingAverage).toBe(0);
+    expect(createdProduct.numberOfRatings).toBe(0);
+    createdProduct.updateProductRating({
+      numberOfRatings: 11,
+      ratingAverage: 3.8,
+    });
+    expect(createdProduct.ratingAverage).toBe(3.8);
+    expect(createdProduct.numberOfRatings).toBe(11);
+  });
+
+  it('Should not effect if provide a rating average greatter than 5', () => {
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.ratingAverage).toBe(0);
+    expect(createdProduct.numberOfRatings).toBe(0);
+    createdProduct.updateProductRating({
+      numberOfRatings: 11,
+      ratingAverage: 7.1,
+    });
+    expect(createdProduct.ratingAverage).toBe(0);
+    expect(createdProduct.numberOfRatings).toBe(0);
+  });
 });

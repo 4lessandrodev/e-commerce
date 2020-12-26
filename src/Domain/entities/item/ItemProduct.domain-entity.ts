@@ -1,9 +1,10 @@
 import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Product } from '../../aggregates-root/product/Product.domain-aggregate-root';
 import { validateNumberGreatterThanZero } from '../../utils';
 import { MonetaryValueObject } from '../../value-objects';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
-export class ItemProduct extends Entity<ItemProps<any>> {
+export class ItemProduct extends Entity<ItemProps<Product>> {
   private constructor(props: ItemProps<any>, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -12,7 +13,7 @@ export class ItemProduct extends Entity<ItemProps<any>> {
     return this._id;
   }
 
-  get item(): any {
+  get item(): Product {
     return this.props.item;
   }
 
