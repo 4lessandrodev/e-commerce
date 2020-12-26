@@ -20,11 +20,11 @@ Todo:
   ✔ Create Coupon - Entity @started(20-12-16 23:29) @done(20-12-17 01:48) @lasted(2h19m53s)
   ✔ Create Comment - Entity @started(20-12-21 23:49) @done(20-12-22 01:02) @lasted(1h13m2s)
   ✔ Create Item - Entity @started(20-12-25 21:40) @done(20-12-25 22:40) @lasted(1h0m0s)
+  ✔ Create Product - Aggregate-Root @started(20-12-25 23:05) @done(20-12-26 01:57) @lasted(2h52m23s)
   ☐ Create Plan - Entity
   ☐ Create Client - Entity
   ☐ Create User - Aggregate-Root
   ☐ Create Rating - Aggregate-Root
-  ☐ Create Product - Aggregate-Root
   ☐ Create Basket - Aggregate-Root
   ☐ Create Cart - Aggregate-Root
   ☐ Create Order - Aggregate-Root
