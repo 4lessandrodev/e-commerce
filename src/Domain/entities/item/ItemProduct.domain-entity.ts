@@ -1,5 +1,5 @@
 import { Entity, Result, UniqueEntityID } from '../../../Shared';
-import { validateGreatterThanZero } from '../../utils';
+import { validateNumberGreatterThanZero } from '../../utils';
 import { MonetaryValueObject } from '../../value-objects';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
@@ -32,7 +32,7 @@ export class ItemProduct extends Entity<ItemProps<any>> {
     props: ItemProps<any>,
     id?: UniqueEntityID,
   ): Result<ItemProduct> {
-    const isValidQuantity = validateGreatterThanZero(props.quantity);
+    const isValidQuantity = validateNumberGreatterThanZero(props.quantity);
     if (!isValidQuantity) {
       return Result.fail<ItemProduct>(ERROR_ITEM_INVALID_QUANTITY);
     }
