@@ -6,12 +6,14 @@ describe('Monetary.value-object.ts', () => {
     expect(MonetaryCreateResult.value).toBeDefined();
     expect(MonetaryCreateResult.value).toBeGreaterThan(0);
     expect(MonetaryCreateResult.value).toBe(10);
+    expect(MonetaryCreateResult.type).toBe(MonetaryType.POSITIVE);
   });
 
   it('Should return positive value if provide a negative value to monetary', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
     expect(MonetaryCreateResult.value).toBeDefined();
     expect(MonetaryCreateResult.value).toBeGreaterThan(0);
+    expect(MonetaryCreateResult.type).toBe(MonetaryType.NEGATIVE);
     expect(MonetaryCreateResult.value).toBe(10);
   });
 
@@ -25,6 +27,7 @@ describe('Monetary.value-object.ts', () => {
   it('Should return a string currency format', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
     expect(MonetaryCreateResult.getCurrencyStringValue()).toBeDefined();
+    expect(MonetaryCreateResult.type).toBe(MonetaryType.NEGATIVE);
     expect(
       MonetaryCreateResult.getCurrencyStringValue()
         .toString()
@@ -36,6 +39,7 @@ describe('Monetary.value-object.ts', () => {
   it('Should return a negative value in currency string format', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(-10).getResult();
     const textResult = MonetaryCreateResult.getRealCurrencyStringValuePositiveOrNegative();
+    expect(MonetaryCreateResult.type).toBe(MonetaryType.NEGATIVE);
     expect(textResult.toString().trim().replace(/\s/g, '')).toBe('-R$10,00');
   });
 
@@ -47,6 +51,7 @@ describe('Monetary.value-object.ts', () => {
 
   it('Should return a real positive number value', () => {
     const MonetaryCreateResult = MonetaryValueObject.create(10).getResult();
+    expect(MonetaryCreateResult.type).toBe(MonetaryType.POSITIVE);
     const textResult = MonetaryCreateResult.getRealValuePositiveOrNegative();
     expect(textResult).toBe(10);
   });
