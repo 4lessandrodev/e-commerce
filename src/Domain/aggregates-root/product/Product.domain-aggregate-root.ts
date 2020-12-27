@@ -1,5 +1,5 @@
 import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
-import { ProductCategory } from '../../entities';
+import { Comment, ProductCategory } from '../../entities';
 import {
   validateNumberGreatterOrEqualToZero,
   validateNumberGreatterThanZero,
@@ -17,9 +17,9 @@ import {
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
-export const MAX_DESCRIPTION_LENGTH = 80;
-export const MIN_DESCRIPTION_LENGTH = 3;
-export const MAX_RATING_AVERAGE = 5;
+export const MAX_PRODUCT_DESCRIPTION_LENGTH = 80;
+export const MIN_PRODUCT_DESCRIPTION_LENGTH = 3;
+export const MAX_PRODUCT_RATING_AVERAGE = 5;
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -31,7 +31,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   get info(): string {
-    return this.props.info;
+    return this.props.info ?? '';
   }
 
   get description(): string {
@@ -70,11 +70,15 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.ratingAverage ?? 0;
   }
 
+  get comments(): Comment[] | null {
+    return this.props.comments ?? null;
+  }
+
   updateProductRating(props: {
     numberOfRatings: number;
     ratingAverage: number;
   }): void {
-    if (props.ratingAverage > MAX_RATING_AVERAGE) {
+    if (props.ratingAverage > MAX_PRODUCT_RATING_AVERAGE) {
       return;
     }
     this.props.ratingAverage = props.ratingAverage;
@@ -92,7 +96,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return Result.ok<void>();
   }
 
-  addProductImage(image: ImageValueObject): void {
+  addImage(image: ImageValueObject): void {
     this.props.images.push(image);
     this.props.updatedAt = new Date();
   }
@@ -131,8 +135,8 @@ export class Product extends AggregateRoot<ProductProps> {
   changeDescription(value: string): Result<void> {
     const isValidDescription = validateStringLengthBetweenMaxAndMin({
       text: value,
-      maxLength: MAX_DESCRIPTION_LENGTH,
-      minLength: MIN_DESCRIPTION_LENGTH,
+      maxLength: MAX_PRODUCT_DESCRIPTION_LENGTH,
+      minLength: MIN_PRODUCT_DESCRIPTION_LENGTH,
     });
     if (!isValidDescription) {
       return Result.fail<void>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
@@ -152,14 +156,32 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.updatedAt = new Date();
   }
 
+  addComment(comment: Comment): void {
+    const existComments = this.props.comments ?? null;
+    this.props.comments = [comment];
+    if (existComments) {
+      this.props.comments = this.props.comments.concat(existComments);
+    }
+  }
+
+  removeComment(comment: Comment): void {
+    const existComments = this.props.comments ?? null;
+    if (!existComments) {
+      return;
+    }
+    this.props.comments = existComments.filter(
+      (cmt) => cmt.id.toString() !== comment.id.toString(),
+    );
+  }
+
   public static create(
     props: ProductProps,
     id?: UniqueEntityID,
   ): Result<Product> {
     const isValidDescription = validateStringLengthBetweenMaxAndMin({
       text: props.description,
-      maxLength: MAX_DESCRIPTION_LENGTH,
-      minLength: MIN_DESCRIPTION_LENGTH,
+      maxLength: MAX_PRODUCT_DESCRIPTION_LENGTH,
+      minLength: MIN_PRODUCT_DESCRIPTION_LENGTH,
     });
     if (!isValidDescription) {
       return Result.fail<Product>(ERROR_PRODUCT_DESCRIPTION_LENGTH);

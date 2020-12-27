@@ -10,3 +10,4 @@ export * from './state/State.domain-entity';
 export * from './state/StateId.domain-entity';
 export * from './tag/Tag.domain-entity';
 export * from './tag/TagId.domain-entity';
+export * from './comment/Comment.domain-entity';

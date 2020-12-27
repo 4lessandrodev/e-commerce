@@ -1,5 +1,6 @@
 import { BaseDomainEntity } from '../../../Shared';
 import { ProductCategory } from '../../entities';
+import { Comment } from '../../entities/comment/Comment.domain-entity';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 
 export interface ProductProps extends BaseDomainEntity {
@@ -9,8 +10,9 @@ export interface ProductProps extends BaseDomainEntity {
   isSpecial: boolean;
   price: MonetaryValueObject;
   isActive: boolean;
-  info: string;
   quantityAvaliable: number;
   numberOfRatings?: number;
   ratingAverage?: number;
+  comments?: Comment[];
+  info?: string;
 }
