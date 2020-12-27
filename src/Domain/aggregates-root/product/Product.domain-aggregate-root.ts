@@ -1,5 +1,5 @@
 import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
-import { Comment, ProductCategory } from '../../entities';
+import { Comment, ProductCategory, Tag } from '../../entities';
 import {
   validateNumberGreatterOrEqualToZero,
   validateNumberGreatterThanZero,
@@ -72,6 +72,10 @@ export class Product extends AggregateRoot<ProductProps> {
 
   get comments(): Comment[] | null {
     return this.props.comments ?? null;
+  }
+
+  get tags(): Tag[] | null {
+    return this.props.tags ?? null;
   }
 
   updateProductRating(props: {
@@ -171,6 +175,24 @@ export class Product extends AggregateRoot<ProductProps> {
     }
     this.props.comments = existComments.filter(
       (cmt) => cmt.id.toString() !== comment.id.toString(),
+    );
+  }
+
+  addTag(tag: Tag): void {
+    const existTags = this.props.tags ?? null;
+    this.props.tags = [tag];
+    if (existTags) {
+      this.props.tags = this.props.tags.concat(existTags);
+    }
+  }
+
+  removeTag(tag: Tag): void {
+    const existTags = this.props.tags ?? null;
+    if (!existTags) {
+      return;
+    }
+    this.props.tags = existTags.filter(
+      (tg) => tg.id.toString() !== tag.id.toString(),
     );
   }
 

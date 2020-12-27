@@ -1,5 +1,5 @@
 import { BaseDomainEntity } from '../../../Shared';
-import { BasketCategory, Comment } from '../../entities';
+import { BasketCategory, Comment, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { Product } from '../product/Product.domain-aggregate-root';
 
@@ -14,4 +14,5 @@ export interface BasketProps extends BaseDomainEntity {
   ratingAverage?: number;
   comments?: Comment[];
   info?: string;
+  tags?: Tag[];
 }

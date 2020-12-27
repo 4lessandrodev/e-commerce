@@ -1,5 +1,5 @@
 import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
-import { BasketCategory } from '../../entities';
+import { BasketCategory, Tag } from '../../entities';
 import {
   ImageValueObject,
   MonetaryType,
@@ -62,6 +62,10 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.comments ?? null;
   }
 
+  get tags(): Tag[] | null {
+    return this.props.tags ?? null;
+  }
+
   updateBasketRating(props: {
     numberOfRatings: number;
     ratingAverage: number;
@@ -121,6 +125,24 @@ export class Basket extends AggregateRoot<BasketProps> {
     }
     this.props.comments = existComments.filter(
       (cmt) => cmt.id.toString() !== comment.id.toString(),
+    );
+  }
+
+  addTag(tag: Tag): void {
+    const existTags = this.props.tags ?? null;
+    this.props.tags = [tag];
+    if (existTags) {
+      this.props.tags = this.props.tags.concat(existTags);
+    }
+  }
+
+  removeTag(tag: Tag): void {
+    const existTags = this.props.tags ?? null;
+    if (!existTags) {
+      return;
+    }
+    this.props.tags = existTags.filter(
+      (tg) => tg.id.toString() !== tag.id.toString(),
     );
   }
 

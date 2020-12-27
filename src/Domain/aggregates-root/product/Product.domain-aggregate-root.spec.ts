@@ -1,6 +1,6 @@
 import { image, random } from 'faker';
 import { Result, UniqueEntityID } from '../../../Shared';
-import { Comment, ProductCategory } from '../../entities';
+import { Comment, ProductCategory, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { Product } from './Product.domain-aggregate-root';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
@@ -216,5 +216,34 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.comments?.length).toBe(2);
     createdProduct.removeComment(comment2);
     expect(createdProduct.comments?.length).toBe(1);
+  });
+
+  it('Should add a tag with success', () => {
+    const tag = Tag.create({
+      description: 'Fresco',
+    }).getResult();
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.tags?.length).toBe(undefined);
+    createdProduct.addTag(tag);
+    expect(createdProduct.tags?.length).toBe(1);
+    createdProduct.addTag(tag);
+    expect(createdProduct.tags?.length).toBe(2);
+  });
+
+  it('Should remove a tag with success', () => {
+    const tag1 = Tag.create({
+      description: 'Orgânico',
+    }).getResult();
+    const tag2 = Tag.create({
+      description: 'Verduras',
+    }).getResult();
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.tags?.length).toBe(undefined);
+    createdProduct.addTag(tag1);
+    expect(createdProduct.tags?.length).toBe(1);
+    createdProduct.addTag(tag2);
+    expect(createdProduct.tags?.length).toBe(2);
+    createdProduct.removeTag(tag2);
+    expect(createdProduct.tags?.length).toBe(1);
   });
 });

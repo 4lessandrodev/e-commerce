@@ -1,5 +1,5 @@
 import { BaseDomainEntity } from '../../../Shared';
-import { ProductCategory } from '../../entities';
+import { ProductCategory, Tag } from '../../entities';
 import { Comment } from '../../entities/comment/Comment.domain-entity';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 
@@ -15,4 +15,5 @@ export interface ProductProps extends BaseDomainEntity {
   ratingAverage?: number;
   comments?: Comment[];
   info?: string;
+  tags?: Tag[];
 }

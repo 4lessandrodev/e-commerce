@@ -1,7 +1,7 @@
 import { image, random } from 'faker';
 import { Basket } from '..';
 import { Result, UniqueEntityID } from '../../../Shared';
-import { BasketCategory, Comment, ProductCategory } from '../../entities';
+import { BasketCategory, Comment, ProductCategory, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { Product } from '../product/Product.domain-aggregate-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
@@ -197,5 +197,34 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.comments?.length).toBe(undefined);
     createdBasket.removeComment(comment1);
     expect(createdBasket.comments?.length).toBe(undefined);
+  });
+
+  it('Should add a tag with success', () => {
+    const tag = Tag.create({
+      description: 'Fresco',
+    }).getResult();
+    const createdBasket = makeSut().getResult();
+    expect(createdBasket.tags?.length).toBe(undefined);
+    createdBasket.addTag(tag);
+    expect(createdBasket.tags?.length).toBe(1);
+    createdBasket.addTag(tag);
+    expect(createdBasket.tags?.length).toBe(2);
+  });
+
+  it('Should remove a tag with success', () => {
+    const tag1 = Tag.create({
+      description: 'Orgânico',
+    }).getResult();
+    const tag2 = Tag.create({
+      description: 'Verduras',
+    }).getResult();
+    const createdBasket = makeSut().getResult();
+    expect(createdBasket.tags?.length).toBe(undefined);
+    createdBasket.addTag(tag1);
+    expect(createdBasket.tags?.length).toBe(1);
+    createdBasket.addTag(tag2);
+    expect(createdBasket.tags?.length).toBe(2);
+    createdBasket.removeTag(tag2);
+    expect(createdBasket.tags?.length).toBe(1);
   });
 });
