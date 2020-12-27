@@ -1,6 +1,6 @@
 import { image, random } from 'faker';
 import { Result, UniqueEntityID } from '../../../Shared';
-import { ProductCategory } from '../../entities';
+import { Comment, ProductCategory } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { Product } from './Product.domain-aggregate-root';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
@@ -85,7 +85,7 @@ describe('Product.domain-aggregate-root', () => {
   it('Should add an image to product with success', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.images.length).toBe(3);
-    createdProduct.addProductImage(
+    createdProduct.addImage(
       ImageValueObject.create(image.imageUrl()).getResult(),
     );
     expect(createdProduct.images.length).toBe(4);
@@ -97,7 +97,7 @@ describe('Product.domain-aggregate-root', () => {
       image.imageUrl(80, 80),
     ).getResult();
     expect(createdProduct.images.length).toBe(3);
-    createdProduct.addProductImage(imageAdd);
+    createdProduct.addImage(imageAdd);
     expect(createdProduct.images.length).toBe(4);
     createdProduct.removeImage(imageAdd);
     expect(createdProduct.images.length).toBe(3);
@@ -187,5 +187,34 @@ describe('Product.domain-aggregate-root', () => {
     });
     expect(createdProduct.ratingAverage).toBe(0);
     expect(createdProduct.numberOfRatings).toBe(0);
+  });
+
+  it('Should add a comment with success', () => {
+    const comment = Comment.create({
+      text: 'Produto bacana esse!',
+    }).getResult();
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.comments?.length).toBe(undefined);
+    createdProduct.addComment(comment);
+    expect(createdProduct.comments?.length).toBe(1);
+    createdProduct.addComment(comment);
+    expect(createdProduct.comments?.length).toBe(2);
+  });
+
+  it('Should remove a comment with success', () => {
+    const comment1 = Comment.create({
+      text: 'Produto bacana esse!',
+    }).getResult();
+    const comment2 = Comment.create({
+      text: 'Eu recomendo esse produto!',
+    }).getResult();
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.comments?.length).toBe(undefined);
+    createdProduct.addComment(comment1);
+    expect(createdProduct.comments?.length).toBe(1);
+    createdProduct.addComment(comment2);
+    expect(createdProduct.comments?.length).toBe(2);
+    createdProduct.removeComment(comment2);
+    expect(createdProduct.comments?.length).toBe(1);
   });
 });
