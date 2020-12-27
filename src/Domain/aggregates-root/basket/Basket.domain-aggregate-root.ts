@@ -1,0 +1,145 @@
+import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
+import { BasketCategory } from '../../entities';
+import {
+  ImageValueObject,
+  MonetaryType,
+  MonetaryValueObject,
+} from '../../value-objects';
+import { Product } from '../';
+import { BasketProps } from './Basket.domain-aggregate-root-interface';
+import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import {
+  ERROR_BASKET_DESCRIPTION_LENGTH,
+  ERROR_BASKET_PRICE,
+} from './BasketErrors.domain-aggregate-root';
+import { Comment } from '../../entities';
+export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
+export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
+export const MAX_BASKET_RATING_AVERAGE = 5;
+
+export class Basket extends AggregateRoot<BasketProps> {
+  private constructor(props: BasketProps, id?: UniqueEntityID) {
+    super(props, id);
+  }
+
+  get description(): string {
+    return this.props.description;
+  }
+
+  get category(): BasketCategory {
+    return this.props.category;
+  }
+
+  get products(): Product[] {
+    return this.props.products;
+  }
+
+  get price(): MonetaryValueObject {
+    return this.props.price;
+  }
+
+  get isActive(): boolean {
+    return this.props.isActive;
+  }
+
+  get info(): string {
+    return this.props.info ?? '';
+  }
+
+  get numberOfRatings(): number {
+    return this.props.numberOfRatings ?? 0;
+  }
+
+  get ratingAverage(): number {
+    return this.props.ratingAverage ?? 0;
+  }
+
+  get images(): ImageValueObject[] {
+    return this.props.images;
+  }
+
+  get comments(): Comment[] | null {
+    return this.props.comments ?? null;
+  }
+
+  updateBasketRating(props: {
+    numberOfRatings: number;
+    ratingAverage: number;
+  }): void {
+    if (props.ratingAverage > MAX_BASKET_RATING_AVERAGE) {
+      return;
+    }
+    this.props.ratingAverage = props.ratingAverage;
+    this.props.numberOfRatings = props.numberOfRatings;
+    this.props.updatedAt = new Date();
+  }
+
+  changePrice(price: MonetaryValueObject): Result<void> {
+    const isValidPrice = price.type === MonetaryType.POSITIVE;
+    if (!isValidPrice) {
+      return Result.fail<void>(ERROR_BASKET_PRICE);
+    }
+    this.props.price = price;
+    this.props.updatedAt = new Date();
+    return Result.ok<void>();
+  }
+
+  addImage(image: ImageValueObject): void {
+    this.props.images.push(image);
+    this.props.updatedAt = new Date();
+  }
+
+  removeImage(image: ImageValueObject): void {
+    this.props.images = this.props.images.filter(
+      (img) => img.value !== image.value,
+    );
+    this.props.updatedAt = new Date();
+  }
+
+  deactivate(): void {
+    this.props.isActive = false;
+    this.props.updatedAt = new Date();
+  }
+
+  activate(): void {
+    this.props.isActive = true;
+    this.props.updatedAt = new Date();
+  }
+
+  addComment(comment: Comment): void {
+    const existComments = this.props.comments ?? null;
+    this.props.comments = [comment];
+    if (existComments) {
+      this.props.comments = this.props.comments.concat(existComments);
+    }
+  }
+
+  removeComment(comment: Comment): void {
+    const existComments = this.props.comments ?? null;
+    if (!existComments) {
+      return;
+    }
+    this.props.comments = existComments.filter(
+      (cmt) => cmt.id.toString() !== comment.id.toString(),
+    );
+  }
+
+  public static create(
+    props: BasketProps,
+    id?: UniqueEntityID,
+  ): Result<Basket> {
+    const isValidDescription = validateStringLengthBetweenMaxAndMin({
+      text: props.description,
+      maxLength: MAX_BASKET_DESCRIPTION_LENGTH,
+      minLength: MIN_BASKET_DESCRIPTION_LENGTH,
+    });
+    if (!isValidDescription) {
+      return Result.fail<Basket>(ERROR_BASKET_DESCRIPTION_LENGTH);
+    }
+    const isValidPrice = props.price.type === MonetaryType.POSITIVE;
+    if (!isValidPrice) {
+      return Result.fail<Basket>(ERROR_BASKET_PRICE);
+    }
+    return Result.ok<Basket>(new Basket(props, id));
+  }
+}
