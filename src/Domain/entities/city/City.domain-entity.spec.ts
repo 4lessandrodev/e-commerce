@@ -51,5 +51,6 @@ describe('City.domain-entity', () => {
     );
     expect(validCity.isFailure).toBe(false);
     expect(validCity.getResult().id.toString()).toBe(createdId.toString());
+    expect(validCity.getResult().stateId).toBeDefined();
   });
 });

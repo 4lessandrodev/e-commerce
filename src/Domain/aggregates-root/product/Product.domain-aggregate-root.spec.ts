@@ -42,6 +42,17 @@ describe('Product.domain-aggregate-root', () => {
   it('Should create a valid product', () => {
     const createdProduct = makeSut();
     expect(createdProduct.isFailure).toBe(false);
+    expect(createdProduct.getResult().description).toBe('Maçã Brasileira');
+    expect(createdProduct.getResult().category.description).toBe('Frutas');
+    expect(createdProduct.getResult().info).toBe(
+      'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+    );
+    expect(createdProduct.getResult().isActive).toBe(true);
+    expect(createdProduct.getResult().isSpecial).toBe(false);
+    expect(
+      createdProduct.getResult().price.getRealValuePositiveOrNegative(),
+    ).toBe(10);
+    expect(createdProduct.getResult().images.length).toBe(3);
   });
 
   it('Should fail if provide a long description to update', () => {
@@ -49,6 +60,15 @@ describe('Product.domain-aggregate-root', () => {
     const fail = createdProduct.getResult().changeDescription(random.words(20));
     expect(fail.isFailure).toBe(true);
     expect(fail.error).toBe(ERROR_PRODUCT_DESCRIPTION_LENGTH);
+  });
+
+  it('Should change a description with success', () => {
+    const createdProduct = makeSut();
+    const change = createdProduct
+      .getResult()
+      .changeDescription('Valid description');
+    expect(change.isFailure).toBe(false);
+    expect(createdProduct.getResult().description).toBe('Valid description');
   });
 
   it('Should fail if provide a long description to create', () => {
@@ -218,6 +238,16 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.comments?.length).toBe(1);
   });
 
+  it('Should not effect on try remove a inexsting comment', () => {
+    const comment = Comment.create({
+      text: 'Produto bacana esse!',
+    }).getResult();
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.comments?.length).toBe(undefined);
+    createdProduct.removeComment(comment);
+    expect(createdProduct.comments?.length).toBe(undefined);
+  });
+
   it('Should add a tag with success', () => {
     const tag = Tag.create({
       description: 'Fresco',
@@ -245,5 +275,32 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.tags?.length).toBe(2);
     createdProduct.removeTag(tag2);
     expect(createdProduct.tags?.length).toBe(1);
+  });
+
+  it('Should not effect on try to remove a inexisting tag', () => {
+    const tag = Tag.create({
+      description: 'Orgânico',
+    }).getResult();
+
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.tags?.length).toBe(undefined);
+    createdProduct.removeTag(tag);
+    expect(createdProduct.tags?.length).toBe(undefined);
+  });
+
+  it('Should change price with success', () => {
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.price.value).toBe(10);
+    const validPrice = MonetaryValueObject.create(5).getResult();
+    createdProduct.changePrice(validPrice);
+    expect(createdProduct.price.value).toBe(5);
+  });
+
+  it('Should fail if provide a negative price to change it', () => {
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.price.value).toBe(10);
+    const validPrice = MonetaryValueObject.create(-5).getResult();
+    createdProduct.changePrice(validPrice);
+    expect(createdProduct.price.value).toBe(10);
   });
 });

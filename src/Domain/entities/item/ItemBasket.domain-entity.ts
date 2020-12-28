@@ -1,10 +1,11 @@
 import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Basket } from '../../aggregates-root';
 import { validateNumberGreatterThanZero } from '../../utils';
 import { MonetaryValueObject } from '../../value-objects';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
-export class ItemBasket extends Entity<ItemProps<any>> {
-  private constructor(props: ItemProps<any>, id?: UniqueEntityID) {
+export class ItemBasket extends Entity<ItemProps<Basket>> {
+  private constructor(props: ItemProps<Basket>, id?: UniqueEntityID) {
     super(props, id);
   }
 
@@ -12,7 +13,7 @@ export class ItemBasket extends Entity<ItemProps<any>> {
     return this._id;
   }
 
-  get item(): any {
+  get item(): Basket {
     return this.props.item;
   }
 
@@ -29,7 +30,7 @@ export class ItemBasket extends Entity<ItemProps<any>> {
   }
 
   public static create(
-    props: ItemProps<any>,
+    props: ItemProps<Basket>,
     id?: UniqueEntityID,
   ): Result<ItemBasket> {
     const isValidQuantity = validateNumberGreatterThanZero(props.quantity);

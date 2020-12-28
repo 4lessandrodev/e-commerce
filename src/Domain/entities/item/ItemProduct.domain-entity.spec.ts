@@ -6,6 +6,7 @@ import { ProductCategory } from '../product-category/ProductCategory.domain-enti
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemProduct } from './ItemProduct.domain-entity';
+import { ItemId } from './ItemId.domain-entity';
 
 describe('ItemProduct.domain-entity', () => {
   const makeSut = (
@@ -42,6 +43,7 @@ describe('ItemProduct.domain-entity', () => {
     expect(itemCreated.getResult().item).toBeInstanceOf(Product);
     expect(itemCreated.getResult().quantity).toBe(1);
     expect(itemCreated.getResult().total.value).toBe(10);
+    expect(itemCreated.getResult().orderId).toBeDefined();
   });
 
   it('Should fail if provide a negative number', () => {
@@ -56,7 +58,7 @@ describe('ItemProduct.domain-entity', () => {
 
   it('Should create a valid ItemProduct with provided id', () => {
     const props = makeSut().getResult().props;
-    const providedId = new UniqueEntityID();
+    const providedId = ItemId.create().id;
     const itemCreated = makeSut(
       {
         ...props,

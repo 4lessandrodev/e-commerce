@@ -71,11 +71,23 @@ describe('Comment.domain-entity', () => {
     const createdId = CommentId.create().id;
     const createdComment = makeSut(
       {
-        text: lorem.word(2),
+        text: lorem.words(2),
       },
       createdId,
     );
     expect(createdComment.isFailure).toBe(false);
     expect(createdComment.getResult().id.toString()).toBe(createdId.toString());
+  });
+
+  it('Should fail if provide a text greatter than 250 char', () => {
+    const createdId = CommentId.create().id;
+    const createdComment = makeSut(
+      {
+        text: lorem.words(250),
+      },
+      createdId,
+    );
+    expect(createdComment.isFailure).toBe(true);
+    expect(createdComment.error).toBe(ERROR_COMMENT_TEXT_LENGTH);
   });
 });

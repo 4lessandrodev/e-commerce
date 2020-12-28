@@ -41,6 +41,7 @@ describe('Basket.domain-aggregate-root', () => {
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
+        info: 'Information',
       },
       id,
     );
@@ -49,6 +50,10 @@ describe('Basket.domain-aggregate-root', () => {
   it('Should create a valid basket', () => {
     const createdBasket = makeSut();
     expect(createdBasket.isFailure).toBe(false);
+    expect(createdBasket.getResult().description).toBe('Basket 5 itens');
+    expect(createdBasket.getResult().category.description).toBe('Mini Basket');
+    expect(createdBasket.getResult().products.length).toBe(1);
+    expect(createdBasket.getResult().info).toBe('Information');
   });
 
   it('Should fail if provide a long description to basket', () => {
@@ -98,6 +103,20 @@ describe('Basket.domain-aggregate-root', () => {
     });
     expect(createdBasket.getResult().numberOfRatings).toBe(0);
     expect(createdBasket.getResult().ratingAverage).toBe(0);
+  });
+
+  it('Should fail if try create a basket providing a negative price', () => {
+    const props = makeSut().getResult().props;
+    const id = BasketId.create().id;
+    const createdBasket = makeSut(
+      {
+        ...props,
+        price: MonetaryValueObject.create(-20).getResult(),
+      },
+      id,
+    );
+    expect(createdBasket.isFailure).toBe(true);
+    expect(createdBasket.error).toBe(ERROR_BASKET_PRICE);
   });
 
   it('Should fail if provide a negative price on change it', () => {
@@ -226,5 +245,15 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.tags?.length).toBe(2);
     createdBasket.removeTag(tag2);
     expect(createdBasket.tags?.length).toBe(1);
+  });
+
+  it('Should not fail if try to remove a inexisting tag', () => {
+    const tag1 = Tag.create({
+      description: 'Orgânico',
+    }).getResult();
+    const createdBasket = makeSut().getResult();
+    expect(createdBasket.tags?.length).toBe(undefined);
+    createdBasket.removeTag(tag1);
+    expect(createdBasket.tags?.length).toBe(undefined);
   });
 });

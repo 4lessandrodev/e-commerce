@@ -7,6 +7,7 @@ import delay from 'delay';
 import { UniqueEntityID } from '../../../Shared';
 import { BasketCategoryId } from './BasketCategoryId.domain-entity';
 import { BasketCategoryProps } from './BasketCategory.domain-entity-interface';
+import { random } from 'faker';
 
 describe('BasketCategory', () => {
   const makeSut = (props?: BasketCategoryProps, id?: UniqueEntityID) => {
@@ -112,5 +113,31 @@ describe('BasketCategory', () => {
     expect(BasketCategoryResult.isDeleted).toBe(true);
     const dateUpdatedAtAfterDelete = BasketCategoryResult.updatedAt.getMilliseconds();
     expect(dateUpdatedAtAfterDelete).not.toEqual(dateUpdatedAtBeforeDelete);
+  });
+
+  it('Should convert to positive a negative value provided as changelimit ', async () => {
+    const category = makeSut({
+      changesLimit: -7,
+      description: 'Convert Negative',
+    });
+    expect(category.getResult().changesLimit).toBe(7);
+  });
+
+  it('Should fail if provide a change limit greatter than 20 ', async () => {
+    const category = makeSut({
+      changesLimit: 21,
+      description: 'Invalid Category',
+    });
+    expect(category.isFailure).toBe(true);
+    expect(category.error).toBe(ERROR_BASKET_CATEGORY_MAX_VALUE);
+  });
+
+  it('Should fail if provide description greatter than 20 ', async () => {
+    const category = makeSut({
+      changesLimit: 3,
+      description: random.words(20),
+    });
+    expect(category.isFailure).toBe(true);
+    expect(category.error).toBe(ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH);
   });
 });

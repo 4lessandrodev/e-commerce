@@ -105,4 +105,13 @@ describe('DeliveryStatus.domain-entity', () => {
     expect(validDeliveryStatus.getResult().isActive).toBe(false);
     expect(validDeliveryStatus.getResult().isDeleted).toBe(true);
   });
+
+  it('Should activate a status', () => {
+    const validDeliveryStatus = makeSut();
+    expect(validDeliveryStatus.getResult().isActive).toBe(true);
+    validDeliveryStatus.getResult().deactivate();
+    expect(validDeliveryStatus.getResult().isActive).toBe(false);
+    validDeliveryStatus.getResult().activate();
+    expect(validDeliveryStatus.getResult().isActive).toBe(true);
+  });
 });

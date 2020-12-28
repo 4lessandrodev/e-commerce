@@ -1,17 +1,52 @@
 import { Result, UniqueEntityID } from '../../../Shared';
-import { MonetaryValueObject } from '../../value-objects';
+import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemBasket } from './ItemBasket.domain-entity';
+import { Basket, Product } from '../../aggregates-root';
+import { BasketCategory } from '../basket-category/BasketCategory.domain-entity';
+import { image, random } from 'faker';
+import { ProductCategory } from '../product-category/ProductCategory.domain-entity';
+import { ItemId } from './ItemId.domain-entity';
 
-describe('ItemProduct.domain-entity', () => {
+describe('ItemBasket.domain-entity', () => {
   const makeSut = (
-    props?: ItemProps<any>,
+    props?: ItemProps<Basket>,
     id?: UniqueEntityID,
   ): Result<ItemBasket> => {
     return ItemBasket.create(
       {
-        item: props?.item ?? 'teste',
+        item:
+          props?.item ??
+          Basket.create({
+            category: BasketCategory.create({
+              changesLimit: 3,
+              description: random.words(2),
+            }).getResult(),
+            description: random.words(2),
+            images: [
+              ImageValueObject.create(image.imageUrl().toString()).getResult(),
+            ],
+            isActive: true,
+            price: MonetaryValueObject.create(5).getResult(),
+            products: [
+              Product.create({
+                category: ProductCategory.create({
+                  description: random.words(1),
+                }).getResult(),
+                description: random.word(),
+                images: [
+                  ImageValueObject.create(
+                    image.imageUrl().toString(),
+                  ).getResult(),
+                ],
+                isActive: true,
+                isSpecial: false,
+                price: MonetaryValueObject.create(25).getResult(),
+                quantityAvaliable: 7,
+              }).getResult(),
+            ],
+          }).getResult(),
         orderId: props?.orderId ?? new UniqueEntityID(),
         quantity: props?.quantity ?? 1,
         total: props?.total ?? MonetaryValueObject.create(10).getResult(),
@@ -20,33 +55,31 @@ describe('ItemProduct.domain-entity', () => {
     );
   };
 
-  it('Should create a valid ItemProduct', () => {
+  it('Should create a valid ItemBasket', () => {
     const itemCreated = makeSut();
     expect(itemCreated.isFailure).toBe(false);
-    expect(itemCreated.getResult().item).toBe('teste');
+    expect(itemCreated.getResult().item).toBeDefined();
     expect(itemCreated.getResult().quantity).toBe(1);
     expect(itemCreated.getResult().total.value).toBe(10);
+    expect(itemCreated.getResult().orderId).toBeDefined();
   });
 
   it('Should fail if provide a negative number', () => {
+    const props = makeSut().getResult().props;
     const itemCreated = makeSut({
-      item: 'teste',
-      orderId: new UniqueEntityID(),
+      ...props,
       quantity: -1,
-      total: MonetaryValueObject.create(0).getResult(),
     });
     expect(itemCreated.isFailure).toBe(true);
-    expect(itemCreated.error).toBe(ERROR_ITEM_INVALID_QUANTITY);
+    expect(itemCreated.errorValue()).toBe(ERROR_ITEM_INVALID_QUANTITY);
   });
 
-  it('Should create a valid ItemProduct with provided id', () => {
-    const providedId = new UniqueEntityID();
+  it('Should create a valid ItemBasket with provided id', () => {
+    const props = makeSut().getResult().props;
+    const providedId = ItemId.create().id;
     const itemCreated = makeSut(
       {
-        item: 'teste',
-        orderId: new UniqueEntityID(),
-        quantity: 1,
-        total: MonetaryValueObject.create(0).getResult(),
+        ...props,
       },
       providedId,
     );
