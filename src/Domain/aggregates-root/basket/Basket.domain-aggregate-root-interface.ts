@@ -6,12 +6,12 @@ import { Product } from '../product/Product.domain-aggregate-root';
 export interface BasketProps extends BaseDomainEntity {
   description: string;
   category: BasketCategory;
-  products: Product[];
   price: MonetaryValueObject;
   isActive: boolean;
   images: ImageValueObject[];
   numberOfRatings?: number;
   ratingAverage?: number;
+  products?: Product[];
   comments?: Comment[];
   info?: string;
   tags?: Tag[];

@@ -52,7 +52,7 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.isFailure).toBe(false);
     expect(createdBasket.getResult().description).toBe('Basket 5 itens');
     expect(createdBasket.getResult().category.description).toBe('Mini Basket');
-    expect(createdBasket.getResult().products.length).toBe(1);
+    expect(createdBasket.getResult().products?.length).toBe(1);
     expect(createdBasket.getResult().info).toBe('Information');
   });
 
@@ -255,5 +255,43 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.tags?.length).toBe(undefined);
     createdBasket.removeTag(tag1);
     expect(createdBasket.tags?.length).toBe(undefined);
+  });
+
+  it('Should add product on a basket', () => {
+    const createdBasket = makeSut().getResult();
+    const product = Product.create({
+      description: 'Valid Product',
+      category: ProductCategory.create({
+        description: 'Valid Category',
+      }).getResult(),
+      images: [ImageValueObject.create(image.imageUrl()).getResult()],
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(15).getResult(),
+      quantityAvaliable: 15,
+    }).getResult();
+    expect(createdBasket.products?.length).toBe(1);
+    createdBasket.addProduct(product);
+    expect(createdBasket.products?.length).toBe(2);
+  });
+
+  it('Should remove product from a basket', () => {
+    const createdBasket = makeSut().getResult();
+    const product = Product.create({
+      description: 'Valid Product',
+      category: ProductCategory.create({
+        description: 'Valid Category',
+      }).getResult(),
+      images: [ImageValueObject.create(image.imageUrl()).getResult()],
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(15).getResult(),
+      quantityAvaliable: 15,
+    }).getResult();
+    expect(createdBasket.products?.length).toBe(1);
+    createdBasket.addProduct(product);
+    expect(createdBasket.products?.length).toBe(2);
+    createdBasket.removeProduct(product);
+    expect(createdBasket.products?.length).toBe(1);
   });
 });

@@ -30,8 +30,8 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.category;
   }
 
-  get products(): Product[] {
-    return this.props.products;
+  get products(): Product[] | null {
+    return this.props.products ?? null;
   }
 
   get price(): MonetaryValueObject {
@@ -143,6 +143,24 @@ export class Basket extends AggregateRoot<BasketProps> {
     }
     this.props.tags = existTags.filter(
       (tg) => tg.id.toString() !== tag.id.toString(),
+    );
+  }
+
+  addProduct(product: Product): void {
+    const existProducts = this.props.products ?? null;
+    this.props.products = [product];
+    if (existProducts) {
+      this.props.products = this.props.products.concat(existProducts);
+    }
+  }
+
+  removeProduct(product: Product): void {
+    const existProducts = this.props.products ?? null;
+    if (!existProducts) {
+      return;
+    }
+    this.props.products = existProducts.filter(
+      (prd) => prd.id.toString() !== product.id.toString(),
     );
   }
 
