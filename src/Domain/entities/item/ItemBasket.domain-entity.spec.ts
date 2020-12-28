@@ -68,10 +68,10 @@ describe('ItemBasket.domain-entity', () => {
     const props = makeSut().getResult().props;
     const itemCreated = makeSut({
       ...props,
-      quantity: -1,
+      quantity: -10,
     });
     expect(itemCreated.isFailure).toBe(true);
-    expect(itemCreated.errorValue()).toBe(ERROR_ITEM_INVALID_QUANTITY);
+    expect(itemCreated.error).toBe(ERROR_ITEM_INVALID_QUANTITY);
   });
 
   it('Should create a valid ItemBasket with provided id', () => {

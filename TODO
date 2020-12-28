@@ -22,7 +22,7 @@ Todo:
   ✔ Create Item - Entity @started(20-12-25 21:40) @done(20-12-25 22:40) @lasted(1h0m0s)
   ✔ Create Product - Aggregate-Root @started(20-12-25 23:05) @done(20-12-26 01:57) @lasted(2h52m23s)
   ✔ Create Basket - Aggregate-Root @started(20-12-26 20:21) @done(20-12-27 00:55) @lasted(4h34m14s)
-  ☐ Create User - Aggregate-Root
+  ✔ Create User - Aggregate-Root @started(20-12-27 21:51) @done(20-12-27 23:18) @lasted(1h27m38s)
   ☐ Create Client - Entity
   ☐ Create Plan - Entity
   ☐ Create Rating - Aggregate-Root
