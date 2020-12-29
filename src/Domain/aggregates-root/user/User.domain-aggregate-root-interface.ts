@@ -4,9 +4,7 @@ import { EmailValueObject, PasswordValueObject } from '../../value-objects';
 export interface UserProps extends BaseDomainEntity {
   email: EmailValueObject;
   password: PasswordValueObject;
-  isDeveloper: boolean;
-  isAdmin: boolean;
-  isDeliveryman: boolean;
+  permission: 'DEVELOPER' | 'ADMIN' | 'CLIENT' | 'DELIVERYMAN';
   isActive: boolean;
   isTheEmailConfirmed: boolean;
 }

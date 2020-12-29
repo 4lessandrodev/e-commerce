@@ -1,7 +1,6 @@
 import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
 import { EmailValueObject, PasswordValueObject } from '../../value-objects';
 import { UserProps } from './User.domain-aggregate-root-interface';
-import { ERROR_USER_HAS_MORE_THAN_ONE_PERMISSION } from './UserErrors.domain-aggregate-root';
 
 export class User extends AggregateRoot<UserProps> {
   private constructor(props: UserProps, id?: UniqueEntityID) {
@@ -20,16 +19,20 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.password;
   }
 
+  get isClient(): boolean {
+    return this.props.permission === 'CLIENT';
+  }
+
   get isDeveloper(): boolean {
-    return this.props.isDeveloper;
+    return this.props.permission === 'DEVELOPER';
   }
 
   get isAdmin(): boolean {
-    return this.props.isAdmin;
+    return this.props.permission === 'ADMIN';
   }
 
   get isDeliveryman(): boolean {
-    return this.props.isDeliveryman;
+    return this.props.permission === 'DELIVERYMAN';
   }
 
   get isActive(): boolean {
@@ -55,36 +58,27 @@ export class User extends AggregateRoot<UserProps> {
     this.props.updatedAt = new Date();
   }
 
+  makeClient(): void {
+    this.props.permission = 'CLIENT';
+    this.props.updatedAt = new Date();
+  }
+
   makeAdmin(): void {
-    this.props.isAdmin = true;
-    this.props.isDeliveryman = false;
-    this.props.isDeveloper = false;
+    this.props.permission = 'ADMIN';
     this.props.updatedAt = new Date();
   }
 
   makeDeveloper(): void {
-    this.props.isAdmin = false;
-    this.props.isDeliveryman = false;
-    this.props.isDeveloper = true;
+    this.props.permission = 'DEVELOPER';
     this.props.updatedAt = new Date();
   }
 
   makeDeliveryman(): void {
-    this.props.isAdmin = false;
-    this.props.isDeliveryman = true;
-    this.props.isDeveloper = false;
+    this.props.permission = 'DELIVERYMAN';
     this.props.updatedAt = new Date();
   }
 
   public static create(props: UserProps, id?: UniqueEntityID): Result<User> {
-    const hasUserMoreThanOnePermission =
-      (props.isAdmin && props.isDeliveryman) ||
-      (props.isAdmin && props.isDeveloper) ||
-      (props.isDeliveryman && props.isDeveloper);
-
-    if (hasUserMoreThanOnePermission) {
-      return Result.fail<User>(ERROR_USER_HAS_MORE_THAN_ONE_PERMISSION);
-    }
     return Result.ok<User>(new User(props, id));
   }
 }

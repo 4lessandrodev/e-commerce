@@ -3,7 +3,6 @@ import { Result, UniqueEntityID } from '../../../Shared';
 import { EmailValueObject, PasswordValueObject } from '../../value-objects';
 import { User } from './User.domain-aggregate-root';
 import { UserProps } from './User.domain-aggregate-root-interface';
-import { ERROR_USER_HAS_MORE_THAN_ONE_PERMISSION } from './UserErrors.domain-aggregate-root';
 import { UserId } from './UserId.domain-aggregate-root';
 
 describe('User.domain-aggregate-root', () => {
@@ -13,10 +12,8 @@ describe('User.domain-aggregate-root', () => {
         email:
           props?.email ?? EmailValueObject.create(internet.email()).getResult(),
         isActive: props?.isActive ?? true,
-        isAdmin: props?.isAdmin ?? false,
+        permission: props?.permission ?? 'CLIENT',
         isTheEmailConfirmed: props?.isTheEmailConfirmed ?? false,
-        isDeliveryman: props?.isDeliveryman ?? false,
-        isDeveloper: props?.isDeveloper ?? false,
         password:
           props?.password ??
           PasswordValueObject.create('valid password').getResult(),
@@ -95,16 +92,5 @@ describe('User.domain-aggregate-root', () => {
     expect(createdUser.getResult().isAdmin).toBe(false);
     expect(createdUser.getResult().isDeliveryman).toBe(true);
     expect(createdUser.getResult().isDeveloper).toBe(false);
-  });
-
-  it('Should fail if provide more than one permission', () => {
-    const props = makeSut().getResult().props;
-    const createdUser = makeSut({
-      ...props,
-      isAdmin: true,
-      isDeliveryman: true,
-    });
-    expect(createdUser.isFailure).toBe(true);
-    expect(createdUser.error).toBe(ERROR_USER_HAS_MORE_THAN_ONE_PERMISSION);
   });
 });
