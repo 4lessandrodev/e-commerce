@@ -1,4 +1,4 @@
-import { ERROR_INVALID_URL } from './Image-errors.domain';
+import { ERROR_INVALID_URL } from './ImageErrors.domain';
 import { ImageValueObject } from './Image.value-object';
 
 describe('Image.value-object', () => {

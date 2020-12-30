@@ -1,10 +1,9 @@
 import { Result, ValueObject } from '../../../Shared';
 import {
   convertPositiveNumberToNegative,
-  convertNegativeNumberToPositive,
   formatNumberToCurrency,
-  transformMonetaryValueInTwoDecimalsValue,
 } from '../../utils';
+import { Currency } from './Currency.value-object';
 
 export enum MonetaryType {
   POSITIVE = 'POSITIVE',
@@ -12,15 +11,17 @@ export enum MonetaryType {
 }
 
 interface MonetaryProps {
-  value: number;
-  type: MonetaryType;
+  currency: Currency;
 }
 
 /**
  * @extends ValueObject
  */
 export class MonetaryValueObject extends ValueObject<MonetaryProps> {
-  private constructor(props: MonetaryProps) {
+  private constructor(
+    props: MonetaryProps,
+    private type: keyof typeof MonetaryType,
+  ) {
     super(props);
   }
 
@@ -28,15 +29,15 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * Returns always positive value
    */
   get value(): number {
-    return this.props.value;
+    return this.props.currency.value;
   }
 
   /**
    * Returns type from an instance of MonetaryValueObject
-   * `"POSITIVE"` or `"NEGATIVE"` as string
+   * `true` if "POSITIVE" or `false` "NEGATIVE"
    */
-  get type(): string {
-    return this.props.type;
+  isPositive(): boolean {
+    return this.type === 'POSITIVE';
   }
 
   /**
@@ -44,7 +45,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * `"R$ 20,00"`
    */
   getCurrencyStringValue(): string {
-    return formatNumberToCurrency(this.props.value);
+    return formatNumberToCurrency(this.props.currency);
   }
 
   /**
@@ -53,17 +54,23 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    */
   getRealCurrencyStringValuePositiveOrNegative(): string {
     const value = this.getRealValuePositiveOrNegative();
-    return formatNumberToCurrency(value);
+    const props = this.props.currency.props;
+    return formatNumberToCurrency(
+      Currency.create({
+        ...props,
+        value,
+      }).getResult(),
+    );
   }
 
   /**
    * Returns a real number value, if negative `-20.00` or positive `20.00`
    */
   getRealValuePositiveOrNegative(): number {
-    if (this.props.type === MonetaryType.NEGATIVE) {
-      return convertPositiveNumberToNegative(this.props.value);
+    if (this.type === 'NEGATIVE') {
+      return convertPositiveNumberToNegative(this.props.currency.value);
     }
-    return this.props.value;
+    return this.props.currency.value;
   }
 
   /**
@@ -71,13 +78,11 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * @param value type number.
    * If provided an invalid email will returns `Result.fail`
    */
-  public static create(value: number): Result<MonetaryValueObject> {
-    let type = MonetaryType.POSITIVE;
-    if (value < 0) {
-      type = MonetaryType.NEGATIVE;
-      value = convertNegativeNumberToPositive(value);
+  public static create(currency: Currency): Result<MonetaryValueObject> {
+    if (currency.value >= 0) {
+      return Result.ok(new MonetaryValueObject({ currency }, 'POSITIVE'));
     }
-    value = transformMonetaryValueInTwoDecimalsValue(value);
-    return Result.ok(new MonetaryValueObject({ type, value }));
+    currency.positifyValue();
+    return Result.ok(new MonetaryValueObject({ currency }, 'NEGATIVE'));
   }
 }

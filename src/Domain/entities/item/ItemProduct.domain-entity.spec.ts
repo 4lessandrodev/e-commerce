@@ -7,12 +7,20 @@ import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemProduct } from './ItemProduct.domain-entity';
 import { ItemId } from './ItemId.domain-entity';
+import { Currency } from '../../value-objects/monetary/Currency.value-object';
 
 describe('ItemProduct.domain-entity', () => {
   const makeSut = (
     props?: ItemProps<Product>,
     id?: UniqueEntityID,
   ): Result<ItemProduct> => {
+    const price = MonetaryValueObject.create(
+      Currency.create({
+        locale: 'BR',
+        simbol: 'BRL',
+        value: 9.9,
+      }).getResult(),
+    ).getResult();
     return ItemProduct.create(
       {
         item:
@@ -26,12 +34,20 @@ describe('ItemProduct.domain-entity', () => {
             info: random.words(7),
             isActive: true,
             isSpecial: false,
-            price: MonetaryValueObject.create(9.9).getResult(),
+            price,
             quantityAvaliable: 3,
           }).getResult(),
         orderId: props?.orderId ?? new UniqueEntityID(),
         quantity: props?.quantity ?? 1,
-        total: props?.total ?? MonetaryValueObject.create(10).getResult(),
+        total:
+          props?.total ??
+          MonetaryValueObject.create(
+            Currency.create({
+              locale: 'BR',
+              simbol: 'BRL',
+              value: 88,
+            }).getResult(),
+          ).getResult(),
       },
       id,
     );
@@ -42,7 +58,7 @@ describe('ItemProduct.domain-entity', () => {
     expect(itemCreated.isFailure).toBe(false);
     expect(itemCreated.getResult().item).toBeInstanceOf(Product);
     expect(itemCreated.getResult().quantity).toBe(1);
-    expect(itemCreated.getResult().total.value).toBe(10);
+    expect(itemCreated.getResult().total.value).toBe(88);
     expect(itemCreated.getResult().orderId).toBeDefined();
   });
 

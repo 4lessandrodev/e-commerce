@@ -1,13 +1,13 @@
 import { Result, ValueObject } from '../../../Shared';
-import { enumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
+import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import {
   ERROR_INITIAL_STATE_INVALID,
   ERROR_INITIAL_STATE_INVALID_LENGTH,
-} from './StateInitials-errors.domain';
+} from './StateInitialsErrors.domain';
 
 export interface InitialStateProps {
-  value: InitialStates;
+  value: keyof typeof InitialStates;
 }
 
 export enum InitialStates {
@@ -45,11 +45,17 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
     super(props);
   }
 
-  get value(): InitialStates {
-    return this.props.value;
+  get value(): keyof typeof InitialStates {
+    return InitialStates[this.props.value];
   }
 
-  public static create(initial: string): Result<InitialStateValueObject> {
+  private static isValidInitial = (initial: InitialStates) => {
+    return initial in InitialStates;
+  };
+
+  public static create(
+    initial: keyof typeof InitialStates,
+  ): Result<InitialStateValueObject> {
     const isValidString = validateStringLengthBetweenMaxAndMin({
       text: initial,
       maxLength: 2,
@@ -62,24 +68,22 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
       );
     }
 
-    const isValid = enumIncludesValue({ enum: InitialStates, value: initial });
+    const isValid = validateEnumIncludesValue({
+      enum: InitialStates,
+      value: initial,
+    });
 
     if (!isValid) {
       return Result.fail<InitialStateValueObject>(ERROR_INITIAL_STATE_INVALID);
     }
 
-    const arrayValues = Object.values(InitialStates);
-    const foundKey = arrayValues.find(
-      (entity) => entity === initial.toUpperCase(),
-    );
-
-    if (!foundKey) {
+    if (!this.isValidInitial(InitialStates[initial])) {
       return Result.fail<InitialStateValueObject>(ERROR_INITIAL_STATE_INVALID);
     }
 
     return Result.ok<InitialStateValueObject>(
       new InitialStateValueObject({
-        value: InitialStates[foundKey],
+        value: InitialStates[initial],
       }),
     );
   }

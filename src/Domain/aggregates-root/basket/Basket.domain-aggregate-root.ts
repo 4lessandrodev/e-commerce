@@ -1,10 +1,6 @@
 import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
 import { BasketCategory, Tag } from '../../entities';
-import {
-  ImageValueObject,
-  MonetaryType,
-  MonetaryValueObject,
-} from '../../value-objects';
+import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { Product } from '../';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
@@ -79,11 +75,10 @@ export class Basket extends AggregateRoot<BasketProps> {
   }
 
   changePrice(price: MonetaryValueObject): Result<void> {
-    const isValidPrice = price.type === MonetaryType.POSITIVE;
-    if (!isValidPrice) {
+    if (!price.isPositive()) {
       return Result.fail<void>(ERROR_BASKET_PRICE);
     }
-    this.props.price = price;
+    this.props.price.props.currency.changePrice(price.value);
     this.props.updatedAt = new Date();
     return Result.ok<void>();
   }
@@ -176,8 +171,8 @@ export class Basket extends AggregateRoot<BasketProps> {
     if (!isValidDescription) {
       return Result.fail<Basket>(ERROR_BASKET_DESCRIPTION_LENGTH);
     }
-    const isValidPrice = props.price.type === MonetaryType.POSITIVE;
-    if (!isValidPrice) {
+
+    if (!props.price.isPositive()) {
       return Result.fail<Basket>(ERROR_BASKET_PRICE);
     }
     return Result.ok<Basket>(new Basket(props, id));

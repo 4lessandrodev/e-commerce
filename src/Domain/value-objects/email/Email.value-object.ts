@@ -1,6 +1,6 @@
 import { isValidEmail, transformStringToLowerCase } from '../../utils';
 import { Result, ValueObject } from '../../../Shared';
-import { ERROR_INVALID_EMAIL_FORMAT } from './Email-errors.domain';
+import { ERROR_INVALID_EMAIL_FORMAT } from './EmailErrors.domain';
 export interface EmailValueObjectProps {
   value: string;
 }

@@ -2,6 +2,7 @@ import { image, random } from 'faker';
 import { Result, UniqueEntityID } from '../../../Shared';
 import { Comment, ProductCategory, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
+import { Currency } from '../../value-objects/monetary/Currency.value-object';
 import { Product } from './Product.domain-aggregate-root';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
 import {
@@ -27,7 +28,15 @@ describe('Product.domain-aggregate-root', () => {
           'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
         isActive: props?.isActive ?? true,
         isSpecial: props?.isSpecial ?? false,
-        price: props?.price ?? MonetaryValueObject.create(10).getResult(),
+        price:
+          props?.price ??
+          MonetaryValueObject.create(
+            Currency.create({
+              locale: 'BR',
+              simbol: 'BRL',
+              value: 10,
+            }).getResult(),
+          ).getResult(),
         quantityAvaliable: props?.quantityAvaliable ?? 10,
         images: props?.images ?? [
           ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
@@ -92,14 +101,20 @@ describe('Product.domain-aggregate-root', () => {
   });
 
   it('Should fail if provide a negative number as price', () => {
-    const invalidPrice = MonetaryValueObject.create(-3).getResult();
-    const createdProduct = makeSut().getResult();
-    const createdProductCustom = makeSut({
-      ...createdProduct.props,
-      price: invalidPrice,
+    const props = makeSut().getResult().props;
+    const product = makeSut({
+      ...props,
+      price: MonetaryValueObject.create(
+        Currency.create({
+          locale: 'BR',
+          simbol: 'BRL',
+          value: -55,
+        }).getResult(),
+      ).getResult(),
     });
-    expect(createdProductCustom.isFailure).toBe(true);
-    expect(createdProductCustom.error).toBe(ERROR_PRODUCT_PRICE);
+
+    expect(product.error).toBe(ERROR_PRODUCT_PRICE);
+    expect(product.isFailure).toBe(true);
   });
 
   it('Should add an image to product with success', () => {
@@ -291,7 +306,13 @@ describe('Product.domain-aggregate-root', () => {
   it('Should change price with success', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.price.value).toBe(10);
-    const validPrice = MonetaryValueObject.create(5).getResult();
+    const validPrice = MonetaryValueObject.create(
+      Currency.create({
+        locale: 'BR',
+        simbol: 'BRL',
+        value: 5,
+      }).getResult(),
+    ).getResult();
     createdProduct.changePrice(validPrice);
     expect(createdProduct.price.value).toBe(5);
   });
@@ -299,7 +320,13 @@ describe('Product.domain-aggregate-root', () => {
   it('Should fail if provide a negative price to change it', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.price.value).toBe(10);
-    const validPrice = MonetaryValueObject.create(-5).getResult();
+    const validPrice = MonetaryValueObject.create(
+      Currency.create({
+        locale: 'BR',
+        simbol: 'BRL',
+        value: -5,
+      }).getResult(),
+    ).getResult();
     createdProduct.changePrice(validPrice);
     expect(createdProduct.price.value).toBe(10);
   });

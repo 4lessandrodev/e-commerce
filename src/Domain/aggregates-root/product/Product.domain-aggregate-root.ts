@@ -6,11 +6,7 @@ import {
   validateStringLengthBetweenMaxAndMin,
 } from '../../utils';
 
-import {
-  ImageValueObject,
-  MonetaryType,
-  MonetaryValueObject,
-} from '../../value-objects';
+import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
 import {
   ERROR_PRODUCT_AVALIABLE_QUANTITY,
@@ -91,8 +87,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   changePrice(price: MonetaryValueObject): Result<void> {
-    const isValidPrice = price.type === MonetaryType.POSITIVE;
-    if (!isValidPrice) {
+    if (!price.isPositive()) {
       return Result.fail<void>(ERROR_PRODUCT_PRICE);
     }
     this.props.price = price;
@@ -214,8 +209,8 @@ export class Product extends AggregateRoot<ProductProps> {
     if (!isValidQuantity) {
       return Result.fail<Product>(ERROR_PRODUCT_AVALIABLE_QUANTITY);
     }
-    const isValidPrice = props.price.type === MonetaryType.POSITIVE;
-    if (!isValidPrice) {
+
+    if (!props.price.isPositive()) {
       return Result.fail<Product>(ERROR_PRODUCT_PRICE);
     }
     return Result.ok<Product>(new Product(props, id));

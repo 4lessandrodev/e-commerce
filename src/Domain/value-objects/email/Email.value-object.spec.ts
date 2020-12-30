@@ -1,4 +1,4 @@
-import { ERROR_INVALID_EMAIL_FORMAT } from './Email-errors.domain';
+import { ERROR_INVALID_EMAIL_FORMAT } from './EmailErrors.domain';
 import { EmailValueObject } from './Email.value-object';
 
 describe('Email.value-object', () => {

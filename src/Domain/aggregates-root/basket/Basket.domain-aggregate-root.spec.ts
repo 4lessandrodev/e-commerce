@@ -3,6 +3,7 @@ import { Basket } from '..';
 import { Result, UniqueEntityID } from '../../../Shared';
 import { BasketCategory, Comment, ProductCategory, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
+import { Currency } from '../../value-objects/monetary/Currency.value-object';
 import { Product } from '../product/Product.domain-aggregate-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import {
@@ -12,6 +13,13 @@ import {
 import { BasketId } from './BasketId.domain-aggregate-root';
 
 describe('Basket.domain-aggregate-root', () => {
+  const makePrice = (value: number): Currency => {
+    return Currency.create({
+      locale: 'BR',
+      simbol: 'BRL',
+      value,
+    }).getResult();
+  };
   const makeSut = (
     props?: BasketProps,
     id?: UniqueEntityID,
@@ -26,7 +34,8 @@ describe('Basket.domain-aggregate-root', () => {
             description: 'Mini Basket',
           }).getResult(),
         isActive: props?.isActive ?? true,
-        price: props?.price ?? MonetaryValueObject.create(20).getResult(),
+        price:
+          props?.price ?? MonetaryValueObject.create(makePrice(1)).getResult(),
         products: props?.products ?? [
           Product.create({
             description: 'Abacaxi',
@@ -36,7 +45,13 @@ describe('Basket.domain-aggregate-root', () => {
             images: [ImageValueObject.create(image.imageUrl()).getResult()],
             isActive: true,
             isSpecial: false,
-            price: MonetaryValueObject.create(1).getResult(),
+            price: MonetaryValueObject.create(
+              Currency.create({
+                locale: 'BR',
+                simbol: 'BRL',
+                value: 15,
+              }).getResult(),
+            ).getResult(),
             quantityAvaliable: 20,
           }).getResult(),
         ],
@@ -111,7 +126,7 @@ describe('Basket.domain-aggregate-root', () => {
     const createdBasket = makeSut(
       {
         ...props,
-        price: MonetaryValueObject.create(-20).getResult(),
+        price: MonetaryValueObject.create(makePrice(-20)).getResult(),
       },
       id,
     );
@@ -121,11 +136,13 @@ describe('Basket.domain-aggregate-root', () => {
 
   it('Should fail if provide a negative price on change it', () => {
     const createdBasket = makeSut();
+
     expect(createdBasket.isFailure).toBe(false);
-    expect(createdBasket.getResult().price.value).toBe(20);
+    expect(createdBasket.getResult().price.value).toBe(1);
     const fail = createdBasket
       .getResult()
-      .changePrice(MonetaryValueObject.create(-1).getResult());
+      .changePrice(MonetaryValueObject.create(makePrice(-11)).getResult());
+
     expect(fail.isFailure).toBe(true);
     expect(fail.error).toBe(ERROR_BASKET_PRICE);
   });
@@ -133,10 +150,14 @@ describe('Basket.domain-aggregate-root', () => {
   it('Should change price with success', () => {
     const createdBasket = makeSut();
     expect(createdBasket.isFailure).toBe(false);
-    expect(createdBasket.getResult().price.value).toBe(20);
+
+    expect(createdBasket.getResult().price.value).toBe(1);
+
     const fail = createdBasket
       .getResult()
-      .changePrice(MonetaryValueObject.create(11).getResult());
+      .changePrice(MonetaryValueObject.create(makePrice(11)).getResult());
+    console.log(fail);
+
     expect(fail.isFailure).toBe(false);
     expect(createdBasket.getResult().price.value).toBe(11);
   });
@@ -267,7 +288,7 @@ describe('Basket.domain-aggregate-root', () => {
       images: [ImageValueObject.create(image.imageUrl()).getResult()],
       isActive: true,
       isSpecial: false,
-      price: MonetaryValueObject.create(15).getResult(),
+      price: MonetaryValueObject.create(makePrice(15)).getResult(),
       quantityAvaliable: 15,
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
@@ -285,7 +306,7 @@ describe('Basket.domain-aggregate-root', () => {
       images: [ImageValueObject.create(image.imageUrl()).getResult()],
       isActive: true,
       isSpecial: false,
-      price: MonetaryValueObject.create(15).getResult(),
+      price: MonetaryValueObject.create(makePrice(15)).getResult(),
       quantityAvaliable: 15,
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);

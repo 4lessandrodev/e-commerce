@@ -8,6 +8,7 @@ import { BasketCategory } from '../basket-category/BasketCategory.domain-entity'
 import { image } from 'faker';
 import { ProductCategory } from '../product-category/ProductCategory.domain-entity';
 import { ItemId } from './ItemId.domain-entity';
+import { Currency } from '../../value-objects/monetary/Currency.value-object';
 
 describe('ItemBasket.domain-entity', () => {
   const makeSut = (
@@ -28,7 +29,13 @@ describe('ItemBasket.domain-entity', () => {
               ImageValueObject.create(image.imageUrl().toString()).getResult(),
             ],
             isActive: true,
-            price: MonetaryValueObject.create(5).getResult(),
+            price: MonetaryValueObject.create(
+              Currency.create({
+                locale: 'BR',
+                simbol: 'BRL',
+                value: 99,
+              }).getResult(),
+            ).getResult(),
             products: [
               Product.create({
                 category: ProductCategory.create({
@@ -42,14 +49,28 @@ describe('ItemBasket.domain-entity', () => {
                 ],
                 isActive: true,
                 isSpecial: false,
-                price: MonetaryValueObject.create(25).getResult(),
+                price: MonetaryValueObject.create(
+                  Currency.create({
+                    locale: 'BR',
+                    simbol: 'BRL',
+                    value: 99,
+                  }).getResult(),
+                ).getResult(),
                 quantityAvaliable: 7,
               }).getResult(),
             ],
           }).getResult(),
         orderId: props?.orderId ?? new UniqueEntityID(),
         quantity: props?.quantity ?? 1,
-        total: props?.total ?? MonetaryValueObject.create(10).getResult(),
+        total:
+          props?.total ??
+          MonetaryValueObject.create(
+            Currency.create({
+              locale: 'BR',
+              simbol: 'BRL',
+              value: 99,
+            }).getResult(),
+          ).getResult(),
       },
       id,
     );
@@ -60,7 +81,7 @@ describe('ItemBasket.domain-entity', () => {
     expect(itemCreated.isFailure).toBe(false);
     expect(itemCreated.getResult().item).toBeDefined();
     expect(itemCreated.getResult().quantity).toBe(1);
-    expect(itemCreated.getResult().total.value).toBe(10);
+    expect(itemCreated.getResult().total.value).toBe(99);
     expect(itemCreated.getResult().orderId).toBeDefined();
   });
 
