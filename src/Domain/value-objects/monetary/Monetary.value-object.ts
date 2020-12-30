@@ -1,6 +1,6 @@
 import { Result, ValueObject } from '../../../Shared';
 import {
-  convertPositiveNumberToNegative,
+  convertNegativeNumberToPositive,
   formatNumberToCurrency,
 } from '../../utils';
 import { Currency } from './Currency.value-object';
@@ -26,7 +26,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
   }
 
   /**
-   * Returns always positive value
+   * Returns a real number value, if negative `-20.00` or positive `20.00`
    */
   get value(): number {
     return this.props.currency.value;
@@ -53,24 +53,17 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * `"R$ 20,00"` or `"-R$ 20,00"`
    */
   getRealCurrencyStringValuePositiveOrNegative(): string {
-    const value = this.getRealValuePositiveOrNegative();
-    const props = this.props.currency.props;
-    return formatNumberToCurrency(
-      Currency.create({
-        ...props,
-        value,
-      }).getResult(),
-    );
+    return formatNumberToCurrency(this.props.currency);
   }
 
   /**
-   * Returns a real number value, if negative `-20.00` or positive `20.00`
+   * Returns a always positive number even if value is negative
    */
-  getRealValuePositiveOrNegative(): number {
+  getAlwaysPositiveValue(): number {
     if (this.type === 'NEGATIVE') {
-      return convertPositiveNumberToNegative(this.props.currency.value);
+      return convertNegativeNumberToPositive(this.value);
     }
-    return this.props.currency.value;
+    return this.value;
   }
 
   /**
@@ -82,7 +75,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
     if (currency.value >= 0) {
       return Result.ok(new MonetaryValueObject({ currency }, 'POSITIVE'));
     }
-    currency.positifyValue();
+
     return Result.ok(new MonetaryValueObject({ currency }, 'NEGATIVE'));
   }
 }

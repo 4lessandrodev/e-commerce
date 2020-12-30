@@ -6,11 +6,7 @@ import {
   ERROR_INITIAL_STATE_INVALID_LENGTH,
 } from './StateInitialsErrors.domain';
 
-export interface InitialStateProps {
-  value: keyof typeof InitialStates;
-}
-
-export enum InitialStates {
+export enum AvaliableInitials {
   AC = 'AC',
   AL = 'AL',
   AP = 'AP',
@@ -24,7 +20,7 @@ export enum InitialStates {
   MS = 'MS',
   MG = 'MG',
   PA = 'PA',
-  PB = 'PB',
+  OB = 'PB',
   PR = 'PR',
   PE = 'PE',
   PI = 'PI',
@@ -40,21 +36,25 @@ export enum InitialStates {
   DF = 'DF',
 }
 
+export interface InitialStateProps {
+  value: keyof typeof AvaliableInitials;
+}
+
 export class InitialStateValueObject extends ValueObject<InitialStateProps> {
   private constructor(props: InitialStateProps) {
     super(props);
   }
 
-  get value(): keyof typeof InitialStates {
-    return InitialStates[this.props.value];
+  get value(): AvaliableInitials {
+    return AvaliableInitials[this.props.value];
   }
 
-  private static isValidInitial = (initial: InitialStates) => {
-    return initial in InitialStates;
+  private static isValidInitial = (initial: keyof typeof AvaliableInitials) => {
+    return initial in AvaliableInitials;
   };
 
   public static create(
-    initial: keyof typeof InitialStates,
+    initial: keyof typeof AvaliableInitials,
   ): Result<InitialStateValueObject> {
     const isValidString = validateStringLengthBetweenMaxAndMin({
       text: initial,
@@ -69,7 +69,7 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
     }
 
     const isValid = validateEnumIncludesValue({
-      enum: InitialStates,
+      enum: AvaliableInitials,
       value: initial,
     });
 
@@ -77,14 +77,12 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
       return Result.fail<InitialStateValueObject>(ERROR_INITIAL_STATE_INVALID);
     }
 
-    if (!this.isValidInitial(InitialStates[initial])) {
+    if (!this.isValidInitial(initial)) {
       return Result.fail<InitialStateValueObject>(ERROR_INITIAL_STATE_INVALID);
     }
 
     return Result.ok<InitialStateValueObject>(
-      new InitialStateValueObject({
-        value: InitialStates[initial],
-      }),
+      new InitialStateValueObject({ value: initial }),
     );
   }
 }

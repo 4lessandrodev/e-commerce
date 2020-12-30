@@ -11,16 +11,7 @@ describe('Currency.value-object', () => {
   };
   it('Should create a valid currency', () => {
     const currency = makeSut();
-    console.log(currency);
 
-    expect(currency.isFailure).toBe(false);
-    expect(currency.getResult().locale).toBe('pt-BR');
-    expect(currency.getResult().simbol).toBe('BRL');
-    expect(currency.getResult().value).toBe(20);
-  });
-
-  it('Should create a valid currency', () => {
-    const currency = makeSut();
     expect(currency.isFailure).toBe(false);
     expect(currency.getResult().locale).toBe('pt-BR');
     expect(currency.getResult().simbol).toBe('BRL');
@@ -29,15 +20,13 @@ describe('Currency.value-object', () => {
 
   it('Should positify a currency', () => {
     const currency = makeSut({
-      locale: 'BR',
-      simbol: 'BRL',
+      locale: 'GB',
+      simbol: 'EUR',
       value: -20,
     });
     expect(currency.isFailure).toBe(false);
-    expect(currency.getResult().locale).toBe('pt-BR');
-    expect(currency.getResult().simbol).toBe('BRL');
+    expect(currency.getResult().locale).toBe('en-GB');
+    expect(currency.getResult().simbol).toBe('EUR');
     expect(currency.getResult().value).toBe(-20);
-    currency.getResult().positifyValue();
-    expect(currency.getResult().value).toBe(20);
   });
 });

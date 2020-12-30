@@ -1,10 +1,7 @@
 import { Entity, Result, UniqueEntityID } from '../../../Shared';
 import { transformStringToUpperCase } from '../../utils';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
-import {
-  InitialStates,
-  InitialStateValueObject,
-} from '../../value-objects/state-initials/StateInitials.value-object';
+import { InitialStateValueObject } from '../../value-objects/state-initials/StateInitials.value-object';
 import { StateProps } from './State.domain-entity-interface';
 import { ERROR_STATE_DESCRIPTION_LENGTH } from './StateErrors.domain.entity';
 export const STATE_NAME_MIN_STRING_LENGTH = 3;
@@ -23,7 +20,7 @@ export class State extends Entity<StateProps> {
     return this.props.description;
   }
 
-  get initial(): InitialStates {
+  get initial() {
     return this.props.initial;
   }
 
@@ -46,9 +43,8 @@ export class State extends Entity<StateProps> {
     return Result.ok<State>(
       new State(
         {
-          ...props,
           description: uppercaseDescription,
-          initial: initial.getResult().value,
+          initial: props.initial,
         },
         id,
       ),

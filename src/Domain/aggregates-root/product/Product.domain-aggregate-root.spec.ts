@@ -13,6 +13,14 @@ import {
 import { ProductId } from './ProductId.domain-aggregate-root';
 
 describe('Product.domain-aggregate-root', () => {
+  const makeCurrency = (value: number): Currency => {
+    return Currency.create({
+      locale: 'BR',
+      simbol: 'BRL',
+      value,
+    }).getResult();
+  };
+
   const makeSut = (
     props?: ProductProps,
     id?: UniqueEntityID,
@@ -30,13 +38,7 @@ describe('Product.domain-aggregate-root', () => {
         isSpecial: props?.isSpecial ?? false,
         price:
           props?.price ??
-          MonetaryValueObject.create(
-            Currency.create({
-              locale: 'BR',
-              simbol: 'BRL',
-              value: 10,
-            }).getResult(),
-          ).getResult(),
+          MonetaryValueObject.create(makeCurrency(10)).getResult(),
         quantityAvaliable: props?.quantityAvaliable ?? 10,
         images: props?.images ?? [
           ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
@@ -58,9 +60,7 @@ describe('Product.domain-aggregate-root', () => {
     );
     expect(createdProduct.getResult().isActive).toBe(true);
     expect(createdProduct.getResult().isSpecial).toBe(false);
-    expect(
-      createdProduct.getResult().price.getRealValuePositiveOrNegative(),
-    ).toBe(10);
+    expect(createdProduct.getResult().price.value).toBe(10);
     expect(createdProduct.getResult().images.length).toBe(3);
   });
 
@@ -104,13 +104,7 @@ describe('Product.domain-aggregate-root', () => {
     const props = makeSut().getResult().props;
     const product = makeSut({
       ...props,
-      price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'BR',
-          simbol: 'BRL',
-          value: -55,
-        }).getResult(),
-      ).getResult(),
+      price: MonetaryValueObject.create(makeCurrency(-55)).getResult(),
     });
 
     expect(product.error).toBe(ERROR_PRODUCT_PRICE);
@@ -306,13 +300,7 @@ describe('Product.domain-aggregate-root', () => {
   it('Should change price with success', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.price.value).toBe(10);
-    const validPrice = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'BR',
-        simbol: 'BRL',
-        value: 5,
-      }).getResult(),
-    ).getResult();
+    const validPrice = MonetaryValueObject.create(makeCurrency(5)).getResult();
     createdProduct.changePrice(validPrice);
     expect(createdProduct.price.value).toBe(5);
   });
@@ -320,14 +308,8 @@ describe('Product.domain-aggregate-root', () => {
   it('Should fail if provide a negative price to change it', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.price.value).toBe(10);
-    const validPrice = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'BR',
-        simbol: 'BRL',
-        value: -5,
-      }).getResult(),
-    ).getResult();
+    const validPrice = MonetaryValueObject.create(makeCurrency(5)).getResult();
     createdProduct.changePrice(validPrice);
-    expect(createdProduct.price.value).toBe(10);
+    expect(createdProduct.price.value).toBe(5);
   });
 });

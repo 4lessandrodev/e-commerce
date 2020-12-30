@@ -1,8 +1,5 @@
 import { Result, ValueObject } from '../../../Shared';
-import {
-  convertNegativeNumberToPositive,
-  transformMonetaryValueInTwoDecimalsValue,
-} from '../../utils';
+import { transformMonetaryValueInTwoDecimalsValue } from '../../utils';
 import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
 import {
   ERROR_INVALID_CURRENCY,
@@ -15,7 +12,7 @@ enum AvaliableCurrency {
   EUR = 'Euro',
 }
 
-enum AvaliableLocale {
+export enum AvaliableLocale {
   BR = 'pt-BR',
   PT = 'pt-PT',
   AU = 'en-AU',
@@ -28,6 +25,15 @@ enum AvaliableLocale {
 export interface CurrencyProps {
   value: number;
   simbol: keyof typeof AvaliableCurrency;
+  /**
+   * BR = `pt-BR`
+   * PT = `pt-PT`
+   * AU = `en-AU`
+   * CA = `en-CA`
+   * GB = `en-GB`
+   * US = `en-US`
+   * ZA = `en-ZA`
+   */
   locale: keyof typeof AvaliableLocale;
 }
 
@@ -62,10 +68,6 @@ export class Currency extends ValueObject<CurrencyProps> {
   private static isValidLocale = (locale: AvaliableLocale) => {
     return validateEnumIncludesValue({ enum: AvaliableLocale, value: locale });
   };
-
-  positifyValue(): void {
-    this.props.value = convertNegativeNumberToPositive(this.props.value);
-  }
 
   public static create(props: CurrencyProps): Result<Currency> {
     if (!this.isValidCurrency(AvaliableCurrency[props.simbol])) {
