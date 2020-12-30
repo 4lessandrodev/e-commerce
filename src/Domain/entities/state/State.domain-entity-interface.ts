@@ -3,5 +3,5 @@ import { InitialStates } from '../../value-objects';
 
 export interface StateProps extends BaseDomainEntity {
   description: string;
-  initial: InitialStates;
+  initial: typeof InitialStates;
 }
