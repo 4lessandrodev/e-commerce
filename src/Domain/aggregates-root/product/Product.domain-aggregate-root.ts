@@ -169,7 +169,7 @@ export class Product extends AggregateRoot<ProductProps> {
       return;
     }
     this.props.comments = existComments.filter(
-      (cmt) => cmt.id.toString() !== comment.id.toString(),
+      (cmt) => !cmt.id.equals(comment.id),
     );
   }
 
@@ -186,9 +186,7 @@ export class Product extends AggregateRoot<ProductProps> {
     if (!existTags) {
       return;
     }
-    this.props.tags = existTags.filter(
-      (tg) => tg.id.toString() !== tag.id.toString(),
-    );
+    this.props.tags = existTags.filter((tg) => !tg.id.equals(tag.id));
   }
 
   public static create(

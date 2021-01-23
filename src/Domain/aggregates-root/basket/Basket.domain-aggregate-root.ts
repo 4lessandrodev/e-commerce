@@ -119,7 +119,7 @@ export class Basket extends AggregateRoot<BasketProps> {
       return;
     }
     this.props.comments = existComments.filter(
-      (cmt) => cmt.id.toString() !== comment.id.toString(),
+      (cmt) => !cmt.id.equals(comment.id),
     );
   }
 
@@ -136,9 +136,7 @@ export class Basket extends AggregateRoot<BasketProps> {
     if (!existTags) {
       return;
     }
-    this.props.tags = existTags.filter(
-      (tg) => tg.id.toString() !== tag.id.toString(),
-    );
+    this.props.tags = existTags.filter((tg) => !tg.id.equals(tag.id));
   }
 
   addProduct(product: Product): void {
@@ -155,7 +153,7 @@ export class Basket extends AggregateRoot<BasketProps> {
       return;
     }
     this.props.products = existProducts.filter(
-      (prd) => prd.id.toString() !== product.id.toString(),
+      (prd) => !prd.id.equals(product.id),
     );
   }
 
