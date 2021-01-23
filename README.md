@@ -187,6 +187,18 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ![](./readme/UseCase.png)
 
+##### Experts
+
+---
+
+![](./readme/experts.png)
+
+##### Events
+
+---
+
+![](./readme/events.png)
+
 ##### Diagrama de classe
 
 ---
