@@ -1,5 +1,5 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import { ProductCategoryProps } from './ProductCategory.domain-entity-interface';
 import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErrors.domain-entity';
 export const PRODUCT_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
@@ -16,6 +16,11 @@ export class ProductCategory extends Entity<ProductCategoryProps> {
 
   get description(): string {
     return this.props.description;
+  }
+
+  delete(): void {
+    this.props.isDeleted = true;
+    this.props.updatedAt = new Date();
   }
 
   public static create(

@@ -1,6 +1,6 @@
 import { internet } from 'faker';
-import { Result, UniqueEntityID } from '../../../Shared';
-import { EmailValueObject, PasswordValueObject } from '../../value-objects';
+import { Result, UniqueEntityID } from 'types-ddd';
+import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { User } from './User.domain-aggregate-root';
 import { UserProps } from './User.domain-aggregate-root-interface';
 import { UserId } from './UserId.domain-aggregate-root';
@@ -34,9 +34,17 @@ describe('User.domain-aggregate-root', () => {
   });
 
   it('Should create a valid user with provided id', () => {
-    const props = makeSut().getResult().props;
     const userId = UserId.create().id;
-    const createdUser = makeSut({ ...props }, userId);
+    const createdUser = makeSut(
+      {
+        email: EmailValueObject.create(internet.email()).getResult(),
+        isActive: true,
+        permission: 'CLIENT',
+        isTheEmailConfirmed: false,
+        password: PasswordValueObject.create('valid password').getResult(),
+      },
+      userId,
+    );
     expect(createdUser.isFailure).toBe(false);
     expect(createdUser.getResult().id.toString()).toBe(userId.toString());
   });

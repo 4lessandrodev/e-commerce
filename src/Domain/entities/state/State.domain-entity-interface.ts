@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from '../../../Shared';
+import { BaseDomainEntity } from 'types-ddd';
 import { AvaliableInitials } from '../../value-objects';
 
 export interface StateProps extends BaseDomainEntity {

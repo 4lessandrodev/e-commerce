@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from '../../../Shared';
+import { BaseDomainEntity } from 'types-ddd';
 
 export interface CouponProps extends BaseDomainEntity {
   description: string;

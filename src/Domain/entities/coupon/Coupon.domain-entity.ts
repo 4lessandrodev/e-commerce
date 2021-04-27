@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import {
   getDifferenceInDaysFromDateAndCurrentDay,
   validateNumberBetweenMaxAndMin,

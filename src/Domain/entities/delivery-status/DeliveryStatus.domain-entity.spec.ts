@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '../../../Shared';
+import { UniqueEntityID } from 'types-ddd';
 import { DeliveryStatus } from './DeliveryStatus.domain-entity';
 import { DeliveryStatusProps } from './DeliveryStatus.domain-entity-interface';
 import {

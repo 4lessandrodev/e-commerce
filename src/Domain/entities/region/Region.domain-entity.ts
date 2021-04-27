@@ -1,6 +1,6 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
-import { MonetaryValueObject } from '../../value-objects';
+import { MonetaryValueObject } from '@domain/value-objects';
 import { RegionProps } from './Region.domain-entity-interface';
 import { ERROR_REGION_DESCRIPTION_LENGTH } from './RegionErrors.domain-entity';
 export const REGION_DESCRIPTION_MAX_STRING_LENGTH = 20;
@@ -20,7 +20,7 @@ export class Region extends Entity<RegionProps> {
   }
 
   get freigthPrice(): MonetaryValueObject {
-    return this.props.freigthPrice;
+    return this.props.freightPrice;
   }
 
   get isActive(): boolean {

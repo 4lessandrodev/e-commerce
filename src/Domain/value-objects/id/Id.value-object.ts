@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 export class IdValueObject extends Entity<any> {
   private constructor(id?: UniqueEntityID) {
     super(null, id);

@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from '../../../Shared';
+import { BaseDomainEntity } from 'types-ddd/dist/src';
 import { ProductCategory, Tag } from '../../entities';
 import { Comment } from '../../entities/comment/Comment.domain-entity';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
@@ -10,7 +10,7 @@ export interface ProductProps extends BaseDomainEntity {
   isSpecial: boolean;
   price: MonetaryValueObject;
   isActive: boolean;
-  quantityAvaliable: number;
+  quantityAvailable: number;
   numberOfRatings?: number;
   ratingAverage?: number;
   comments?: Comment[];

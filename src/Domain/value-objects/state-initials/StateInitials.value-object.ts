@@ -1,4 +1,4 @@
-import { Result, ValueObject } from '../../../Shared';
+import { Result, ValueObject } from 'types-ddd';
 import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import {

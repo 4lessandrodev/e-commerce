@@ -1,4 +1,4 @@
-import { Result } from '../../../Shared';
+import { Result } from 'types-ddd';
 import { Currency } from './Currency.value-object';
 import { MonetaryValueObject } from './Monetary.value-object';
 
@@ -10,7 +10,7 @@ describe('Monetary.value-object.ts', () => {
   const makeSut = (value: number): ImakeSut => {
     const currency = Currency.create({
       locale: 'BR',
-      simbol: 'BRL',
+      symbol: 'BRL',
       value,
     });
     const monetary = MonetaryValueObject.create(currency.getResult());

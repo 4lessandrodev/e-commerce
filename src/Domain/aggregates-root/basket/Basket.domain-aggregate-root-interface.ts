@@ -1,6 +1,6 @@
-import { BaseDomainEntity } from '../../../Shared';
-import { BasketCategory, Comment, Tag } from '../../entities';
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
+import { BaseDomainEntity } from 'types-ddd/dist/src';
+import { BasketCategory, Comment, Tag } from '@domain/entities';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { Product } from '../product/Product.domain-aggregate-root';
 
 export interface BasketProps extends BaseDomainEntity {

@@ -1,14 +1,13 @@
-import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
-import { BasketCategory, Tag } from '../../entities';
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
-import { Product } from '../';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { Product } from '@domain/aggregates-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import {
   ERROR_BASKET_DESCRIPTION_LENGTH,
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
-import { Comment } from '../../entities';
+import { Comment, BasketCategory, Tag } from '@domain/entities';
+import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd/dist/src';
 export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
 export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_RATING_AVERAGE = 5;
@@ -16,6 +15,10 @@ export const MAX_BASKET_RATING_AVERAGE = 5;
 export class Basket extends AggregateRoot<BasketProps> {
   private constructor(props: BasketProps, id?: UniqueEntityID) {
     super(props, id);
+  }
+
+  get id(): UniqueEntityID {
+    return this._id;
   }
 
   get description(): string {
@@ -78,7 +81,7 @@ export class Basket extends AggregateRoot<BasketProps> {
     if (!price.isPositive()) {
       return Result.fail<void>(ERROR_BASKET_PRICE);
     }
-    this.props.price.props.currency.changePrice(price.value);
+    this.props.price = price;
     this.props.updatedAt = new Date();
     return Result.ok<void>();
   }

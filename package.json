@@ -35,9 +35,11 @@
     "bcrypt": "^5.0.0",
     "date-fns": "^2.16.1",
     "env-var": "^7.0.0",
+    "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
+    "types-ddd": "^0.0.5",
     "uuid": "^8.3.1",
     "validator": "^13.1.17"
   },
@@ -74,5 +76,11 @@
     "tsconfig-paths": "^3.9.0",
     "typedoc": "^0.19.2",
     "typescript": "^4.0.5"
+  },
+  "_moduleAliases": {
+    "@domain": "dist/Domain/*",
+    "@shared": "dist/Shared/*",
+    "@infra": "dist/Infra/*",
+    "@": "dist"
   }
 }

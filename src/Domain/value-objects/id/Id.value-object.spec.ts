@@ -1,6 +1,6 @@
 import { IdValueObject } from './Id.value-object';
 import { v4 as uuid, validate } from 'uuid';
-import { UniqueEntityID } from '../../../Shared/UniqueEntityID';
+import { UniqueEntityID } from 'types-ddd/dist/src';
 
 describe('Id.value-object', () => {
   it('Should generate a valid uuid', async () => {

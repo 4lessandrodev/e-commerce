@@ -1,4 +1,4 @@
-import { AggregateRoot, Result, UniqueEntityID } from '../../../Shared';
+import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
 import { Comment, ProductCategory, Tag } from '../../entities';
 import {
   validateNumberGreatterOrEqualToZero,
@@ -9,7 +9,7 @@ import {
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
 import {
-  ERROR_PRODUCT_AVALIABLE_QUANTITY,
+  ERROR_PRODUCT_AVAILABLE_QUANTITY,
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
@@ -47,7 +47,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   get quantityAvaliable(): number {
-    return this.props.quantityAvaliable;
+    return this.props.quantityAvailable;
   }
 
   get images(): ImageValueObject[] {
@@ -112,22 +112,22 @@ export class Product extends AggregateRoot<ProductProps> {
     if (!isValidStock) {
       return;
     }
-    this.props.quantityAvaliable = quantity;
+    this.props.quantityAvailable = quantity;
     this.props.updatedAt = new Date();
   }
 
   incrementStock(): void {
-    this.props.quantityAvaliable++;
+    this.props.quantityAvailable++;
   }
 
   decrementStock(): void {
     const isValidStock = validateNumberGreatterThanZero(
-      this.props.quantityAvaliable,
+      this.props.quantityAvailable,
     );
     if (!isValidStock) {
       return;
     }
-    this.props.quantityAvaliable--;
+    this.props.quantityAvailable--;
     this.props.updatedAt = new Date();
   }
 
@@ -202,10 +202,10 @@ export class Product extends AggregateRoot<ProductProps> {
       return Result.fail<Product>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
     }
     const isValidQuantity = validateNumberGreatterOrEqualToZero(
-      props.quantityAvaliable,
+      props.quantityAvailable,
     );
     if (!isValidQuantity) {
-      return Result.fail<Product>(ERROR_PRODUCT_AVALIABLE_QUANTITY);
+      return Result.fail<Product>(ERROR_PRODUCT_AVAILABLE_QUANTITY);
     }
 
     if (!props.price.isPositive()) {

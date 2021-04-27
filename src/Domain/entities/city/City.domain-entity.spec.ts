@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '../../../Shared';
+import { UniqueEntityID } from 'types-ddd';
 import { StateId } from '../state/StateId.domain-entity';
 import { City } from './City.domain-entity';
 import { CityProps } from './City.domain-entity-interface';

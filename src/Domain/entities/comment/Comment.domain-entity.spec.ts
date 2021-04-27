@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '../../../Shared';
+import { UniqueEntityID } from 'types-ddd';
 import {
   Comment,
   COMMENT_MIN_QUANTITY_TO_DELETE,

@@ -1,5 +1,5 @@
-import { Result, ValueObject } from '../../../Shared';
-import { validateLink } from '../../utils/validate-link.domain.util';
+import { Result, ValueObject } from 'types-ddd';
+import { validateLink } from '@domain/utils/validate-link.domain.util';
 import { ERROR_INVALID_URL } from './ImageErrors.domain';
 
 interface ImageValueObjectProps {

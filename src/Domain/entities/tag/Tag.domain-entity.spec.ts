@@ -1,4 +1,4 @@
-import { Result, UniqueEntityID } from '../../../Shared';
+import { Result, UniqueEntityID } from 'types-ddd';
 import { Tag } from './Tag.domain-entity';
 import { TagProps } from './Tag.domain-entity-interface';
 import { ERROR_TAG_DESCRIPTION_LENGTH } from './TagErrors.domain-entity';

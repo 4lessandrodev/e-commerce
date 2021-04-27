@@ -1,8 +1,8 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
 import {
   convertNegativeNumberToPositive,
   validateStringLengthBetweenMaxAndMin,
-} from '../../utils';
+} from '@domain/utils';
 import { BasketCategoryProps } from './BasketCategory.domain-entity-interface';
 import {
   ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
@@ -28,6 +28,11 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
 
   get changesLimit(): number {
     return this.props.changesLimit;
+  }
+
+  delete(): void {
+    this.props.isDeleted = true;
+    this.props.updatedAt = new Date();
   }
 
   public static create(

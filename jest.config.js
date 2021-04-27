@@ -1,4 +1,5 @@
 module.exports = {
+  roots: ['<rootDir>/src'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '**/tests/**',
@@ -16,7 +17,6 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['\\\\node_modules\\\\'],
   coverageProvider: 'v8',
-  roots: ['<rootDir>/src'],
   testEnvironment: 'node',
   testPathIgnorePatterns: ['\\\\node_modules\\\\'],
   transform: {
@@ -24,4 +24,11 @@ module.exports = {
   },
   testRegex: '.*\\.spec\\.ts$',
   moduleFileExtensions: ['js', 'json', 'ts'],
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1',
+    '@root/(.*)': '<rootDir>/src/$1',
+    '@domain/(.*)': '<rootDir>/src/Domain/$1',
+    '@shared/(.*)': '<rootDir>/src/Shared/core/$1',
+    '@infra/(.*)': '<rootDir>/src/Infra/$1',
+  },
 };

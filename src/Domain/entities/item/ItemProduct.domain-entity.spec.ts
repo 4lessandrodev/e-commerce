@@ -1,13 +1,14 @@
-import { Result, UniqueEntityID } from '../../../Shared';
 import { image, random } from 'faker';
-import { Product } from '../../aggregates-root/product/Product.domain-aggregate-root';
+import { Product } from '@domain/aggregates-root/product/Product.domain-aggregate-root';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 import { ProductCategory } from '../product-category/ProductCategory.domain-entity';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemProduct } from './ItemProduct.domain-entity';
 import { ItemId } from './ItemId.domain-entity';
-import { Currency } from '../../value-objects/monetary/Currency.value-object';
+import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
+import { Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { ProductId } from '../../aggregates-root/product/ProductId.domain-aggregate-root';
 
 describe('ItemProduct.domain-entity', () => {
   const makeSut = (
@@ -17,7 +18,7 @@ describe('ItemProduct.domain-entity', () => {
     const price = MonetaryValueObject.create(
       Currency.create({
         locale: 'BR',
-        simbol: 'BRL',
+        symbol: 'BRL',
         value: 9.9,
       }).getResult(),
     ).getResult();
@@ -35,7 +36,7 @@ describe('ItemProduct.domain-entity', () => {
             isActive: true,
             isSpecial: false,
             price,
-            quantityAvaliable: 3,
+            quantityAvailable: 3,
           }).getResult(),
         orderId: props?.orderId ?? new UniqueEntityID(),
         quantity: props?.quantity ?? 1,
@@ -44,7 +45,7 @@ describe('ItemProduct.domain-entity', () => {
           MonetaryValueObject.create(
             Currency.create({
               locale: 'BR',
-              simbol: 'BRL',
+              symbol: 'BRL',
               value: 88,
             }).getResult(),
           ).getResult(),
@@ -63,21 +64,36 @@ describe('ItemProduct.domain-entity', () => {
   });
 
   it('Should fail if provide a negative number', () => {
-    const props = makeSut().getResult().props;
-    const itemCreated = makeSut({
-      ...props,
-      quantity: -1,
+    const itemCreated = ItemProduct.create({
+      item: [ProductId.create()],
+      total: MonetaryValueObject.create(
+        Currency.create({
+          locale: 'BR',
+          symbol: 'BRL',
+          value: 20,
+        }).getResult(),
+      ).getResult(),
+      orderId: new UniqueEntityID(),
+      quantity: -5,
     });
     expect(itemCreated.isFailure).toBe(true);
     expect(itemCreated.error).toBe(ERROR_ITEM_INVALID_QUANTITY);
   });
 
   it('Should create a valid ItemProduct with provided id', () => {
-    const props = makeSut().getResult().props;
     const providedId = ItemId.create().id;
-    const itemCreated = makeSut(
+    const itemCreated = ItemProduct.create(
       {
-        ...props,
+        item: [ProductId.create()],
+        total: MonetaryValueObject.create(
+          Currency.create({
+            locale: 'BR',
+            symbol: 'BRL',
+            value: 20,
+          }).getResult(),
+        ).getResult(),
+        orderId: new UniqueEntityID(),
+        quantity: 10,
       },
       providedId,
     );

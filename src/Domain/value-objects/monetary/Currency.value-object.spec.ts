@@ -1,11 +1,11 @@
-import { Result } from '../../../Shared';
+import { Result } from 'types-ddd';
 import { Currency, CurrencyProps } from './Currency.value-object';
 
 describe('Currency.value-object', () => {
   const makeSut = (props?: CurrencyProps): Result<Currency> => {
     return Currency.create({
       locale: props?.locale ?? 'BR',
-      simbol: props?.simbol ?? 'BRL',
+      symbol: props?.symbol ?? 'BRL',
       value: props?.value ?? 20,
     });
   };
@@ -14,19 +14,19 @@ describe('Currency.value-object', () => {
 
     expect(currency.isFailure).toBe(false);
     expect(currency.getResult().locale).toBe('pt-BR');
-    expect(currency.getResult().simbol).toBe('BRL');
+    expect(currency.getResult().symbol).toBe('BRL');
     expect(currency.getResult().value).toBe(20);
   });
 
   it('Should positify a currency', () => {
     const currency = makeSut({
       locale: 'GB',
-      simbol: 'EUR',
+      symbol: 'EUR',
       value: -20,
     });
     expect(currency.isFailure).toBe(false);
     expect(currency.getResult().locale).toBe('en-GB');
-    expect(currency.getResult().simbol).toBe('EUR');
+    expect(currency.getResult().symbol).toBe('EUR');
     expect(currency.getResult().value).toBe(-20);
   });
 });

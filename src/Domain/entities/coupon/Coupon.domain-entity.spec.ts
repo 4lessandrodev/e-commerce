@@ -1,4 +1,4 @@
-import { Result, UniqueEntityID } from '../../../Shared';
+import { Result, UniqueEntityID } from 'types-ddd';
 import { Coupon } from './Coupon.domain-entity';
 import { CouponProps } from './Coupon.domain-entity-interface';
 import { addDays } from 'date-fns';

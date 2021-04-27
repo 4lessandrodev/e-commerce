@@ -1,7 +1,7 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
-import { Product } from '../../aggregates-root/product/Product.domain-aggregate-root';
-import { validateNumberGreatterThanZero } from '../../utils';
-import { MonetaryValueObject } from '../../value-objects';
+import { Product } from '@domain/aggregates-root/product/Product.domain-aggregate-root';
+import { validateNumberGreatterThanZero } from '@domain/utils';
+import { MonetaryValueObject } from '@domain/value-objects';
+import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
 import { ItemProps } from './Item.domain-entity-interface';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 export class ItemProduct extends Entity<ItemProps<Product>> {

@@ -4,7 +4,7 @@ import {
   ERROR_BASKET_CATEGORY_MAX_VALUE,
 } from './BasketCategoryErrors.domain-entity';
 import delay from 'delay';
-import { UniqueEntityID } from '../../../Shared';
+import { UniqueEntityID } from 'types-ddd';
 import { BasketCategoryId } from './BasketCategoryId.domain-entity';
 import { BasketCategoryProps } from './BasketCategory.domain-entity-interface';
 import { random } from 'faker';

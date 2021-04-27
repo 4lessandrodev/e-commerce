@@ -1,4 +1,4 @@
-import { Result, ValueObject } from '../../../Shared';
+import { Result, ValueObject } from 'types-ddd';
 import { transformMonetaryValueInTwoDecimalsValue } from '../../utils';
 import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
 import {
@@ -24,7 +24,7 @@ export enum AvaliableLocale {
 
 export interface CurrencyProps {
   value: number;
-  simbol: keyof typeof AvaliableCurrency;
+  symbol: keyof typeof AvaliableCurrency;
   /**
    * BR = `pt-BR`
    * PT = `pt-PT`
@@ -46,8 +46,8 @@ export class Currency extends ValueObject<CurrencyProps> {
     return this.props.value;
   }
 
-  get simbol(): keyof typeof AvaliableCurrency {
-    return this.props.simbol;
+  get symbol(): keyof typeof AvaliableCurrency {
+    return this.props.symbol;
   }
 
   get locale(): AvaliableLocale {
@@ -70,7 +70,7 @@ export class Currency extends ValueObject<CurrencyProps> {
   };
 
   public static create(props: CurrencyProps): Result<Currency> {
-    if (!this.isValidCurrency(AvaliableCurrency[props.simbol])) {
+    if (!this.isValidCurrency(AvaliableCurrency[props.symbol])) {
       return Result.fail<Currency>(ERROR_INVALID_CURRENCY);
     }
     if (!this.isValidLocale(AvaliableLocale[props.locale])) {

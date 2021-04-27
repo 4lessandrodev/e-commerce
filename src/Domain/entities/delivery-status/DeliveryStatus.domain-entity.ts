@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { DeliveryStatusProps } from './DeliveryStatus.domain-entity-interface';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import {
@@ -29,6 +29,11 @@ export class DeliveryStatus extends Entity<DeliveryStatusProps> {
 
   get info(): string {
     return this.props.info ?? '';
+  }
+
+  delete(): void {
+    this.props.isDeleted = true;
+    this.props.updatedAt = new Date();
   }
 
   deactivate(): void {

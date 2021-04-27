@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import { CommentProps } from './Comment.domain-entity-interface';
 import { ERROR_COMMENT_TEXT_LENGTH } from './CommentErrors.domain-entity';

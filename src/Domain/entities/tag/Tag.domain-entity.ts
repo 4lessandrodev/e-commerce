@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import { TagProps } from './Tag.domain-entity-interface';
 import { ERROR_TAG_DESCRIPTION_LENGTH } from './TagErrors.domain-entity';
@@ -16,6 +16,11 @@ export class Tag extends Entity<TagProps> {
 
   get description(): string {
     return this.props.description;
+  }
+
+  delete(): void {
+    this.props.isDeleted = true;
+    this.props.updatedAt = new Date();
   }
 
   public static create(props: TagProps, id?: UniqueEntityID): Result<Tag> {

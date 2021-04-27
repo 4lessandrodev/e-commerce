@@ -10,7 +10,18 @@
     "target": "ES2019",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "src",
+    "paths": {
+      "@domain/*": [
+        "Domain/*"
+      ],
+      "@infra/*": [
+        "Infra/*"
+      ],
+      "@shared/*": [
+        "Shared/*"
+      ]
+    }
   }
 }

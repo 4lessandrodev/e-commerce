@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from '../../../Shared';
+import { BaseDomainEntity } from 'types-ddd/dist/src';
 import { EmailValueObject, PasswordValueObject } from '../../value-objects';
 
 export interface UserProps extends BaseDomainEntity {

@@ -1,9 +1,14 @@
 import { image, random } from 'faker';
+import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '..';
-import { Result, UniqueEntityID } from '../../../Shared';
-import { BasketCategory, Comment, ProductCategory, Tag } from '../../entities';
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
-import { Currency } from '../../value-objects/monetary/Currency.value-object';
+import {
+  BasketCategory,
+  Comment,
+  ProductCategory,
+  Tag,
+} from '@domain/entities';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
 import { Product } from '../product/Product.domain-aggregate-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import {
@@ -16,7 +21,7 @@ describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
     return Currency.create({
       locale: 'BR',
-      simbol: 'BRL',
+      symbol: 'BRL',
       value,
     }).getResult();
   };
@@ -48,11 +53,11 @@ describe('Basket.domain-aggregate-root', () => {
             price: MonetaryValueObject.create(
               Currency.create({
                 locale: 'BR',
-                simbol: 'BRL',
+                symbol: 'BRL',
                 value: 15,
               }).getResult(),
             ).getResult(),
-            quantityAvaliable: 20,
+            quantityAvailable: 20,
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -72,21 +77,40 @@ describe('Basket.domain-aggregate-root', () => {
   });
 
   it('Should fail if provide a long description to basket', () => {
-    const props = makeSut().getResult().props;
     const failBasket = makeSut({
-      ...props,
       description: random.words(20),
+      price: MonetaryValueObject.create(
+        Currency.create({ locale: 'BR', symbol: 'BRL', value: 10 }).getResult(),
+      ).getResult(),
+      category: BasketCategory.create({
+        changesLimit: 1,
+        description: 'valid_desc',
+      }).getResult(),
+      images: [ImageValueObject.create('https://s3.aws.com').getResult()],
+      isActive: true,
     });
     expect(failBasket.isFailure).toBe(true);
     expect(failBasket.error).toBe(ERROR_BASKET_DESCRIPTION_LENGTH);
   });
 
   it('Should create a valid basket with provided id', () => {
-    const props = makeSut().getResult().props;
     const id = BasketId.create().id;
-    const createdBasket = makeSut(
+    const createdBasket = Basket.create(
       {
-        ...props,
+        description: 'valid_description',
+        price: MonetaryValueObject.create(
+          Currency.create({
+            locale: 'BR',
+            symbol: 'BRL',
+            value: 10,
+          }).getResult(),
+        ).getResult(),
+        category: BasketCategory.create({
+          changesLimit: 1,
+          description: 'valid_desc',
+        }).getResult(),
+        images: [ImageValueObject.create('https://s3.aws.com').getResult()],
+        isActive: true,
       },
       id,
     );
@@ -121,15 +145,22 @@ describe('Basket.domain-aggregate-root', () => {
   });
 
   it('Should fail if try create a basket providing a negative price', () => {
-    const props = makeSut().getResult().props;
     const id = BasketId.create().id;
-    const createdBasket = makeSut(
+
+    const createdBasket = Basket.create(
       {
-        ...props,
+        description: 'valid_description',
+        category: BasketCategory.create({
+          changesLimit: 1,
+          description: 'valid_desc',
+        }).getResult(),
+        images: [ImageValueObject.create('https://s3.aws.com').getResult()],
+        isActive: true,
         price: MonetaryValueObject.create(makePrice(-20)).getResult(),
       },
       id,
     );
+
     expect(createdBasket.isFailure).toBe(true);
     expect(createdBasket.error).toBe(ERROR_BASKET_PRICE);
   });
@@ -289,7 +320,7 @@ describe('Basket.domain-aggregate-root', () => {
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makePrice(15)).getResult(),
-      quantityAvaliable: 15,
+      quantityAvailable: 15,
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
     createdBasket.addProduct(product);
@@ -307,7 +338,7 @@ describe('Basket.domain-aggregate-root', () => {
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makePrice(15)).getResult(),
-      quantityAvaliable: 15,
+      quantityAvailable: 15,
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
     createdBasket.addProduct(product);

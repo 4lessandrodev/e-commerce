@@ -1,7 +1,7 @@
 import { ProductCategory } from './ProductCategory.domain-entity';
 import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErrors.domain-entity';
 import delay from 'delay';
-import { UniqueEntityID } from '../../../Shared';
+import { UniqueEntityID } from 'types-ddd';
 import { ProductCategoryId } from './ProductCategoryId.domain-entity';
 import { ProductCategoryProps } from './ProductCategory.domain-entity-interface';
 

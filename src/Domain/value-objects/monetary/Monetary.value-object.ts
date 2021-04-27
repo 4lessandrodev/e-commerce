@@ -1,8 +1,8 @@
-import { Result, ValueObject } from '../../../Shared';
+import { Result, ValueObject } from 'types-ddd';
 import {
   convertNegativeNumberToPositive,
   formatNumberToCurrency,
-} from '../../utils';
+} from '@domain/utils';
 import { Currency } from './Currency.value-object';
 
 export enum MonetaryType {

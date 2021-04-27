@@ -1,12 +1,15 @@
 import { image, random } from 'faker';
-import { Result, UniqueEntityID } from '../../../Shared';
-import { Comment, ProductCategory, Tag } from '../../entities';
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
-import { Currency } from '../../value-objects/monetary/Currency.value-object';
+import { Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Comment, ProductCategory, Tag } from '@domain/entities';
+import {
+  ImageValueObject,
+  MonetaryValueObject,
+  Currency,
+} from '@domain/value-objects';
 import { Product } from './Product.domain-aggregate-root';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
 import {
-  ERROR_PRODUCT_AVALIABLE_QUANTITY,
+  ERROR_PRODUCT_AVAILABLE_QUANTITY as ERROR_PRODUCT_AVAILABLE_QUANTITY,
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
@@ -16,7 +19,7 @@ describe('Product.domain-aggregate-root', () => {
   const makeCurrency = (value: number): Currency => {
     return Currency.create({
       locale: 'BR',
-      simbol: 'BRL',
+      symbol: 'BRL',
       value,
     }).getResult();
   };
@@ -39,7 +42,7 @@ describe('Product.domain-aggregate-root', () => {
         price:
           props?.price ??
           MonetaryValueObject.create(makeCurrency(10)).getResult(),
-        quantityAvaliable: props?.quantityAvaliable ?? 10,
+        quantityAvailable: props?.quantityAvailable ?? 10,
         images: props?.images ?? [
           ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
           ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
@@ -81,30 +84,61 @@ describe('Product.domain-aggregate-root', () => {
   });
 
   it('Should fail if provide a long description to create', () => {
-    const createdProduct = makeSut().getResult();
-    const createdProductCustom = makeSut({
-      ...createdProduct.props,
-      description: random.words(20),
+    const createdProductCustom = Product.create({
+      description: String('invalid_long_description').repeat(50),
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      info:
+        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: 10,
+      images: [
+        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
+        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
+      ],
     });
+
     expect(createdProductCustom.isFailure).toBe(true);
     expect(createdProductCustom.error).toBe(ERROR_PRODUCT_DESCRIPTION_LENGTH);
   });
 
-  it('Should fail if provide a negative number as avaliable quantity', () => {
-    const createdProduct = makeSut().getResult();
-    const createdProductCustom = makeSut({
-      ...createdProduct.props,
-      quantityAvaliable: -1,
+  it('Should fail if provide a negative number as available quantity', () => {
+    const createdProductCustom = Product.create({
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      info:
+        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: -1,
+      images: [
+        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
+        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
+      ],
     });
     expect(createdProductCustom.isFailure).toBe(true);
-    expect(createdProductCustom.error).toBe(ERROR_PRODUCT_AVALIABLE_QUANTITY);
+    expect(createdProductCustom.error).toBe(ERROR_PRODUCT_AVAILABLE_QUANTITY);
   });
 
   it('Should fail if provide a negative number as price', () => {
-    const props = makeSut().getResult().props;
-    const product = makeSut({
-      ...props,
-      price: MonetaryValueObject.create(makeCurrency(-55)).getResult(),
+    const product = Product.create({
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      info:
+        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(-10)).getResult(),
+      quantityAvailable: 2,
+      images: [
+        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
+        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
+      ],
     });
 
     expect(product.error).toBe(ERROR_PRODUCT_PRICE);
@@ -161,28 +195,50 @@ describe('Product.domain-aggregate-root', () => {
   });
 
   it('Should fail if decrement stock until negative value', () => {
-    const createdProduct = makeSut().getResult();
-    const createdProductCustom = makeSut({
-      ...createdProduct.props,
-      quantityAvaliable: 1,
+    const product = Product.create({
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      info:
+        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: 1,
+      images: [
+        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
+        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
+      ],
     }).getResult();
-    expect(createdProductCustom.quantityAvaliable).toBe(1);
-    createdProductCustom.decrementStock();
-    expect(createdProductCustom.quantityAvaliable).toBe(0);
-    createdProductCustom.decrementStock();
-    expect(createdProductCustom.quantityAvaliable).toBe(0);
+
+    expect(product.quantityAvaliable).toBe(1);
+    product.decrementStock();
+    expect(product.quantityAvaliable).toBe(0);
+    product.decrementStock();
+    expect(product.quantityAvaliable).toBe(0);
   });
 
   it('Should create a product with provided id', () => {
-    const createdProduct = makeSut().getResult();
     const id = ProductId.create().id;
-    const createdProductCustom = makeSut(
+    const product = Product.create(
       {
-        ...createdProduct.props,
+        description: 'Maçã Brasileira',
+        category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+        info:
+          'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+        isActive: true,
+        isSpecial: false,
+        price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+        quantityAvailable: 1,
+        images: [
+          ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+          ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
+          ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
+        ],
       },
       id,
     ).getResult();
-    expect(createdProductCustom.id.toString()).toBe(id.toString());
+    expect(product.id.toString()).toBe(id.toString());
   });
 
   it('Should deactivate and reactivate a product with success', () => {

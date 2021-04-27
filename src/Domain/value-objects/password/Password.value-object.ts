@@ -1,10 +1,10 @@
-import { Result, ValueObject } from '../../../Shared';
+import { Result, ValueObject } from 'types-ddd';
 import { hashSync, compareSync } from 'bcrypt';
 import {
   ERROR_INVALID_PASSWORD_MAX_LENGTH,
   ERROR_INVALID_PASSWORD_MIN_LENGTH,
 } from './PasswordErrors.domain';
-import { isBcryptHash } from '../../utils/validate-bcrypt-hash.domain.util';
+import { isBcryptHash } from '@domain/utils/validate-bcrypt-hash.domain.util';
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 21;
 export const PASSWORD_SALT = 10;
@@ -30,7 +30,7 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
   }
 
   /**
-   * Return a boolean ckeck if instance value is encripted
+   * Return a boolean check if instance value is encrypted
    */
   isAlreadyEncrypted(): boolean {
     return this.props.isHashed;
@@ -38,7 +38,7 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
 
   /**
    *
-   * @param password string not encryped value.
+   * @param password string not encrypted value.
    * Return boolean, true if match or false if not
    */
   async comparePassword(password: string): Promise<boolean> {

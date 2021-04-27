@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from '../../../Shared';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { transformStringToUpperCase } from '../../utils';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import { InitialStateValueObject } from '../../value-objects/state-initials/StateInitials.value-object';

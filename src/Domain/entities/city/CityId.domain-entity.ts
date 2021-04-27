@@ -1,4 +1,4 @@
-import { Entity, UniqueEntityID } from '../../../Shared';
+import { Entity, UniqueEntityID } from 'types-ddd';
 export class CityId extends Entity<any> {
   get id(): UniqueEntityID {
     return this._id;
