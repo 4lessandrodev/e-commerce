@@ -8,12 +8,15 @@ import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Payload } from './interfaces/payload.interface';
 import { SignUpUseCase } from '@app/sign-up-use-case/sign-up.use-case';
+import { UserRepository } from './user.repository';
+import { User } from './user.schema';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject(SignInUseCase) private readonly signInUseCase: SignInUseCase,
     @Inject(SignUpUseCase) private readonly signUpUseCase: SignUpUseCase,
+    @Inject(UserRepository) private readonly userRepo: UserRepository,
   ) {}
 
   async signIn(dto: SignInDto): Promise<void> {
@@ -31,5 +34,10 @@ export class UserService {
       throw new PreconditionFailedException(result.error);
     }
     return { token: result.getResult().token };
+  }
+
+  // Query Repository
+  async getMyProfile(id: string): Promise<User> {
+    return this.userRepo.getMyProfile(id);
   }
 }
