@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SignInUseCase } from '../../Application/sign-in-use-case/sign-in.use-case';
+import { PassportModule } from '@nestjs/passport';
+import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
+import { JWT_EXPIRATION_IN_HOURS, JWT_SECRET } from '../configs/env';
+import { JwtStrategy } from './services/jwt-strategy';
 import { UserController } from './user.controller';
 import { UserMapper } from './user.mapper';
 import { UserRepository } from './user.repository';
@@ -9,6 +13,15 @@ import { UserService } from './user.service';
 
 @Module({
   imports: [
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
+    JwtModule.register({
+      secret: JWT_SECRET,
+      signOptions: {
+        expiresIn: `${JWT_EXPIRATION_IN_HOURS}h`,
+      },
+    }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [UserController],
@@ -17,6 +30,7 @@ import { UserService } from './user.service';
       provide: UserMapper,
       useFactory: () => new UserMapper(),
     },
+    JwtStrategy,
     SignInUseCase,
     UserRepository,
     UserService,
