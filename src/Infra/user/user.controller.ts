@@ -6,6 +6,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Payload } from './interfaces/payload.interface';
 import { UserService } from './user.service';
 
 @Controller('v1/auth')
@@ -18,8 +21,8 @@ export class UserController {
     return this.userService.signIn(dto);
   }
 
-  /*   @Get()
+  @Post('signup')
   signUp(@Body() dto: SignUpDto): Promise<Payload> {
-    return {};
-  } */
+    return this.userService.SignUp(dto);
+  }
 }

@@ -41,11 +41,11 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
    * @param password string not encrypted value.
    * Return boolean, true if match or false if not
    */
-  async comparePassword(password: string): Promise<boolean> {
+  async comparePassword(plainText: string): Promise<boolean> {
     if (this.props.isHashed) {
-      return compareSync(password, this.props.value);
+      return compareSync(plainText, this.props.value);
     }
-    return password === this.props.value;
+    return plainText === this.props.value;
   }
 
   /**

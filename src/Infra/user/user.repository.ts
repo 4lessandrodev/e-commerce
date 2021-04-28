@@ -20,7 +20,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async find(filter: Filter): Promise<Aggregate | null> {
-    const userExist = await this.conn.findOne({ filter }).exec();
+    const userExist = await this.conn.findOne(filter).exec();
     if (!userExist) {
       return null;
     }

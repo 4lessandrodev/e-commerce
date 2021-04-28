@@ -10,6 +10,7 @@ import { UserMapper } from './user.mapper';
 import { UserRepository } from './user.repository';
 import { User, UserSchema } from './user.schema';
 import { UserService } from './user.service';
+import { SignUpUseCase } from '@app/sign-up-use-case/sign-up.use-case';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserService } from './user.service';
     },
     JwtStrategy,
     SignInUseCase,
+    SignUpUseCase,
     UserRepository,
     UserService,
   ],
