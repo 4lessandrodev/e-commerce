@@ -38,7 +38,7 @@ describe('Region.domain-entity', () => {
     expect(regionCreated.getResult().id).not.toBeUndefined();
     expect(regionCreated.getResult().id).not.toBeNull();
     expect(regionCreated.getResult().isActive).toBe(true);
-    expect(regionCreated.getResult().freigthPrice.value).toBe(10);
+    expect(regionCreated.getResult().freightPrice.value).toBe(10);
     expect(regionCreated.getResult().geoCode).toBe(0);
     expect(regionCreated.getResult().isDeleted).toBe(false);
   });

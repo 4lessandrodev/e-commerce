@@ -19,7 +19,7 @@ export class Region extends Entity<RegionProps> {
     return this.props.description;
   }
 
-  get freigthPrice(): MonetaryValueObject {
+  get freightPrice(): MonetaryValueObject {
     return this.props.freightPrice;
   }
 

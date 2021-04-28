@@ -27,7 +27,7 @@ export class Comment extends Entity<CommentProps> {
     return this.props.reportedCommentQuantity ?? 0;
   }
 
-  incremmentCommentReport(): void {
+  incrementCommentReport(): void {
     this.props.reportedCommentQuantity = this.reportedCommentQuantity + 1;
     if (this.reportedCommentQuantity >= COMMENT_MIN_QUANTITY_TO_DELETE) {
       this.deleteCommentOnReportSevenTimes();

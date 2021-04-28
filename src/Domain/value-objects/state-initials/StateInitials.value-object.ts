@@ -1,12 +1,14 @@
-import { Result, ValueObject } from 'types-ddd';
-import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
 import {
   ERROR_INITIAL_STATE_INVALID,
   ERROR_INITIAL_STATE_INVALID_LENGTH,
 } from './StateInitialsErrors.domain';
+import { Result, ValueObject } from 'types-ddd';
+import {
+  validateEnumIncludesValue,
+  validateStringLengthBetweenMaxAndMin,
+} from '@domain/utils';
 
-export enum AvaliableInitials {
+export enum AvailableInitials {
   AC = 'AC',
   AL = 'AL',
   AP = 'AP',
@@ -37,7 +39,7 @@ export enum AvaliableInitials {
 }
 
 export interface InitialStateProps {
-  value: keyof typeof AvaliableInitials;
+  value: keyof typeof AvailableInitials;
 }
 
 export class InitialStateValueObject extends ValueObject<InitialStateProps> {
@@ -45,16 +47,16 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
     super(props);
   }
 
-  get value(): AvaliableInitials {
-    return AvaliableInitials[this.props.value];
+  get value(): AvailableInitials {
+    return AvailableInitials[this.props.value];
   }
 
-  private static isValidInitial = (initial: keyof typeof AvaliableInitials) => {
-    return initial in AvaliableInitials;
+  private static isValidInitial = (initial: keyof typeof AvailableInitials) => {
+    return initial in AvailableInitials;
   };
 
   public static create(
-    initial: keyof typeof AvaliableInitials,
+    initial: keyof typeof AvailableInitials,
   ): Result<InitialStateValueObject> {
     const isValidString = validateStringLengthBetweenMaxAndMin({
       text: initial,
@@ -69,7 +71,7 @@ export class InitialStateValueObject extends ValueObject<InitialStateProps> {
     }
 
     const isValid = validateEnumIncludesValue({
-      enum: AvaliableInitials,
+      enum: AvailableInitials,
       value: initial,
     });
 

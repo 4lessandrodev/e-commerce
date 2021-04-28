@@ -123,7 +123,7 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.isFailure).toBe(false);
     expect(createdBasket.getResult().numberOfRatings).toBe(0);
     expect(createdBasket.getResult().ratingAverage).toBe(0);
-    createdBasket.getResult().updateBasketRating({
+    createdBasket.getResult().rateTheBasket({
       numberOfRatings: 7,
       ratingAverage: 4.8,
     });
@@ -136,7 +136,7 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.isFailure).toBe(false);
     expect(createdBasket.getResult().numberOfRatings).toBe(0);
     expect(createdBasket.getResult().ratingAverage).toBe(0);
-    createdBasket.getResult().updateBasketRating({
+    createdBasket.getResult().rateTheBasket({
       numberOfRatings: 7,
       ratingAverage: 5.8,
     });

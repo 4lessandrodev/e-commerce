@@ -12,7 +12,7 @@ describe('User.domain-aggregate-root', () => {
         email:
           props?.email ?? EmailValueObject.create(internet.email()).getResult(),
         isActive: props?.isActive ?? true,
-        permission: props?.permission ?? 'CLIENT',
+        role: props?.role ?? 'CLIENT',
         isTheEmailConfirmed: props?.isTheEmailConfirmed ?? false,
         password:
           props?.password ??
@@ -39,7 +39,7 @@ describe('User.domain-aggregate-root', () => {
       {
         email: EmailValueObject.create(internet.email()).getResult(),
         isActive: true,
-        permission: 'CLIENT',
+        role: 'CLIENT',
         isTheEmailConfirmed: false,
         password: PasswordValueObject.create('valid password').getResult(),
       },
@@ -86,6 +86,19 @@ describe('User.domain-aggregate-root', () => {
     createdUser.getResult().makeDeliveryman();
     expect(createdUser.getResult().isAdmin).toBe(false);
     expect(createdUser.getResult().isDeliveryman).toBe(true);
+    expect(createdUser.getResult().isDeveloper).toBe(false);
+  });
+
+  it('Should make user as undefined profile', () => {
+    const createdUser = makeSut();
+    expect(createdUser.getResult().isAdmin).toBe(false);
+    expect(createdUser.getResult().isDeliveryman).toBe(false);
+    expect(createdUser.getResult().isDeveloper).toBe(false);
+    expect(createdUser.getResult().isUndefined).toBe(false);
+    createdUser.getResult().makeUndefined();
+    expect(createdUser.getResult().isAdmin).toBe(false);
+    expect(createdUser.getResult().isDeliveryman).toBe(false);
+    expect(createdUser.getResult().isUndefined).toBe(true);
     expect(createdUser.getResult().isDeveloper).toBe(false);
   });
 

@@ -1,5 +1,5 @@
 import { Product } from '@domain/aggregates-root/product/Product.domain-aggregate-root';
-import { validateNumberGreatterThanZero } from '@domain/utils';
+import { validateNumberGreaterThanZero } from '@domain/utils';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
 import { ItemProps } from './Item.domain-entity-interface';
@@ -33,7 +33,7 @@ export class ItemProduct extends Entity<ItemProps<Product>> {
     props: ItemProps<any>,
     id?: UniqueEntityID,
   ): Result<ItemProduct> {
-    const isValidQuantity = validateNumberGreatterThanZero(props.quantity);
+    const isValidQuantity = validateNumberGreaterThanZero(props.quantity);
     if (!isValidQuantity) {
       return Result.fail<ItemProduct>(ERROR_ITEM_INVALID_QUANTITY);
     }

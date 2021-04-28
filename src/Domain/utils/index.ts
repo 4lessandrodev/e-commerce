@@ -8,5 +8,6 @@ export * from './validate-string-length.domain.util';
 export * from './transform-string-to-uppercase.domain.util';
 export * from './validate-number-between-max-and-min.domain.util';
 export * from './get-difference-in-days-from-date-and-current-day.domain.util';
-export * from './validate-number-is-greatter-than-zero.domain.util';
-export * from './validate-number-is-greatter-or-equal-to-zero.domain.util';
+export * from './validate-number-is-greater-than-zero.domain.util';
+export * from './validate-number-is-greater-or-equal-to-zero.domain.util';
+export * from './validate-is-string-in-enum.domain.util';

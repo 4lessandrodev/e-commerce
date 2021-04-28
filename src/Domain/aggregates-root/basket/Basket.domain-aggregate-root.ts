@@ -65,7 +65,7 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.tags ?? null;
   }
 
-  updateBasketRating(props: {
+  rateTheBasket(props: {
     numberOfRatings: number;
     ratingAverage: number;
   }): void {

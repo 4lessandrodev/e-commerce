@@ -1,6 +1,6 @@
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd/dist/src';
-import { UserProps } from './User.domain-aggregate-root-interface';
+import { Role, UserProps } from './User.domain-aggregate-root-interface';
 
 export class User extends AggregateRoot<UserProps> {
   private constructor(props: UserProps, id?: UniqueEntityID) {
@@ -19,20 +19,28 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.password;
   }
 
+  get role(): Role {
+    return this.props.role;
+  }
+
+  get isUndefined(): boolean {
+    return this.props.role === 'UNDEFINED';
+  }
+
   get isClient(): boolean {
-    return this.props.permission === 'CLIENT';
+    return this.props.role === 'CLIENT';
   }
 
   get isDeveloper(): boolean {
-    return this.props.permission === 'DEVELOPER';
+    return this.props.role === 'DEVELOPER';
   }
 
   get isAdmin(): boolean {
-    return this.props.permission === 'ADMIN';
+    return this.props.role === 'ADMIN';
   }
 
   get isDeliveryman(): boolean {
-    return this.props.permission === 'DELIVERYMAN';
+    return this.props.role === 'DELIVERYMAN';
   }
 
   get isActive(): boolean {
@@ -58,23 +66,28 @@ export class User extends AggregateRoot<UserProps> {
     this.props.updatedAt = new Date();
   }
 
+  makeUndefined(): void {
+    this.props.role = 'UNDEFINED';
+    this.props.updatedAt = new Date();
+  }
+
   makeClient(): void {
-    this.props.permission = 'CLIENT';
+    this.props.role = 'CLIENT';
     this.props.updatedAt = new Date();
   }
 
   makeAdmin(): void {
-    this.props.permission = 'ADMIN';
+    this.props.role = 'ADMIN';
     this.props.updatedAt = new Date();
   }
 
   makeDeveloper(): void {
-    this.props.permission = 'DEVELOPER';
+    this.props.role = 'DEVELOPER';
     this.props.updatedAt = new Date();
   }
 
   makeDeliveryman(): void {
-    this.props.permission = 'DELIVERYMAN';
+    this.props.role = 'DELIVERYMAN';
     this.props.updatedAt = new Date();
   }
 

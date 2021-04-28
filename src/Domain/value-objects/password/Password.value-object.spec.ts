@@ -13,7 +13,7 @@ describe('Password.value-object', () => {
   });
 
   it('Should return a invalid password min length message', () => {
-    const createdPassword = PasswordValueObject.create('invalid');
+    const createdPassword = PasswordValueObject.create('inv');
     expect(createdPassword.isFailure).toBe(true);
     expect(createdPassword.errorValue()).toBe(
       ERROR_INVALID_PASSWORD_MIN_LENGTH,

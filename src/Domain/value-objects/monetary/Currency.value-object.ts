@@ -1,18 +1,20 @@
-import { Result, ValueObject } from 'types-ddd';
-import { transformMonetaryValueInTwoDecimalsValue } from '../../utils';
-import { validateEnumIncludesValue } from '../../utils/validate-is-string-in-enum.domain.util';
 import {
   ERROR_INVALID_CURRENCY,
   ERROR_INVALID_LOCALE,
 } from './CurrencyErrors.value-object';
+import { Result, ValueObject } from 'types-ddd';
+import {
+  transformMonetaryValueInTwoDecimalsValue,
+  validateEnumIncludesValue,
+} from '@domain/utils';
 
-enum AvaliableCurrency {
-  BRL = 'Brasilian Real',
+enum AvailableCurrency {
+  BRL = 'Brazilian Real',
   USD = 'American Dollar',
   EUR = 'Euro',
 }
 
-export enum AvaliableLocale {
+export enum AvailableLocale {
   BR = 'pt-BR',
   PT = 'pt-PT',
   AU = 'en-AU',
@@ -24,7 +26,7 @@ export enum AvaliableLocale {
 
 export interface CurrencyProps {
   value: number;
-  symbol: keyof typeof AvaliableCurrency;
+  symbol: keyof typeof AvailableCurrency;
   /**
    * BR = `pt-BR`
    * PT = `pt-PT`
@@ -34,7 +36,7 @@ export interface CurrencyProps {
    * US = `en-US`
    * ZA = `en-ZA`
    */
-  locale: keyof typeof AvaliableLocale;
+  locale: keyof typeof AvailableLocale;
 }
 
 export class Currency extends ValueObject<CurrencyProps> {
@@ -46,17 +48,17 @@ export class Currency extends ValueObject<CurrencyProps> {
     return this.props.value;
   }
 
-  get symbol(): keyof typeof AvaliableCurrency {
+  get symbol(): keyof typeof AvailableCurrency {
     return this.props.symbol;
   }
 
-  get locale(): AvaliableLocale {
-    return AvaliableLocale[this.props.locale];
+  get locale(): AvailableLocale {
+    return AvailableLocale[this.props.locale];
   }
 
-  private static isValidCurrency = (currency: AvaliableCurrency) => {
+  private static isValidCurrency = (currency: AvailableCurrency) => {
     return validateEnumIncludesValue({
-      enum: AvaliableCurrency,
+      enum: AvailableCurrency,
       value: currency,
     });
   };
@@ -65,17 +67,20 @@ export class Currency extends ValueObject<CurrencyProps> {
     this.props.value = value;
   }
 
-  private static isValidLocale = (locale: AvaliableLocale) => {
-    return validateEnumIncludesValue({ enum: AvaliableLocale, value: locale });
+  private static isValidLocale = (locale: AvailableLocale) => {
+    return validateEnumIncludesValue({ enum: AvailableLocale, value: locale });
   };
 
   public static create(props: CurrencyProps): Result<Currency> {
-    if (!this.isValidCurrency(AvaliableCurrency[props.symbol])) {
+    //
+    if (!this.isValidCurrency(AvailableCurrency[props.symbol])) {
       return Result.fail<Currency>(ERROR_INVALID_CURRENCY);
     }
-    if (!this.isValidLocale(AvaliableLocale[props.locale])) {
+    //
+    if (!this.isValidLocale(AvailableLocale[props.locale])) {
       return Result.fail<Currency>(ERROR_INVALID_LOCALE);
     }
+
     props.value = transformMonetaryValueInTwoDecimalsValue(props.value);
     return Result.ok<Currency>(new Currency(props));
   }

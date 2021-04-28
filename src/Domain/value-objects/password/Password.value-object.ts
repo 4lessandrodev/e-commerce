@@ -1,3 +1,6 @@
+export const PASSWORD_MIN_LENGTH = 5;
+export const PASSWORD_MAX_LENGTH = 21;
+export const PASSWORD_SALT = 10;
 import { Result, ValueObject } from 'types-ddd';
 import { hashSync, compareSync } from 'bcrypt';
 import {
@@ -5,9 +8,6 @@ import {
   ERROR_INVALID_PASSWORD_MIN_LENGTH,
 } from './PasswordErrors.domain';
 import { isBcryptHash } from '@domain/utils/validate-bcrypt-hash.domain.util';
-export const PASSWORD_MIN_LENGTH = 8;
-export const PASSWORD_MAX_LENGTH = 21;
-export const PASSWORD_SALT = 10;
 
 interface PasswordValueObjectProps {
   value: string;

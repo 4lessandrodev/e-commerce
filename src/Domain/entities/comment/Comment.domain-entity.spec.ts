@@ -58,7 +58,7 @@ describe('Comment.domain-entity', () => {
     expect(createdComment.getResult().isDeleted).toBe(false);
     expect(createdComment.getResult().reportedCommentQuantity).toBe(0);
     for (let index = 0; index <= COMMENT_MIN_QUANTITY_TO_DELETE; index++) {
-      createdComment.getResult().incremmentCommentReport();
+      createdComment.getResult().incrementCommentReport();
     }
     expect(createdComment.getResult().reportedCommentQuantity).toBeGreaterThan(
       COMMENT_MIN_QUANTITY_TO_DELETE,

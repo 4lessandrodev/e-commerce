@@ -1,21 +1,21 @@
-import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
-import { Comment, ProductCategory, Tag } from '../../entities';
-import {
-  validateNumberGreatterOrEqualToZero,
-  validateNumberGreatterThanZero,
-  validateStringLengthBetweenMaxAndMin,
-} from '../../utils';
-
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
-import { ProductProps } from './Product.domain-aggregate-root-interface';
+export const MAX_PRODUCT_DESCRIPTION_LENGTH = 80;
+export const MIN_PRODUCT_DESCRIPTION_LENGTH = 3;
+export const MAX_PRODUCT_RATING_AVERAGE = 5;
 import {
   ERROR_PRODUCT_AVAILABLE_QUANTITY,
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
-export const MAX_PRODUCT_DESCRIPTION_LENGTH = 80;
-export const MIN_PRODUCT_DESCRIPTION_LENGTH = 3;
-export const MAX_PRODUCT_RATING_AVERAGE = 5;
+import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
+import { Comment, ProductCategory, Tag } from '@domain/entities';
+import {
+  validateNumberGreaterOrEqualToZero,
+  validateNumberGreaterThanZero,
+  validateStringLengthBetweenMaxAndMin,
+} from '@domain/utils';
+
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { ProductProps } from './Product.domain-aggregate-root-interface';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -108,7 +108,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   launchStock(quantity: number): void {
-    const isValidStock = validateNumberGreatterOrEqualToZero(quantity);
+    const isValidStock = validateNumberGreaterOrEqualToZero(quantity);
     if (!isValidStock) {
       return;
     }
@@ -121,7 +121,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   decrementStock(): void {
-    const isValidStock = validateNumberGreatterThanZero(
+    const isValidStock = validateNumberGreaterThanZero(
       this.props.quantityAvailable,
     );
     if (!isValidStock) {
@@ -201,7 +201,7 @@ export class Product extends AggregateRoot<ProductProps> {
     if (!isValidDescription) {
       return Result.fail<Product>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
     }
-    const isValidQuantity = validateNumberGreatterOrEqualToZero(
+    const isValidQuantity = validateNumberGreaterOrEqualToZero(
       props.quantityAvailable,
     );
     if (!isValidQuantity) {

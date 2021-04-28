@@ -1,6 +1,6 @@
+import { ERROR_INVALID_EMAIL_FORMAT } from './EmailErrors.domain';
 import { isValidEmail, transformStringToLowerCase } from '@domain/utils';
 import { Result, ValueObject } from 'types-ddd';
-import { ERROR_INVALID_EMAIL_FORMAT } from './EmailErrors.domain';
 export interface EmailValueObjectProps {
   value: string;
 }

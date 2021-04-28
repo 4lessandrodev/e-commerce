@@ -21,7 +21,16 @@
       ],
       "@shared/*": [
         "Shared/*"
+      ],
+      "@repo/*": [
+        "Repo/*"
+      ],
+      "@app/*": [
+        "Application/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "*.md"
+  ]
 }

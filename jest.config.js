@@ -30,5 +30,7 @@ module.exports = {
     '@domain/(.*)': '<rootDir>/src/Domain/$1',
     '@shared/(.*)': '<rootDir>/src/Shared/core/$1',
     '@infra/(.*)': '<rootDir>/src/Infra/$1',
+    '@app/(.*)': '<rootDir>/src/Application/$1',
+    '@repo/(.*)': '<rootDir>/src/Repo/$1',
   },
 };
