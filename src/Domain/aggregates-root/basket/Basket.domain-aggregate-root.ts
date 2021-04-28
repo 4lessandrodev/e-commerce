@@ -7,7 +7,7 @@ import {
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
 import { Comment, BasketCategory, Tag } from '@domain/entities';
-import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
 export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_RATING_AVERAGE = 5;

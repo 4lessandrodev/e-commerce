@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '@domain/aggregates-root';
 import { validateNumberGreaterThanZero } from '@domain/utils';
 import { MonetaryValueObject } from '@domain/value-objects';

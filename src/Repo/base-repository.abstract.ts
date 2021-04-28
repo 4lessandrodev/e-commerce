@@ -1,4 +1,4 @@
-import { Filter } from 'types-ddd/dist/src';
+import { Filter } from 'types-ddd';
 
 export interface BaseRepository<Aggregate> {
   exists: (filter: Filter) => Promise<boolean>;

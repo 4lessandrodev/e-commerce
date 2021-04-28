@@ -1,5 +1,5 @@
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
-import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { Role, UserProps } from './User.domain-aggregate-root-interface';
 
 export class User extends AggregateRoot<UserProps> {

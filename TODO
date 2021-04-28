@@ -24,6 +24,7 @@ Todo:
   ✔ Create Basket - Aggregate-Root @started(20-12-26 20:21) @done(20-12-27 00:55) @lasted(4h34m14s)
   ✔ Create User - Aggregate-Root @started(20-12-27 21:51) @done(20-12-27 23:18) @lasted(1h27m38s)
   ☐ Create Client - Aggregte-Root @started(21-04-26 23:38) 
+  ☐ Refactor repository to query-repo and repository
   ☐ Create Zip Code - Value Object
   ☐ Create Readme Structure for each aggregate and entity
   ☐ Refactor Array items on Aggregates to WriteList
@@ -67,9 +68,9 @@ Todo:
   ☐ Create use case - RemoveProductFromCart [CLIENT]
   ☐ Create use case - AddCustomBasketOnCart [CLIENT]
   ☐ Create use case - RemoveCustomBasketfromCart [CLIENT]
-  ☐ Create use case - SignUp [ADMIN, DELIVERYMAN, CLIENT]
+  ✔ Create use case - SignUp [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
   ☐ Create use case - DefineAnUserAsDeliveryMan [ADMIN]
-  ☐ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT]
+  ✔ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
   ☐ Create use case - ResetPassword [ADMIN, DELIVERYMAN, CLIENT]
   ☐ Create use case - SendEmailWithResetPasswordToken [ADMIN, DELIVERYMAN, CLIENT]
   ☐ Create use case - DeactivateUser [ADMIN]

@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import { ProductCategoryProps } from './ProductCategory.domain-entity-interface';
 import { ERROR_PRODUCT_CATEGORY_DESCRIPTION_LENGTH } from './ProductCategoryErrors.domain-entity';

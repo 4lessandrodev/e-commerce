@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from 'types-ddd/dist/src';
+import { BaseDomainEntity } from 'types-ddd';
 import { BasketCategory, Comment, Tag } from '@domain/entities';
 import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { Product } from '../product/Product.domain-aggregate-root';

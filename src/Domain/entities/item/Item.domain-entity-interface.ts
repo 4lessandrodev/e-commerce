@@ -1,4 +1,4 @@
-import { BaseDomainEntity, UniqueEntityID } from 'types-ddd/dist/src';
+import { BaseDomainEntity, UniqueEntityID } from 'types-ddd';
 import { MonetaryValueObject } from '@domain/value-objects';
 
 export interface ItemProps<T> extends BaseDomainEntity {

@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from 'types-ddd/dist/src';
+import { BaseDomainEntity } from 'types-ddd';
 import { CityId, RegionId, StateId } from '@domain/entities';
 import { UserId } from '../user/UserId.domain-aggregate-root';
 import { AvailableInitials } from '@domain/value-objects';

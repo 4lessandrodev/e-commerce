@@ -1,5 +1,5 @@
 import { image, random } from 'faker';
-import { Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Result, UniqueEntityID } from 'types-ddd';
 import { Comment, ProductCategory, Tag } from '@domain/entities';
 import {
   ImageValueObject,

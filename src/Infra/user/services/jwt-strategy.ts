@@ -5,9 +5,8 @@ import { Model } from 'mongoose';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { User } from '@domain/aggregates-root';
 import { JwtPayload } from '../interfaces/jwt.payload.interface';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserDocument } from '../user.schema';
-import { JWT_SECRET } from '../../configs/env';
+import { JWT_SECRET } from '@infra/configs/env';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy<any>(Strategy) {

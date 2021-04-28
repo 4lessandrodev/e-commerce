@@ -7,7 +7,7 @@ import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemProduct } from './ItemProduct.domain-entity';
 import { ItemId } from './ItemId.domain-entity';
 import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
-import { Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Result, UniqueEntityID } from 'types-ddd';
 import { ProductId } from '../../aggregates-root/product/ProductId.domain-aggregate-root';
 
 describe('ItemProduct.domain-entity', () => {

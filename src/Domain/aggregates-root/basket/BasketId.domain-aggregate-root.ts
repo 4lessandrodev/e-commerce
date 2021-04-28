@@ -1,4 +1,4 @@
-import { Entity, UniqueEntityID } from 'types-ddd/dist/src';
+import { Entity, UniqueEntityID } from 'types-ddd';
 
 export class BasketId extends Entity<any> {
   get id(): UniqueEntityID {

@@ -1,10 +1,10 @@
-import { IUseCase, Result } from 'types-ddd/dist/src';
+import { IUseCase, Result } from 'types-ddd';
 import { Payload } from '@infra/user/interfaces/payload.interface';
 import { SignUpDto } from './sign-up.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '@infra/user/user.repository';
+import { UserRepository } from '@infra/user/repo/user.repository';
 
 @Injectable()
 export class SignUpUseCase implements IUseCase<SignUpDto, Result<Payload>> {

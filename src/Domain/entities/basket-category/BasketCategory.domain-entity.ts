@@ -1,4 +1,4 @@
-import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import {
   convertNegativeNumberToPositive,
   validateStringLengthBetweenMaxAndMin,

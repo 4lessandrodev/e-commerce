@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from 'types-ddd/dist/src';
+import { BaseDomainEntity } from 'types-ddd';
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 export enum Roles {
   'DEVELOPER',

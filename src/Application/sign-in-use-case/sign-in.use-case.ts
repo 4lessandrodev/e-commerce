@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IUseCase, Result } from 'types-ddd/dist/src';
+import { IUseCase, Result } from 'types-ddd';
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { SignInDto } from './sign-in.dto';
 import { User } from '@domain/aggregates-root';
-import { UserRepository } from '@infra/user/user.repository';
+import { UserRepository } from '@infra/user/repo/user.repository';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
 
 @Injectable()

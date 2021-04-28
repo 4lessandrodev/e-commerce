@@ -1,4 +1,4 @@
-import { BaseDomainEntity } from 'types-ddd/dist/src';
+import { BaseDomainEntity } from 'types-ddd';
 import { ProductCategory, Tag } from '../../entities';
 import { Comment } from '../../entities/comment/Comment.domain-entity';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';

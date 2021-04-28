@@ -1,9 +1,8 @@
-import { Filter } from 'types-ddd/dist/src';
+import { Filter } from 'types-ddd';
 import { User as Aggregate } from '@domain/aggregates-root';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { User, UserDocument } from '@infra/user/user.schema';
 import { Model } from 'mongoose';
 import { UserMapper } from './user.mapper';
@@ -35,19 +34,5 @@ export class UserRepository implements UserRepositoryInterface {
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
     await this.conn.create(schema);
-  }
-
-  // Query Repository
-  //---------------------------------------------------------
-
-  async getMyProfile(id: string): Promise<User> {
-    const profile = await this.conn.findOne(
-      { id },
-      { password: 0, _id: 0, role: 0, __v: 0 },
-    );
-    if (!profile) {
-      throw new NotFoundException('Profile not found');
-    }
-    return profile;
   }
 }
