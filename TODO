@@ -23,9 +23,12 @@ Todo:
   ✔ Create Product - Aggregate-Root @started(20-12-25 23:05) @done(20-12-26 01:57) @lasted(2h52m23s)
   ✔ Create Basket - Aggregate-Root @started(20-12-26 20:21) @done(20-12-27 00:55) @lasted(4h34m14s)
   ✔ Create User - Aggregate-Root @started(20-12-27 21:51) @done(20-12-27 23:18) @lasted(1h27m38s)
-  ☐ Create Client - Aggregte-Root @started(21-04-26 23:38) 
   ✔ Refactor repository to query-repo and repository @done(21-04-29 00:38)
   ☐ Create Zip Code - Value Object
+  ☐ Refactor City - Embed state initial and add geoCode
+  ☐ Refactor Region - Make It an aggregate root and Add relationship with city
+  ☐ Create Address Entity
+  ☐ Create Client - Aggregte-Root @started(21-04-26 23:38) 
   ☐ Create Readme Structure for each aggregate and entity
   ☐ Refactor Array items on Aggregates to WriteList
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket

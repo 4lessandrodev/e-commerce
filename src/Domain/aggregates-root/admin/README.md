@@ -8,4 +8,17 @@
 }
 ```
 
+#### Value Object
+
+- Avatar
+- Name
+
+#### Aggregate
+
+- Id
+
 #### Methods
+
+- ChangeAvatar
+- ChangeName
+- RemoveAvatar

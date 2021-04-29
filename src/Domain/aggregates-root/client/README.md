@@ -11,27 +11,10 @@
       "id": "String",
       "zipCode": "String",
       "street": "String",
-      "complement": "String",
       "number": "String",
-      "geoCode": "Number",
+      "complement": "String",
       "isMainAddress": "Boolean",
-      "zone": {
-        "id": "String",
-        "description": "String",
-        "freight": {
-          "currency": {
-            "value": "Number",
-            "symbol": "Enum",
-            "locale": "Enum"
-          }
-        }
-      },
-      "city": {
-        "id": "String",
-        "name": "String",
-        "stateId": "id",
-        "state": "Enum"
-      }
+      "region": "RegionId"
     }
   ]
 }
@@ -42,22 +25,24 @@
 #### Aggregates
 
 - Id
+- Region
 
 #### Entities
 
-- City
-- State
 - Address
 
 #### Value Objects
 
 - Avatar
+- ZipCode
 
 #### Methods
 
 - AddNewAddress
-- RemoveAddress
-- DefineMainAddress
-- ChangeAddress
+- RemoveOneAddress
+- DefineAsMainAddress
 - ChangeName
-- ChangeAvatar
+- ChangeZipCode
+- ChangeStreetName
+- ChangeNumber
+- ChangeComplement

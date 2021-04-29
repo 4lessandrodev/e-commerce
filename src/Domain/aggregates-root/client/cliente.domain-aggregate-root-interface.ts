@@ -1,26 +1,22 @@
 import { BaseDomainEntity } from 'types-ddd';
-import { CityId, RegionId, StateId } from '@domain/entities';
+import { RegionId } from '@domain/entities';
 import { UserId } from '../user/UserId.domain-aggregate-root';
-import { AvailableInitials } from '@domain/value-objects';
+import { ImageValueObject } from '@domain/value-objects';
 
 export interface ClientProps extends BaseDomainEntity {
-  userId: UserId;
-  address: {
-    street: string;
-    region: {
-      id: RegionId;
-      geoCode: number;
-      description: string;
-    };
-    city: {
-      id: CityId;
-      name: string;
-      stateId: StateId;
-      state: keyof typeof AvailableInitials;
-    };
-    complement: string;
-    number: string;
-    zone: string;
-    zipCode: string;
-  };
+  id: UserId;
+  name: string;
+  avatar: ImageValueObject;
+  hasEcobag: boolean;
+  addresses: [
+    {
+      id: string;
+      zipCode: string;
+      street: string;
+      number: string;
+      complement: string;
+      isMainAddress: boolean;
+      region: RegionId;
+    },
+  ];
 }
