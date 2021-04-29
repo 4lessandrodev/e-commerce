@@ -3,11 +3,11 @@ import {
   Injectable,
   PreconditionFailedException,
 } from '@nestjs/common';
-import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
+import { SignUpUseCase } from '@app/sign-up-use-case/sign-up.use-case';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Payload } from './interfaces/payload.interface';
-import { SignUpUseCase } from '@app/sign-up-use-case/sign-up.use-case';
+import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
 import { User } from './user.schema';
 import { UserQuery } from './repo/user.query';
 
@@ -19,21 +19,21 @@ export class UserService {
     @Inject(UserQuery) private readonly userQuery: UserQuery,
   ) {}
 
-  async signIn(dto: SignInDto): Promise<void> {
+  async signIn(dto: SignInDto): Promise<Payload> {
     const result = await this.signInUseCase.execute(dto);
     //
     if (result.isFailure) {
       throw new PreconditionFailedException(result.error);
     }
+    return { token: result.getResult().token };
   }
 
-  async SignUp(dto: SignUpDto): Promise<Payload> {
+  async SignUp(dto: SignUpDto): Promise<void> {
     const result = await this.signUpUseCase.execute(dto);
     if (result.isFailure) {
       //
       throw new PreconditionFailedException(result.error);
     }
-    return { token: result.getResult().token };
   }
 
   // Query Repository

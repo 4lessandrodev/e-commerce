@@ -14,6 +14,7 @@ export class UserMapper implements IMapper<User, Schema> {
         role: target.role,
         createdAt: target.createdAt,
         updatedAt: target.updatedAt,
+        terms: target.terms,
       },
       DomainId.create(target.id).id,
     ).getResult();
@@ -28,6 +29,7 @@ export class UserMapper implements IMapper<User, Schema> {
       password: target.password.value,
       role: target.role,
       updatedAt: target.updatedAt,
+      terms: target.terms,
     };
   }
 }

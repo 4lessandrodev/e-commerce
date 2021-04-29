@@ -15,7 +15,7 @@ export class UserRepository implements UserRepositoryInterface {
   ) {}
 
   async exists(filter: Filter): Promise<boolean> {
-    return await this.conn.exists({ filter });
+    return await this.conn.exists(filter);
   }
 
   async find(filter: Filter): Promise<Aggregate | null> {
@@ -28,7 +28,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete({ filter }).exec();
+    await this.conn.findOneAndDelete(filter).exec();
   }
 
   async save(target: Aggregate): Promise<void> {

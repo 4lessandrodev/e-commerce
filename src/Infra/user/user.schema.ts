@@ -2,6 +2,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Role, Roles } from '@domain/aggregates-root';
 
+export interface Term {
+  acceptedAt: Date;
+  browser: string;
+  ip: string;
+  os: string;
+  termVersion: string;
+}
+
 export type UserDocument = User & Document;
 
 @Schema({ autoCreate: true, autoIndex: true, timestamps: true })
@@ -29,6 +37,9 @@ export class User {
 
   @Prop({ type: Date, default: new Date() })
   updatedAt!: Date;
+
+  @Prop({ type: Array })
+  terms!: Term[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

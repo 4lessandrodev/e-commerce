@@ -7,7 +7,16 @@
   "password": "String",
   "role": "Enum",
   "isActive": "Boolean",
-  "isTheEmailConfirmed": "Boolean"
+  "isTheEmailConfirmed": "Boolean",
+  "acceptedTerms": [
+    {
+      "ip": "String",
+      "date": "Date",
+      "os": "String",
+      "browser": "String",
+      "termVersion": "String"
+    }
+  ]
 }
 ```
 

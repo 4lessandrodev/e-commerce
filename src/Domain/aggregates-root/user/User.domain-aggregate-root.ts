@@ -1,6 +1,6 @@
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-import { Role, UserProps } from './User.domain-aggregate-root-interface';
+import { Role, Term, UserProps } from './User.domain-aggregate-root-interface';
 
 export class User extends AggregateRoot<UserProps> {
   private constructor(props: UserProps, id?: UniqueEntityID) {
@@ -49,6 +49,10 @@ export class User extends AggregateRoot<UserProps> {
 
   get isTheEmailConfirmed(): boolean {
     return this.props.isTheEmailConfirmed;
+  }
+
+  get terms(): Term[] {
+    return this.props.terms;
   }
 
   confirmEmail(): void {

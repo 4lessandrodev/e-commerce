@@ -1,64 +1,39 @@
-import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
-import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
+import { Payload } from '@infra/user/interfaces/payload.interface';
 import { SignInDto } from './sign-in.dto';
-import { User } from '@domain/aggregates-root';
-import { UserRepository } from '@infra/user/repo/user.repository';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
+import { JwtService } from '@nestjs/jwt';
+import { UserRepository } from '@infra/user/repo/user.repository';
 
 @Injectable()
-export class SignInUseCase implements IUseCase<SignInDto, Result<void>> {
+export class SignInUseCase implements IUseCase<SignInDto, Result<Payload>> {
   constructor(
+    @Inject(JwtService) private readonly jwt: JwtService,
     @Inject(UserRepository) private readonly userRepo: UserRepositoryInterface,
   ) {}
-  async execute(dto: SignInDto) {
-    /**
-     * @todo inject repository
-     */
 
-    const emailOrError = EmailValueObject.create(dto.email);
-    const passwordOrError = PasswordValueObject.create(dto.password);
-
-    const checkResults = Result.combine([emailOrError, passwordOrError]);
-
-    if (checkResults.isFailure) {
-      return Result.fail<void>(checkResults.error);
-    }
-
+  async execute(dto: SignInDto): Promise<Result<Payload>> {
     try {
-      const isEmailAlreadyInUse: boolean = await this.userRepo.exists({
-        email: dto.email,
-      });
+      const user = await this.userRepo.find({ email: dto.email });
 
-      if (isEmailAlreadyInUse) {
-        return Result.fail<void>('Email Already in use');
+      if (!user) {
+        return Result.fail<Payload>('Invalid email or password');
       }
 
-      const email = emailOrError.getResult();
-      const password = passwordOrError.getResult();
+      const passwordMatch = await user.password.comparePassword(dto.password);
 
-      // Encrypt password before save
-      await password.encryptPassword();
+      if (!passwordMatch) {
+        return Result.fail<Payload>('Invalid email or password');
+      }
 
-      /**
-       * The role by default is undefined
-       * It is set when register a profile for user
-       */
-      const user = User.create({
-        email,
-        password,
-        isActive: true,
-        isTheEmailConfirmed: false,
-        role: 'UNDEFINED',
-      }).getResult();
+      const token = this.jwt.sign({ id: user.id.toString() });
 
-      await this.userRepo.save(user);
+      return Result.ok<Payload>({ token });
 
-      return Result.ok<void>();
       //
     } catch (error) {
-      //
-      return Result.fail<void>('Internal Server Error on SignIn UseCase');
+      return Result.fail<Payload>('Internal Server Error on SignUp use case');
     }
   }
 }

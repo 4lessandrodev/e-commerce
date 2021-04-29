@@ -17,6 +17,15 @@ describe('User.domain-aggregate-root', () => {
         password:
           props?.password ??
           PasswordValueObject.create('valid password').getResult(),
+        terms: [
+          {
+            acceptedAt: new Date(),
+            browser: 'firefox',
+            ip: '123.123.123.123',
+            os: 'Linux',
+            termVersion: '1.0.2',
+          },
+        ],
       },
       id,
     );
@@ -42,6 +51,15 @@ describe('User.domain-aggregate-root', () => {
         role: 'CLIENT',
         isTheEmailConfirmed: false,
         password: PasswordValueObject.create('valid password').getResult(),
+        terms: [
+          {
+            acceptedAt: new Date(),
+            browser: 'firefox',
+            ip: '123.123.123.123',
+            os: 'Linux',
+            termVersion: '1.0.2',
+          },
+        ],
       },
       userId,
     );

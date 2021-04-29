@@ -1,39 +1,65 @@
-import { IUseCase, Result } from 'types-ddd';
-import { Payload } from '@infra/user/interfaces/payload.interface';
-import { SignUpDto } from './sign-up.dto';
 import { Inject, Injectable } from '@nestjs/common';
-import { UserRepositoryInterface } from '@repo/user-repository.interface';
-import { JwtService } from '@nestjs/jwt';
+import { IUseCase, Result } from 'types-ddd';
+import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
+import { SignUpDto } from './sign-up.dto';
+import { User } from '@domain/aggregates-root';
 import { UserRepository } from '@infra/user/repo/user.repository';
+import { UserRepositoryInterface } from '@repo/user-repository.interface';
 
 @Injectable()
-export class SignUpUseCase implements IUseCase<SignUpDto, Result<Payload>> {
+export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
   constructor(
-    @Inject(JwtService) private readonly jwt: JwtService,
     @Inject(UserRepository) private readonly userRepo: UserRepositoryInterface,
   ) {}
+  async execute(dto: SignUpDto) {
+    /**
+     * @todo inject repository
+     */
 
-  async execute(dto: SignUpDto): Promise<Result<Payload>> {
+    const emailOrError = EmailValueObject.create(dto.email);
+    const passwordOrError = PasswordValueObject.create(dto.password);
+
+    const checkResults = Result.combine([emailOrError, passwordOrError]);
+
+    if (checkResults.isFailure) {
+      return Result.fail<void>(checkResults.error);
+    }
+
     try {
-      const user = await this.userRepo.find({ email: dto.email });
+      const isEmailAlreadyInUse: boolean = await this.userRepo.exists({
+        email: dto.email,
+      });
 
-      if (!user) {
-        return Result.fail<Payload>('Invalid email or password');
+      if (isEmailAlreadyInUse) {
+        return Result.fail<void>('Email Already in use');
       }
 
-      const passwordMatch = await user.password.comparePassword(dto.password);
+      const email = emailOrError.getResult();
+      const password = passwordOrError.getResult();
 
-      if (!passwordMatch) {
-        return Result.fail<Payload>('Invalid email or password');
-      }
+      // Encrypt password before save
+      await password.encryptPassword();
 
-      const token = this.jwt.sign({ id: user.id.toString() });
+      /**
+       * The role by default is undefined
+       * It is set when register a profile for user
+       */
+      const user = User.create({
+        email,
+        password,
+        isActive: true,
+        isTheEmailConfirmed: false,
+        role: 'UNDEFINED',
+        terms: [dto.term],
+      }).getResult();
 
-      return Result.ok<Payload>({ token });
+      await this.userRepo.save(user);
 
+      return Result.ok<void>();
       //
     } catch (error) {
-      return Result.fail<Payload>('Internal Server Error on SignUp use case');
+      //
+      return Result.fail<void>('Internal Server Error on SignIn UseCase');
     }
   }
 }
