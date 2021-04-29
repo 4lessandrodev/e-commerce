@@ -12,7 +12,7 @@ export interface Term {
 
 export type UserDocument = User & Document;
 
-@Schema({ autoCreate: true, autoIndex: true, timestamps: true })
+@Schema({ autoCreate: true, timestamps: true })
 export class User {
   @Prop({ type: String, required: true, index: true })
   id!: string;

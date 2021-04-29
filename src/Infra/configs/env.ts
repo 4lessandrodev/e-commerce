@@ -41,3 +41,13 @@ export const MONGO_DB = get('MONGO_DB')
   .required(true)
   .default('fazenda')
   .asString();
+
+export const ENV = get('ENV')
+  .required(true)
+  .default('DEVELOPMENT')
+  .asEnum(['DEVELOPMENT', 'PRODUCTION']);
+
+export const MONGO_URL =
+  ENV === 'PRODUCTION'
+    ? `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/${MONGO_DB}?retryWrites=true&w=majority`
+    : `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`;
