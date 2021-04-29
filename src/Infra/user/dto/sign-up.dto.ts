@@ -1,4 +1,4 @@
-import { IsEmail, Length } from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { Term } from '../user.schema';
 
 export class SignUpDto {
@@ -9,4 +9,8 @@ export class SignUpDto {
 
   @Length(5, 15)
   password!: string;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  acceptedTerm!: boolean;
 }

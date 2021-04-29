@@ -12,9 +12,11 @@ export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
     @Inject(UserRepository) private readonly userRepo: UserRepositoryInterface,
   ) {}
   async execute(dto: SignUpDto) {
-    /**
-     * @todo inject repository
-     */
+    //
+    const acceptedTerm = dto.acceptedTerm;
+    if (!acceptedTerm) {
+      return Result.fail<void>('You must accept the terms');
+    }
 
     const emailOrError = EmailValueObject.create(dto.email);
     const passwordOrError = PasswordValueObject.create(dto.password);

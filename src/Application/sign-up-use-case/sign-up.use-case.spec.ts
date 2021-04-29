@@ -24,6 +24,7 @@ describe('sign-in.use-case', () => {
     const result = await useCase.execute({
       email: 'invalid_email',
       password: '123456',
+      acceptedTerm: true,
       term: {
         acceptedAt: new Date(),
         browser: 'firefox',
@@ -42,6 +43,7 @@ describe('sign-in.use-case', () => {
     const result = await useCase.execute({
       email: 'valid_email@domain.com',
       password: '',
+      acceptedTerm: true,
       term: {
         acceptedAt: new Date(),
         browser: 'firefox',
@@ -62,6 +64,7 @@ describe('sign-in.use-case', () => {
     const result = await useCase.execute({
       email: 'already_in_use@domain.com',
       password: '',
+      acceptedTerm: true,
       term: {
         acceptedAt: new Date(),
         browser: 'firefox',
@@ -74,6 +77,29 @@ describe('sign-in.use-case', () => {
     expect(result.isFailure).toBe(true);
   });
 
+  it('should fail if not accept the terms', async () => {
+    jest.spyOn(userRepo, 'exists').mockReturnValueOnce(false);
+    const spySave = jest.spyOn(userRepo, 'save');
+
+    const useCase = new SignUpUseCase(userRepo);
+
+    const result = await useCase.execute({
+      email: 'valid_email@domain.com',
+      password: '123456',
+      acceptedTerm: false,
+      term: {
+        acceptedAt: new Date(),
+        browser: 'firefox',
+        ip: '123.123.123.123',
+        os: 'Linux',
+        termVersion: '1.0.2',
+      },
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(spySave).not.toHaveBeenCalled();
+  });
+
   it('should be success', async () => {
     jest.spyOn(userRepo, 'exists').mockReturnValueOnce(false);
     const spySave = jest.spyOn(userRepo, 'save');
@@ -83,6 +109,7 @@ describe('sign-in.use-case', () => {
     const result = await useCase.execute({
       email: 'valid_email@domain.com',
       password: '123456',
+      acceptedTerm: true,
       term: {
         acceptedAt: new Date(),
         browser: 'firefox',
