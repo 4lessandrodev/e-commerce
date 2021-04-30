@@ -1,4 +1,5 @@
 import { UniqueEntityID } from 'types-ddd';
+import { InitialStateValueObject } from '../../value-objects';
 import { StateId } from '../state/StateId.domain-entity';
 import { City } from './City.domain-entity';
 import { CityProps } from './City.domain-entity-interface';
@@ -11,6 +12,8 @@ describe('City.domain-entity', () => {
       {
         name: props?.name ?? 'Santa Catarina',
         stateId: props?.stateId ?? StateId.create(),
+        geoCode: 0,
+        stateInitial: InitialStateValueObject.create('RJ').getResult(),
       },
       id,
     );
@@ -23,21 +26,33 @@ describe('City.domain-entity', () => {
   });
 
   it('Should fail if not provide a city name', () => {
-    const validCity = makeSut({ name: '', stateId: StateId.create() });
+    const validCity = makeSut({
+      name: '',
+      stateId: StateId.create(),
+      stateInitial: InitialStateValueObject.create('RJ').getResult(),
+      geoCode: 0,
+    });
     expect(validCity.isFailure).toBe(true);
     expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
   });
 
   it('Should fail if provide a city name length less than required', () => {
-    const validCity = makeSut({ name: 'a', stateId: StateId.create() });
+    const validCity = makeSut({
+      name: 'a',
+      stateId: StateId.create(),
+      stateInitial: InitialStateValueObject.create('RJ').getResult(),
+      geoCode: 0,
+    });
     expect(validCity.isFailure).toBe(true);
     expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
   });
 
-  it('Should fail if provide a city name length more than max permited', () => {
+  it('Should fail if provide a city name length more than max permitted', () => {
     const validCity = City.create({
       name: 'this-is-a-long-city-invalid-name-to-check-the-validation',
       stateId: StateId.create(),
+      stateInitial: InitialStateValueObject.create('RJ').getResult(),
+      geoCode: 0,
     });
     expect(validCity.isFailure).toBe(true);
     expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
@@ -46,7 +61,12 @@ describe('City.domain-entity', () => {
   it('Should return the same id if provided', () => {
     const createdId = CityId.create().id;
     const validCity = City.create(
-      { name: 'Valid name', stateId: StateId.create() },
+      {
+        name: 'Valid name',
+        stateId: StateId.create(),
+        stateInitial: InitialStateValueObject.create('RJ').getResult(),
+        geoCode: 0,
+      },
       createdId,
     );
     expect(validCity.isFailure).toBe(false);
