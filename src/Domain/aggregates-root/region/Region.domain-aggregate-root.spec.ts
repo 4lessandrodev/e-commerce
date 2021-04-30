@@ -28,7 +28,7 @@ describe('Region.domain-aggregate-root', () => {
         freightPrice:
           props?.freightPrice ??
           MonetaryValueObject.create(makePrice(10)).getResult(),
-        isActive: props?.isActive,
+        isActive: props?.isActive ?? true,
         city: City.create({
           geoCode: 0,
           name: 'Valid name',
@@ -91,6 +91,7 @@ describe('Region.domain-aggregate-root', () => {
           stateId: StateId.create(),
           stateInitial: InitialStateValueObject.create('RJ').getResult(),
         }).getResult(),
+        isActive: true,
       },
       createdId,
     ).getResult();
@@ -107,6 +108,7 @@ describe('Region.domain-aggregate-root', () => {
         stateId: StateId.create(),
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       }).getResult(),
+      isActive: true,
     });
     expect(regionResult.isFailure).toBe(true);
     expect(regionResult.error).toBe(ERROR_REGION_DESCRIPTION_LENGTH);
@@ -123,6 +125,7 @@ describe('Region.domain-aggregate-root', () => {
         stateId: StateId.create(),
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       }).getResult(),
+      isActive: true,
     });
 
     expect(regionResult.isFailure).toBe(true);
