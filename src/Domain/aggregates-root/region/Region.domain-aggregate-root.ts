@@ -1,12 +1,13 @@
-import { Entity, Result, UniqueEntityID } from 'types-ddd';
+import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import { MonetaryValueObject } from '@domain/value-objects';
-import { RegionProps } from './Region.domain-entity-interface';
-import { ERROR_REGION_DESCRIPTION_LENGTH } from './RegionErrors.domain-entity';
+import { RegionProps } from './Region.domain-aggregate-root-interface';
+import { ERROR_REGION_DESCRIPTION_LENGTH } from './RegionErrors.domain';
+import { City } from '@domain/entities';
 export const REGION_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const REGION_DESCRIPTION_MIN_STRING_LENGTH = 3;
 
-export class Region extends Entity<RegionProps> {
+export class Region extends AggregateRoot<RegionProps> {
   private constructor(props: RegionProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -27,8 +28,8 @@ export class Region extends Entity<RegionProps> {
     return this.props.isActive ?? true;
   }
 
-  get geoCode(): number {
-    return this.props.geoCode ?? 0;
+  get city(): City {
+    return this.props.city;
   }
 
   deactivate(): void {

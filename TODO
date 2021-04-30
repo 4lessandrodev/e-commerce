@@ -26,7 +26,7 @@ Todo:
   ✔ Refactor repository to query-repo and repository @done(21-04-29 00:38)
   ✔ Create Zip Code - Value Object @started(21-04-29 20:07) @done(21-04-29 22:02) @lasted(1h55m48s)
   ✔ Refactor City - Embed state initial and add geoCode @started(21-04-29 22:06) @done(21-04-29 22:35) @lasted(29m31s)
-  ☐ Refactor Region - Make It an aggregate root and Add relationship with city
+  ✔ Refactor Region - Make It an aggregate root and Add relationship with city @started(21-04-29 22:51) @done(21-04-29 23:06) @lasted(15m2s)
   ☐ Create Address Entity
   ☐ Create Client - Aggregte-Root @started(21-04-26 23:38) 
   ☐ Create Readme Structure for each aggregate and entity
