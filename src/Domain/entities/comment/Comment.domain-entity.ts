@@ -16,7 +16,7 @@ export class Comment extends Entity<CommentProps> {
   }
 
   get text(): string {
-    return this.props.text;
+    return this.props.text.toLowerCase();
   }
 
   get likes(): number {

@@ -2,7 +2,7 @@ import { UniqueEntityID } from 'types-ddd';
 import { InitialStateValueObject } from '../../value-objects';
 import { StateId } from '../state/StateId.domain-entity';
 import { City } from './City.domain-entity';
-import { CityProps } from './City.domain-entity-interface';
+import { CityProps } from './City.domain-entity.interface';
 import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain-entity';
 import { CityId } from './CityId.domain-entity';
 

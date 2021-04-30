@@ -5,3 +5,5 @@ export * from './basket/BasketId.domain-aggregate-root';
 export * from './user/User.domain-aggregate-root';
 export * from './user/UserId.domain-aggregate-root';
 export * from './user/User.domain-aggregate-root-interface';
+export * from './region/Region.domain-aggregate-root';
+export * from './region/RegionId.domain-aggregate-root';

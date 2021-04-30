@@ -1,10 +1,10 @@
 import { BaseDomainEntity } from 'types-ddd';
-import { City } from '../../entities';
-import { MonetaryValueObject } from '../../value-objects';
+import { City } from '@domain/entities';
+import { MonetaryValueObject } from '@domain/value-objects';
 
 export interface RegionProps extends BaseDomainEntity {
   description: string;
   freightPrice: MonetaryValueObject;
   city: City;
-  isActive?: boolean;
+  isActive: boolean;
 }

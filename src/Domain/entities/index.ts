@@ -21,3 +21,4 @@ export * from './product-category/ProductCategoryId.domain-entity';
 export * from '../aggregates-root/region/RegionId.domain-aggregate-root';
 export * from './state/StateId.domain-entity';
 export * from './tag/TagId.domain-entity';
+export * from './address/Address.domain-entity';
