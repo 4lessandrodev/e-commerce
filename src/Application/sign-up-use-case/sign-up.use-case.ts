@@ -42,16 +42,12 @@ export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
       // Encrypt password before save
       await password.encryptPassword();
 
-      /**
-       * The role by default is undefined
-       * It is set when register a profile for user
-       */
       const user = User.create({
         email,
         password,
         isActive: true,
         isTheEmailConfirmed: false,
-        role: 'UNDEFINED',
+        role: 'CLIENT',
         terms: [dto.term],
       }).getResult();
 

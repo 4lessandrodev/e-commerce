@@ -1,3 +1,12 @@
+import { AuthGuard } from '@nestjs/passport';
+import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
+import { JwtPayload } from './interfaces/jwt.payload.interface';
+import { Payload } from './interfaces/payload.interface';
+import { GetUser } from './services/get-user.decorator';
+import { Term, User } from './entities/user.schema';
+import { UserService } from './user.service';
+import { GetUserAgent } from './services/get-user-agent.decorator';
 import {
   Body,
   Controller,
@@ -6,18 +15,8 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
-  Request,
   Ip,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { SignInDto } from './dto/sign-in.dto';
-import { SignUpDto } from './dto/sign-up.dto';
-import { JwtPayload } from './interfaces/jwt.payload.interface';
-import { Payload } from './interfaces/payload.interface';
-import { GetUser } from './services/get-user.decorator';
-import { Term, User } from './user.schema';
-import { UserService } from './user.service';
-import { GetUserAgent } from './services/get-user-agent.decorator';
 
 @Controller('v1/auth')
 @UsePipes(new ValidationPipe())

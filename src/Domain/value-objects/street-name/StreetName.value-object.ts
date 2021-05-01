@@ -8,7 +8,7 @@ export interface StreetNameProps {
   value: string;
 }
 
-export class StreetName extends ValueObject<StreetNameProps> {
+export class StreetNameValueObject extends ValueObject<StreetNameProps> {
   private constructor(props: StreetNameProps) {
     super(props);
   }
@@ -17,7 +17,7 @@ export class StreetName extends ValueObject<StreetNameProps> {
     return this.props.value;
   }
 
-  public static create(street: string): Result<StreetName> {
+  public static create(street: string): Result<StreetNameValueObject> {
     const isValidStreetLength = validateStringLengthBetweenMaxAndMin({
       maxLength: MAX_STREET_NAME_LENGTH,
       minLength: MIN_STREET_NAME_LENGTH,
@@ -25,9 +25,11 @@ export class StreetName extends ValueObject<StreetNameProps> {
     });
 
     if (!isValidStreetLength) {
-      return Result.fail<StreetName>(ERROR_STREET_NAME_LENGTH);
+      return Result.fail<StreetNameValueObject>(ERROR_STREET_NAME_LENGTH);
     }
 
-    return Result.ok<StreetName>(new StreetName({ value: street }));
+    return Result.ok<StreetNameValueObject>(
+      new StreetNameValueObject({ value: street }),
+    );
   }
 }

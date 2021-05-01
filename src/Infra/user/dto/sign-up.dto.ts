@@ -1,5 +1,5 @@
 import { IsBoolean, IsEmail, IsNotEmpty, Length } from 'class-validator';
-import { Term } from '../user.schema';
+import { Term } from '../entities/user.schema';
 
 export class SignUpDto {
   term!: Term;

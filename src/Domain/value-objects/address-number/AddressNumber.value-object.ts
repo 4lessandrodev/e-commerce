@@ -8,7 +8,7 @@ export interface AddressNumberProps {
   value: string;
 }
 
-export class AddressNumber extends ValueObject<AddressNumberProps> {
+export class AddressNumberValueObject extends ValueObject<AddressNumberProps> {
   private constructor(props: AddressNumberProps) {
     super(props);
   }
@@ -17,7 +17,7 @@ export class AddressNumber extends ValueObject<AddressNumberProps> {
     return this.props.value;
   }
 
-  public static create(street: string): Result<AddressNumber> {
+  public static create(street: string): Result<AddressNumberValueObject> {
     const isValidStreetLength = validateStringLengthBetweenMaxAndMin({
       maxLength: MAX_ADDRESS_NUMBER_LENGTH,
       minLength: MIN_ADDRESS_NUMBER_LENGTH,
@@ -25,9 +25,11 @@ export class AddressNumber extends ValueObject<AddressNumberProps> {
     });
 
     if (!isValidStreetLength) {
-      return Result.fail<AddressNumber>(ERROR_ADDRESS_NUMBER_LENGTH);
+      return Result.fail<AddressNumberValueObject>(ERROR_ADDRESS_NUMBER_LENGTH);
     }
 
-    return Result.ok<AddressNumber>(new AddressNumber({ value: street }));
+    return Result.ok<AddressNumberValueObject>(
+      new AddressNumberValueObject({ value: street }),
+    );
   }
 }

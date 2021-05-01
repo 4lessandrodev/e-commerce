@@ -14,8 +14,8 @@ export type UserDocument = User & Document;
 
 @Schema({ autoCreate: true, timestamps: true })
 export class User {
-  @Prop({ type: String, required: true, index: true })
-  id!: string;
+  @Prop({ type: String, required: true, index: true, immutable: true })
+  readonly id!: string;
 
   @Prop({ type: String, required: true, index: true })
   email!: string;

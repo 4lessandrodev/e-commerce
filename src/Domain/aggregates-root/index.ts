@@ -7,3 +7,4 @@ export * from './user/UserId.domain-aggregate-root';
 export * from './user/User.domain-aggregate-root-interface';
 export * from './region/Region.domain-aggregate-root';
 export * from './region/RegionId.domain-aggregate-root';
+export * from './client/client.domain-aggregate-root';

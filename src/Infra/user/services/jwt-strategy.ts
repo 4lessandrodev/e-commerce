@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { User } from '@domain/aggregates-root';
 import { JwtPayload } from '../interfaces/jwt.payload.interface';
-import { UserDocument } from '../user.schema';
+import { UserDocument } from '../entities/user.schema';
 import { JWT_SECRET } from '@infra/configs/env';
 
 @Injectable()

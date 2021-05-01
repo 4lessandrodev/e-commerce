@@ -1,5 +1,5 @@
 import { User } from '@domain/aggregates-root';
-import { User as Schema } from '@infra/user/user.schema';
+import { User as Schema } from '@infra/user/entities/user.schema';
 import { DomainId } from 'types-ddd';
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { UserMapper } from './user.mapper';
@@ -8,9 +8,9 @@ describe('user.mapper', () => {
   //
   const currentDate = new Date();
   const email = 'valid_email@domain.com';
-  const role = 'UNDEFINED';
+  const role = 'ADMIN';
   const password = '123456';
-  const id = 'SFPOIPJDFG46565D.DFG4';
+  const id = 'SF-PO.IPJ.DFG46565D.DFG4';
   const terms = [
     {
       acceptedAt: currentDate,

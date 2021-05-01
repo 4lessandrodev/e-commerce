@@ -3,7 +3,7 @@ import { User as Aggregate } from '@domain/aggregates-root';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from '@infra/user/user.schema';
+import { User, UserDocument } from '@infra/user/entities/user.schema';
 import { Model } from 'mongoose';
 import { UserMapper } from './user.mapper';
 
@@ -33,7 +33,7 @@ export class UserRepository implements UserRepositoryInterface {
 
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
-    await this.conn.updateOne(schema, schema, { upsert: true });
+    await this.conn.updateOne({ id: target.id }, schema, { upsert: true });
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {

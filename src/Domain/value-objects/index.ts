@@ -10,3 +10,4 @@ export * from './street-name/StreetName.value-object';
 export * from './address-complement/AddressComplement.value-object';
 export * from './address-number/AddressNumber.value-object';
 export * from './region-name/RegionName.value-object';
+export * from './user-name/UserName.value-object';

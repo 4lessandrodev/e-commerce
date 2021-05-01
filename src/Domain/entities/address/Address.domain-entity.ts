@@ -1,8 +1,8 @@
 import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import {
-  AddressComplement,
-  AddressNumber,
-  StreetName,
+  AddressComplementValueObject,
+  AddressNumberValueObject,
+  StreetNameValueObject,
   ZipCodeValueObject,
 } from '@domain/value-objects';
 import { AddressProps } from './Address.domain-entity.interface';
@@ -13,23 +13,32 @@ export class Address extends Entity<AddressProps> {
     super(props, id);
   }
 
+  get id(): UniqueEntityID {
+    return this._id;
+  }
+
   get zipCode(): ZipCodeValueObject {
     return this.props.zipCode;
   }
-  get street(): StreetName {
+
+  get street(): StreetNameValueObject {
     return this.props.street;
   }
-  get number(): AddressNumber {
+
+  get number(): AddressNumberValueObject {
     return this.props.number;
   }
-  get complement(): AddressComplement {
+
+  get complement(): AddressComplementValueObject {
     return this.props.complement;
   }
+
   get isMainAddress(): boolean {
     return this.props.isMainAddress;
   }
-  get region(): RegionId {
-    return this.props.region;
+
+  get regionId(): RegionId {
+    return this.props.regionId;
   }
 
   public static create(

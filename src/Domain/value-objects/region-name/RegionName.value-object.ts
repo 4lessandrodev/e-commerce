@@ -8,7 +8,7 @@ export interface RegionNameProps {
   value: string;
 }
 
-export class RegionName extends ValueObject<RegionNameProps> {
+export class RegionNameValueObject extends ValueObject<RegionNameProps> {
   private constructor(props: RegionNameProps) {
     super(props);
   }
@@ -17,7 +17,7 @@ export class RegionName extends ValueObject<RegionNameProps> {
     return this.props.value;
   }
 
-  public static create(name: string): Result<RegionName> {
+  public static create(name: string): Result<RegionNameValueObject> {
     const isValidStreetLength = validateStringLengthBetweenMaxAndMin({
       maxLength: MAX_REGION_NAME_LENGTH,
       minLength: MIN_REGION_NAME_LENGTH,
@@ -25,9 +25,11 @@ export class RegionName extends ValueObject<RegionNameProps> {
     });
 
     if (!isValidStreetLength) {
-      return Result.fail<RegionName>(ERROR_REGION_NAME_LENGTH);
+      return Result.fail<RegionNameValueObject>(ERROR_REGION_NAME_LENGTH);
     }
 
-    return Result.ok<RegionName>(new RegionName({ value: name }));
+    return Result.ok<RegionNameValueObject>(
+      new RegionNameValueObject({ value: name }),
+    );
   }
 }

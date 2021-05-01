@@ -1,6 +1,6 @@
 import { DomainId, IMapper } from 'types-ddd';
 import { User } from '@domain/aggregates-root';
-import { User as Schema } from '../user.schema';
+import { User as Schema } from '../entities/user.schema';
 import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 
 export class UserMapper implements IMapper<User, Schema> {

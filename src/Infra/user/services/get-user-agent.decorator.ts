@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { HeaderUserAgent } from '../interfaces/user-agent.interface';
 import { UAParser } from 'ua-parser-js';
-import { Term } from '../user.schema';
+import { Term } from '../entities/user.schema';
 
 export const GetUserAgent = createParamDecorator(
   (data, ctx: ExecutionContext): Term => {

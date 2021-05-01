@@ -23,10 +23,6 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.role;
   }
 
-  get isUndefined(): boolean {
-    return this.props.role === 'UNDEFINED';
-  }
-
   get isClient(): boolean {
     return this.props.role === 'CLIENT';
   }
@@ -37,10 +33,6 @@ export class User extends AggregateRoot<UserProps> {
 
   get isAdmin(): boolean {
     return this.props.role === 'ADMIN';
-  }
-
-  get isDeliveryman(): boolean {
-    return this.props.role === 'DELIVERYMAN';
   }
 
   get isActive(): boolean {
@@ -70,11 +62,6 @@ export class User extends AggregateRoot<UserProps> {
     this.props.updatedAt = new Date();
   }
 
-  makeUndefined(): void {
-    this.props.role = 'UNDEFINED';
-    this.props.updatedAt = new Date();
-  }
-
   makeClient(): void {
     this.props.role = 'CLIENT';
     this.props.updatedAt = new Date();
@@ -87,11 +74,6 @@ export class User extends AggregateRoot<UserProps> {
 
   makeDeveloper(): void {
     this.props.role = 'DEVELOPER';
-    this.props.updatedAt = new Date();
-  }
-
-  makeDeliveryman(): void {
-    this.props.role = 'DELIVERYMAN';
     this.props.updatedAt = new Date();
   }
 

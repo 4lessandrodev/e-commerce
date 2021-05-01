@@ -8,7 +8,7 @@ import { JwtStrategy } from './services/jwt-strategy';
 import { UserController } from './user.controller';
 import { UserMapper } from './repo/user.mapper';
 import { UserRepository } from './repo/user.repository';
-import { User, UserSchema } from './user.schema';
+import { User, UserSchema } from './entities/user.schema';
 import { UserService } from './user.service';
 import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
 import { UserQuery } from './repo/user.query';

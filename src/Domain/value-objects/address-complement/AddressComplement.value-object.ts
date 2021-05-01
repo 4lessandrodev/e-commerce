@@ -8,7 +8,7 @@ export interface AddressComplementProps {
   value: string;
 }
 
-export class AddressComplement extends ValueObject<AddressComplementProps> {
+export class AddressComplementValueObject extends ValueObject<AddressComplementProps> {
   private constructor(props: AddressComplementProps) {
     super(props);
   }
@@ -17,7 +17,7 @@ export class AddressComplement extends ValueObject<AddressComplementProps> {
     return this.props.value;
   }
 
-  public static create(street: string): Result<AddressComplement> {
+  public static create(street: string): Result<AddressComplementValueObject> {
     const isValidStreetLength = validateStringLengthBetweenMaxAndMin({
       maxLength: MAX_ADDRESS_COMPLEMENT_LENGTH,
       minLength: MIN_ADDRESS_COMPLEMENT_LENGTH,
@@ -25,11 +25,13 @@ export class AddressComplement extends ValueObject<AddressComplementProps> {
     });
 
     if (!isValidStreetLength) {
-      return Result.fail<AddressComplement>(ERROR_ADDRESS_COMPLEMENT_LENGTH);
+      return Result.fail<AddressComplementValueObject>(
+        ERROR_ADDRESS_COMPLEMENT_LENGTH,
+      );
     }
 
-    return Result.ok<AddressComplement>(
-      new AddressComplement({ value: street }),
+    return Result.ok<AddressComplementValueObject>(
+      new AddressComplementValueObject({ value: street }),
     );
   }
 }

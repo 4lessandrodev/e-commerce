@@ -37,7 +37,6 @@ describe('User.domain-aggregate-root', () => {
     expect(createdUser.getResult().email.value).toBeDefined();
     expect(createdUser.getResult().isActive).toBe(true);
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
     expect(createdUser.getResult().isTheEmailConfirmed).toBe(false);
   });
@@ -77,59 +76,46 @@ describe('User.domain-aggregate-root', () => {
   it('Should make user as admin profile', () => {
     const createdUser = makeSut();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
     createdUser.getResult().makeAdmin();
     expect(createdUser.getResult().isAdmin).toBe(true);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
   });
 
   it('Should make user as developer profile', () => {
     const createdUser = makeSut();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
     createdUser.getResult().makeDeveloper();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(true);
   });
 
   it('Should make user as deliveryman profile', () => {
     const createdUser = makeSut();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
-    createdUser.getResult().makeDeliveryman();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(true);
     expect(createdUser.getResult().isDeveloper).toBe(false);
   });
 
   it('Should make user as undefined profile', () => {
     const createdUser = makeSut();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
-    expect(createdUser.getResult().isUndefined).toBe(false);
-    createdUser.getResult().makeUndefined();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
-    expect(createdUser.getResult().isUndefined).toBe(true);
     expect(createdUser.getResult().isDeveloper).toBe(false);
   });
 
   it('Should deactivate old profile on change for a new one', () => {
     const createdUser = makeSut();
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(false);
     expect(createdUser.getResult().isDeveloper).toBe(false);
     createdUser.getResult().makeDeveloper();
-    createdUser.getResult().makeAdmin();
-    createdUser.getResult().makeDeliveryman();
+    expect(createdUser.getResult().isDeveloper).toBe(true);
     expect(createdUser.getResult().isAdmin).toBe(false);
-    expect(createdUser.getResult().isDeliveryman).toBe(true);
+    createdUser.getResult().makeAdmin();
     expect(createdUser.getResult().isDeveloper).toBe(false);
+    expect(createdUser.getResult().isAdmin).toBe(true);
   });
 });
