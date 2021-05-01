@@ -18,13 +18,13 @@ export class UserRepository implements UserRepositoryInterface {
     return await this.conn.exists(filter);
   }
 
-  async find(filter: Filter): Promise<Aggregate | null> {
-    const userExist = await this.conn.findOne(filter).exec();
-    if (!userExist) {
+  async find(filter: Filter): Promise<Aggregate[] | null> {
+    const usersFound = await this.conn.find(filter).exec();
+    if (!usersFound) {
       return null;
     }
 
-    return this.mapper.toDomain(userExist);
+    return usersFound.map(this.mapper.toDomain);
   }
 
   async delete(filter: Filter): Promise<void> {
@@ -33,6 +33,16 @@ export class UserRepository implements UserRepositoryInterface {
 
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
-    await this.conn.create(schema);
+    await this.conn.updateOne(schema, schema, { upsert: true });
+  }
+
+  async findOne(filter: Filter): Promise<Aggregate | null> {
+    const userFound = await this.conn.findOne(filter);
+
+    if (!userFound) {
+      return null;
+    }
+
+    return this.mapper.toDomain(userFound);
   }
 }

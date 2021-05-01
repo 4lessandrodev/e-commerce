@@ -15,7 +15,7 @@ export class SignInUseCase implements IUseCase<SignInDto, Result<Payload>> {
 
   async execute(dto: SignInDto): Promise<Result<Payload>> {
     try {
-      const user = await this.userRepo.find({ email: dto.email });
+      const user = await this.userRepo.findOne({ email: dto.email });
 
       if (!user) {
         return Result.fail<Payload>('Invalid email or password');

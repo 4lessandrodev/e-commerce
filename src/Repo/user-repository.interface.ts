@@ -1,4 +1,4 @@
 import { User } from '@domain/aggregates-root';
-import { BaseRepository } from './base-repository.abstract';
+import { IBaseRepository } from 'types-ddd';
 
-export type UserRepositoryInterface = BaseRepository<User>;
+export interface UserRepositoryInterface extends IBaseRepository<User> {}

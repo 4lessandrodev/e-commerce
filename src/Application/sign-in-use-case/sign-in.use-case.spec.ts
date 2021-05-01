@@ -42,6 +42,7 @@ describe('sign-in.use-case', () => {
       delete: jest.fn(),
       exists: jest.fn(),
       find: jest.fn(),
+      findOne: jest.fn(),
       save: jest.fn(),
     };
   });
@@ -66,7 +67,7 @@ describe('sign-in.use-case', () => {
 
   it('should fail if password does not match', async () => {
     //
-    jest.spyOn(userRepository, 'find').mockResolvedValueOnce(user);
+    jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(user);
     //
     const useCase = new SignInUseCase(jwtService, userRepository);
     const result = await useCase.execute({
@@ -79,7 +80,7 @@ describe('sign-in.use-case', () => {
 
   it('should return a token with success', async () => {
     //
-    jest.spyOn(userRepository, 'find').mockResolvedValueOnce(user);
+    jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(user);
     jest.spyOn(jwtService, 'sign').mockReturnValue('valid_token');
     //
     const useCase = new SignInUseCase(jwtService, userRepository);
