@@ -18,7 +18,7 @@ import { ProductId } from './ProductId.domain-aggregate-root';
 describe('Product.domain-aggregate-root', () => {
   const makeCurrency = (value: number): Currency => {
     return Currency.create({
-      locale: 'BR',
+      locale: 'pt-BR',
       symbol: 'BRL',
       value,
     }).getResult();

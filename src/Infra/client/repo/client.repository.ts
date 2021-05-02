@@ -10,7 +10,6 @@ import { ClientMapper } from './client.mapper';
 @Injectable()
 export class ClientRepository implements ClientRepositoryInterface {
   //
-
   constructor(
     @InjectModel(Client.name) private readonly conn: Model<ClientDocument>,
     @Inject(ClientMapper) private readonly mapper: ClientMapper,

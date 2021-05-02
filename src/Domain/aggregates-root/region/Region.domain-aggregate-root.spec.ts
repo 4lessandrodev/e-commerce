@@ -13,7 +13,7 @@ import { City, StateId } from '../../entities';
 describe('Region.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
     return Currency.create({
-      locale: 'BR',
+      locale: 'pt-BR',
       symbol: 'BRL',
       value,
     }).getResult();
@@ -32,7 +32,6 @@ describe('Region.domain-aggregate-root', () => {
         city: City.create({
           geoCode: 0,
           name: 'Valid name',
-          stateId: StateId.create(),
           stateInitial: InitialStateValueObject.create('RJ').getResult(),
         }).getResult(),
       },
@@ -68,7 +67,6 @@ describe('Region.domain-aggregate-root', () => {
       city: City.create({
         geoCode: 0,
         name: 'Valid name',
-        stateId: StateId.create(),
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       }).getResult(),
     }).getResult();
@@ -88,7 +86,6 @@ describe('Region.domain-aggregate-root', () => {
         city: City.create({
           geoCode: 0,
           name: 'Valid name',
-          stateId: StateId.create(),
           stateInitial: InitialStateValueObject.create('RJ').getResult(),
         }).getResult(),
         isActive: true,
@@ -105,7 +102,6 @@ describe('Region.domain-aggregate-root', () => {
       city: City.create({
         geoCode: 0,
         name: 'Valid name',
-        stateId: StateId.create(),
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       }).getResult(),
       isActive: true,
@@ -122,7 +118,6 @@ describe('Region.domain-aggregate-root', () => {
       city: City.create({
         geoCode: 0,
         name: 'Valid name',
-        stateId: StateId.create(),
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       }).getResult(),
       isActive: true,

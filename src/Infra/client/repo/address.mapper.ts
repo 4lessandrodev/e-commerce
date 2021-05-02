@@ -8,7 +8,9 @@ import {
   ZipCodeValueObject,
 } from '@domain/value-objects';
 import { RegionId } from '@domain/aggregates-root';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class AddressMapper implements IMapper<Entity, Schema> {
   toDomain(target: Schema): Entity {
     //

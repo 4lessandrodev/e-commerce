@@ -3,9 +3,14 @@ import { Client, UserId } from '@domain/aggregates-root';
 import { Client as Schema } from '../entities/client.schema';
 import { AddressMapper } from './address.mapper';
 import { ImageValueObject, UserNameValueObject } from '@domain/value-objects';
+import { Inject, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ClientMapper implements IMapper<Client, Schema> {
-  constructor(private readonly addressMapper: AddressMapper) {}
+  constructor(
+    @Inject(AddressMapper)
+    private readonly addressMapper: AddressMapper,
+  ) {}
   toDomain(target: Schema): Client {
     return Client.create(
       {

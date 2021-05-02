@@ -1,6 +1,6 @@
 import { Entity, Result, UniqueEntityID } from 'types-ddd';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils/validate-string-length.domain.util';
-import { InitialStateValueObject } from '../../value-objects';
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils/validate-string-length.domain.util';
+import { InitialStateValueObject } from '@domain/value-objects';
 import { CityProps } from './City.domain-entity.interface';
 import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain-entity';
 export const CITY_NAME_MAX_STRING_LENGTH = 50;
@@ -17,10 +17,6 @@ export class City extends Entity<CityProps> {
 
   get name(): string {
     return this.props.name;
-  }
-
-  get stateId(): UniqueEntityID {
-    return this.props.stateId.id;
   }
 
   get geoCode(): number {

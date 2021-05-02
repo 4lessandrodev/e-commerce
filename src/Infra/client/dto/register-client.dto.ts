@@ -1,13 +1,16 @@
+import { File } from '@shared/services/upload-files/interfaces/uploader.interface';
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
   Length,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
-
 export class AddressDto {
   @IsString()
   @IsNotEmpty()
@@ -43,10 +46,14 @@ export class RegisterClientDto {
   readonly name!: string;
 
   @IsOptional()
-  avatar?: Blob;
+  avatar?: File;
 
   @IsBoolean()
   readonly hasEcobag!: boolean;
 
+  @IsNotEmpty({ each: true })
+  @IsObject({ each: true })
+  @ValidateNested()
+  @Type(() => AddressDto)
   readonly address!: AddressDto;
 }

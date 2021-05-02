@@ -9,7 +9,7 @@ describe('Monetary.value-object.ts', () => {
   }
   const makeSut = (value: number): ImakeSut => {
     const currency = Currency.create({
-      locale: 'BR',
+      locale: 'pt-BR',
       symbol: 'BRL',
       value,
     });

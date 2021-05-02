@@ -4,7 +4,7 @@ import { Currency, CurrencyProps } from './Currency.value-object';
 describe('Currency.value-object', () => {
   const makeSut = (props?: CurrencyProps): Result<Currency> => {
     return Currency.create({
-      locale: props?.locale ?? 'BR',
+      locale: props?.locale ?? 'pt-BR',
       symbol: props?.symbol ?? 'BRL',
       value: props?.value ?? 20,
     });
@@ -20,7 +20,7 @@ describe('Currency.value-object', () => {
 
   it('Should positify a currency', () => {
     const currency = makeSut({
-      locale: 'GB',
+      locale: 'en-GB',
       symbol: 'EUR',
       value: -20,
     });

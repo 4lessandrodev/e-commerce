@@ -1,3 +1,4 @@
+import { File } from '@shared/services/upload-files/interfaces/uploader.interface';
 import { JwtPayload } from '../user/interfaces/jwt.payload.interface';
 import { RegisterClientDto } from './dto/register-client.dto';
 import { GetUser } from '../user/services/get-user.decorator';

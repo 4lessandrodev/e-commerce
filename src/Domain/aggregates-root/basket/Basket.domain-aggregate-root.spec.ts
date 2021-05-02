@@ -20,7 +20,7 @@ import { BasketId } from './BasketId.domain-aggregate-root';
 describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
     return Currency.create({
-      locale: 'BR',
+      locale: 'pt-BR',
       symbol: 'BRL',
       value,
     }).getResult();
@@ -52,7 +52,7 @@ describe('Basket.domain-aggregate-root', () => {
             isSpecial: false,
             price: MonetaryValueObject.create(
               Currency.create({
-                locale: 'BR',
+                locale: 'pt-BR',
                 symbol: 'BRL',
                 value: 15,
               }).getResult(),
@@ -80,7 +80,11 @@ describe('Basket.domain-aggregate-root', () => {
     const failBasket = makeSut({
       description: random.words(20),
       price: MonetaryValueObject.create(
-        Currency.create({ locale: 'BR', symbol: 'BRL', value: 10 }).getResult(),
+        Currency.create({
+          locale: 'pt-BR',
+          symbol: 'BRL',
+          value: 10,
+        }).getResult(),
       ).getResult(),
       category: BasketCategory.create({
         changesLimit: 1,
@@ -100,7 +104,7 @@ describe('Basket.domain-aggregate-root', () => {
         description: 'valid_description',
         price: MonetaryValueObject.create(
           Currency.create({
-            locale: 'BR',
+            locale: 'pt-BR',
             symbol: 'BRL',
             value: 10,
           }).getResult(),

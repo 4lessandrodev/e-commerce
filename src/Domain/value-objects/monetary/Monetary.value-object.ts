@@ -32,6 +32,10 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
     return this.props.currency.value;
   }
 
+  get currency(): Currency {
+    return this.props.currency;
+  }
+
   /**
    * Returns type from an instance of MonetaryValueObject
    * `true` if "POSITIVE" or `false` "NEGATIVE"

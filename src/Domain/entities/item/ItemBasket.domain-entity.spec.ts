@@ -20,7 +20,7 @@ describe('ItemBasket.domain-entity', () => {
         images: [],
         price: MonetaryValueObject.create(
           Currency.create({
-            locale: 'BR',
+            locale: 'pt-BR',
             symbol: 'BRL',
             value: 10,
           }).getResult(),
@@ -30,7 +30,7 @@ describe('ItemBasket.domain-entity', () => {
       quantity: 1,
       total: MonetaryValueObject.create(
         Currency.create({
-          locale: 'BR',
+          locale: 'pt-BR',
           symbol: 'BRL',
           value: 99,
         }).getResult(),
@@ -56,7 +56,7 @@ describe('ItemBasket.domain-entity', () => {
         images: [],
         price: MonetaryValueObject.create(
           Currency.create({
-            locale: 'BR',
+            locale: 'pt-BR',
             symbol: 'BRL',
             value: 10,
           }).getResult(),
@@ -66,7 +66,7 @@ describe('ItemBasket.domain-entity', () => {
       quantity: -10,
       total: MonetaryValueObject.create(
         Currency.create({
-          locale: 'BR',
+          locale: 'pt-BR',
           symbol: 'BRL',
           value: 99,
         }).getResult(),
@@ -92,7 +92,7 @@ describe('ItemBasket.domain-entity', () => {
           images: [],
           price: MonetaryValueObject.create(
             Currency.create({
-              locale: 'BR',
+              locale: 'pt-BR',
               symbol: 'BRL',
               value: 10,
             }).getResult(),
@@ -102,7 +102,7 @@ describe('ItemBasket.domain-entity', () => {
         quantity: 1,
         total: MonetaryValueObject.create(
           Currency.create({
-            locale: 'BR',
+            locale: 'pt-BR',
             symbol: 'BRL',
             value: 99,
           }).getResult(),

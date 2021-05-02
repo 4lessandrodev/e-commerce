@@ -1,6 +1,5 @@
 import { UniqueEntityID } from 'types-ddd';
 import { InitialStateValueObject } from '../../value-objects';
-import { StateId } from '../state/StateId.domain-entity';
 import { City } from './City.domain-entity';
 import { CityProps } from './City.domain-entity.interface';
 import { ERROR_CITY_LENGTH_NAME } from './CityErrors.domain-entity';
@@ -11,7 +10,6 @@ describe('City.domain-entity', () => {
     return City.create(
       {
         name: props?.name ?? 'Santa Catarina',
-        stateId: props?.stateId ?? StateId.create(),
         geoCode: 0,
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
       },
@@ -28,7 +26,6 @@ describe('City.domain-entity', () => {
   it('Should fail if not provide a city name', () => {
     const validCity = makeSut({
       name: '',
-      stateId: StateId.create(),
       stateInitial: InitialStateValueObject.create('RJ').getResult(),
       geoCode: 0,
     });
@@ -39,7 +36,6 @@ describe('City.domain-entity', () => {
   it('Should fail if provide a city name length less than required', () => {
     const validCity = makeSut({
       name: 'a',
-      stateId: StateId.create(),
       stateInitial: InitialStateValueObject.create('RJ').getResult(),
       geoCode: 0,
     });
@@ -50,7 +46,6 @@ describe('City.domain-entity', () => {
   it('Should fail if provide a city name length more than max permitted', () => {
     const validCity = City.create({
       name: 'this-is-a-long-city-invalid-name-to-check-the-validation',
-      stateId: StateId.create(),
       stateInitial: InitialStateValueObject.create('RJ').getResult(),
       geoCode: 0,
     });
@@ -63,7 +58,7 @@ describe('City.domain-entity', () => {
     const validCity = City.create(
       {
         name: 'Valid name',
-        stateId: StateId.create(),
+
         stateInitial: InitialStateValueObject.create('RJ').getResult(),
         geoCode: 0,
       },
@@ -71,6 +66,5 @@ describe('City.domain-entity', () => {
     );
     expect(validCity.isFailure).toBe(false);
     expect(validCity.getResult().id.toString()).toBe(createdId.toString());
-    expect(validCity.getResult().stateId).toBeDefined();
   });
 });

@@ -28,10 +28,7 @@ import { UserQuery } from './repo/user.query';
   ],
   controllers: [UserController],
   providers: [
-    {
-      provide: UserMapper,
-      useFactory: () => new UserMapper(),
-    },
+    UserMapper,
     JwtStrategy,
     SignUpUseCase,
     SignInUseCase,
@@ -39,5 +36,6 @@ import { UserQuery } from './repo/user.query';
     UserQuery,
     UserService,
   ],
+  exports: [JwtStrategy, PassportModule],
 })
 export class UserModule {}

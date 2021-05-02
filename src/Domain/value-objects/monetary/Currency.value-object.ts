@@ -8,20 +8,20 @@ import {
   validateEnumIncludesValue,
 } from '@domain/utils';
 
-enum AvailableCurrency {
+export enum AvailableCurrency {
   BRL = 'Brazilian Real',
   USD = 'American Dollar',
   EUR = 'Euro',
 }
 
 export enum AvailableLocale {
-  BR = 'pt-BR',
-  PT = 'pt-PT',
-  AU = 'en-AU',
-  CA = 'en-CA',
-  GB = 'en-GB',
-  US = 'en-US',
-  ZA = 'en-ZA',
+  'pt-BR' = 'pt-BR',
+  'pt-PT' = 'pt-PT',
+  'en-AU' = 'en-AU',
+  'en-CA' = 'en-CA',
+  'en-GB' = 'en-GB',
+  'en-US' = 'en-US',
+  'en-ZA' = 'en-ZA',
 }
 
 export interface CurrencyProps {

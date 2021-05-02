@@ -1,3 +1,5 @@
+import { File } from '@shared/services/upload-files/interfaces/uploader.interface';
+
 export interface AddressDto {
   zipCode: string;
   street: string;
@@ -9,7 +11,7 @@ export interface AddressDto {
 export interface RegisterClientDto {
   userId: string;
   name: string;
-  avatar?: Blob;
+  avatar?: File;
   hasEcobag: boolean;
   address: AddressDto;
 }

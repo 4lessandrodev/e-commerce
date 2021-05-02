@@ -89,7 +89,7 @@ export class RegisterClientUseCase
         /**
          * @todo call upload avatar service here
          */
-        const uploadedFileURL = await dto.avatar.text();
+        const uploadedFileURL = dto.avatar.filename;
 
         const avatarOrError = ImageValueObject.create(uploadedFileURL);
         if (avatarOrError.isSuccess) {

@@ -17,7 +17,7 @@ describe('ItemProduct.domain-entity', () => {
   ): Result<ItemProduct> => {
     const price = MonetaryValueObject.create(
       Currency.create({
-        locale: 'BR',
+        locale: 'pt-BR',
         symbol: 'BRL',
         value: 9.9,
       }).getResult(),
@@ -44,7 +44,7 @@ describe('ItemProduct.domain-entity', () => {
           props?.total ??
           MonetaryValueObject.create(
             Currency.create({
-              locale: 'BR',
+              locale: 'pt-BR',
               symbol: 'BRL',
               value: 88,
             }).getResult(),
@@ -68,7 +68,7 @@ describe('ItemProduct.domain-entity', () => {
       item: [ProductId.create()],
       total: MonetaryValueObject.create(
         Currency.create({
-          locale: 'BR',
+          locale: 'pt-BR',
           symbol: 'BRL',
           value: 20,
         }).getResult(),
@@ -87,7 +87,7 @@ describe('ItemProduct.domain-entity', () => {
         item: [ProductId.create()],
         total: MonetaryValueObject.create(
           Currency.create({
-            locale: 'BR',
+            locale: 'pt-BR',
             symbol: 'BRL',
             value: 20,
           }).getResult(),
