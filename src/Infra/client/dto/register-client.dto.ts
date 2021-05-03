@@ -12,15 +12,13 @@ import {
   ValidateNested,
 } from 'class-validator';
 export class AddressDto {
+  @Length(8, 9)
   @IsString()
-  @IsNotEmpty()
-  @MaxLength(9)
-  readonly zipCode!: string;
+  zipCode!: string;
 
   @IsString()
-  @IsNotEmpty()
-  @MaxLength(40)
-  readonly street!: string;
+  @Length(1, 40)
+  street!: string;
 
   @IsString()
   @IsNotEmpty()

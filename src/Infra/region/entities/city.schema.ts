@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AvailableInitials } from '@domain/value-objects';
+import { Document } from 'mongoose';
 
 export type initials = keyof typeof AvailableInitials;
+
+export type CityDocument = City & Document;
 
 @Schema({ autoCreate: true, timestamps: true })
 export class City {

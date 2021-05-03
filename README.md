@@ -1,5 +1,7 @@
 # Projeto e-commerce
 
+---
+
 ### Projeto com DDD, SOLID, TDD, CLEAN CODE e POO
 
 #### Resumo
@@ -49,6 +51,14 @@ O sistema deve aceitar pagamentos em cartão de crédito ou boleto via PayPal.
 
 Cada pedido é enviado com uma ecobag retornável, o sistema deve realizar o rastreamento
 das mesmas e indicar se um cliente realizou a devolução ou não.
+
+---
+
+## Documentation
+
+Check available endpoints on postman documentation
+
+[Link Postman Api Documentation](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
 
 ## Sobre DDD
 

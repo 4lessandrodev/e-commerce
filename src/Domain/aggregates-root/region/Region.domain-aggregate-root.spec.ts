@@ -6,7 +6,10 @@ import {
 import { Currency } from '../../value-objects/monetary/Currency.value-object';
 import { Region } from './Region.domain-aggregate-root';
 import { RegionProps } from './Region.domain-aggregate-root-interface';
-import { ERROR_REGION_DESCRIPTION_LENGTH } from './RegionErrors.domain';
+import {
+  ERROR_FREIGHT_PRICE_FOR_REGION,
+  ERROR_REGION_DESCRIPTION_LENGTH,
+} from './RegionErrors.domain';
 import { RegionId } from './RegionId.domain-aggregate-root';
 import { City, StateId } from '../../entities';
 
@@ -125,5 +128,21 @@ describe('Region.domain-aggregate-root', () => {
 
     expect(regionResult.isFailure).toBe(true);
     expect(regionResult.error).toBe(ERROR_REGION_DESCRIPTION_LENGTH);
+  });
+
+  it('Should fail if provide a negative value for freight on region', () => {
+    const regionResult = makeSut({
+      description: 'valid_description',
+      freightPrice: MonetaryValueObject.create(makePrice(-15)).getResult(),
+      city: City.create({
+        geoCode: 0,
+        name: 'Valid name',
+        stateInitial: InitialStateValueObject.create('RJ').getResult(),
+      }).getResult(),
+      isActive: true,
+    });
+
+    expect(regionResult.isFailure).toBe(true);
+    expect(regionResult.error).toBe(ERROR_FREIGHT_PRICE_FOR_REGION);
   });
 });

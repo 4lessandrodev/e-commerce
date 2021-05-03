@@ -19,7 +19,7 @@ export class Region {
   @Prop({ type: String, required: true, index: true, immutable: true })
   readonly id!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, index: true })
   description!: string;
 
   @Prop({ type: Object, required: true })

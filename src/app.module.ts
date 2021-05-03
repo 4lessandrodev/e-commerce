@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './Infra/user/user.module';
 import { ClientModule } from './Infra/client/client.module';
+import { RegionModule } from './Infra/region/region.module';
 
 @Module({
   imports: [
@@ -10,11 +11,12 @@ import { ClientModule } from './Infra/client/client.module';
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       dbName: MONGO_DB,
     }),
     UserModule,
     ClientModule,
+    RegionModule,
   ],
   controllers: [],
   providers: [],

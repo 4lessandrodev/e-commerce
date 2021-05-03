@@ -1,8 +1,11 @@
+import {
+  ERROR_REGION_DESCRIPTION_LENGTH,
+  ERROR_FREIGHT_PRICE_FOR_REGION,
+} from './RegionErrors.domain';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { RegionProps } from './Region.domain-aggregate-root-interface';
-import { ERROR_REGION_DESCRIPTION_LENGTH } from './RegionErrors.domain';
 import { City } from '@domain/entities';
 export const REGION_DESCRIPTION_MAX_STRING_LENGTH = 20;
 export const REGION_DESCRIPTION_MIN_STRING_LENGTH = 3;
@@ -53,6 +56,9 @@ export class Region extends AggregateRoot<RegionProps> {
     });
     if (!isValidDescriptionLength) {
       return Result.fail<Region>(ERROR_REGION_DESCRIPTION_LENGTH);
+    }
+    if (!props.freightPrice.isPositive()) {
+      return Result.fail<Region>(ERROR_FREIGHT_PRICE_FOR_REGION);
     }
     return Result.ok<Region>(new Region(props, id));
   }

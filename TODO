@@ -28,7 +28,7 @@ Todo:
   ✔ Refactor City - Embed state initial and add geoCode @started(21-04-29 22:06) @done(21-04-29 22:35) @lasted(29m31s)
   ✔ Refactor Region - Make It an aggregate root and Add relationship with city @started(21-04-29 22:51) @done(21-04-29 23:06) @lasted(15m2s)
   ✔ Create Address Entity @done(21-04-30 01:15)
-  ☐ Create Client - Aggregte-Root @started(21-04-26 23:38) 
+  ✔ Create Client - Aggregte-Root @started(21-04-26 23:38) @done(21-05-03 01:33) @lasted(6d1h55m18s)
   ☐ Create Readme Structure for each aggregate and entity
   ☐ Refactor Array items on Aggregates to WriteList
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
@@ -49,7 +49,7 @@ Todo:
   ☐ Create use case - RegisterEcobagDevolution [DELIVERYMAN, ADMIN]
   ☐ Create use case - RegisterEcobagPrice [ADMIN]
   ☐ Create use case - RegisterCompany [ADMIN]
-  ☐ Create use case - RegisterRegion [ADMIN]
+  ✔ Create use case - RegisterRegion [ADMIN] @started(21-05-02 16:18) @done(21-05-03 01:33) @lasted(9h15m41s)
   ☐ Create use case - RegisterOrder [ADMIN, CLIENT]
   ☐ Create use case - RegisterProductCategory [ADMIN]
   ☐ Create use case - RegisterProduct [ADMIN]

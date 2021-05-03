@@ -22,7 +22,7 @@ export enum AvailableInitials {
   MS = 'MS',
   MG = 'MG',
   PA = 'PA',
-  OB = 'PB',
+  PB = 'PB',
   PR = 'PR',
   PE = 'PE',
   PI = 'PI',
@@ -38,8 +38,10 @@ export enum AvailableInitials {
   DF = 'DF',
 }
 
+export type AvailableInitialsType = keyof typeof AvailableInitials;
+
 export interface InitialStateProps {
-  value: keyof typeof AvailableInitials;
+  value: AvailableInitialsType;
 }
 
 export class InitialStateValueObject extends ValueObject<InitialStateProps> {

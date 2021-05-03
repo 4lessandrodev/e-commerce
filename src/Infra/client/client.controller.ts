@@ -19,6 +19,7 @@ import {
 @UsePipes(new ValidationPipe())
 @UseGuards(AuthGuard())
 export class ClientController {
+  //
   constructor(
     @Inject(ClientService) private readonly clientService: ClientService,
   ) {}
