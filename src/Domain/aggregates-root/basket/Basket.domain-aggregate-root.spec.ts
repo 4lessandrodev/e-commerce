@@ -47,7 +47,7 @@ describe('Basket.domain-aggregate-root', () => {
             category: ProductCategory.create({
               description: 'Frutas',
             }).getResult(),
-            images: [ImageValueObject.create(image.imageUrl()).getResult()],
+            image: ImageValueObject.create(image.imageUrl()).getResult(),
             isActive: true,
             isSpecial: false,
             price: MonetaryValueObject.create(
@@ -319,7 +319,7 @@ describe('Basket.domain-aggregate-root', () => {
       category: ProductCategory.create({
         description: 'Valid Category',
       }).getResult(),
-      images: [ImageValueObject.create(image.imageUrl()).getResult()],
+      image: ImageValueObject.create(image.imageUrl()).getResult(),
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makePrice(15)).getResult(),
@@ -337,7 +337,7 @@ describe('Basket.domain-aggregate-root', () => {
       category: ProductCategory.create({
         description: 'Valid Category',
       }).getResult(),
-      images: [ImageValueObject.create(image.imageUrl()).getResult()],
+      image: ImageValueObject.create(image.imageUrl()).getResult(),
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makePrice(15)).getResult(),

@@ -33,9 +33,8 @@ Todo:
   ☐ Refactor Array items on Aggregates to WriteList
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
   ☐ Refactor Basket Aggregate - Remove embeded Product and add reference
-  ☐ Refactor Comment to Value Object
-  ☐ Refactor Tag to Value Object
-  ☐ Create Rating - Aggregate-Root
+  ☐ Refactor Comment to Aggregate and add author
+  ☐ Create Rating - Entity to relate user, product and rating
   ☐ Create Cart - Aggregate-Root
   ☐ Create Order - Aggregate-Root
   ☐ Create Delivery - Aggregate-Root
@@ -51,7 +50,7 @@ Todo:
   ☐ Create use case - RegisterCompany [ADMIN]
   ✔ Create use case - RegisterRegion [ADMIN] @started(21-05-02 16:18) @done(21-05-03 01:33) @lasted(9h15m41s)
   ☐ Create use case - RegisterOrder [ADMIN, CLIENT]
-  ☐ Create use case - RegisterProductCategory [ADMIN]
+  ✔ Create use case - RegisterProductCategory [ADMIN] @done(21-05-03 23:47)
   ☐ Create use case - RegisterProduct [ADMIN]
   ☐ Create use case - RegisterBasketCategory [ADMIN]
   ☐ Create use case - RegisterBasket [ADMIN]
@@ -83,8 +82,6 @@ Todo:
   ☐ Create use case - ActivateBasketCategory [ADMIN]
   ☐ Create use case - IncrementBasketChangeLimit [ADMIN]
   ☐ Create use case - DecrementBasketChangeLimit [ADMIN]
-  ☐ Create use case - DeactivateProductCategory [ADMIN]
-  ☐ Create use case - ActivateProductCategory [ADMIN]
   ☐ Create use case - ClearCart [CLIENT]
   ☐ Create use case - ApplyDiscountCoupon [CLIENT]
   ☐ Create use case - RegisterDiscountCoupon [ADMIN]

@@ -1,19 +1,18 @@
 import { BaseDomainEntity } from 'types-ddd';
-import { ProductCategory, Tag } from '../../entities';
-import { Comment } from '../../entities/comment/Comment.domain-entity';
+import { CommentId, ProductCategory, Tag } from '../../entities';
 import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
 
 export interface ProductProps extends BaseDomainEntity {
   description: string;
   category: ProductCategory;
-  images: ImageValueObject[];
   isSpecial: boolean;
   price: MonetaryValueObject;
   isActive: boolean;
   quantityAvailable: number;
+  image?: ImageValueObject;
   numberOfRatings?: number;
   ratingAverage?: number;
-  comments?: Comment[];
+  commentIds?: CommentId[];
   info?: string;
   tags?: Tag[];
 }

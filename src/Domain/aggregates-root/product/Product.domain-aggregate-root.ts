@@ -7,7 +7,7 @@ import {
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
 import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
-import { Comment, ProductCategory, Tag } from '@domain/entities';
+import { Comment, CommentId, ProductCategory, Tag } from '@domain/entities';
 import {
   validateNumberGreaterOrEqualToZero,
   validateNumberGreaterThanZero,
@@ -50,8 +50,8 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.quantityAvailable;
   }
 
-  get images(): ImageValueObject[] {
-    return this.props.images;
+  get images(): ImageValueObject | undefined {
+    return this.props.image;
   }
 
   get isActive(): boolean {
@@ -66,8 +66,8 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.ratingAverage ?? 0;
   }
 
-  get comments(): Comment[] | null {
-    return this.props.comments ?? null;
+  get comments(): CommentId[] | null {
+    return this.props.commentIds ?? null;
   }
 
   get tags(): Tag[] | null {
@@ -95,15 +95,13 @@ export class Product extends AggregateRoot<ProductProps> {
     return Result.ok<void>();
   }
 
-  addImage(image: ImageValueObject): void {
-    this.props.images.push(image);
+  changeImage(image: ImageValueObject): void {
+    this.props.image = image;
     this.props.updatedAt = new Date();
   }
 
   removeImage(image: ImageValueObject): void {
-    this.props.images = this.props.images.filter(
-      (img) => img.value !== image.value,
-    );
+    this.props.image = undefined;
     this.props.updatedAt = new Date();
   }
 
@@ -155,29 +153,33 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.updatedAt = new Date();
   }
 
-  addComment(comment: Comment): void {
-    const existComments = this.props.comments ?? null;
-    this.props.comments = [comment];
+  addComment(comment: CommentId): void {
+    const existComments = this.props.commentIds ?? null;
+    this.props.commentIds = [comment];
     if (existComments) {
-      this.props.comments = this.props.comments.concat(existComments);
+      this.props.commentIds = this.props.commentIds.concat(existComments);
     }
   }
 
-  removeComment(comment: Comment): void {
-    const existComments = this.props.comments ?? null;
+  removeComment(comment: CommentId): void {
+    const existComments = this.props.commentIds ?? null;
     if (!existComments) {
       return;
     }
-    this.props.comments = existComments.filter(
+    this.props.commentIds = existComments.filter(
       (cmt) => !cmt.id.equals(comment.id),
     );
   }
 
   addTag(tag: Tag): void {
     const existTags = this.props.tags ?? null;
+
     this.props.tags = [tag];
     if (existTags) {
-      this.props.tags = this.props.tags.concat(existTags);
+      const tagAlreadyOnProduct = existTags.includes(tag);
+      if (!tagAlreadyOnProduct) {
+        this.props.tags = this.props.tags.concat(existTags);
+      }
     }
   }
 

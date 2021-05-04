@@ -43,11 +43,9 @@ describe('Product.domain-aggregate-root', () => {
           props?.price ??
           MonetaryValueObject.create(makeCurrency(10)).getResult(),
         quantityAvailable: props?.quantityAvailable ?? 10,
-        images: props?.images ?? [
+        image:
+          props?.image ??
           ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-          ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-          ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-        ],
       },
       id,
     );
@@ -64,7 +62,7 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.getResult().isActive).toBe(true);
     expect(createdProduct.getResult().isSpecial).toBe(false);
     expect(createdProduct.getResult().price.value).toBe(10);
-    expect(createdProduct.getResult().images.length).toBe(3);
+    expect(createdProduct.getResult().images?.value).toBeDefined();
   });
 
   it('Should fail if provide a long description to update', () => {
@@ -93,11 +91,7 @@ describe('Product.domain-aggregate-root', () => {
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
       quantityAvailable: 10,
-      images: [
-        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-      ],
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
     });
 
     expect(createdProductCustom.isFailure).toBe(true);
@@ -114,11 +108,7 @@ describe('Product.domain-aggregate-root', () => {
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
       quantityAvailable: -1,
-      images: [
-        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-      ],
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
     });
     expect(createdProductCustom.isFailure).toBe(true);
     expect(createdProductCustom.error).toBe(ERROR_PRODUCT_AVAILABLE_QUANTITY);
@@ -134,11 +124,7 @@ describe('Product.domain-aggregate-root', () => {
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(-10)).getResult(),
       quantityAvailable: 2,
-      images: [
-        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-      ],
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
     });
 
     expect(product.error).toBe(ERROR_PRODUCT_PRICE);
@@ -147,11 +133,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should add an image to product with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.images.length).toBe(3);
-    createdProduct.addImage(
+    expect(createdProduct.images?.value).toBeDefined();
+    createdProduct.changeImage(
       ImageValueObject.create(image.imageUrl()).getResult(),
     );
-    expect(createdProduct.images.length).toBe(4);
+    expect(createdProduct.images?.value).toBeDefined();
   });
 
   it('Should remove an image from a product with success', () => {
@@ -159,11 +145,11 @@ describe('Product.domain-aggregate-root', () => {
     const imageAdd = ImageValueObject.create(
       image.imageUrl(80, 80),
     ).getResult();
-    expect(createdProduct.images.length).toBe(3);
-    createdProduct.addImage(imageAdd);
-    expect(createdProduct.images.length).toBe(4);
+    expect(createdProduct.images?.value).toBeDefined();
+    createdProduct.changeImage(imageAdd);
+    expect(createdProduct.images?.value).toBeDefined();
     createdProduct.removeImage(imageAdd);
-    expect(createdProduct.images.length).toBe(3);
+    expect(createdProduct.images?.value).not.toBeDefined();
   });
 
   it('Should launch stock with success', () => {
@@ -204,11 +190,7 @@ describe('Product.domain-aggregate-root', () => {
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
       quantityAvailable: 1,
-      images: [
-        ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-        ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-        ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-      ],
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
     }).getResult();
 
     expect(product.quantityAvaliable).toBe(1);
@@ -230,11 +212,7 @@ describe('Product.domain-aggregate-root', () => {
         isSpecial: false,
         price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
         quantityAvailable: 1,
-        images: [
-          ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
-          ImageValueObject.create(image.imageUrl(400, 600)).getResult(),
-          ImageValueObject.create(image.imageUrl(800, 1020)).getResult(),
-        ],
+        image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
       },
       id,
     ).getResult();
@@ -313,7 +291,7 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.comments?.length).toBe(undefined);
   });
 
-  it('Should add a tag with success', () => {
+  it('Should not add a existing tag', () => {
     const tag = Tag.create({
       description: 'Fresco',
     }).getResult();
@@ -322,6 +300,23 @@ describe('Product.domain-aggregate-root', () => {
     createdProduct.addTag(tag);
     expect(createdProduct.tags?.length).toBe(1);
     createdProduct.addTag(tag);
+    expect(createdProduct.tags?.length).toBe(1);
+  });
+
+  it('Should add a different provided tag', () => {
+    const tag1 = Tag.create({
+      description: 'Fresco',
+    }).getResult();
+
+    const tag2 = Tag.create({
+      description: 'Verdura',
+    }).getResult();
+
+    const createdProduct = makeSut().getResult();
+    expect(createdProduct.tags?.length).toBe(undefined);
+    createdProduct.addTag(tag1);
+    expect(createdProduct.tags?.length).toBe(1);
+    createdProduct.addTag(tag2);
     expect(createdProduct.tags?.length).toBe(2);
   });
 

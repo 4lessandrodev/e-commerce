@@ -31,7 +31,7 @@ describe('ItemProduct.domain-entity', () => {
             category: ProductCategory.create({
               description: 'Pera Portuguesa',
             }).getResult(),
-            images: [ImageValueObject.create(image.imageUrl()).getResult()],
+            image: ImageValueObject.create(image.imageUrl()).getResult(),
             info: random.words(7),
             isActive: true,
             isSpecial: false,
