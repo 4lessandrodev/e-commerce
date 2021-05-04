@@ -8,16 +8,13 @@ import { ProductCategoryProps } from './ProductCategory.domain-entity-interface'
 describe('ProductCategory', () => {
   const makeSut = (props?: ProductCategoryProps, id?: UniqueEntityID) => {
     return ProductCategory.create(
-      {
-        description: props?.description ?? 'Valid Category',
-        isDeleted: props?.isDeleted ?? undefined,
-      },
+      props ?? { description: 'valid category' },
       id,
     );
   };
 
   it('Should create a valid Product Category', () => {
-    expect(makeSut().getResult().description).toBe('Valid Category');
+    expect(makeSut().getResult().description).toBe('valid category');
   });
 
   it('Should fail if provide a short description', () => {

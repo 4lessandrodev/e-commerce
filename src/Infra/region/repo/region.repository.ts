@@ -19,7 +19,7 @@ export class RegionRepository implements RegionRepositoryInterface {
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {
-    const foundRegion = await this.conn.findOne(filter);
+    const foundRegion = await this.conn.findOne(filter).exec();
     if (!foundRegion) {
       return null;
     }
@@ -36,8 +36,10 @@ export class RegionRepository implements RegionRepositoryInterface {
 
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
-    await this.conn.findOneAndUpdate({ id: target.id }, schema, {
-      upsert: true,
-    });
+    await this.conn
+      .findOneAndUpdate({ id: target.id }, schema, {
+        upsert: true,
+      })
+      .exec();
   }
 }

@@ -57,7 +57,7 @@ describe('Product.domain-aggregate-root', () => {
     const createdProduct = makeSut();
     expect(createdProduct.isFailure).toBe(false);
     expect(createdProduct.getResult().description).toBe('Maçã Brasileira');
-    expect(createdProduct.getResult().category.description).toBe('Frutas');
+    expect(createdProduct.getResult().category.description).toBe('frutas');
     expect(createdProduct.getResult().info).toBe(
       'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
     );

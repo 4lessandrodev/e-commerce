@@ -191,7 +191,6 @@ describe('Basket.domain-aggregate-root', () => {
     const fail = createdBasket
       .getResult()
       .changePrice(MonetaryValueObject.create(makePrice(11)).getResult());
-    console.log(fail);
 
     expect(fail.isFailure).toBe(false);
     expect(createdBasket.getResult().price.value).toBe(11);

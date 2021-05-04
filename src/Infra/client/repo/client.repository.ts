@@ -16,7 +16,7 @@ export class ClientRepository implements ClientRepositoryInterface {
   ) {}
 
   async find(filter: Filter): Promise<Aggregate[] | null> {
-    const clientsFound = await this.conn.find(filter);
+    const clientsFound = await this.conn.find(filter).exec();
 
     if (!clientsFound) {
       return null;
@@ -26,7 +26,7 @@ export class ClientRepository implements ClientRepositoryInterface {
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {
-    const clientFound = await this.conn.findOne(filter);
+    const clientFound = await this.conn.findOne(filter).exec();
 
     if (!clientFound) {
       return null;
@@ -36,7 +36,7 @@ export class ClientRepository implements ClientRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter);
+    await this.conn.findOneAndDelete(filter).exec();
   }
 
   async exists(filter: Filter): Promise<boolean> {
@@ -45,6 +45,8 @@ export class ClientRepository implements ClientRepositoryInterface {
 
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
-    await this.conn.updateOne({ id: schema.id }, schema, { upsert: true });
+    await this.conn
+      .updateOne({ id: schema.id }, schema, { upsert: true })
+      .exec();
   }
 }

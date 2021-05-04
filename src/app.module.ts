@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './Infra/user/user.module';
 import { ClientModule } from './Infra/client/client.module';
 import { RegionModule } from './Infra/region/region.module';
+import { ProductModule } from './Infra/product/product.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RegionModule } from './Infra/region/region.module';
     UserModule,
     ClientModule,
     RegionModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],

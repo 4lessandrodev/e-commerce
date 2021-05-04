@@ -33,11 +33,13 @@ export class UserRepository implements UserRepositoryInterface {
 
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
-    await this.conn.updateOne({ id: target.id }, schema, { upsert: true });
+    await this.conn
+      .updateOne({ id: target.id }, schema, { upsert: true })
+      .exec();
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {
-    const userFound = await this.conn.findOne(filter);
+    const userFound = await this.conn.findOne(filter).exec();
 
     if (!userFound) {
       return null;

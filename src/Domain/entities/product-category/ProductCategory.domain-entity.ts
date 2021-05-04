@@ -15,7 +15,7 @@ export class ProductCategory extends Entity<ProductCategoryProps> {
   }
 
   get description(): string {
-    return this.props.description;
+    return this.props.description.toLowerCase();
   }
 
   delete(): void {
