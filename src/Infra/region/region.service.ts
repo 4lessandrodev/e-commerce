@@ -7,6 +7,10 @@ import {
   Injectable,
   PreconditionFailedException,
 } from '@nestjs/common';
+import { CityQuery } from './query/city.query';
+import { City } from './entities/city.schema';
+import { RegionQuery } from './query/region.query';
+import { Region } from './entities/region.schema';
 
 @Injectable()
 export class RegionService {
@@ -15,6 +19,8 @@ export class RegionService {
     private readonly registerCityUseCase: RegisterCityUseCase,
     @Inject(RegisterRegionUseCase)
     private readonly registerRegionUseCase: RegisterRegionUseCase,
+    @Inject(CityQuery) private readonly cityQuery: CityQuery,
+    @Inject(RegionQuery) private readonly regionQuery: RegionQuery,
   ) {}
 
   async registerCity(dto: RegisterCityDto): Promise<void> {
@@ -29,5 +35,14 @@ export class RegionService {
     if (result.isFailure) {
       throw new PreconditionFailedException(result.error);
     }
+  }
+
+  // Queries
+  async getCities(): Promise<City[]> {
+    return await this.cityQuery.getCities();
+  }
+
+  async getRegions(): Promise<Region[]> {
+    return await this.regionQuery.getRegions();
   }
 }

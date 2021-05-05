@@ -6,11 +6,13 @@ import { UserModule } from '../user/user.module';
 import { City, CitySchema } from './entities/city.schema';
 import { Region, RegionSchema } from './entities/region.schema';
 import { RegionService } from './region.service';
-import { CityMapper } from './repo/city.mapper';
+import { CityMapper } from './mapper/city.mapper';
 import { CityRepository } from './repo/city.repository';
-import { RegionMapper } from './repo/region.mapper';
+import { RegionMapper } from './mapper/region.mapper';
 import { RegionRepository } from './repo/region.repository';
 import { RegionController } from './region.controller';
+import { CityQuery } from './query/city.query';
+import { RegionQuery } from './query/region.query';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { RegionController } from './region.controller';
     RegionMapper,
     CityRepository,
     RegionRepository,
+    CityQuery,
+    RegionQuery,
     RegisterCityUseCase,
     RegisterRegionUseCase,
     RegionService,

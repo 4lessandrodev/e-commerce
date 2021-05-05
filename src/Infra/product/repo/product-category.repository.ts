@@ -2,7 +2,7 @@ import { ProductCategoryRepositoryInterface } from '@repo/product-category-repos
 import { Filter } from 'types-ddd';
 import { ProductCategory as Entity } from '@domain/entities';
 import { Inject, Injectable } from '@nestjs/common';
-import { ProductCategoryMapper } from './product-category.mapper';
+import { ProductCategoryMapper } from '../mapper/product-category.mapper';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   ProductCategory,

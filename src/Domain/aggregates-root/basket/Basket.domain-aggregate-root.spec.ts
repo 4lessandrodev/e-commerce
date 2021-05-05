@@ -16,6 +16,7 @@ import {
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
 import { BasketId } from './BasketId.domain-aggregate-root';
+import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
 
 describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
@@ -43,6 +44,9 @@ describe('Basket.domain-aggregate-root', () => {
           props?.price ?? MonetaryValueObject.create(makePrice(1)).getResult(),
         products: props?.products ?? [
           Product.create({
+            unitOfMeasurement: UnitOfMeasurementValueObject.create(
+              'KG',
+            ).getResult(),
             description: 'Abacaxi',
             category: ProductCategory.create({
               description: 'Frutas',
@@ -316,6 +320,7 @@ describe('Basket.domain-aggregate-root', () => {
     const createdBasket = makeSut().getResult();
     const product = Product.create({
       description: 'Valid Product',
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       category: ProductCategory.create({
         description: 'Valid Category',
       }).getResult(),
@@ -333,6 +338,7 @@ describe('Basket.domain-aggregate-root', () => {
   it('Should remove product from a basket', () => {
     const createdBasket = makeSut().getResult();
     const product = Product.create({
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       description: 'Valid Product',
       category: ProductCategory.create({
         description: 'Valid Category',

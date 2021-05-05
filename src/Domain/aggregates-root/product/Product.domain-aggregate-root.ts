@@ -16,6 +16,7 @@ import {
 
 import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
+import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -46,12 +47,16 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.price;
   }
 
-  get quantityAvaliable(): number {
+  get quantityAvailable(): number {
     return this.props.quantityAvailable;
   }
 
   get images(): ImageValueObject | undefined {
     return this.props.image;
+  }
+
+  get unitOfMeasurement(): UnitOfMeasurementValueObject {
+    return this.props.unitOfMeasurement;
   }
 
   get isActive(): boolean {

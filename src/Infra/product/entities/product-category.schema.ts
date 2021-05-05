@@ -5,7 +5,13 @@ export type ProductCategoryDocument = ProductCategory & Document;
 
 @Schema({ timestamps: true, autoCreate: true, autoIndex: true })
 export class ProductCategory {
-  @Prop({ type: String, required: true, index: true, immutable: true })
+  @Prop({
+    type: String,
+    required: true,
+    index: true,
+    immutable: true,
+    unique: true,
+  })
   readonly id!: string;
 
   @Prop({ type: String, index: true, required: true })

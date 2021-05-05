@@ -9,6 +9,7 @@ import { ItemId } from './ItemId.domain-entity';
 import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
 import { Result, UniqueEntityID } from 'types-ddd';
 import { ProductId } from '../../aggregates-root/product/ProductId.domain-aggregate-root';
+import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
 
 describe('ItemProduct.domain-entity', () => {
   const makeSut = (
@@ -28,6 +29,9 @@ describe('ItemProduct.domain-entity', () => {
           props?.item ??
           Product.create({
             description: 'Pera Brasileira',
+            unitOfMeasurement: UnitOfMeasurementValueObject.create(
+              'KG',
+            ).getResult(),
             category: ProductCategory.create({
               description: 'Pera Portuguesa',
             }).getResult(),

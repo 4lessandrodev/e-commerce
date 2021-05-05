@@ -9,6 +9,7 @@ import {
 } from '@domain/value-objects';
 import { AddressMapper } from './address.mapper';
 import { Address as Schema } from '../entities/address.schema';
+import { Region } from '@infra/region/entities/region.schema';
 
 describe('address.mapper', () => {
   //
@@ -18,13 +19,16 @@ describe('address.mapper', () => {
   //
   beforeAll(() => {
     //
+    const region = new Region();
+    region.id = 'valid_region';
+    //
     schema = {
       complement: 'valid_complement',
       createdAt: currentDate,
       id: 'valid_id',
       isMainAddress: true,
       number: '777',
-      regionId: 'valid_region',
+      region,
       street: 'valid_street',
       updatedAt: currentDate,
       zipCode: '75520140',

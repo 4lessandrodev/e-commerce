@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RegionDocument, Region } from '../entities/region.schema';
 import { Inject, Injectable } from '@nestjs/common';
-import { RegionMapper } from './region.mapper';
+import { RegionMapper } from '../mapper/region.mapper';
 
 @Injectable()
 export class RegionRepository implements RegionRepositoryInterface {

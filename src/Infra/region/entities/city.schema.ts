@@ -6,15 +6,21 @@ export type initials = keyof typeof AvailableInitials;
 
 export type CityDocument = City & Document;
 
-@Schema({ autoCreate: true, timestamps: true })
+@Schema({ autoCreate: true, timestamps: true, autoIndex: true })
 export class City {
-  @Prop({ type: String, required: true, index: true, immutable: true })
+  @Prop({
+    type: String,
+    required: true,
+    index: true,
+    immutable: true,
+    unique: true,
+  })
   readonly id!: string;
 
   @Prop({ type: String, required: true, index: true })
   name!: string;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: true, index: true })
   geoCode!: number;
 
   @Prop({ enum: AvailableInitials, required: true })

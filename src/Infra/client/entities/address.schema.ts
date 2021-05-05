@@ -1,11 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Region } from '@infra/region/entities/region.schema';
 
 export type AddressDocument = Address & Document;
 
-@Schema({ autoCreate: true, timestamps: true })
+@Schema({
+  autoCreate: true,
+  timestamps: true,
+  autoIndex: true,
+})
 export class Address {
-  @Prop({ type: String, required: true, index: true, immutable: true })
+  @Prop({
+    type: String,
+    required: true,
+    index: true,
+    immutable: true,
+    unique: true,
+  })
   readonly id!: string;
 
   @Prop({ type: String, required: true, index: true })
@@ -21,7 +32,7 @@ export class Address {
   complement!: string;
 
   @Prop({ type: String, required: true })
-  regionId!: string; // Relationship
+  region!: Region;
 
   @Prop({ type: Boolean, required: true })
   isMainAddress!: boolean;
@@ -35,8 +46,11 @@ export class Address {
 
 export const AddressSchema = SchemaFactory.createForClass(Address);
 
-AddressSchema.virtual('region', {
+AddressSchema.virtual('Region', {
   ref: 'Region',
-  localField: 'region',
+  localField: 'regionId',
   foreignField: 'id',
+  autopopulate: true,
 });
+
+AddressSchema.plugin(require('mongoose-autopopulate'));

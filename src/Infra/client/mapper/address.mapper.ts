@@ -9,6 +9,7 @@ import {
 } from '@domain/value-objects';
 import { RegionId } from '@domain/aggregates-root';
 import { Injectable } from '@nestjs/common';
+import { Region } from '@infra/region/entities/region.schema';
 
 @Injectable()
 export class AddressMapper implements IMapper<Entity, Schema> {
@@ -42,12 +43,16 @@ export class AddressMapper implements IMapper<Entity, Schema> {
   }
 
   toPersistence(target: Entity): Schema {
+    //
+    const region = new Region();
+    region.id = target.regionId.id.toString();
+
     return {
       id: target.id.toString(),
       complement: target.complement.value,
       isMainAddress: target.isMainAddress,
       number: target.number.value,
-      regionId: target.regionId.id.toString(),
+      region,
       street: target.street.value,
       zipCode: target.zipCode.value,
       updatedAt: target.updatedAt,

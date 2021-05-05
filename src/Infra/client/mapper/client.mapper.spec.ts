@@ -1,3 +1,4 @@
+import { Region } from '@infra/region/entities/region.schema';
 import { Client, RegionId } from '@domain/aggregates-root';
 import { Client as Schema } from '../entities/client.schema';
 import { AddressMapper } from './address.mapper';
@@ -21,6 +22,9 @@ describe('client.mapper', () => {
   //
   beforeAll(() => {
     //
+    const region = new Region();
+    region.id = 'valid_region';
+    //
     schema = {
       addresses: [
         {
@@ -29,7 +33,7 @@ describe('client.mapper', () => {
           id: 'valid_id',
           isMainAddress: true,
           number: '777',
-          regionId: 'valid_region',
+          region,
           street: 'valid_street',
           updatedAt: currentDate,
           zipCode: '75520140',

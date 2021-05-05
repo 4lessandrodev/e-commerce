@@ -8,7 +8,7 @@ import {
 } from './entities/product-category.schema';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
-import { ProductCategoryMapper } from './repo/product-category.mapper';
+import { ProductCategoryMapper } from './mapper/product-category.mapper';
 import { ProductCategoryRepository } from './repo/product-category.repository';
 
 @Module({

@@ -2,12 +2,14 @@
 
 ```json
 {
+  "id": "String",
   "description": "String",
+  "unitOfMeasurement": "String",
   "category": {
     "id": "String",
     "description": "String"
   },
-  "images": "String",
+  "image": "String",
   "isSpecial": "Boolean",
   "price": {
     "currency": {

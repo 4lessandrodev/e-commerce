@@ -5,7 +5,7 @@ import { Client, ClientDocument } from '../entities/client.schema';
 import { Model } from 'mongoose';
 import { Filter } from 'types-ddd';
 import { Client as Aggregate } from '@domain/aggregates-root';
-import { ClientMapper } from './client.mapper';
+import { ClientMapper } from '../mapper/client.mapper';
 
 @Injectable()
 export class ClientRepository implements ClientRepositoryInterface {

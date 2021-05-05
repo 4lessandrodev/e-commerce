@@ -2,7 +2,11 @@ import { IMapper, UniqueEntityID } from 'types-ddd';
 import { Region } from '@domain/aggregates-root';
 import { Region as Schema } from '../entities/region.schema';
 import { CityMapper } from './city.mapper';
-import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import {
+  AvailableLocale,
+  Currency,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -37,7 +41,7 @@ export class RegionMapper implements IMapper<Region, Schema> {
       createdAt: target.createdAt,
       description: target.description,
       freightPrice: {
-        locale: target.freightPrice.currency.locale as any,
+        locale: target.freightPrice.currency.locale as AvailableLocale,
         symbol: target.freightPrice.currency.symbol,
         value: target.freightPrice.currency.value,
       },

@@ -14,6 +14,7 @@ import {
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
 import { ProductId } from './ProductId.domain-aggregate-root';
+import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
 
 describe('Product.domain-aggregate-root', () => {
   const makeCurrency = (value: number): Currency => {
@@ -31,6 +32,9 @@ describe('Product.domain-aggregate-root', () => {
     return Product.create(
       {
         description: props?.description ?? 'Maçã Brasileira',
+        unitOfMeasurement:
+          props?.unitOfMeasurement ??
+          UnitOfMeasurementValueObject.create('UN').getResult(),
         category:
           props?.category ??
           ProductCategory.create({ description: 'Frutas' }).getResult(),
@@ -85,6 +89,7 @@ describe('Product.domain-aggregate-root', () => {
     const createdProductCustom = Product.create({
       description: String('invalid_long_description').repeat(50),
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
         'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
       isActive: true,
@@ -102,6 +107,7 @@ describe('Product.domain-aggregate-root', () => {
     const createdProductCustom = Product.create({
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
         'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
       isActive: true,
@@ -118,6 +124,7 @@ describe('Product.domain-aggregate-root', () => {
     const product = Product.create({
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
         'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
       isActive: true,
@@ -154,36 +161,37 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should launch stock with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.quantityAvaliable).toBe(10);
+    expect(createdProduct.quantityAvailable).toBe(10);
     createdProduct.launchStock(200);
-    expect(createdProduct.quantityAvaliable).toBe(200);
+    expect(createdProduct.quantityAvailable).toBe(200);
   });
 
   it('Should fail if provide a negative value to launch stock', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.quantityAvaliable).toBe(10);
+    expect(createdProduct.quantityAvailable).toBe(10);
     createdProduct.launchStock(-1);
-    expect(createdProduct.quantityAvaliable).toBe(10);
+    expect(createdProduct.quantityAvailable).toBe(10);
   });
 
   it('Should increment stock with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.quantityAvaliable).toBe(10);
+    expect(createdProduct.quantityAvailable).toBe(10);
     createdProduct.incrementStock();
-    expect(createdProduct.quantityAvaliable).toBe(11);
+    expect(createdProduct.quantityAvailable).toBe(11);
   });
 
   it('Should decrement stock with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.quantityAvaliable).toBe(10);
+    expect(createdProduct.quantityAvailable).toBe(10);
     createdProduct.decrementStock();
-    expect(createdProduct.quantityAvaliable).toBe(9);
+    expect(createdProduct.quantityAvailable).toBe(9);
   });
 
   it('Should fail if decrement stock until negative value', () => {
     const product = Product.create({
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
         'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
       isActive: true,
@@ -193,11 +201,11 @@ describe('Product.domain-aggregate-root', () => {
       image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
     }).getResult();
 
-    expect(product.quantityAvaliable).toBe(1);
+    expect(product.quantityAvailable).toBe(1);
     product.decrementStock();
-    expect(product.quantityAvaliable).toBe(0);
+    expect(product.quantityAvailable).toBe(0);
     product.decrementStock();
-    expect(product.quantityAvaliable).toBe(0);
+    expect(product.quantityAvailable).toBe(0);
   });
 
   it('Should create a product with provided id', () => {
@@ -206,6 +214,9 @@ describe('Product.domain-aggregate-root', () => {
       {
         description: 'Maçã Brasileira',
         category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+        unitOfMeasurement: UnitOfMeasurementValueObject.create(
+          'KG',
+        ).getResult(),
         info:
           'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
         isActive: true,

@@ -4,9 +4,15 @@ import { Address } from './address.schema';
 
 export type ClientDocument = Client & Document;
 
-@Schema({ autoCreate: true, timestamps: true })
+@Schema({ autoCreate: true, timestamps: true, autoIndex: true })
 export class Client {
-  @Prop({ type: String, required: true, index: true, immutable: true })
+  @Prop({
+    type: String,
+    required: true,
+    index: true,
+    immutable: true,
+    unique: true,
+  })
   readonly id!: string;
 
   @Prop({ type: String, required: true, index: true })
@@ -18,7 +24,7 @@ export class Client {
   @Prop({ type: Boolean, required: true, default: false })
   hasEcobag!: boolean;
 
-  @Prop({ type: Array, required: true })
+  @Prop({ type: [{ type: Object, required: true }] })
   addresses!: Array<Address>;
 
   @Prop({ type: Date, required: true, default: new Date() })

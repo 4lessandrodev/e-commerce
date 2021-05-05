@@ -46,6 +46,7 @@
     "envvar": "^2.0.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.12.6",
+    "mongoose-autopopulate": "^0.13.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
