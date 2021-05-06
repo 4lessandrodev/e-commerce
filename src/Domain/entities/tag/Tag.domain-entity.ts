@@ -1,9 +1,9 @@
-import { Entity, Result, UniqueEntityID } from 'types-ddd';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils';
-import { TagProps } from './Tag.domain-entity-interface';
-import { ERROR_TAG_DESCRIPTION_LENGTH } from './TagErrors.domain-entity';
 export const TAG_DESCRIPTION_MIN_STRING_LENGTH = 3;
 export const TAG_DESCRIPTION_MAX_STRING_LENGTH = 27;
+import { ERROR_TAG_DESCRIPTION_LENGTH } from './TagErrors.domain-entity';
+import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import { Entity, Result, UniqueEntityID } from 'types-ddd';
+import { TagProps } from './Tag.domain-entity-interface';
 
 export class Tag extends Entity<TagProps> {
   private constructor(props: TagProps, id?: UniqueEntityID) {

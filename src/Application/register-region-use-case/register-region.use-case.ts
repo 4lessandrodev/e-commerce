@@ -1,17 +1,19 @@
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
-import { RegionRepository } from '@infra/region/repo/region.repository';
 import { IUseCase, Result } from 'types-ddd';
 import { RegisterRegionDto } from './register-region.use-case.dto';
-import { CityRepository } from '@infra/region/repo/city.repository';
 import { Region } from '@domain/aggregates-root';
 import { Inject } from '@nestjs/common';
+import { RegionRepositoryInterface } from '@repo/region-repository.interface';
+import { CityRepositoryInterface } from '@repo/city.repository.interface';
 
 export class RegisterRegionUseCase
   implements IUseCase<RegisterRegionDto, Result<void>> {
   //
   constructor(
-    @Inject(RegionRepository) private readonly regionRepo: RegionRepository,
-    @Inject(CityRepository) private readonly cityRepo: CityRepository,
+    @Inject('RegionRepository')
+    private readonly regionRepo: RegionRepositoryInterface,
+    @Inject('CityRepository')
+    private readonly cityRepo: CityRepositoryInterface,
   ) {}
   //
   async execute(dto: RegisterRegionDto): Promise<Result<void>> {
@@ -70,7 +72,7 @@ export class RegisterRegionUseCase
       //
     } catch (error) {
       return Result.fail<void>(
-        'Internal server error on register region use case',
+        'Internal Server Error on Register Region Use Case',
       );
     }
   }

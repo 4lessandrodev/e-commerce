@@ -1,15 +1,15 @@
+import { UserRepositoryInterface } from '@repo/user-repository.interface';
+import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
-import { EmailValueObject, PasswordValueObject } from '@domain/value-objects';
 import { SignUpDto } from './sign-up.dto';
 import { User } from '@domain/aggregates-root';
-import { UserRepository } from '@infra/user/repo/user.repository';
-import { UserRepositoryInterface } from '@repo/user-repository.interface';
 
 @Injectable()
 export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
   constructor(
-    @Inject(UserRepository) private readonly userRepo: UserRepositoryInterface,
+    @Inject('UserRepository')
+    private readonly userRepo: UserRepositoryInterface,
   ) {}
   async execute(dto: SignUpDto) {
     //
@@ -57,7 +57,7 @@ export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
       //
     } catch (error) {
       //
-      return Result.fail<void>('Internal Server Error on SignIn UseCase');
+      return Result.fail<void>('Internal Server Error on SignUp UseCase');
     }
   }
 }

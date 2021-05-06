@@ -1,14 +1,15 @@
-import { Inject } from '@nestjs/common';
-import { IUseCase, Result } from 'types-ddd';
-import { CityRepository } from '@infra/region/repo/city.repository';
-import { RegisterCityDto } from './register-city.use-case.dto';
+import { CityRepositoryInterface } from '@repo/city.repository.interface';
 import { InitialStateValueObject } from '@domain/value-objects';
+import { RegisterCityDto } from './register-city.use-case.dto';
+import { IUseCase, Result } from 'types-ddd';
+import { Inject } from '@nestjs/common';
 import { City } from '@domain/entities';
 
 export class RegisterCityUseCase
   implements IUseCase<RegisterCityDto, Result<void>> {
   constructor(
-    @Inject(CityRepository) private readonly cityRepo: CityRepository,
+    @Inject('CityRepository')
+    private readonly cityRepo: CityRepositoryInterface,
   ) {}
 
   async execute(dto: RegisterCityDto): Promise<Result<void>> {
@@ -44,7 +45,7 @@ export class RegisterCityUseCase
     } catch (error) {
       //
       return Result.fail<void>(
-        'Internal server error on register city use case',
+        'Internal Server Error on Register City Use Case',
       );
     }
   }

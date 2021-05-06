@@ -1,15 +1,15 @@
+import { ProductCategoryRepositoryInterface } from '@repo/product-category-repository.interface';
+import { RegisterProductCategoryDto } from './register-product-category-use-case.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
 import { ProductCategory } from '@domain/entities';
-import { RegisterProductCategoryDto } from './register-product-category-use-case.dto';
-import { ProductCategoryRepository } from '@infra/product/repo/product-category.repository';
 
 @Injectable()
 export class RegisterProductCategoryUseCase
   implements IUseCase<RegisterProductCategoryDto, Result<void>> {
   constructor(
-    @Inject(ProductCategoryRepository)
-    private readonly categoryRepo: ProductCategoryRepository,
+    @Inject('ProductCategoryRepository')
+    private readonly categoryRepo: ProductCategoryRepositoryInterface,
   ) {}
   async execute(dto: RegisterProductCategoryDto): Promise<Result<void>> {
     //
@@ -40,7 +40,7 @@ export class RegisterProductCategoryUseCase
       //
 
       return Result.fail<void>(
-        'Internal server error on register product category use case',
+        'Internal Server Error on Register Product Category Use Case',
       );
     }
   }

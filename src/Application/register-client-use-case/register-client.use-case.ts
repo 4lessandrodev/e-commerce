@@ -1,3 +1,10 @@
+import { Injectable, Inject } from '@nestjs/common';
+import { IUseCase, Result, UniqueEntityID } from 'types-ddd';
+import { RegisterClientDto } from './register-client.use-case.dto';
+import { Client, RegionId, UserId } from '@domain/aggregates-root';
+import { Address } from '@domain/entities';
+import { ClientRepositoryInterface } from '@repo/client-repository.interface';
+import { RegionRepositoryInterface } from '@repo/region-repository.interface';
 import {
   AddressComplementValueObject,
   AddressNumberValueObject,
@@ -6,13 +13,6 @@ import {
   UserNameValueObject,
   ZipCodeValueObject,
 } from '@domain/value-objects';
-import { Injectable, Inject } from '@nestjs/common';
-import { IUseCase, Result, UniqueEntityID } from 'types-ddd';
-import { RegisterClientDto } from './register-client.use-case.dto';
-import { ClientRepository } from '@infra/client/repo/client.repository';
-import { Client, RegionId, UserId } from '@domain/aggregates-root';
-import { Address } from '@domain/entities';
-import { RegionRepository } from '@infra/region/repo/region.repository';
 
 @Injectable()
 export class RegisterClientUseCase
@@ -22,8 +22,10 @@ export class RegisterClientUseCase
    * @todo inject upload image service
    */
   constructor(
-    @Inject(ClientRepository) private readonly clientRepo: ClientRepository,
-    @Inject(RegionRepository) private readonly regionRepo: RegionRepository,
+    @Inject('ClientRepository')
+    private readonly clientRepo: ClientRepositoryInterface,
+    @Inject('RegionRepository')
+    private readonly regionRepo: RegionRepositoryInterface,
   ) {}
 
   async execute(dto: RegisterClientDto): Promise<Result<void>> {
@@ -116,7 +118,7 @@ export class RegisterClientUseCase
     } catch (error) {
       //
       return Result.fail<void>(
-        'Internal server error on register client use case',
+        'Internal Server Error on Register Client Use Case',
       );
     }
   }

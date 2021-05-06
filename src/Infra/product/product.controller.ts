@@ -10,6 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { RegisterTagDto } from './dto/register-tag.dto';
 
 @Controller('v1/product')
 @UsePipes(new ValidationPipe())
@@ -24,5 +25,10 @@ export class ProductController {
     @Body() dto: RegisterProductCategoryDto,
   ): Promise<void> {
     return this.productService.registerProductCategory(dto);
+  }
+
+  @Post('tag')
+  registerTag(@Body() dto: RegisterTagDto): Promise<void> {
+    return this.productService.registerTag(dto);
   }
 }

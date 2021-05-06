@@ -27,6 +27,14 @@ import { RegionQuery } from './query/region.query';
     RegionMapper,
     CityRepository,
     RegionRepository,
+    {
+      provide: 'CityRepository',
+      useClass: CityRepository,
+    },
+    {
+      provide: 'RegionRepository',
+      useClass: RegionRepository,
+    },
     CityQuery,
     RegionQuery,
     RegisterCityUseCase,

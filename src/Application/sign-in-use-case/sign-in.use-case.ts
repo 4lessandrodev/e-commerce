@@ -4,13 +4,13 @@ import { SignInDto } from './sign-in.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepositoryInterface } from '@repo/user-repository.interface';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '@infra/user/repo/user.repository';
 
 @Injectable()
 export class SignInUseCase implements IUseCase<SignInDto, Result<Payload>> {
   constructor(
     @Inject(JwtService) private readonly jwt: JwtService,
-    @Inject(UserRepository) private readonly userRepo: UserRepositoryInterface,
+    @Inject('UserRepository')
+    private readonly userRepo: UserRepositoryInterface,
   ) {}
 
   async execute(dto: SignInDto): Promise<Result<Payload>> {
@@ -33,7 +33,7 @@ export class SignInUseCase implements IUseCase<SignInDto, Result<Payload>> {
 
       //
     } catch (error) {
-      return Result.fail<Payload>('Internal Server Error on SignUp use case');
+      return Result.fail<Payload>('Internal Server Error on SignIn use case');
     }
   }
 }

@@ -28,6 +28,14 @@ import { ClientService } from './client.service';
     ClientMapper,
     ClientRepository,
     RegionRepository,
+    {
+      provide: 'ClientRepository',
+      useClass: ClientRepository,
+    },
+    {
+      provide: 'RegionRepository',
+      useClass: RegionRepository,
+    },
     RegisterClientUseCase,
     ClientService,
   ],

@@ -33,6 +33,10 @@ import { UserQuery } from './repo/user.query';
     SignUpUseCase,
     SignInUseCase,
     UserRepository,
+    {
+      provide: 'UserRepository',
+      useClass: UserRepository,
+    },
     UserQuery,
     UserService,
   ],

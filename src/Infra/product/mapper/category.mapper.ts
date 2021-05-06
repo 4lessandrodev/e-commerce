@@ -1,23 +1,26 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { ProductCategory as Aggregate } from '@domain/entities';
-import { ProductCategory } from '../entities/product-category.schema';
+import { Category as Schema } from '../entities/category.schema';
 
-export class ProductCategoryMapper
-  implements IMapper<Aggregate, ProductCategory> {
+export class CategoryMapper implements IMapper<Aggregate, Schema> {
   //
-  toDomain(target: ProductCategory): Aggregate {
+  toDomain(target: Schema): Aggregate {
     return Aggregate.create(
       {
         description: target.description,
+        createdAt: target.createdAt,
+        updatedAt: target.updatedAt,
       },
       new UniqueEntityID(target.id),
     ).getResult();
   }
   //
-  toPersistence(target: Aggregate): ProductCategory {
+  toPersistence(target: Aggregate): Schema {
     return {
       id: target.id.toString(),
       description: target.description,
+      createdAt: target.createdAt,
+      updatedAt: target.updatedAt,
     };
   }
   //
