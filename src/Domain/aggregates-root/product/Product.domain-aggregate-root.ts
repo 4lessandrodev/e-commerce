@@ -7,7 +7,7 @@ import {
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
 import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
-import { Comment, CommentId, ProductCategory, Tag } from '@domain/entities';
+import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import {
   validateNumberGreaterOrEqualToZero,
   validateNumberGreaterThanZero,
@@ -28,11 +28,11 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   get info(): string {
-    return this.props.info ?? '';
+    return this.props.info?.toLowerCase() ?? '';
   }
 
   get description(): string {
-    return this.props.description;
+    return this.props.description.toLowerCase();
   }
 
   get category(): ProductCategory {
@@ -71,12 +71,12 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.ratingAverage ?? 0;
   }
 
-  get comments(): CommentId[] | null {
-    return this.props.commentIds ?? null;
+  get comments(): CommentId[] {
+    return this.props.commentIds ?? [];
   }
 
-  get tags(): Tag[] | null {
-    return this.props.tags ?? null;
+  get tags(): Tag[] {
+    return this.props.tags ?? [];
   }
 
   updateProductRating(props: {

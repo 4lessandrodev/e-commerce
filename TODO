@@ -29,8 +29,8 @@ Todo:
   ✔ Refactor Region - Make It an aggregate root and Add relationship with city @started(21-04-29 22:51) @done(21-04-29 23:06) @lasted(15m2s)
   ✔ Create Address Entity @done(21-04-30 01:15)
   ✔ Create Client - Aggregte-Root @started(21-04-26 23:38) @done(21-05-03 01:33) @lasted(6d1h55m18s)
-  ☐ Create use case - RegisterProduct [ADMIN]
-  ☐ Register Tag on Product Context - [ADMIN]
+  ✔ Register Tag on Product Context - [ADMIN] @done(21-05-06 01:10)
+  ☐ Create use case - RegisterProduct [ADMIN] @started(21-05-06 19:55)
   ☐ Create Readme Structure for each aggregate and entity
   ☐ Refactor Array items on Aggregates to WriteList
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket

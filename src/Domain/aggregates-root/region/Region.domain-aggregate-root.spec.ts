@@ -45,7 +45,7 @@ describe('Region.domain-aggregate-root', () => {
   it('Should create a valid region ', () => {
     const regionCreated = makeSut();
     expect(regionCreated.isFailure).toBe(false);
-    expect(regionCreated.getResult().description).toBe('Valid Description');
+    expect(regionCreated.getResult().description).toBe('valid description');
     expect(regionCreated.getResult().id).not.toBeUndefined();
     expect(regionCreated.getResult().id).not.toBeNull();
     expect(regionCreated.getResult().isActive).toBe(true);

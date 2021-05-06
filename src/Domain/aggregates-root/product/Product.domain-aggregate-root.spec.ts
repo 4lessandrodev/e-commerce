@@ -40,7 +40,7 @@ describe('Product.domain-aggregate-root', () => {
           ProductCategory.create({ description: 'Frutas' }).getResult(),
         info:
           props?.info ??
-          'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+          'Maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
         isActive: props?.isActive ?? true,
         isSpecial: props?.isSpecial ?? false,
         price:
@@ -58,10 +58,10 @@ describe('Product.domain-aggregate-root', () => {
   it('Should create a valid product', () => {
     const createdProduct = makeSut();
     expect(createdProduct.isFailure).toBe(false);
-    expect(createdProduct.getResult().description).toBe('Maçã Brasileira');
+    expect(createdProduct.getResult().description).toBe('maçã brasileira');
     expect(createdProduct.getResult().category.description).toBe('frutas');
     expect(createdProduct.getResult().info).toBe(
-      'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+      'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
     );
     expect(createdProduct.getResult().isActive).toBe(true);
     expect(createdProduct.getResult().isSpecial).toBe(false);
@@ -82,7 +82,7 @@ describe('Product.domain-aggregate-root', () => {
       .getResult()
       .changeDescription('Valid description');
     expect(change.isFailure).toBe(false);
-    expect(createdProduct.getResult().description).toBe('Valid description');
+    expect(createdProduct.getResult().description).toBe('valid description');
   });
 
   it('Should fail if provide a long description to create', () => {
@@ -91,7 +91,7 @@ describe('Product.domain-aggregate-root', () => {
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
-        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -109,7 +109,7 @@ describe('Product.domain-aggregate-root', () => {
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
-        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -126,7 +126,7 @@ describe('Product.domain-aggregate-root', () => {
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
-        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(-10)).getResult(),
@@ -193,7 +193,7 @@ describe('Product.domain-aggregate-root', () => {
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
       info:
-        'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -218,7 +218,7 @@ describe('Product.domain-aggregate-root', () => {
           'KG',
         ).getResult(),
         info:
-          'Maçã Brasileira produzida no sul de Santa Catariana e cultivada com carinho',
+          'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
         isActive: true,
         isSpecial: false,
         price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -268,7 +268,7 @@ describe('Product.domain-aggregate-root', () => {
       text: 'Produto bacana esse!',
     }).getResult();
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.comments?.length).toBe(undefined);
+    expect(createdProduct.comments?.length).toBe(0);
     createdProduct.addComment(comment);
     expect(createdProduct.comments?.length).toBe(1);
     createdProduct.addComment(comment);
@@ -283,7 +283,7 @@ describe('Product.domain-aggregate-root', () => {
       text: 'Eu recomendo esse produto!',
     }).getResult();
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.comments?.length).toBe(undefined);
+    expect(createdProduct.comments?.length).toBe(0);
     createdProduct.addComment(comment1);
     expect(createdProduct.comments?.length).toBe(1);
     createdProduct.addComment(comment2);
@@ -297,9 +297,9 @@ describe('Product.domain-aggregate-root', () => {
       text: 'Produto bacana esse!',
     }).getResult();
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.comments?.length).toBe(undefined);
+    expect(createdProduct.comments?.length).toBe(0);
     createdProduct.removeComment(comment);
-    expect(createdProduct.comments?.length).toBe(undefined);
+    expect(createdProduct.comments?.length).toBe(0);
   });
 
   it('Should not add a existing tag', () => {
@@ -307,7 +307,7 @@ describe('Product.domain-aggregate-root', () => {
       description: 'Fresco',
     }).getResult();
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.tags?.length).toBe(undefined);
+    expect(createdProduct.tags?.length).toBe(0);
     createdProduct.addTag(tag);
     expect(createdProduct.tags?.length).toBe(1);
     createdProduct.addTag(tag);
@@ -324,7 +324,7 @@ describe('Product.domain-aggregate-root', () => {
     }).getResult();
 
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.tags?.length).toBe(undefined);
+    expect(createdProduct.tags?.length).toBe(0);
     createdProduct.addTag(tag1);
     expect(createdProduct.tags?.length).toBe(1);
     createdProduct.addTag(tag2);
@@ -339,7 +339,7 @@ describe('Product.domain-aggregate-root', () => {
       description: 'Verduras',
     }).getResult();
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.tags?.length).toBe(undefined);
+    expect(createdProduct.tags?.length).toBe(0);
     createdProduct.addTag(tag1);
     expect(createdProduct.tags?.length).toBe(1);
     createdProduct.addTag(tag2);
@@ -354,9 +354,9 @@ describe('Product.domain-aggregate-root', () => {
     }).getResult();
 
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.tags?.length).toBe(undefined);
+    expect(createdProduct.tags?.length).toBe(0);
     createdProduct.removeTag(tag);
-    expect(createdProduct.tags?.length).toBe(undefined);
+    expect(createdProduct.tags?.length).toBe(0);
   });
 
   it('Should change price with success', () => {

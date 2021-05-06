@@ -20,7 +20,7 @@ export class Region extends AggregateRoot<RegionProps> {
   }
 
   get description(): string {
-    return this.props.description;
+    return this.props.description.toLowerCase();
   }
 
   get freightPrice(): MonetaryValueObject {
