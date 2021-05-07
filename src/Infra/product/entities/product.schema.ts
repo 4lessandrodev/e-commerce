@@ -39,7 +39,7 @@ export class Product {
   @Prop({ type: String, required: true })
   unitOfMeasurement!: UnitTypes;
 
-  @Prop({ type: String, required: true, index: true })
+  @Prop({ type: ProductCategory, required: true, index: true })
   category!: ProductCategory;
 
   @Prop({ type: String, required: false })
@@ -69,8 +69,14 @@ export class Product {
   @Prop({ type: String, required: false })
   info?: string;
 
-  @Prop({ type: [ProductTag] })
+  @Prop({ type: [{ type: Object }] })
   tags?: ProductTag[];
+
+  @Prop({ type: Date, default: new Date() })
+  createdAt!: Date;
+
+  @Prop({ type: Date, default: new Date() })
+  updatedAt!: Date;
 }
 
 const ProductSchema = SchemaFactory.createForClass(Product);

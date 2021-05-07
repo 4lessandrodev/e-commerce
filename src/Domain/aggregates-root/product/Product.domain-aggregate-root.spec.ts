@@ -66,7 +66,7 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.getResult().isActive).toBe(true);
     expect(createdProduct.getResult().isSpecial).toBe(false);
     expect(createdProduct.getResult().price.value).toBe(10);
-    expect(createdProduct.getResult().images?.value).toBeDefined();
+    expect(createdProduct.getResult().image?.value).toBeDefined();
   });
 
   it('Should fail if provide a long description to update', () => {
@@ -140,11 +140,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should add an image to product with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.images?.value).toBeDefined();
+    expect(createdProduct.image?.value).toBeDefined();
     createdProduct.changeImage(
       ImageValueObject.create(image.imageUrl()).getResult(),
     );
-    expect(createdProduct.images?.value).toBeDefined();
+    expect(createdProduct.image?.value).toBeDefined();
   });
 
   it('Should remove an image from a product with success', () => {
@@ -152,11 +152,11 @@ describe('Product.domain-aggregate-root', () => {
     const imageAdd = ImageValueObject.create(
       image.imageUrl(80, 80),
     ).getResult();
-    expect(createdProduct.images?.value).toBeDefined();
+    expect(createdProduct.image?.value).toBeDefined();
     createdProduct.changeImage(imageAdd);
-    expect(createdProduct.images?.value).toBeDefined();
+    expect(createdProduct.image?.value).toBeDefined();
     createdProduct.removeImage(imageAdd);
-    expect(createdProduct.images?.value).not.toBeDefined();
+    expect(createdProduct.image?.value).not.toBeDefined();
   });
 
   it('Should launch stock with success', () => {

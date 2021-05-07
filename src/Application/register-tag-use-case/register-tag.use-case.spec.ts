@@ -9,6 +9,7 @@ describe('register-tag.use-case', () => {
     repo = {
       updateOrCreate: jest.fn(),
       exists: jest.fn(),
+      findTagsById: jest.fn(),
     };
   });
   //

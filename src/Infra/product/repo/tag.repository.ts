@@ -25,4 +25,12 @@ export class TagRepository implements TagRepositoryInterface {
   async exists(filter: Filter): Promise<boolean> {
     return await this.conn.exists(filter);
   }
+
+  async findTagsById(ids: string[]): Promise<Aggregate[] | null> {
+    const foundTags = await this.conn.find({ id: { $in: ids } });
+    if (foundTags.length < 1) {
+      return null;
+    }
+    return foundTags.map(this.mapper.toDomain);
+  }
 }

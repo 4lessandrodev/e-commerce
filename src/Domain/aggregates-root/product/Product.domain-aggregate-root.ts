@@ -51,7 +51,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.quantityAvailable;
   }
 
-  get images(): ImageValueObject | undefined {
+  get image(): ImageValueObject | undefined {
     return this.props.image;
   }
 
