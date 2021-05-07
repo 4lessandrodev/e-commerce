@@ -39,7 +39,7 @@ export class Product {
   @Prop({ type: String, required: true })
   unitOfMeasurement!: UnitTypes;
 
-  @Prop({ type: ProductCategory, required: true, index: true })
+  @Prop({ type: Object, required: true, index: true })
   category!: ProductCategory;
 
   @Prop({ type: String, required: false })

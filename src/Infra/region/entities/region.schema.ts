@@ -39,7 +39,7 @@ export class Region {
   @Prop({ type: Boolean, required: true })
   isActive!: boolean;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: Object })
   city!: City;
 
   @Prop({ type: Date, default: new Date() })
