@@ -6,6 +6,8 @@ export enum Units {
   'LT',
   'UN',
   'MT',
+  'CX',
+  'PC',
 }
 
 export type UnitTypes = keyof typeof Units;

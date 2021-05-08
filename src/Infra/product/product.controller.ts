@@ -1,6 +1,5 @@
 import { RegisterTagDto } from './dto/register-tag.dto';
 import { RegisterProductDto } from './dto/register-product.dto';
-import { Product } from './entities/product.schema';
 import { ProductFilter } from './interfaces/product.filters.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { RegisterProductCategoryDto } from './dto/register-product-category.dto';
@@ -16,6 +15,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { GetProductsResult } from './interfaces/product.query.interface';
 
 @Controller('v1/product')
 @UsePipes(new ValidationPipe())
@@ -43,7 +43,7 @@ export class ProductController {
   }
 
   @Get()
-  getProducts(@Query() filter: ProductFilter): Promise<Product[]> {
+  getProducts(@Query() filter: ProductFilter): Promise<GetProductsResult> {
     return this.productService.getProducts(filter);
   }
 }

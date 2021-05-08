@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ProductQuery } from './query/product.query';
 import { ProductFilter } from './interfaces/product.filters.interface';
-import { Product } from './entities/product.schema';
+import { GetProductsResult } from './interfaces/product.query.interface';
 
 @Injectable()
 export class ProductService {
@@ -49,7 +49,7 @@ export class ProductService {
   }
 
   // Query methods
-  async getProducts(filter: ProductFilter): Promise<Product[]> {
+  async getProducts(filter: ProductFilter): Promise<GetProductsResult> {
     return this.productQuery.getProducts(filter);
   }
 }
