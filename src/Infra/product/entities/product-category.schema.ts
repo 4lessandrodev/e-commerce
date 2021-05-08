@@ -12,7 +12,7 @@ export class ProductCategory {
   })
   id!: string;
 
-  @Prop({ type: String, index: true, required: true })
+  @Prop({ type: String, index: true, text: true, required: true })
   description!: string;
 }
 

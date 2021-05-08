@@ -9,6 +9,7 @@ import { ProductRepository } from './repo/product.repository';
 import { ProductController } from './product.controller';
 import { ProductMapper } from './mapper/product.mapper';
 import { TagRepository } from './repo/tag.repository';
+import { ProductQuery } from './query/product.query';
 import { ProductService } from './product.service';
 import { TagSchema } from './entities/tag.schema';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -36,6 +37,7 @@ import {
     TagMapper,
     ProductMapper,
     ProductCategoryRepository,
+    ProductQuery,
     {
       provide: 'ProductCategoryRepository',
       useClass: ProductCategoryRepository,

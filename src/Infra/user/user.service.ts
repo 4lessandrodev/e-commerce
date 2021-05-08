@@ -9,7 +9,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { Payload } from './interfaces/payload.interface';
 import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
 import { User } from './entities/user.schema';
-import { UserQuery } from './repo/user.query';
+import { UserQuery } from './query/user.query';
 
 @Injectable()
 export class UserService {

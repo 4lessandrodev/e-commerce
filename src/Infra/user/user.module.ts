@@ -11,7 +11,7 @@ import { UserRepository } from './repo/user.repository';
 import { User, UserSchema } from './entities/user.schema';
 import { UserService } from './user.service';
 import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
-import { UserQuery } from './repo/user.query';
+import { UserQuery } from './query/user.query';
 
 @Module({
   imports: [

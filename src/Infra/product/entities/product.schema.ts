@@ -33,7 +33,13 @@ export class Product {
   })
   id!: string;
 
-  @Prop({ type: String, index: true, unique: true, required: true })
+  @Prop({
+    type: String,
+    index: true,
+    unique: true,
+    required: true,
+    text: true,
+  })
   description!: string;
 
   @Prop({ type: String, required: true })

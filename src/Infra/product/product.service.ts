@@ -9,6 +9,9 @@ import {
   Injectable,
   PreconditionFailedException,
 } from '@nestjs/common';
+import { ProductQuery } from './query/product.query';
+import { ProductFilter } from './interfaces/product.filters.interface';
+import { Product } from './entities/product.schema';
 
 @Injectable()
 export class ProductService {
@@ -19,6 +22,7 @@ export class ProductService {
     private readonly registerTagUseCase: RegisterTagUseCase,
     @Inject(RegisterProductUseCase)
     private readonly registerProductUseCase: RegisterProductUseCase,
+    @Inject(ProductQuery) private readonly productQuery: ProductQuery,
   ) {}
 
   async registerProductCategory(
@@ -42,5 +46,10 @@ export class ProductService {
     if (result.isFailure) {
       throw new PreconditionFailedException(result.error);
     }
+  }
+
+  // Query methods
+  async getProducts(filter: ProductFilter): Promise<Product[]> {
+    return this.productQuery.getProducts(filter);
   }
 }
