@@ -1,6 +1,6 @@
 import { BasketCategory as Aggregate } from '@domain/entities';
 import { UniqueEntityID } from 'types-ddd/dist/src';
-import { BasketCategoryMapper } from './product-category.mapper';
+import { BasketCategoryMapper } from './basket-category.mapper';
 import { BasketCategory } from '../entities/basket-category.schema';
 
 describe('basket-category.mapper', () => {

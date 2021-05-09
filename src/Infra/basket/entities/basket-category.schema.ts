@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE } from '@domain/entities';
 
-export type ProductCategoryDocument = BasketCategory & Document;
+export type BasketCategoryDocument = BasketCategory & Document;
 
 @Schema({ autoCreate: true, autoIndex: true })
 export class BasketCategory {
