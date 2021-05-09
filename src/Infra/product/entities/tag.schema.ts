@@ -8,14 +8,8 @@ export class Tag {
   @Prop({ index: true, unique: true, immutable: true, type: String })
   id!: string;
 
-  @Prop({ index: true, unique: true, type: String })
+  @Prop({ index: true, unique: true, type: String, text: true })
   description!: string;
-
-  @Prop({ type: Date, default: new Date() })
-  createdAt!: Date;
-
-  @Prop({ type: Date, default: new Date() })
-  updatedAt!: Date;
 }
 
 export const TagSchema = SchemaFactory.createForClass(Tag);

@@ -7,17 +7,22 @@ describe('product-category.mapper', () => {
   //
   let domain: Aggregate;
   let persistence: ProductCategory;
+  const currentDate = new Date();
   //
   beforeAll(() => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
+        createdAt: currentDate,
+        updatedAt: currentDate,
       },
       new UniqueEntityID('valid_id'),
     ).getResult();
     persistence = {
       id: 'valid_id',
       description: 'valid_description',
+      createdAt: currentDate,
+      updatedAt: currentDate,
     };
   });
   //

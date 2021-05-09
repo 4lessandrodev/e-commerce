@@ -4,8 +4,8 @@ import { Product as Aggregate } from '@domain/aggregates-root';
 import { Product as Schema } from '@infra/product/entities/product.schema';
 import { CommentId } from '@domain/entities';
 import { Inject } from '@nestjs/common';
-import { ProductCategoryMapper } from './product-category.mapper';
-import { ProductTagMapper } from '@infra/product/mapper/product-tag.mapper';
+import { CategoryMapper } from './category.mapper';
+import { TagMapper } from '@infra/product/mapper/tag.mapper';
 import {
   Currency,
   ImageValueObject,
@@ -15,10 +15,10 @@ import {
 export class ProductMapper implements IMapper<Aggregate, Schema> {
   //
   constructor(
-    @Inject(ProductCategoryMapper)
-    private readonly productCategoryMapper: ProductCategoryMapper,
-    @Inject(ProductTagMapper)
-    private readonly productTagMapper: ProductTagMapper,
+    @Inject(CategoryMapper)
+    private readonly categoryMapper: CategoryMapper,
+    @Inject(TagMapper)
+    private readonly tagMapper: TagMapper,
   ) {}
   //
   toDomain(target: Schema): Aggregate {
@@ -28,7 +28,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         unitOfMeasurement: UnitOfMeasurementValueObject.create(
           target.unitOfMeasurement,
         ).getResult(),
-        category: this.productCategoryMapper.toDomain(target.category),
+        category: this.categoryMapper.toDomain(target.category),
         info: target.info,
         isActive: target.isActive,
         isSpecial: target.isSpecial,
@@ -37,7 +37,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         commentIds: target.comments?.map((id) =>
           CommentId.create(new UniqueEntityID(id)),
         ),
-        tags: target.tags?.map(this.productTagMapper.toDomain),
+        tags: target.tags?.map(this.tagMapper.toDomain),
         price: MonetaryValueObject.create(
           Currency.create(target.price).getResult(),
         ).getResult(),
@@ -57,7 +57,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
       id: target.id.toString(),
       description: target.description,
       unitOfMeasurement: target.unitOfMeasurement.value,
-      category: this.productCategoryMapper.toPersistence(target.category),
+      category: this.categoryMapper.toPersistence(target.category),
       isActive: target.isActive,
       isSpecial: target.isSpecial,
       numberOfRatings: target.numberOfRatings,
@@ -71,7 +71,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
       comments: target.comments.map(({ id }) => id.toString()),
       image: target.image?.value,
       info: target.info,
-      tags: target.tags.map(this.productTagMapper.toPersistence),
+      tags: target.tags.map(this.tagMapper.toPersistence),
       createdAt: target.createdAt,
       updatedAt: target.updatedAt,
     };

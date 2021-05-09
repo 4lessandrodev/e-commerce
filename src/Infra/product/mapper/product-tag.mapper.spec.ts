@@ -7,15 +7,20 @@ describe('product-tag.mapper', () => {
   //
   let persistence: ProductTag;
   let domain: Tag;
+  const currentDate = new Date();
   //
   beforeAll(() => {
     persistence = {
       id: 'valid_id',
       description: 'valid_description',
+      createdAt: currentDate,
+      updatedAt: currentDate,
     };
     domain = Tag.create(
       {
         description: 'valid_description',
+        createdAt: currentDate,
+        updatedAt: currentDate,
       },
       new UniqueEntityID('valid_id'),
     ).getResult();

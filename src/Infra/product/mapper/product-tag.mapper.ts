@@ -7,6 +7,8 @@ export class ProductTagMapper implements IMapper<Aggregate, Schema> {
     return Aggregate.create(
       {
         description: target.description,
+        createdAt: target.createdAt,
+        updatedAt: target.updatedAt,
       },
       new UniqueEntityID(target.id),
     ).getResult();
@@ -16,6 +18,8 @@ export class ProductTagMapper implements IMapper<Aggregate, Schema> {
     return {
       id: target.id.toString(),
       description: target.description,
+      createdAt: target.createdAt,
+      updatedAt: target.updatedAt,
     };
   }
 }

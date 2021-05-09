@@ -9,7 +9,7 @@ export class RegisterBasketCategoryUseCase
   implements IUseCase<RegisterBasketCategoryDto, Result<void>> {
   //
   constructor(
-    @Inject('BasketCategoryRepo')
+    @Inject('BasketCategoryRepository')
     private readonly basketCategoryRepo: BasketCategoryRepositoryInterface,
   ) {}
 
@@ -28,7 +28,7 @@ export class RegisterBasketCategoryUseCase
 
     try {
       const alreadyExistCategoryWithDescription = await this.basketCategoryRepo.exists(
-        { description: dto.description },
+        { description: dto.description.toLowerCase() },
       );
 
       if (alreadyExistCategoryWithDescription) {

@@ -10,6 +10,8 @@ export class BasketCategoryMapper
       {
         description: target.description,
         changesLimit: target.changesLimit,
+        createdAt: target.createdAt,
+        updatedAt: target.updatedAt,
       },
       new UniqueEntityID(target.id),
     ).getResult();
@@ -20,6 +22,8 @@ export class BasketCategoryMapper
       id: target.id.toString(),
       description: target.description,
       changesLimit: target.changesLimit,
+      createdAt: target.createdAt,
+      updatedAt: target.updatedAt,
     };
   }
   //

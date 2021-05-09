@@ -19,7 +19,7 @@ export class ProductQuery implements ProductQueryInterface {
 
     if (!search) {
       // Count
-      const totalOfRegisters = await this.conn.find({}).count();
+      const totalOfRegisters = await this.conn.find({}).countDocuments();
 
       // Get registers
       /**
@@ -47,7 +47,7 @@ export class ProductQuery implements ProductQueryInterface {
           $search: search,
         },
       })
-      .count();
+      .countDocuments();
 
     // Get registers
     const products = await this.conn

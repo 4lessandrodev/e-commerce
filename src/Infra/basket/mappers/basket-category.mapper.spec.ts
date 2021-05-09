@@ -5,6 +5,7 @@ import { BasketCategory } from '../entities/basket-category.schema';
 
 describe('basket-category.mapper', () => {
   //
+  const currentDate = new Date();
   let domain: Aggregate;
   let persistence: BasketCategory;
   //
@@ -13,6 +14,8 @@ describe('basket-category.mapper', () => {
       {
         description: 'valid_description',
         changesLimit: 2,
+        createdAt: currentDate,
+        updatedAt: currentDate,
       },
       new UniqueEntityID('valid_id'),
     ).getResult();
@@ -20,6 +23,8 @@ describe('basket-category.mapper', () => {
       id: 'valid_id',
       description: 'valid_description',
       changesLimit: 2,
+      createdAt: currentDate,
+      updatedAt: currentDate,
     };
   });
   //

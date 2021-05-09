@@ -3,9 +3,8 @@ import { UniqueEntityID } from 'types-ddd';
 import { CategoryMapper } from './category.mapper';
 import { Category } from '../entities/category.schema';
 
-describe('product-category.mapper', () => {
+describe('category.mapper', () => {
   //
-  const currentDate = new Date();
   let domain: Aggregate;
   let persistence: Category;
   //
@@ -13,16 +12,12 @@ describe('product-category.mapper', () => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
-        createdAt: currentDate,
-        updatedAt: currentDate,
       },
       new UniqueEntityID('valid_id'),
     ).getResult();
     persistence = {
       id: 'valid_id',
       description: 'valid_description',
-      createdAt: currentDate,
-      updatedAt: currentDate,
     };
   });
   //

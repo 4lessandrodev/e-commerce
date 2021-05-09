@@ -9,6 +9,8 @@ export class ProductCategoryMapper
     return Aggregate.create(
       {
         description: target.description,
+        createdAt: target.createdAt,
+        updatedAt: target.updatedAt,
       },
       new UniqueEntityID(target.id),
     ).getResult();
@@ -18,6 +20,8 @@ export class ProductCategoryMapper
     return {
       id: target.id.toString(),
       description: target.description,
+      createdAt: target.createdAt,
+      updatedAt: target.updatedAt,
     };
   }
   //

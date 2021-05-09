@@ -2,8 +2,8 @@ import { UnitTypes } from '@domain/value-objects/unit-of-measurement/UnitOfMeasu
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
-import { ProductCategory } from './product-category.schema';
-import { ProductTag } from './product-tag.schema';
+import { Category } from './category.schema';
+import { Tag } from './tag.schema';
 
 // ---------------------------------------------------------------
 type localeType = keyof typeof AvailableLocale;
@@ -46,7 +46,7 @@ export class Product {
   unitOfMeasurement!: UnitTypes;
 
   @Prop({ type: Object, required: true, index: true })
-  category!: ProductCategory;
+  category!: Category;
 
   @Prop({ type: String, required: false })
   image?: string;
@@ -76,7 +76,7 @@ export class Product {
   info?: string;
 
   @Prop({ type: [{ type: Object }] })
-  tags?: ProductTag[];
+  tags?: Tag[];
 
   @Prop({ type: Date, default: new Date() })
   createdAt!: Date;
@@ -88,7 +88,7 @@ export class Product {
 const ProductSchema = SchemaFactory.createForClass(Product);
 
 ProductSchema.virtual('Category', {
-  ref: 'Category',
+  ref: 'ProductCategory',
   localField: 'category.id',
   foreignField: 'id',
   justOne: true,

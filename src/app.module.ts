@@ -5,6 +5,7 @@ import { UserModule } from './Infra/user/user.module';
 import { ClientModule } from './Infra/client/client.module';
 import { RegionModule } from './Infra/region/region.module';
 import { ProductModule } from './Infra/product/product.module';
+import { BasketModule } from './Infra/basket/basket.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ProductModule } from './Infra/product/product.module';
     ClientModule,
     RegionModule,
     ProductModule,
+    BasketModule,
   ],
   controllers: [],
   providers: [],

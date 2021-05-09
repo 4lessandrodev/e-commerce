@@ -6,6 +6,7 @@ import { ProductCategoryMapper } from './mapper/product-category.mapper';
 import { Product, ProductSchema } from './entities/product.schema';
 import { ProductTagMapper } from './mapper/product-tag.mapper';
 import { ProductRepository } from './repo/product.repository';
+import { CategoryMapper } from './mapper/category.mapper';
 import { ProductController } from './product.controller';
 import { ProductMapper } from './mapper/product.mapper';
 import { TagRepository } from './repo/tag.repository';
@@ -37,6 +38,7 @@ import {
     TagMapper,
     ProductMapper,
     ProductCategoryRepository,
+    CategoryMapper,
     ProductQuery,
     {
       provide: 'ProductCategoryRepository',

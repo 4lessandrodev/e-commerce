@@ -5,7 +5,6 @@ import { TagMapper } from './tag.mapper';
 
 describe('tag', () => {
   //
-  const currentDate = new Date();
   let domain: Aggregate;
   let persistence: Schema;
   //
@@ -14,8 +13,6 @@ describe('tag', () => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
-        createdAt: currentDate,
-        updatedAt: currentDate,
       },
       new UniqueEntityID('valid_id'),
     ).getResult();
@@ -23,8 +20,6 @@ describe('tag', () => {
     persistence = {
       id: 'valid_id',
       description: 'valid_description',
-      createdAt: currentDate,
-      updatedAt: currentDate,
     };
   });
   //

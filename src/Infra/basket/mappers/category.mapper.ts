@@ -9,8 +9,6 @@ export class CategoryMapper implements IMapper<Aggregate, Schema> {
       {
         description: target.description,
         changesLimit: target.changesLimit,
-        createdAt: target.createdAt,
-        updatedAt: target.updatedAt,
       },
       new UniqueEntityID(target.id),
     ).getResult();
@@ -21,8 +19,6 @@ export class CategoryMapper implements IMapper<Aggregate, Schema> {
       id: target.id.toString(),
       description: target.description,
       changesLimit: target.changesLimit,
-      createdAt: target.createdAt,
-      updatedAt: target.updatedAt,
     };
   }
   //
