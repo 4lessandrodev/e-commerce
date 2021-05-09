@@ -31,9 +31,9 @@ Todo:
   ✔ Create Client - Aggregte-Root @started(21-04-26 23:38) @done(21-05-03 01:33) @lasted(6d1h55m18s)
   ✔ Register Tag on Product Context - [ADMIN] @done(21-05-06 01:10)
   ✔ Create use case - RegisterProduct [ADMIN] @started(21-05-06 19:55) @done(21-05-08 21:47) @lasted(2d1h52m56s)
+  ✔ Refactor Basket Aggregate - Remove embeded Product and add reference @done(21-05-09 00:39)
   ☐ Create use case - RegisterBasketCategory [ADMIN]
   ☐ Refactor Comment to Aggregate and add author
-  ✔ Refactor Basket Aggregate - Remove embeded Product and add reference @done(21-05-09 00:39)
   ☐ Create Readme Structure for each aggregate and entity
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
   ☐ Refactor Array items on Aggregates to WriteList
