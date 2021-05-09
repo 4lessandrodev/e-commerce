@@ -1,7 +1,7 @@
 import { BaseDomainEntity } from 'types-ddd';
-import { CommentId, ProductCategory, Tag } from '../../entities';
-import { ImageValueObject, MonetaryValueObject } from '../../value-objects';
-import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { CommentId, ProductCategory, Tag } from '@domain/entities';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 
 export interface ProductProps extends BaseDomainEntity {
   description: string;

@@ -231,9 +231,9 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.isActive).toBe(true);
   });
 
-  it('Should return null if product has no comment', () => {
+  it('Should return empty Array if product has no comment', () => {
     const createdBasket = makeSut().getResult();
-    expect(createdBasket.comments).toBe(null);
+    expect(createdBasket.comments).toEqual([]);
   });
 
   it('Should add comment on created product', () => {
@@ -272,9 +272,9 @@ describe('Basket.domain-aggregate-root', () => {
       likes: 2,
     }).getResult();
 
-    expect(createdBasket.comments?.length).toBe(undefined);
+    expect(createdBasket.comments.length).toBe(0);
     createdBasket.removeComment(comment1);
-    expect(createdBasket.comments?.length).toBe(undefined);
+    expect(createdBasket.comments.length).toBe(0);
   });
 
   it('Should add a tag with success', () => {
@@ -282,11 +282,11 @@ describe('Basket.domain-aggregate-root', () => {
       description: 'Fresco',
     }).getResult();
     const createdBasket = makeSut().getResult();
-    expect(createdBasket.tags?.length).toBe(undefined);
+    expect(createdBasket.tags.length).toBe(0);
     createdBasket.addTag(tag);
-    expect(createdBasket.tags?.length).toBe(1);
+    expect(createdBasket.tags.length).toBe(1);
     createdBasket.addTag(tag);
-    expect(createdBasket.tags?.length).toBe(2);
+    expect(createdBasket.tags.length).toBe(2);
   });
 
   it('Should remove a tag with success', () => {
@@ -297,13 +297,13 @@ describe('Basket.domain-aggregate-root', () => {
       description: 'Verduras',
     }).getResult();
     const createdBasket = makeSut().getResult();
-    expect(createdBasket.tags?.length).toBe(undefined);
+    expect(createdBasket.tags.length).toBe(0);
     createdBasket.addTag(tag1);
-    expect(createdBasket.tags?.length).toBe(1);
+    expect(createdBasket.tags.length).toBe(1);
     createdBasket.addTag(tag2);
-    expect(createdBasket.tags?.length).toBe(2);
+    expect(createdBasket.tags.length).toBe(2);
     createdBasket.removeTag(tag2);
-    expect(createdBasket.tags?.length).toBe(1);
+    expect(createdBasket.tags.length).toBe(1);
   });
 
   it('Should not fail if try to remove a inexisting tag', () => {
@@ -311,9 +311,9 @@ describe('Basket.domain-aggregate-root', () => {
       description: 'Orgânico',
     }).getResult();
     const createdBasket = makeSut().getResult();
-    expect(createdBasket.tags?.length).toBe(undefined);
+    expect(createdBasket.tags?.length).toBe(0);
     createdBasket.removeTag(tag1);
-    expect(createdBasket.tags?.length).toBe(undefined);
+    expect(createdBasket.tags?.length).toBe(0);
   });
 
   it('Should add product on a basket', () => {

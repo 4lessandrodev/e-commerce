@@ -1,16 +1,17 @@
+export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
+export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
+export const MAX_BASKET_RATING_AVERAGE = 5;
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { Product } from '@domain/aggregates-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
-import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import {
   ERROR_BASKET_DESCRIPTION_LENGTH,
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
 import { Comment, BasketCategory, Tag } from '@domain/entities';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
-export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
-export const MAX_BASKET_RATING_AVERAGE = 5;
+import { ProductId } from '../product/ProductId.domain-aggregate-root';
 
 export class Basket extends AggregateRoot<BasketProps> {
   private constructor(props: BasketProps, id?: UniqueEntityID) {
@@ -29,8 +30,8 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.category;
   }
 
-  get products(): Product[] | null {
-    return this.props.products ?? null;
+  get products(): ProductId[] {
+    return this.props.products ?? [];
   }
 
   get price(): MonetaryValueObject {
@@ -54,15 +55,15 @@ export class Basket extends AggregateRoot<BasketProps> {
   }
 
   get images(): ImageValueObject[] {
-    return this.props.images;
+    return this.props.images ?? [];
   }
 
-  get comments(): Comment[] | null {
-    return this.props.comments ?? null;
+  get comments(): Comment[] {
+    return this.props.comments ?? [];
   }
 
-  get tags(): Tag[] | null {
-    return this.props.tags ?? null;
+  get tags(): Tag[] {
+    return this.props.tags ?? [];
   }
 
   rateTheBasket(props: {
@@ -87,11 +88,15 @@ export class Basket extends AggregateRoot<BasketProps> {
   }
 
   addImage(image: ImageValueObject): void {
+    this.props.images = this.props.images ?? [];
     this.props.images.push(image);
     this.props.updatedAt = new Date();
   }
 
   removeImage(image: ImageValueObject): void {
+    if (!this.props.images) {
+      return;
+    }
     this.props.images = this.props.images.filter(
       (img) => img.value !== image.value,
     );

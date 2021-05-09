@@ -30,11 +30,12 @@ Todo:
   ✔ Create Address Entity @done(21-04-30 01:15)
   ✔ Create Client - Aggregte-Root @started(21-04-26 23:38) @done(21-05-03 01:33) @lasted(6d1h55m18s)
   ✔ Register Tag on Product Context - [ADMIN] @done(21-05-06 01:10)
-  ☐ Create use case - RegisterProduct [ADMIN] @started(21-05-06 19:55)
-  ☐ Create Readme Structure for each aggregate and entity
-  ☐ Refactor Array items on Aggregates to WriteList
-  ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
+  ✔ Create use case - RegisterProduct [ADMIN] @started(21-05-06 19:55) @done(21-05-08 21:47) @lasted(2d1h52m56s)
+  ☐ Create use case - RegisterBasketCategory [ADMIN]
   ☐ Refactor Basket Aggregate - Remove embeded Product and add reference
+  ☐ Create Readme Structure for each aggregate and entity
+  ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
+  ☐ Refactor Array items on Aggregates to WriteList
   ☐ Refactor Comment to Aggregate and add author
   ☐ Create Rating - Entity to relate user, product and rating
   ☐ Create Cart - Aggregate-Root
@@ -53,7 +54,6 @@ Todo:
   ✔ Create use case - RegisterRegion [ADMIN] @started(21-05-02 16:18) @done(21-05-03 01:33) @lasted(9h15m41s)
   ☐ Create use case - RegisterOrder [ADMIN, CLIENT]
   ✔ Create use case - RegisterProductCategory [ADMIN] @done(21-05-03 23:47)
-  ☐ Create use case - RegisterBasketCategory [ADMIN]
   ☐ Create use case - RegisterBasket [ADMIN]
   ☐ Create use case - ChangeRegionFreigthPrice [ADMIN]
   ☐ Create use case - UpdateRegion [ADMIN]
