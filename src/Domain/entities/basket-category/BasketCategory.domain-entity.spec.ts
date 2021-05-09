@@ -26,7 +26,7 @@ describe('BasketCategory', () => {
       changesLimit: 1,
       description: 'Valid Category',
     }).getResult();
-    expect(BasketCategoryResult.description).toBe('Valid Category');
+    expect(BasketCategoryResult.description).toBe('valid category');
     expect(BasketCategoryResult.changesLimit).toBe(1);
     expect(BasketCategoryResult.isDeleted).toBe(false);
   });
@@ -40,7 +40,7 @@ describe('BasketCategory', () => {
       },
       createdId,
     ).getResult();
-    expect(BasketCategoryResult.description).toBe('Valid Category');
+    expect(BasketCategoryResult.description).toBe('valid category');
     expect(BasketCategoryResult.changesLimit).toBe(1);
     expect(BasketCategoryResult.isDeleted).toBe(false);
     expect(BasketCategoryResult.id.toString()).toBe(createdId.toString());
@@ -51,7 +51,7 @@ describe('BasketCategory', () => {
       changesLimit: -5,
       description: 'Valid Category',
     }).getResult();
-    expect(BasketCategoryResult.description).toBe('Valid Category');
+    expect(BasketCategoryResult.description).toBe('valid category');
     expect(BasketCategoryResult.changesLimit).toBe(5);
     expect(BasketCategoryResult.isDeleted).toBe(false);
   });
@@ -77,7 +77,7 @@ describe('BasketCategory', () => {
     );
   });
 
-  it('Should fail if provide a change limit greatter than 20', () => {
+  it('Should fail if provide a change limit greater than 20', () => {
     const BasketCategoryResult = makeSut({
       description: 'Valid Description',
       changesLimit: 21,
@@ -115,7 +115,7 @@ describe('BasketCategory', () => {
     expect(dateUpdatedAtAfterDelete).not.toEqual(dateUpdatedAtBeforeDelete);
   });
 
-  it('Should convert to positive a negative value provided as changelimit ', async () => {
+  it('Should convert to positive a negative value provided as changeLimit ', async () => {
     const category = makeSut({
       changesLimit: -7,
       description: 'Convert Negative',
@@ -123,7 +123,7 @@ describe('BasketCategory', () => {
     expect(category.getResult().changesLimit).toBe(7);
   });
 
-  it('Should fail if provide a change limit greatter than 20 ', async () => {
+  it('Should fail if provide a change limit greater than 20 ', async () => {
     const category = makeSut({
       changesLimit: 21,
       description: 'Invalid Category',
@@ -132,7 +132,7 @@ describe('BasketCategory', () => {
     expect(category.error).toBe(ERROR_BASKET_CATEGORY_MAX_VALUE);
   });
 
-  it('Should fail if provide description greatter than 20 ', async () => {
+  it('Should fail if provide description greater than 20 ', async () => {
     const category = makeSut({
       changesLimit: 3,
       description: random.words(20),

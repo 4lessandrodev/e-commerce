@@ -58,7 +58,7 @@ describe('Basket.domain-aggregate-root', () => {
     const createdBasket = makeSut();
     expect(createdBasket.isFailure).toBe(false);
     expect(createdBasket.getResult().description).toBe('Basket 5 itens');
-    expect(createdBasket.getResult().category.description).toBe('Mini Basket');
+    expect(createdBasket.getResult().category.description).toBe('mini basket');
     expect(createdBasket.getResult().products?.length).toBe(1);
     expect(createdBasket.getResult().info).toBe('Information');
   });

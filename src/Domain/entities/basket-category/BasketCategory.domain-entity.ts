@@ -23,7 +23,7 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
   }
 
   get description(): string {
-    return this.props.description;
+    return this.props.description.toLowerCase();
   }
 
   get changesLimit(): number {
