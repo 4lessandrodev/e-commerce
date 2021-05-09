@@ -12,3 +12,4 @@ export * from './address-number/AddressNumber.value-object';
 export * from './region-name/RegionName.value-object';
 export * from './user-name/UserName.value-object';
 export * from './unit-of-measurement/UnitOfMeasurement.value-objects';
+export * from './basket-item/BasketItem.value-object';

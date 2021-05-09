@@ -1,9 +1,10 @@
 import { BaseDomainEntity } from 'types-ddd';
 import { BasketCategory, Comment, Tag } from '@domain/entities';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
-import { ProductId } from '@domain/aggregates-root';
-
-//exchange factor
+import {
+  ImageValueObject,
+  MonetaryValueObject,
+  BasketItemValueObject,
+} from '@domain/value-objects';
 
 export interface BasketProps extends BaseDomainEntity {
   description: string;
@@ -13,7 +14,7 @@ export interface BasketProps extends BaseDomainEntity {
   images?: ImageValueObject[];
   numberOfRatings?: number;
   ratingAverage?: number;
-  products?: ProductId[];
+  items?: BasketItemValueObject[];
   comments?: Comment[];
   info?: string;
   tags?: Tag[];

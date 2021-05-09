@@ -2,8 +2,11 @@ export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
 export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_RATING_AVERAGE = 5;
 import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
-import { Product } from '@domain/aggregates-root';
+import {
+  BasketItemValueObject,
+  ImageValueObject,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import {
   ERROR_BASKET_DESCRIPTION_LENGTH,
@@ -30,8 +33,8 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.category;
   }
 
-  get products(): ProductId[] {
-    return this.props.products ?? [];
+  get products(): BasketItemValueObject[] {
+    return this.props.items ?? [];
   }
 
   get price(): MonetaryValueObject {
@@ -147,21 +150,21 @@ export class Basket extends AggregateRoot<BasketProps> {
     this.props.tags = existTags.filter((tg) => !tg.id.equals(tag.id));
   }
 
-  addProduct(product: Product): void {
-    const existProducts = this.props.products ?? null;
-    this.props.products = [product];
+  addProduct(item: BasketItemValueObject): void {
+    const existProducts = this.props.items ?? null;
+    this.props.items = [item];
     if (existProducts) {
-      this.props.products = this.props.products.concat(existProducts);
+      this.props.items = this.props.items.concat(existProducts);
     }
   }
 
-  removeProduct(product: Product): void {
-    const existProducts = this.props.products ?? null;
+  removeProduct(productId: ProductId): void {
+    const existProducts = this.props.items ?? null;
     if (!existProducts) {
       return;
     }
-    this.props.products = existProducts.filter(
-      (prd) => !prd.id.equals(product.id),
+    this.props.items = existProducts.filter(
+      (item) => !item.value.productId.id.equals(productId.id),
     );
   }
 

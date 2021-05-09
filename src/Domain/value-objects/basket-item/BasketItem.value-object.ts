@@ -25,7 +25,7 @@ export class BasketItemValueObject extends ValueObject<BasketItemProps> {
 
   public static create(props: BasketItemValue): Result<BasketItemValueObject> {
     const isValidExchangeFactor =
-      props.exchangeFactor > MIN_EXCHANGE_FACTOR &&
+      props.exchangeFactor >= MIN_EXCHANGE_FACTOR &&
       props.exchangeFactor < MAX_EXCHANGE_FACTOR;
 
     if (!isValidExchangeFactor) {

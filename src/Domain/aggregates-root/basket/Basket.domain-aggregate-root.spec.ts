@@ -1,22 +1,20 @@
 import { image, random } from 'faker';
 import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '..';
+import { BasketCategory, Comment, Tag } from '@domain/entities';
 import {
-  BasketCategory,
-  Comment,
-  ProductCategory,
-  Tag,
-} from '@domain/entities';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+  BasketItemValueObject,
+  ImageValueObject,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
-import { Product } from '../product/Product.domain-aggregate-root';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import {
   ERROR_BASKET_DESCRIPTION_LENGTH,
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
 import { BasketId } from './BasketId.domain-aggregate-root';
-import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { ProductId } from '../product/ProductId.domain-aggregate-root';
 
 describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
@@ -42,26 +40,10 @@ describe('Basket.domain-aggregate-root', () => {
         isActive: props?.isActive ?? true,
         price:
           props?.price ?? MonetaryValueObject.create(makePrice(1)).getResult(),
-        products: props?.products ?? [
-          Product.create({
-            unitOfMeasurement: UnitOfMeasurementValueObject.create(
-              'KG',
-            ).getResult(),
-            description: 'Abacaxi',
-            category: ProductCategory.create({
-              description: 'Frutas',
-            }).getResult(),
-            image: ImageValueObject.create(image.imageUrl()).getResult(),
-            isActive: true,
-            isSpecial: false,
-            price: MonetaryValueObject.create(
-              Currency.create({
-                locale: 'pt-BR',
-                symbol: 'BRL',
-                value: 15,
-              }).getResult(),
-            ).getResult(),
-            quantityAvailable: 20,
+        items: props?.items ?? [
+          BasketItemValueObject.create({
+            exchangeFactor: 1,
+            productId: ProductId.create(),
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -318,41 +300,29 @@ describe('Basket.domain-aggregate-root', () => {
 
   it('Should add product on a basket', () => {
     const createdBasket = makeSut().getResult();
-    const product = Product.create({
-      description: 'Valid Product',
-      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      category: ProductCategory.create({
-        description: 'Valid Category',
-      }).getResult(),
-      image: ImageValueObject.create(image.imageUrl()).getResult(),
-      isActive: true,
-      isSpecial: false,
-      price: MonetaryValueObject.create(makePrice(15)).getResult(),
-      quantityAvailable: 15,
+    const item = BasketItemValueObject.create({
+      exchangeFactor: 1,
+      productId: ProductId.create(),
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
-    createdBasket.addProduct(product);
+
+    createdBasket.addProduct(item);
     expect(createdBasket.products?.length).toBe(2);
   });
 
   it('Should remove product from a basket', () => {
+    const productId = ProductId.create();
+
     const createdBasket = makeSut().getResult();
-    const product = Product.create({
-      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      description: 'Valid Product',
-      category: ProductCategory.create({
-        description: 'Valid Category',
-      }).getResult(),
-      image: ImageValueObject.create(image.imageUrl()).getResult(),
-      isActive: true,
-      isSpecial: false,
-      price: MonetaryValueObject.create(makePrice(15)).getResult(),
-      quantityAvailable: 15,
+    const product = BasketItemValueObject.create({
+      exchangeFactor: 1,
+      productId,
     }).getResult();
+
     expect(createdBasket.products?.length).toBe(1);
     createdBasket.addProduct(product);
     expect(createdBasket.products?.length).toBe(2);
-    createdBasket.removeProduct(product);
+    createdBasket.removeProduct(productId);
     expect(createdBasket.products?.length).toBe(1);
   });
 });
