@@ -12,7 +12,7 @@ import {
   ERROR_BASKET_DESCRIPTION_LENGTH,
   ERROR_BASKET_PRICE,
 } from './BasketErrors.domain-aggregate-root';
-import { Comment, BasketCategory, Tag } from '@domain/entities';
+import { BasketCategory, Tag, CommentId } from '@domain/entities';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { ProductId } from '../product/ProductId.domain-aggregate-root';
 
@@ -61,7 +61,7 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.images ?? [];
   }
 
-  get comments(): Comment[] {
+  get comments(): CommentId[] {
     return this.props.comments ?? [];
   }
 
@@ -116,21 +116,21 @@ export class Basket extends AggregateRoot<BasketProps> {
     this.props.updatedAt = new Date();
   }
 
-  addComment(comment: Comment): void {
+  addComment(commentId: CommentId): void {
     const existComments = this.props.comments ?? null;
-    this.props.comments = [comment];
+    this.props.comments = [commentId];
     if (existComments) {
       this.props.comments = this.props.comments.concat(existComments);
     }
   }
 
-  removeComment(comment: Comment): void {
+  removeComment(commentId: CommentId): void {
     const existComments = this.props.comments ?? null;
     if (!existComments) {
       return;
     }
     this.props.comments = existComments.filter(
-      (cmt) => !cmt.id.equals(comment.id),
+      (cmt) => !cmt.id.equals(commentId.id),
     );
   }
 

@@ -1,5 +1,5 @@
 import { BaseDomainEntity } from 'types-ddd';
-import { BasketCategory, Comment, Tag } from '@domain/entities';
+import { BasketCategory, CommentId, Tag } from '@domain/entities';
 import {
   ImageValueObject,
   MonetaryValueObject,
@@ -15,7 +15,7 @@ export interface BasketProps extends BaseDomainEntity {
   numberOfRatings?: number;
   ratingAverage?: number;
   items?: BasketItemValueObject[];
-  comments?: Comment[];
+  comments?: CommentId[];
   info?: string;
   tags?: Tag[];
 }

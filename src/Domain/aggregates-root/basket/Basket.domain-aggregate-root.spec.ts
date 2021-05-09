@@ -1,7 +1,7 @@
 import { image, random } from 'faker';
 import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '..';
-import { BasketCategory, Comment, Tag } from '@domain/entities';
+import { BasketCategory, Comment, CommentId, Tag } from '@domain/entities';
 import {
   BasketItemValueObject,
   ImageValueObject,
@@ -48,6 +48,7 @@ describe('Basket.domain-aggregate-root', () => {
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
         info: 'Information',
+        comments: [],
       },
       id,
     );
@@ -121,7 +122,7 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.getResult().ratingAverage).toBe(4.8);
   });
 
-  it('Should not effect if provide ratingAverage greatter than 5', () => {
+  it('Should not effect if provide ratingAverage greater than 5', () => {
     const createdBasket = makeSut();
     expect(createdBasket.isFailure).toBe(false);
     expect(createdBasket.getResult().numberOfRatings).toBe(0);
@@ -324,5 +325,31 @@ describe('Basket.domain-aggregate-root', () => {
     expect(createdBasket.products?.length).toBe(2);
     createdBasket.removeProduct(productId);
     expect(createdBasket.products?.length).toBe(1);
+  });
+
+  it('should add comment on basket', () => {
+    const commentId = CommentId.create();
+
+    const basket = Basket.create({
+      category: BasketCategory.create({
+        changesLimit: 2,
+        description: 'valid_description',
+      }).getResult(),
+      description: 'valid_description',
+      isActive: true,
+      price: MonetaryValueObject.create(
+        Currency.create({
+          locale: 'pt-BR',
+          symbol: 'BRL',
+          value: 20,
+        }).getResult(),
+      ).getResult(),
+    }).getResult();
+
+    const commentsLength = basket.comments.length;
+    expect(commentsLength).toBe(0);
+    basket.addComment(commentId);
+    const oneCommentLength = basket.comments.length;
+    expect(oneCommentLength).toBe(1);
   });
 });
