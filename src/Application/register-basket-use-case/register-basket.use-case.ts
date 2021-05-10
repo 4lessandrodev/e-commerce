@@ -79,16 +79,16 @@ export class RegisterBasketUseCase
 
       //-------------------------------------------------------------
       if (dto.items) {
-        //
         const ids = dto.items.map(({ productId }) => productId);
         const foundProducts = await this.productRepo.findProductsByIds(ids);
-
         this.domainService.addItemOnBasket(dto.items, basket, foundProducts);
       }
 
       /**
        * @todo: add image uploader service
        */
+
+      await this.basketRepo.save(basket);
 
       return Result.ok<void>();
       //
