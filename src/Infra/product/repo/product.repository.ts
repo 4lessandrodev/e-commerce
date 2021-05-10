@@ -45,4 +45,8 @@ export class ProductRepository implements ProductRepositoryInterface {
     });
   }
   //
+  async findProductsByIds(ids: string[]): Promise<Aggregate[]> {
+    const foundProducts = await this.conn.find({ id: { $in: ids } });
+    return foundProducts.map(this.mapper.toDomain);
+  }
 }

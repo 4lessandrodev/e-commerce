@@ -7,7 +7,6 @@ import { RegisterProductDto } from './register-product.dto';
 import { Inject, Injectable } from '@nestjs/common';
 import { Product } from '@domain/aggregates-root';
 import { IUseCase, Result } from 'types-ddd';
-import { Tag } from '@domain/entities';
 
 @Injectable()
 export class RegisterProductUseCase
@@ -22,8 +21,6 @@ export class RegisterProductUseCase
   ) {}
   //
   async execute(dto: RegisterProductDto): Promise<Result<void>> {
-    //
-    const tags: Tag[] = [];
     //----------------------------------------------------
     const currencyOrError = Currency.create({
       locale: 'pt-BR',
@@ -80,13 +77,6 @@ export class RegisterProductUseCase
         return Result.fail<void>('Category does not exists');
       }
 
-      if (dto.tagsIds) {
-        const foundTags = await this.tagRepo.findTagsById(dto.tagsIds);
-        if (foundTags) {
-          tags.push(...foundTags);
-        }
-      }
-
       //----------------------------------------------------
       /**
        * @todo Calls uploader service to save product image if provided
@@ -100,7 +90,6 @@ export class RegisterProductUseCase
         isActive: dto.isActive,
         quantityAvailable: dto.quantityAvailable,
         info: dto.info,
-        tags,
       });
       //
       if (productOrError.isFailure) {
@@ -108,6 +97,11 @@ export class RegisterProductUseCase
       }
 
       const product = productOrError.getResult();
+
+      if (dto.tagsIds) {
+        const foundTags = await this.tagRepo.findTagsById(dto.tagsIds);
+        foundTags.map((tag) => product.addTag(tag));
+      }
 
       await this.productRepo.save(product);
 

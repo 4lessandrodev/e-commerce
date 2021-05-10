@@ -20,7 +20,13 @@
   "images": ["String"],
   "numberOfRatings": "Number",
   "ratingAverage": "Number",
-  "products": ["String"],
+  "items": [
+    {
+      "productId": "String",
+      "quantity": "Number",
+      "exchangeFactor": "Number"
+    }
+  ],
   "comments": [
     {
       "id": "String",

@@ -18,6 +18,7 @@ describe('register-product.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
+      findProductsByIds: jest.fn(),
     };
     productCategoryRepo = {
       exists: jest.fn(),

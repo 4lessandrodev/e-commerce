@@ -8,6 +8,8 @@ import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from './BasketItemErrors.domain';
 export interface BasketItemValue {
   exchangeFactor: number;
   productId: ProductId;
+  quantity: number;
+  description: string;
 }
 
 export interface BasketItemProps {

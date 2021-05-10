@@ -44,6 +44,8 @@ describe('Basket.domain-aggregate-root', () => {
           BasketItemValueObject.create({
             exchangeFactor: 1,
             productId: ProductId.create(),
+            description: 'valid_description',
+            quantity: 2,
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -304,6 +306,8 @@ describe('Basket.domain-aggregate-root', () => {
     const item = BasketItemValueObject.create({
       exchangeFactor: 1,
       productId: ProductId.create(),
+      description: 'valid_description',
+      quantity: 2,
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
 
@@ -318,6 +322,8 @@ describe('Basket.domain-aggregate-root', () => {
     const product = BasketItemValueObject.create({
       exchangeFactor: 1,
       productId,
+      description: 'valid_description',
+      quantity: 2,
     }).getResult();
 
     expect(createdBasket.products?.length).toBe(1);
