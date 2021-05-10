@@ -60,8 +60,6 @@ Check available endpoints on postman documentation
 
 [Link Postman Api Documentation](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
 
-## Sobre DDD
-
 ---
 
 ## DDD (Domain Driven Design)
@@ -223,6 +221,16 @@ Check available endpoints on postman documentation
 
 - `$ cd e-commerce `
 
-- `$ yarn `
+- `$ yarn install`
 
-- `$ yarn run start `
+- `Configure seu arquivo .env seguindo exemplo de .env.example`
+
+- `docker-compose up -d`
+
+- `$ yarn start:dev `
+
+### Documentation
+
+Check available endpoints on postman documentation
+
+[Link Postman Api Documentation](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
