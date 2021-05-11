@@ -17,7 +17,8 @@ export class RegisterBasketUseCase
     private readonly basketCategoryRepo: BasketCategoryRepositoryInterface,
     @Inject('ProductRepository')
     private readonly productRepo: ProductRepositoryInterface,
-    @Inject('TagRepository') private readonly tagRepo: TagRepositoryInterface,
+    @Inject('TagRepository')
+    private readonly tagRepo: TagRepositoryInterface,
     @Inject('BasketRepository')
     private readonly basketRepo: BasketRepositoryInterface,
     @Inject(BasketService) private readonly domainService: BasketService,
@@ -89,6 +90,8 @@ export class RegisterBasketUseCase
        */
 
       await this.basketRepo.save(basket);
+
+      console.log(basket);
 
       return Result.ok<void>();
       //
