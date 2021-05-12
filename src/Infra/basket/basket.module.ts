@@ -17,11 +17,11 @@ import { CategoryMapper } from '@infra/product/mapper/category.mapper';
 import { ProductRepository } from '@infra/product/repo/product.repository';
 import { Basket, BasketSchema } from './entities/basket.schema';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
+import { ProductMapper } from '@infra/product/mapper/product.mapper';
 import {
   BasketCategory,
   BasketCategorySchema,
 } from './entities/basket-category.schema';
-import { ProductMapper } from '../product/mapper/product.mapper';
 
 @Module({
   imports: [

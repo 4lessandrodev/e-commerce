@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Category } from './category.schema';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
-import { Tag } from '../../product/entities/tag.schema';
+import { Tag } from '@infra/product/entities/tag.schema';
 
 // ---------------------------------------------------------------
 type localeType = keyof typeof AvailableLocale;
