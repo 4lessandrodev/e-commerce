@@ -91,8 +91,6 @@ export class RegisterBasketUseCase
 
       await this.basketRepo.save(basket);
 
-      console.log(basket);
-
       return Result.ok<void>();
       //
     } catch (error) {
