@@ -155,7 +155,7 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.image?.value).toBeDefined();
     createdProduct.changeImage(imageAdd);
     expect(createdProduct.image?.value).toBeDefined();
-    createdProduct.removeImage(imageAdd);
+    createdProduct.removeImage();
     expect(createdProduct.image?.value).not.toBeDefined();
   });
 

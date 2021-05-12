@@ -5,7 +5,7 @@ import { Category } from '../entities/category.schema';
 
 describe('basket-category.mapper', () => {
   //
-  const currentDate = new Date();
+
   let domain: Aggregate;
   let persistence: Category;
   //

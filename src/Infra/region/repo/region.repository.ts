@@ -15,7 +15,11 @@ export class RegionRepository implements RegionRepositoryInterface {
   ) {}
   //
   async find(filter: Filter): Promise<Aggregate[] | null> {
-    throw new Error('Method not implemented');
+    const foundRegions = await this.conn.find(filter);
+    if (foundRegions.length === 0) {
+      return null;
+    }
+    return foundRegions.map(this.mapper.toDomain);
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {
@@ -27,7 +31,7 @@ export class RegionRepository implements RegionRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    throw new Error('Method not implemented');
+    await this.conn.findOneAndDelete(filter).exec();
   }
 
   async exists(filter: Filter): Promise<boolean> {

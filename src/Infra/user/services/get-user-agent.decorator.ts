@@ -4,13 +4,12 @@ import { UAParser } from 'ua-parser-js';
 import { Term } from '../entities/user.schema';
 
 export const GetUserAgent = createParamDecorator(
-  (data, ctx: ExecutionContext): Term => {
+  (_data: any, ctx: ExecutionContext): Term => {
     const req = ctx.switchToHttp().getRequest();
     const headers: HeaderUserAgent = req.headers;
 
     const parser = new UAParser();
     const userAgent = headers['user-agent'];
-
     if (!userAgent) {
       return {
         acceptedAt: new Date(),

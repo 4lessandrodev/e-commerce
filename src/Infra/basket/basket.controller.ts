@@ -1,3 +1,4 @@
+import { RegisterBasketDto } from '@app/register-basket-use-case/register-basket.dto';
 import { RegisterBasketCategoryDto } from './dto/register-basket-category.dto';
 import { Controller } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,5 +25,10 @@ export class BasketController {
     @Body() dto: RegisterBasketCategoryDto,
   ): Promise<void> {
     return this.basketService.registerBasketCategory(dto);
+  }
+
+  @Post()
+  registerBasket(@Body() dto: RegisterBasketDto): Promise<void> {
+    return this.basketService.registerBasket(dto);
   }
 }

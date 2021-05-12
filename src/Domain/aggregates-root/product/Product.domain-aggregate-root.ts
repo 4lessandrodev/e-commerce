@@ -105,7 +105,7 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.updatedAt = new Date();
   }
 
-  removeImage(image: ImageValueObject): void {
+  removeImage(): void {
     this.props.image = undefined;
     this.props.updatedAt = new Date();
   }

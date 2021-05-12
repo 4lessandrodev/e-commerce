@@ -11,7 +11,7 @@ import {
   ERROR_REGION_DESCRIPTION_LENGTH,
 } from './RegionErrors.domain';
 import { RegionId } from './RegionId.domain-aggregate-root';
-import { City, StateId } from '../../entities';
+import { City } from '../../entities';
 
 describe('Region.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {

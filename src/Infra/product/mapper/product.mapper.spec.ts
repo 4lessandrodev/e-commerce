@@ -109,4 +109,20 @@ describe('product.mapper', () => {
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     expect(mapper).toBeDefined();
   });
+
+  it('should convert from domain to persistence', () => {
+    const categoryMapper = new ProductCategoryMapper();
+    const productTagMapper = new ProductTagMapper();
+    const mapper = new ProductMapper(categoryMapper, productTagMapper);
+    const result = mapper.toPersistence(domain);
+    expect(result).toEqual(persistence);
+  });
+
+  it('should convert from persistence to domain', () => {
+    const categoryMapper = new ProductCategoryMapper();
+    const productTagMapper = new ProductTagMapper();
+    const mapper = new ProductMapper(categoryMapper, productTagMapper);
+    const result = mapper.toDomain(persistence);
+    expect(result).toEqual(domain);
+  });
 });
