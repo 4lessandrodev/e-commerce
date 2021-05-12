@@ -1,6 +1,6 @@
 import { Basket, Product } from '@domain/aggregates-root';
 import { ItemDto } from '@app/register-basket-use-case/register-basket.dto';
-import { BasketService } from '../basket.service';
+import { BasketDomainService } from '../basket.service';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   Currency,
@@ -60,19 +60,19 @@ describe('basket.service', () => {
   //
 
   it('should be defined', () => {
-    const service = new BasketService();
+    const service = new BasketDomainService();
     expect(service).toBeDefined();
   });
 
   it('should not add products if ids does not match', () => {
-    const service = new BasketService();
+    const service = new BasketDomainService();
     const invalidItemDto: ItemDto = { ...itemDto, productId: 'invalid_id' };
     service.addItemOnBasket([invalidItemDto, itemDto], basket, [product]);
     expect(basket.products.length).toBe(1);
   });
 
   it('should add products if provide valid ids', () => {
-    const service = new BasketService();
+    const service = new BasketDomainService();
     service.addItemOnBasket([itemDto, itemDto], basket, [product, product]);
     expect(basket.products.length).toBe(3);
   });

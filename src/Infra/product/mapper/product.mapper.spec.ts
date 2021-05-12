@@ -9,8 +9,8 @@ import {
   MonetaryValueObject,
 } from '@domain/value-objects';
 import { ProductMapper } from './product.mapper';
-import { ProductCategoryMapper } from './product-category.mapper';
-import { ProductTagMapper } from '@infra/product/mapper/product-tag.mapper';
+import { CategoryMapper } from './category.mapper';
+import { TagMapper } from '@infra/product/mapper/tag.mapper';
 
 describe('product.mapper', () => {
   //
@@ -104,23 +104,23 @@ describe('product.mapper', () => {
   });
   //
   it('should be defined', () => {
-    const categoryMapper = new ProductCategoryMapper();
-    const productTagMapper = new ProductTagMapper();
+    const categoryMapper = new CategoryMapper();
+    const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     expect(mapper).toBeDefined();
   });
 
   it('should convert from domain to persistence', () => {
-    const categoryMapper = new ProductCategoryMapper();
-    const productTagMapper = new ProductTagMapper();
+    const categoryMapper = new CategoryMapper();
+    const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     const result = mapper.toPersistence(domain);
     expect(result).toEqual(persistence);
   });
 
   it('should convert from persistence to domain', () => {
-    const categoryMapper = new ProductCategoryMapper();
-    const productTagMapper = new ProductTagMapper();
+    const categoryMapper = new CategoryMapper();
+    const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     const result = mapper.toDomain(persistence);
     expect(result).toEqual(domain);

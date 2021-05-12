@@ -1,6 +1,7 @@
 import {
   ERROR_INVALID_CURRENCY,
   ERROR_INVALID_LOCALE,
+  ERROR_INVALID_CURRENCY_VALUE,
 } from './CurrencyErrors.value-object';
 import { Result, ValueObject } from 'types-ddd';
 import {
@@ -73,6 +74,12 @@ export class Currency extends ValueObject<CurrencyProps> {
 
   public static create(props: CurrencyProps): Result<Currency> {
     //
+
+    const isNumber = typeof props.value === 'number';
+    if (!isNumber) {
+      return Result.fail<Currency>(ERROR_INVALID_CURRENCY_VALUE);
+    }
+
     if (!this.isValidCurrency(AvailableCurrency[props.symbol])) {
       return Result.fail<Currency>(ERROR_INVALID_CURRENCY);
     }

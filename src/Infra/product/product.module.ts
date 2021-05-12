@@ -1,23 +1,23 @@
 import { RegisterProductCategoryUseCase } from '@app/register-product-category-use-case/register-product-category.use-case';
 import { RegisterProductUseCase } from '@app/register-product-use-case/register-product.use-case';
 import { RegisterTagUseCase } from '@app/register-tag-use-case/register-tag.use-case';
-import { ProductCategoryRepository } from './repo/product-category.repository';
-import { ProductCategoryMapper } from './mapper/product-category.mapper';
-import { Product, ProductSchema } from './entities/product.schema';
-import { ProductTagMapper } from './mapper/product-tag.mapper';
-import { ProductRepository } from './repo/product.repository';
-import { CategoryMapper } from './mapper/category.mapper';
-import { ProductController } from './product.controller';
-import { ProductMapper } from './mapper/product.mapper';
-import { TagRepository } from './repo/tag.repository';
+import { Tag } from '@domain/entities';
 import { ProductQuery } from './query/product.query';
+import { CategoryMapper } from './mapper/category.mapper';
+import { ProductMapper } from './mapper/product.mapper';
 import { ProductService } from './product.service';
 import { TagSchema } from './entities/tag.schema';
+import { ProductRepository } from './repo/product.repository';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Module } from '@nestjs/common';
+import { ProductController } from './product.controller';
+import { ProductTagMapper } from './mapper/product-tag.mapper';
+import { Product, ProductSchema } from './entities/product.schema';
+import { TagRepository } from './repo/tag.repository';
 import { UserModule } from '../user/user.module';
 import { TagMapper } from './mapper/tag.mapper';
-import { Module } from '@nestjs/common';
-import { Tag } from '@domain/entities';
+import { ProductCategoryMapper } from './mapper/product-category.mapper';
+import { ProductCategoryRepository } from './repo/product-category.repository';
 import {
   ProductCategory,
   ProductCategorySchema,
@@ -62,5 +62,6 @@ import {
     ProductService,
   ],
   controllers: [ProductController],
+  exports: ['ProductRepository', 'TagRepository', TagMapper],
 })
 export class ProductModule {}

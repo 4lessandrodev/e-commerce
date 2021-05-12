@@ -1,4 +1,4 @@
-import { BasketService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.service';
 import { BasketCategoryRepositoryInterface } from '@repo/basket-category-repository.interface';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
@@ -19,7 +19,7 @@ describe('register-basket.use-case', () => {
   let productRepo: ProductRepositoryInterface;
   let tagRepo: TagRepositoryInterface;
   let basketRepo: BasketRepositoryInterface;
-  let domainService: BasketService;
+  let domainService: BasketDomainService;
   //
   // fake product
   const product = Product.create(
@@ -85,7 +85,7 @@ describe('register-basket.use-case', () => {
       save: jest.fn(),
     };
     //
-    domainService = new BasketService();
+    domainService = new BasketDomainService();
     //
   });
 
@@ -99,6 +99,28 @@ describe('register-basket.use-case', () => {
     );
 
     expect(useCase).toBeDefined();
+  });
+
+  it('should fail if currency value is not a number ', async () => {
+    jest.spyOn(basketCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+
+    const useCase = new RegisterBasketUseCase(
+      basketCategoryRepo,
+      productRepo,
+      tagRepo,
+      basketRepo,
+      domainService,
+    );
+
+    const result = await useCase.execute({
+      categoryId: 'valid_category_id',
+      description: 'valid_description',
+      isActive: true,
+      price: ('80a' as unknown) as number,
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBe('Currency value must be a number');
   });
 
   it('should fail if category does not exists ', async () => {

@@ -7,7 +7,7 @@ import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { IUseCase, Result } from 'types-ddd';
 import { Inject } from '@nestjs/common';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
-import { BasketService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.service';
 
 export class RegisterBasketUseCase
   implements IUseCase<RegisterBasketDto, Result<void>> {
@@ -21,18 +21,25 @@ export class RegisterBasketUseCase
     private readonly tagRepo: TagRepositoryInterface,
     @Inject('BasketRepository')
     private readonly basketRepo: BasketRepositoryInterface,
-    @Inject(BasketService) private readonly domainService: BasketService,
+    @Inject(BasketDomainService)
+    private readonly domainService: BasketDomainService,
   ) {}
   //
   async execute(dto: RegisterBasketDto): Promise<Result<void>> {
     //
-    const priceOrError = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: dto.price,
-      }).getResult(),
-    );
+    const currencyOrError = Currency.create({
+      locale: 'pt-BR',
+      symbol: 'BRL',
+      value: dto.price,
+    });
+
+    if (currencyOrError.isFailure) {
+      return Result.fail<void>(currencyOrError.error.toString());
+    }
+    const currency = currencyOrError.getResult();
+
+    //
+    const priceOrError = MonetaryValueObject.create(currency);
     //
     if (priceOrError.isFailure) {
       return Result.fail<void>(priceOrError.error.toString());

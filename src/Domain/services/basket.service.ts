@@ -6,7 +6,7 @@ import { Tag } from '../entities';
 import { BasketServiceInterface } from './interfaces/basket-service.interface';
 
 @Injectable()
-export class BasketService implements BasketServiceInterface {
+export class BasketDomainService implements BasketServiceInterface {
   //
   addItemOnBasket(items: ItemDto[], basket: Basket, products: Product[]): void {
     for (const product of products) {

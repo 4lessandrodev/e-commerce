@@ -1,8 +1,8 @@
-import { RegisterBasketDto } from '@app/register-basket-use-case/register-basket.dto';
 import { RegisterBasketCategoryDto } from './dto/register-basket-category.dto';
 import { Controller } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BasketService } from './basket.service';
+import { RegisterBasketDto } from './dto/register-basket.dto';
 import {
   Body,
   Inject,
