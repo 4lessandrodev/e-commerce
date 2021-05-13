@@ -4,6 +4,7 @@
 {
   "id": "String",
   "description": "String",
+  "exchangeFactor": "Number",
   "unitOfMeasurement": "String",
   "category": {
     "id": "String",

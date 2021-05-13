@@ -227,9 +227,9 @@ describe('register-basket.use-case', () => {
       price: 50,
       tagsIds: ['valid_id', 'valid_id'],
       items: [
-        { exchangeFactor: 2, productId: 'valid_id', quantity: 3 },
-        { exchangeFactor: 3, productId: 'valid_id', quantity: 1 },
-        { exchangeFactor: 1, productId: 'valid_id', quantity: 2 },
+        { productId: 'valid_id', quantity: 3 },
+        { productId: 'valid_id', quantity: 1 },
+        { productId: 'valid_id', quantity: 2 },
       ],
     });
 

@@ -1,7 +1,6 @@
 import { File } from '@shared/services/upload-files/interfaces/uploader.interface';
 
 export interface ItemDto {
-  exchangeFactor: number;
   productId: string;
   quantity: number;
 }

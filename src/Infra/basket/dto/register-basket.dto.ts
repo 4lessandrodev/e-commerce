@@ -11,7 +11,6 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
-import { MAX_EXCHANGE_FACTOR } from '@domain/value-objects';
 import {
   MAX_BASKET_DESCRIPTION_LENGTH,
   MAX_BASKET_INFO_LENGTH,
@@ -19,10 +18,6 @@ import {
 } from '@domain/aggregates-root';
 
 export class ItemDto {
-  @IsPositive()
-  @Max(MAX_EXCHANGE_FACTOR)
-  exchangeFactor!: number;
-
   @IsUUID('4')
   productId!: string;
 

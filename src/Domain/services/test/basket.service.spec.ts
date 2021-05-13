@@ -41,7 +41,6 @@ describe('basket.service', () => {
   ).getResult();
 
   const itemDto: ItemDto = {
-    exchangeFactor: 2,
     productId: 'valid_id',
     quantity: 3,
   };
@@ -75,5 +74,6 @@ describe('basket.service', () => {
     const service = new BasketDomainService();
     service.addItemOnBasket([itemDto, itemDto], basket, [product, product]);
     expect(basket.products.length).toBe(3);
+    expect(basket.products[0].value.exchangeFactor).toBe(1);
   });
 });

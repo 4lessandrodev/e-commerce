@@ -32,9 +32,26 @@ Todo:
   ✔ Register Tag on Product Context - [ADMIN] @done(21-05-06 01:10)
   ✔ Create use case - RegisterProduct [ADMIN] @started(21-05-06 19:55) @done(21-05-08 21:47) @lasted(2d1h52m56s)
   ✔ Refactor Basket Aggregate - Remove embeded Product and add reference @done(21-05-09 00:39)
-  ☐ Create use case - RegisterBasketCategory [ADMIN]
+  ✔ Create use case - RegisterBasketCategory [ADMIN] @done(21-05-13 11:40)
+  ✔ Create use case - RegisterRegion [ADMIN] @started(21-05-02 16:18) @done(21-05-03 01:33) @lasted(9h15m41s)
+  ✔ Create use case - RegisterProductCategory [ADMIN] @done(21-05-03 23:47)
+  ✔ Create use case - RegisterBasket [ADMIN] @done(21-05-13 11:47)
+  ✔ Create use case - SignUp [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
+  ✔ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
+  ☐ Create Repositories Interfaces @started(21-05-13 11:46)
+  ☐ Create use case - Add item to a basket [ADMIN]
+  ☐ Create use case - Remove item from a basket [ADMIN]
+  ☐ Create use case - DeactivateBasket [ADMIN]
+  ☐ Create use case - Change basket description [ADMIN]
+  ☐ Create use case - Change basket price [ADMIN]
+  ☐ Create use case - Chage basket info [ADMIN]
+  ☐ Create use case - DeactivateProduct [ADMIN]
+  ☐ Create use case - Change Product Description [ADMIN]
+  ☐ Create use case - Change Product exchangeFactor [ADMIN]
+  ☐ Create use case - Change Product quantityAvailable [ADMIN]
+  ☐ Create use case - Change Product price [ADMIN]
   ☐ Refactor Comment to Aggregate and add author
-  ☐ Create Readme Structure for each aggregate and entity
+  ☐ Create Readme Structure for each aggregate and entity @started(21-05-13 11:40)
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket
   ☐ Refactor Array items on Aggregates to WriteList
   ☐ Create Rating - Entity to relate user, product and rating
@@ -44,17 +61,13 @@ Todo:
   ☐ Create Subscription Plan - Aggregate-Root
   ☐ Create Message - Entity
   ☐ Create Chat Aggregate-Root
-  ☐ Create Repositories Interfaces
   ☐ Create use case - RegisterNoteOnDelivery [ADMIN, CLIENT, DELIVERYMAN]
   ☐ Create use case - RegisterDelivery [ADMIN, DELIVERYMAN]
   ☐ Create use case - RegisterDeliveryDevolution [DELIVERYMAN, ADMIN]
   ☐ Create use case - RegisterEcobagDevolution [DELIVERYMAN, ADMIN]
   ☐ Create use case - RegisterEcobagPrice [ADMIN]
   ☐ Create use case - RegisterCompany [ADMIN]
-  ✔ Create use case - RegisterRegion [ADMIN] @started(21-05-02 16:18) @done(21-05-03 01:33) @lasted(9h15m41s)
   ☐ Create use case - RegisterOrder [ADMIN, CLIENT]
-  ✔ Create use case - RegisterProductCategory [ADMIN] @done(21-05-03 23:47)
-  ☐ Create use case - RegisterBasket [ADMIN]
   ☐ Create use case - ChangeRegionFreigthPrice [ADMIN]
   ☐ Create use case - UpdateRegion [ADMIN]
   ☐ Create use case - DeactivateDeliveryStatus [ADMIN]
@@ -71,9 +84,7 @@ Todo:
   ☐ Create use case - RemoveProductFromCart [CLIENT]
   ☐ Create use case - AddCustomBasketOnCart [CLIENT]
   ☐ Create use case - RemoveCustomBasketfromCart [CLIENT]
-  ✔ Create use case - SignUp [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
   ☐ Create use case - DefineAnUserAsDeliveryMan [ADMIN]
-  ✔ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
   ☐ Create use case - ResetPassword [ADMIN, DELIVERYMAN, CLIENT]
   ☐ Create use case - SendEmailWithResetPasswordToken [ADMIN, DELIVERYMAN, CLIENT]
   ☐ Create use case - DeactivateUser [ADMIN]
@@ -90,13 +101,11 @@ Todo:
   ☐ Create use case - ActivateDiscountCoupon [ADMIN]
   ☐ Create use case - ChangeDiscountCouponAvaliableQuantity [ADMIN]
   ☐ Create use case - ApproveOrder [ADMIN]
-  ☐ Create use case - DeactivateBasket [ADMIN]
   ☐ Create use case - ActivateBasket [ADMIN]
   ☐ Create use case - AddProductOnBasket [ADMIN]
   ☐ Create use case - RemoveProductFromBasket [ADMIN]
   ☐ Create use case - LaunchProductStock [ADMIN]
   ☐ Create use case - DimiurProductStock [ADMIN]
-  ☐ Create use case - DeactivateProduct [ADMIN]
   ☐ Create use case - ActivateProduct [ADMIN]
   ☐ Create use case - AddProductOnCustomBasket [CLIENT]
   ☐ Create use case - RemoveProductFromCustomBasket [CLIENT]
