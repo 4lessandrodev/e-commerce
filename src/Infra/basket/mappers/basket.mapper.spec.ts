@@ -11,11 +11,11 @@ import {
 import { BasketMapper } from './basket.mapper';
 import { BasketItemMapper } from './basket-item.mapper';
 import { TagMapper } from '../../product/mapper/tag.mapper';
-import { CategoryMapper } from './category.mapper';
+import { EmbedBasketCategoryMapper } from './embed-category.mapper';
 
 describe('basket.mapper', () => {
   //
-  const categoryMapper = new CategoryMapper();
+  const categoryMapper = new EmbedBasketCategoryMapper();
   const itemMapper = new BasketItemMapper();
   const tagMapper = new TagMapper();
   //

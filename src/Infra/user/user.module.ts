@@ -32,7 +32,6 @@ import { UserQuery } from './query/user.query';
     JwtStrategy,
     SignUpUseCase,
     SignInUseCase,
-    UserRepository,
     {
       provide: 'UserRepository',
       useClass: UserRepository,

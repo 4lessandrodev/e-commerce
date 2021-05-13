@@ -2,12 +2,14 @@ import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { IUseCase, Result } from 'types-ddd';
 import { RegisterRegionDto } from './register-region.use-case.dto';
 import { Region } from '@domain/aggregates-root';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { RegionRepositoryInterface } from '@repo/region-repository.interface';
 import { CityRepositoryInterface } from '@repo/city.repository.interface';
 
+@Injectable()
 export class RegisterRegionUseCase
-  implements IUseCase<RegisterRegionDto, Result<void>> {
+  implements IUseCase<RegisterRegionDto, Result<void>>
+{
   //
   constructor(
     @Inject('RegionRepository')

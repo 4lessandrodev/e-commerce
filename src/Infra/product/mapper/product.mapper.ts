@@ -3,8 +3,8 @@ import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-meas
 import { Product as Aggregate } from '@domain/aggregates-root';
 import { Product as Schema } from '@infra/product/entities/product.schema';
 import { CommentId } from '@domain/entities';
-import { Inject } from '@nestjs/common';
-import { CategoryMapper } from './category.mapper';
+import { Inject, Injectable } from '@nestjs/common';
+import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
 import {
   Currency,
@@ -12,11 +12,12 @@ import {
   MonetaryValueObject,
 } from '@domain/value-objects';
 
+@Injectable()
 export class ProductMapper implements IMapper<Aggregate, Schema> {
   //
   constructor(
-    @Inject(CategoryMapper)
-    private readonly categoryMapper: CategoryMapper,
+    @Inject(EmbedProductCategoryMapper)
+    private readonly categoryMapper: EmbedProductCategoryMapper,
     @Inject(TagMapper)
     private readonly tagMapper: TagMapper,
   ) {}

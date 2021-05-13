@@ -1,8 +1,8 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { Basket as Aggregate } from '@domain/aggregates-root';
 import { Basket as Schema } from '../entities/basket.schema';
-import { Inject } from '@nestjs/common';
-import { CategoryMapper } from './category.mapper';
+import { Inject, Injectable } from '@nestjs/common';
+import { EmbedBasketCategoryMapper } from './embed-category.mapper';
 import { BasketItemMapper } from './basket-item.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
 import {
@@ -12,9 +12,11 @@ import {
 } from '@domain/value-objects';
 import { CommentId } from '@domain/entities';
 
+@Injectable()
 export class BasketMapper implements IMapper<Aggregate, Schema> {
   constructor(
-    @Inject(CategoryMapper) private readonly categoryMapper: CategoryMapper,
+    @Inject(EmbedBasketCategoryMapper)
+    private readonly categoryMapper: EmbedBasketCategoryMapper,
     @Inject(BasketItemMapper) private readonly itemMapper: BasketItemMapper,
     @Inject(TagMapper) private readonly tagMapper: TagMapper,
   ) {}

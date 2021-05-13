@@ -20,7 +20,7 @@ export class BasketRepository implements BasketRepositoryInterface {
     if (foundBaskets.length === 0) {
       return null;
     }
-    return foundBaskets.map(this.mapper.toDomain);
+    return foundBaskets.map((basket) => this.mapper.toDomain(basket));
   }
   //
   async findOne(filter: Filter): Promise<Basket | null> {

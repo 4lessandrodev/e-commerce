@@ -1,7 +1,9 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { Tag as Aggregate } from '@domain/entities';
 import { Tag as Schema } from '../entities/tag.schema';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class TagMapper implements IMapper<Aggregate, Schema> {
   toDomain(target: Schema): Aggregate {
     return Aggregate.create(

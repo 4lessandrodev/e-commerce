@@ -9,7 +9,7 @@ import {
   MonetaryValueObject,
 } from '@domain/value-objects';
 import { ProductMapper } from './product.mapper';
-import { CategoryMapper } from './category.mapper';
+import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
 
 describe('product.mapper', () => {
@@ -22,9 +22,8 @@ describe('product.mapper', () => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
-        unitOfMeasurement: UnitOfMeasurementValueObject.create(
-          'UN',
-        ).getResult(),
+        unitOfMeasurement:
+          UnitOfMeasurementValueObject.create('UN').getResult(),
         category: ProductCategory.create(
           {
             description: 'valid_description',
@@ -104,14 +103,14 @@ describe('product.mapper', () => {
   });
   //
   it('should be defined', () => {
-    const categoryMapper = new CategoryMapper();
+    const categoryMapper = new EmbedProductCategoryMapper();
     const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     expect(mapper).toBeDefined();
   });
 
   it('should convert from domain to persistence', () => {
-    const categoryMapper = new CategoryMapper();
+    const categoryMapper = new EmbedProductCategoryMapper();
     const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     const result = mapper.toPersistence(domain);
@@ -119,7 +118,7 @@ describe('product.mapper', () => {
   });
 
   it('should convert from persistence to domain', () => {
-    const categoryMapper = new CategoryMapper();
+    const categoryMapper = new EmbedProductCategoryMapper();
     const productTagMapper = new TagMapper();
     const mapper = new ProductMapper(categoryMapper, productTagMapper);
     const result = mapper.toDomain(persistence);

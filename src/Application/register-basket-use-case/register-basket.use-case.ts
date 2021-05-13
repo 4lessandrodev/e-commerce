@@ -5,12 +5,14 @@ import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 import { Basket } from '@domain/aggregates-root';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { IUseCase, Result } from 'types-ddd';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { BasketDomainService } from '@domain/services/basket.service';
 
+@Injectable()
 export class RegisterBasketUseCase
-  implements IUseCase<RegisterBasketDto, Result<void>> {
+  implements IUseCase<RegisterBasketDto, Result<void>>
+{
   //
   constructor(
     @Inject('BasketCategoryRepository')
@@ -88,8 +90,12 @@ export class RegisterBasketUseCase
       //-------------------------------------------------------------
       if (dto.items) {
         const ids = dto.items.map(({ productId }) => productId);
+
+        // Error
         const foundProducts = await this.productRepo.findProductsByIds(ids);
-        this.domainService.addItemOnBasket(dto.items, basket, foundProducts);
+        if (foundProducts) {
+          this.domainService.addItemOnBasket(dto.items, basket, foundProducts);
+        }
       }
 
       /**
@@ -102,6 +108,8 @@ export class RegisterBasketUseCase
       //
     } catch (error) {
       //
+      console.log(error);
+
       return Result.fail<void>(
         'Internal Server Error on Register Basket Use Case',
       );

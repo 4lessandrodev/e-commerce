@@ -2,7 +2,9 @@ import { IMapper, UniqueEntityID } from 'types-ddd/dist/src';
 import { BasketItemValueObject as Aggregate } from '@domain/value-objects';
 import { Item as Schema } from '../entities/basket.schema';
 import { ProductId } from '@domain/aggregates-root';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class BasketItemMapper implements IMapper<Aggregate, Schema> {
   toDomain(target: Schema): Aggregate {
     return Aggregate.create({

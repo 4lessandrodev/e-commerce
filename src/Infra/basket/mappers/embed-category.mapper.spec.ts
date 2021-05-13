@@ -1,6 +1,6 @@
 import { BasketCategory as Aggregate } from '@domain/entities';
 import { UniqueEntityID } from 'types-ddd';
-import { CategoryMapper } from './category.mapper';
+import { EmbedBasketCategoryMapper } from './embed-category.mapper';
 import { Category } from '../entities/category.schema';
 
 describe('basket-category.mapper', () => {
@@ -25,18 +25,18 @@ describe('basket-category.mapper', () => {
   });
   //
   it('should be defined', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedBasketCategoryMapper();
     expect(mapper).toBeDefined();
   });
 
   it('should convert from domain to persistence ', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedBasketCategoryMapper();
     const result = mapper.toPersistence(domain);
     expect(result).toEqual(persistence);
   });
 
   it('should convert from persistence to domain ', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedBasketCategoryMapper();
     const result = mapper.toDomain(persistence);
     expect(result).toEqual(domain);
   });

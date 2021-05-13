@@ -1,11 +1,13 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
 import { Tag } from '@domain/entities';
 import { RegisterTagDto } from './register-tag.dto';
 import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 
+@Injectable()
 export class RegisterTagUseCase
-  implements IUseCase<RegisterTagDto, Result<void>> {
+  implements IUseCase<RegisterTagDto, Result<void>>
+{
   //
   constructor(
     @Inject('TagRepository') private readonly tagRepo: TagRepositoryInterface,

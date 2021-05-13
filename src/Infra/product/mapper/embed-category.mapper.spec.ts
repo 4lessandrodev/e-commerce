@@ -1,6 +1,6 @@
 import { ProductCategory as Aggregate } from '@domain/entities';
 import { UniqueEntityID } from 'types-ddd';
-import { CategoryMapper } from './category.mapper';
+import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { Category } from '../entities/category.schema';
 
 describe('category.mapper', () => {
@@ -22,18 +22,18 @@ describe('category.mapper', () => {
   });
   //
   it('should be defined', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedProductCategoryMapper();
     expect(mapper).toBeDefined();
   });
 
   it('should convert from domain to persistence ', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedProductCategoryMapper();
     const result = mapper.toPersistence(domain);
     expect(result).toEqual(persistence);
   });
 
   it('should convert from persistence to domain ', () => {
-    const mapper = new CategoryMapper();
+    const mapper = new EmbedProductCategoryMapper();
     const result = mapper.toDomain(persistence);
     expect(result).toEqual(domain);
   });

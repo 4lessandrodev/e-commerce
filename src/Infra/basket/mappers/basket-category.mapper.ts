@@ -1,9 +1,12 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { BasketCategory as Aggregate } from '@domain/entities';
 import { BasketCategory } from '../entities/basket-category.schema';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class BasketCategoryMapper
-  implements IMapper<Aggregate, BasketCategory> {
+  implements IMapper<Aggregate, BasketCategory>
+{
   //
   toDomain(target: BasketCategory): Aggregate {
     return Aggregate.create(

@@ -3,7 +3,7 @@ import { RegisterProductUseCase } from '@app/register-product-use-case/register-
 import { RegisterTagUseCase } from '@app/register-tag-use-case/register-tag.use-case';
 import { Tag } from '@domain/entities';
 import { ProductQuery } from './query/product.query';
-import { CategoryMapper } from './mapper/category.mapper';
+import { EmbedProductCategoryMapper } from './mapper/embed-category.mapper';
 import { ProductMapper } from './mapper/product.mapper';
 import { ProductService } from './product.service';
 import { TagSchema } from './entities/tag.schema';
@@ -36,9 +36,8 @@ import {
     ProductCategoryMapper,
     ProductTagMapper,
     TagMapper,
+    EmbedProductCategoryMapper,
     ProductMapper,
-    ProductCategoryRepository,
-    CategoryMapper,
     ProductQuery,
     {
       provide: 'ProductCategoryRepository',
@@ -52,16 +51,21 @@ import {
       provide: 'ProductRepository',
       useClass: ProductRepository,
     },
-    {
-      provide: 'TagRepository',
-      useClass: TagRepository,
-    },
     RegisterProductCategoryUseCase,
     RegisterProductUseCase,
     RegisterTagUseCase,
     ProductService,
   ],
   controllers: [ProductController],
-  exports: ['ProductRepository', 'TagRepository', TagMapper],
+  exports: [
+    'ProductCategoryRepository',
+    'TagRepository',
+    'ProductRepository',
+    ProductCategoryMapper,
+    ProductTagMapper,
+    TagMapper,
+    ProductMapper,
+    EmbedProductCategoryMapper,
+  ],
 })
 export class ProductModule {}

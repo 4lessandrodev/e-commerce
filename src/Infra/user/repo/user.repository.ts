@@ -24,7 +24,7 @@ export class UserRepository implements UserRepositoryInterface {
       return null;
     }
 
-    return usersFound.map(this.mapper.toDomain);
+    return usersFound.map((user) => this.mapper.toDomain(user));
   }
 
   async delete(filter: Filter): Promise<void> {

@@ -2,11 +2,13 @@ import { CityRepositoryInterface } from '@repo/city.repository.interface';
 import { InitialStateValueObject } from '@domain/value-objects';
 import { RegisterCityDto } from './register-city.use-case.dto';
 import { IUseCase, Result } from 'types-ddd';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { City } from '@domain/entities';
 
+@Injectable()
 export class RegisterCityUseCase
-  implements IUseCase<RegisterCityDto, Result<void>> {
+  implements IUseCase<RegisterCityDto, Result<void>>
+{
   constructor(
     @Inject('CityRepository')
     private readonly cityRepo: CityRepositoryInterface,

@@ -1,9 +1,12 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { ProductCategory as Aggregate } from '@domain/entities';
 import { ProductCategory } from '../entities/product-category.schema';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ProductCategoryMapper
-  implements IMapper<Aggregate, ProductCategory> {
+  implements IMapper<Aggregate, ProductCategory>
+{
   //
   toDomain(target: ProductCategory): Aggregate {
     return Aggregate.create(

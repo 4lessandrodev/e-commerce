@@ -19,7 +19,7 @@ export class RegionRepository implements RegionRepositoryInterface {
     if (foundRegions.length === 0) {
       return null;
     }
-    return foundRegions.map(this.mapper.toDomain);
+    return foundRegions.map((city) => this.mapper.toDomain(city));
   }
 
   async findOne(filter: Filter): Promise<Aggregate | null> {

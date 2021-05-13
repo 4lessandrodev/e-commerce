@@ -9,7 +9,7 @@ import { BasketItemMapper } from './mappers/basket-item.mapper';
 import { Module } from '@nestjs/common';
 import { BasketRepository } from './repo/basket.repository';
 import { BasketCategoryMapper } from './mappers/basket-category.mapper';
-import { CategoryMapper } from '@infra/product/mapper/category.mapper';
+import { BasketDomainService } from '@domain/services/basket.service';
 import { Basket, BasketSchema } from './entities/basket.schema';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
 import {
@@ -17,7 +17,7 @@ import {
   BasketCategorySchema,
 } from './entities/basket-category.schema';
 import { ProductModule } from '../product/product.module';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
 
 @Module({
   imports: [
@@ -29,10 +29,10 @@ import { BasketDomainService } from '@domain/services/basket.service';
     ]),
   ],
   providers: [
-    CategoryMapper,
     BasketCategoryMapper,
     BasketItemMapper,
     BasketMapper,
+    EmbedBasketCategoryMapper,
     {
       provide: 'BasketCategoryRepository',
       useClass: BasketCategoryRepository,
