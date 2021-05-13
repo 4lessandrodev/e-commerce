@@ -7,8 +7,8 @@ import { validateStringLengthBetweenMaxAndMin } from '../../utils';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { RegionProps } from './Region.domain-aggregate-root-interface';
 import { City } from '@domain/entities';
-export const REGION_DESCRIPTION_MAX_STRING_LENGTH = 20;
-export const REGION_DESCRIPTION_MIN_STRING_LENGTH = 3;
+export const MAX_REGION_DESCRIPTION_LENGTH = 20;
+export const MIN_REGION_DESCRIPTION_LENGTH = 3;
 
 export class Region extends AggregateRoot<RegionProps> {
   private constructor(props: RegionProps, id?: UniqueEntityID) {
@@ -51,8 +51,8 @@ export class Region extends AggregateRoot<RegionProps> {
   ): Result<Region> {
     const isValidDescriptionLength = validateStringLengthBetweenMaxAndMin({
       text: props.description,
-      maxLength: REGION_DESCRIPTION_MAX_STRING_LENGTH,
-      minLength: REGION_DESCRIPTION_MIN_STRING_LENGTH,
+      maxLength: MAX_REGION_DESCRIPTION_LENGTH,
+      minLength: MIN_REGION_DESCRIPTION_LENGTH,
     });
     if (!isValidDescriptionLength) {
       return Result.fail<Region>(ERROR_REGION_DESCRIPTION_LENGTH);

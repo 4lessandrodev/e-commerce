@@ -6,6 +6,7 @@ import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 export interface ProductProps extends BaseDomainEntity {
   description: string;
   category: ProductCategory;
+  exchangeFactor: number;
   unitOfMeasurement: UnitOfMeasurementValueObject;
   isSpecial: boolean;
   price: MonetaryValueObject;

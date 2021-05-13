@@ -23,6 +23,7 @@
   "items": [
     {
       "productId": "String",
+      "description": "String",
       "quantity": "Number",
       "exchangeFactor": "Number"
     }

@@ -7,7 +7,7 @@ interface validateParams {
  *
  * @param value number to validate
  * @param max max value as number to check.
- * @param min min value as number to chack.
+ * @param min min value as number to check.
  * Returns `true` if value is between range or `false`if not
  */
 export const validateNumberBetweenMaxAndMin = (

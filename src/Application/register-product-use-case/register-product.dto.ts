@@ -3,6 +3,7 @@ import { UnitTypes } from '@domain/value-objects/unit-of-measurement/UnitOfMeasu
 
 export interface RegisterProductDto {
   description: string;
+  exchangeFactor: number;
   categoryId: string;
   unitOfMeasurement: UnitTypes;
   isSpecial: boolean;

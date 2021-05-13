@@ -22,6 +22,7 @@ describe('product.mapper', () => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
+        exchangeFactor: 1,
         unitOfMeasurement:
           UnitOfMeasurementValueObject.create('UN').getResult(),
         category: ProductCategory.create(
@@ -69,6 +70,7 @@ describe('product.mapper', () => {
     persistence = {
       id: 'valid_id',
       description: 'valid_description',
+      exchangeFactor: 1,
       unitOfMeasurement: 'UN',
       category: {
         id: 'valid_id',

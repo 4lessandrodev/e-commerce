@@ -11,23 +11,31 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
+import {
+  MAX_ADDRESS_COMPLEMENT_LENGTH,
+  MAX_ADDRESS_NUMBER_LENGTH,
+  MAX_STREET_NAME_LENGTH,
+  MAX_USER_NAME_LENGTH,
+  MIN_STREET_NAME_LENGTH,
+  MIN_USER_NAME_LENGTH,
+} from '@domain/value-objects';
 export class AddressDto {
   @Length(8, 9)
   @IsString()
   zipCode!: string;
 
   @IsString()
-  @Length(1, 40)
+  @Length(MIN_STREET_NAME_LENGTH, MAX_STREET_NAME_LENGTH)
   street!: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(7)
+  @MaxLength(MAX_ADDRESS_NUMBER_LENGTH)
   readonly number!: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(40)
+  @MaxLength(MAX_ADDRESS_COMPLEMENT_LENGTH)
   readonly complement!: string;
 
   @IsNotEmpty()
@@ -40,7 +48,7 @@ export class RegisterClientDto {
   userId!: string;
 
   @IsString()
-  @Length(1, 30)
+  @Length(MIN_USER_NAME_LENGTH, MAX_USER_NAME_LENGTH)
   readonly name!: string;
 
   @IsOptional()

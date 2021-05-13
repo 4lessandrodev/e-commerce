@@ -8,9 +8,9 @@ import {
   ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
   ERROR_BASKET_CATEGORY_MAX_VALUE,
 } from './BasketCategoryErrors.domain-entity';
-export const BASKET_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH = 3;
-export const BASKET_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH = 20;
-export const BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE = 20;
+export const MIN_BASKET_CATEGORY_DESCRIPTION_LENGTH = 3;
+export const MAX_BASKET_CATEGORY_DESCRIPTION_LENGTH = 20;
+export const MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE = 20;
 const ZERO = 0;
 
 export class BasketCategory extends Entity<BasketCategoryProps> {
@@ -41,15 +41,15 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
   ): Result<BasketCategory> {
     const isValidDescription = validateStringLengthBetweenMaxAndMin({
       text: props.description,
-      minLength: BASKET_CATEGORY_DESCRIPTION_MIN_STRING_LENGTH,
-      maxLength: BASKET_CATEGORY_DESCRIPTION_MAX_STRING_LENGTH,
+      minLength: MIN_BASKET_CATEGORY_DESCRIPTION_LENGTH,
+      maxLength: MAX_BASKET_CATEGORY_DESCRIPTION_LENGTH,
     });
 
     if (props.changesLimit < ZERO) {
       props.changesLimit = convertNegativeNumberToPositive(props.changesLimit);
     }
 
-    if (props.changesLimit > BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE) {
+    if (props.changesLimit > MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE) {
       return Result.fail<BasketCategory>(ERROR_BASKET_CATEGORY_MAX_VALUE);
     }
 

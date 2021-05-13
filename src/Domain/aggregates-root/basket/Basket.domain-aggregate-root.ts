@@ -1,6 +1,12 @@
-export const MAX_BASKET_DESCRIPTION_LENGTH = 20;
+export const MAX_BASKET_DESCRIPTION_LENGTH = 30;
 export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_RATING_AVERAGE = 5;
+export const MAX_BASKET_INFO_LENGTH = 250;
+import {
+  ERROR_BASKET_DESCRIPTION_LENGTH,
+  ERROR_BASKET_INFO_MAX_LENGTH,
+  ERROR_BASKET_PRICE,
+} from './BasketErrors.domain-aggregate-root';
 import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import {
   BasketItemValueObject,
@@ -8,10 +14,6 @@ import {
   MonetaryValueObject,
 } from '@domain/value-objects';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
-import {
-  ERROR_BASKET_DESCRIPTION_LENGTH,
-  ERROR_BASKET_PRICE,
-} from './BasketErrors.domain-aggregate-root';
 import { BasketCategory, Tag, CommentId } from '@domain/entities';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { ProductId } from '../product/ProductId.domain-aggregate-root';
@@ -179,6 +181,16 @@ export class Basket extends AggregateRoot<BasketProps> {
     });
     if (!isValidDescription) {
       return Result.fail<Basket>(ERROR_BASKET_DESCRIPTION_LENGTH);
+    }
+
+    const isValidInfoLength = validateStringLengthBetweenMaxAndMin({
+      maxLength: MAX_BASKET_INFO_LENGTH,
+      minLength: 0,
+      text: props.info ?? '',
+    });
+
+    if (!isValidInfoLength) {
+      return Result.fail<Basket>(ERROR_BASKET_INFO_MAX_LENGTH);
     }
 
     if (!props.price.isPositive()) {

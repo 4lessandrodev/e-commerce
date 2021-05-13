@@ -66,6 +66,9 @@ export class Product {
   @Prop({ type: Number, required: true, default: 0 })
   numberOfRatings!: number;
 
+  @Prop({ type: Number, required: true, default: 1, index: true })
+  exchangeFactor!: number;
+
   @Prop({ type: Number, required: true, default: 0 })
   ratingAverage!: number;
 

@@ -3,13 +3,21 @@ import { ProductCategoryRepositoryInterface } from '@repo/product-category-repos
 import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 import { RegisterProductUseCase } from './register-product.use-case';
 import { UniqueEntityID } from 'types-ddd/dist/src';
-import { ProductCategory, Tag } from '../../Domain/entities';
+import { ProductCategory, Tag } from '@domain/entities';
+import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/BasketItemErrors.domain';
 
 describe('register-product.use-case', () => {
   //
   let productRepo: ProductRepositoryInterface;
   let productCategoryRepo: ProductCategoryRepositoryInterface;
   let tagRepo: TagRepositoryInterface;
+  //
+  const category = ProductCategory.create(
+    {
+      description: 'valid_description',
+    },
+    new UniqueEntityID('valid_id'),
+  ).getResult();
 
   beforeEach(() => {
     productRepo = {
@@ -51,6 +59,7 @@ describe('register-product.use-case', () => {
       tagRepo,
     );
     const result = await useCase.execute({
+      exchangeFactor: 2,
       categoryId: 'valid_id',
       description: 'invalid_description',
       isActive: true,
@@ -66,6 +75,56 @@ describe('register-product.use-case', () => {
     expect(result.error).toBe('Product already exists');
   });
 
+  it('should fail provide an invalid exchangeFactor', async () => {
+    jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
+    jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+
+    const useCase = new RegisterProductUseCase(
+      productRepo,
+      productCategoryRepo,
+      tagRepo,
+    );
+    const result = await useCase.execute({
+      exchangeFactor: -1,
+      categoryId: 'valid_id',
+      description: 'valid_description',
+      isActive: true,
+      isSpecial: false,
+      price: 20,
+      quantityAvailable: 10,
+      unitOfMeasurement: 'UN',
+      info: 'valid_info',
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+  });
+
+  it('should fail provide an invalid exchangeFactor', async () => {
+    jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
+    jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+
+    const useCase = new RegisterProductUseCase(
+      productRepo,
+      productCategoryRepo,
+      tagRepo,
+    );
+    const result = await useCase.execute({
+      exchangeFactor: 6,
+      categoryId: 'valid_id',
+      description: 'valid_description',
+      isActive: true,
+      isSpecial: false,
+      price: 20,
+      quantityAvailable: 10,
+      unitOfMeasurement: 'UN',
+      info: 'valid_info',
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+  });
+
   it('should fail if category does not exists', async () => {
     jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
     jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(null);
@@ -76,6 +135,7 @@ describe('register-product.use-case', () => {
       tagRepo,
     );
     const result = await useCase.execute({
+      exchangeFactor: 2,
       categoryId: 'invalid_id',
       description: 'valid_description',
       isActive: true,
@@ -98,14 +158,7 @@ describe('register-product.use-case', () => {
         description: 'valid_description',
       }).getResult(),
     ]);
-    jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(
-      ProductCategory.create(
-        {
-          description: 'valid_description',
-        },
-        new UniqueEntityID('valid_id'),
-      ).getResult(),
-    );
+    jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
 
     const useCase = new RegisterProductUseCase(
       productRepo,
@@ -113,6 +166,7 @@ describe('register-product.use-case', () => {
       tagRepo,
     );
     const result = await useCase.execute({
+      exchangeFactor: 2,
       categoryId: 'valid_id',
       description: 'valid_description',
       isActive: true,

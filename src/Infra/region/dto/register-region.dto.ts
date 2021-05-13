@@ -5,10 +5,14 @@ import {
   IsUUID,
   Length,
 } from 'class-validator';
+import {
+  MAX_REGION_DESCRIPTION_LENGTH,
+  MIN_REGION_DESCRIPTION_LENGTH,
+} from '@domain/aggregates-root';
 
 export class RegisterRegionDto {
   @IsString()
-  @Length(3, 20)
+  @Length(MIN_REGION_DESCRIPTION_LENGTH, MAX_REGION_DESCRIPTION_LENGTH)
   description!: string;
 
   @IsPositive()

@@ -23,13 +23,13 @@ describe('basket.service', () => {
     }).getResult(),
   ).getResult();
   //
-  const unitOfMeasurement: UnitOfMeasurementValueObject = UnitOfMeasurementValueObject.create(
-    'KG',
-  ).getResult();
+  const unitOfMeasurement: UnitOfMeasurementValueObject =
+    UnitOfMeasurementValueObject.create('KG').getResult();
   //
   const product: Product = Product.create(
     {
       category,
+      exchangeFactor: 1,
       description: 'valid_description',
       isActive: true,
       isSpecial: false,

@@ -1,3 +1,8 @@
+import {
+  ERROR_BASKET_DESCRIPTION_LENGTH,
+  ERROR_BASKET_INFO_MAX_LENGTH,
+  ERROR_BASKET_PRICE,
+} from './BasketErrors.domain-aggregate-root';
 import { image, random } from 'faker';
 import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '..';
@@ -9,10 +14,6 @@ import {
 } from '@domain/value-objects';
 import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
-import {
-  ERROR_BASKET_DESCRIPTION_LENGTH,
-  ERROR_BASKET_PRICE,
-} from './BasketErrors.domain-aggregate-root';
 import { BasketId } from './BasketId.domain-aggregate-root';
 import { ProductId } from '../product/ProductId.domain-aggregate-root';
 
@@ -357,5 +358,27 @@ describe('Basket.domain-aggregate-root', () => {
     basket.addComment(commentId);
     const oneCommentLength = basket.comments.length;
     expect(oneCommentLength).toBe(1);
+  });
+
+  it('Should fail if provide a long info description to basket', () => {
+    const failBasket = Basket.create({
+      category: BasketCategory.create({
+        changesLimit: 2,
+        description: 'valid_description',
+      }).getResult(),
+      description: 'valid_description',
+      info: 'invalid_info_description_length'.repeat(10),
+      isActive: true,
+      price: MonetaryValueObject.create(
+        Currency.create({
+          locale: 'pt-BR',
+          symbol: 'BRL',
+          value: 20,
+        }).getResult(),
+      ).getResult(),
+    });
+
+    expect(failBasket.isFailure).toBe(true);
+    expect(failBasket.error).toBe(ERROR_BASKET_INFO_MAX_LENGTH);
   });
 });

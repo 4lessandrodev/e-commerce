@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE } from '@domain/entities';
+import { MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE } from '@domain/entities';
 
 export type CategoryDocument = Category & Document;
 
@@ -16,7 +16,7 @@ export class Category {
   @Prop({ type: String, index: true, text: true, required: true, unique: true })
   description!: string;
 
-  @Prop({ type: Number, max: BASKET_CATEGORY_CHANGE_LIMIT_MAX_VALUE })
+  @Prop({ type: Number, max: MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE })
   changesLimit!: number;
 }
 

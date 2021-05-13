@@ -10,7 +10,8 @@ import { IUseCase, Result } from 'types-ddd';
 
 @Injectable()
 export class RegisterProductUseCase
-  implements IUseCase<RegisterProductDto, Result<void>> {
+  implements IUseCase<RegisterProductDto, Result<void>>
+{
   //
   constructor(
     @Inject('ProductRepository')
@@ -82,6 +83,7 @@ export class RegisterProductUseCase
        * @todo Calls uploader service to save product image if provided
        */
       const productOrError = Product.create({
+        exchangeFactor: dto.exchangeFactor,
         unitOfMeasurement,
         category,
         price,

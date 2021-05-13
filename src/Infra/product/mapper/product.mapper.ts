@@ -26,6 +26,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
     return Aggregate.create(
       {
         description: target.description,
+        exchangeFactor: target.exchangeFactor,
         unitOfMeasurement: UnitOfMeasurementValueObject.create(
           target.unitOfMeasurement,
         ).getResult(),
@@ -57,6 +58,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
     return {
       id: target.id.toString(),
       description: target.description,
+      exchangeFactor: target.exchangeFactor,
       unitOfMeasurement: target.unitOfMeasurement.value,
       category: this.categoryMapper.toPersistence(target.category),
       isActive: target.isActive,

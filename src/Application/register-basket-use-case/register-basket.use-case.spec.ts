@@ -1,3 +1,4 @@
+import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/aggregates-root/basket/BasketErrors.domain-aggregate-root';
 import { BasketDomainService } from '@domain/services/basket.service';
 import { BasketCategoryRepositoryInterface } from '@repo/basket-category-repository.interface';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
@@ -24,6 +25,7 @@ describe('register-basket.use-case', () => {
   // fake product
   const product = Product.create(
     {
+      exchangeFactor: 1,
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),
@@ -116,7 +118,7 @@ describe('register-basket.use-case', () => {
       categoryId: 'valid_category_id',
       description: 'valid_description',
       isActive: true,
-      price: ('80a' as unknown) as number,
+      price: '80a' as unknown as number,
     });
 
     expect(result.isFailure).toBe(true);
@@ -168,6 +170,36 @@ describe('register-basket.use-case', () => {
     });
 
     expect(result.isSuccess).toBe(true);
+  });
+
+  it('should fail if provide an invalid info length', async () => {
+    //
+    jest.spyOn(basketCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+    //
+    jest.spyOn(tagRepo, 'findTagsById').mockResolvedValueOnce([tag, tag]);
+
+    jest
+      .spyOn(productRepo, 'findProductsByIds')
+      .mockResolvedValueOnce([product, product, product]);
+
+    const useCase = new RegisterBasketUseCase(
+      basketCategoryRepo,
+      productRepo,
+      tagRepo,
+      basketRepo,
+      domainService,
+    );
+
+    const result = await useCase.execute({
+      categoryId: 'invalid_category_id',
+      description: 'valid_description',
+      info: 'invalid_info_length'.repeat(30),
+      isActive: true,
+      price: 50,
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBe(ERROR_BASKET_INFO_MAX_LENGTH);
   });
 
   it('should save with success if provide items', async () => {

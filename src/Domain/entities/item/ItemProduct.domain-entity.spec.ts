@@ -29,9 +29,9 @@ describe('ItemProduct.domain-entity', () => {
           props?.item ??
           Product.create({
             description: 'Pera Brasileira',
-            unitOfMeasurement: UnitOfMeasurementValueObject.create(
-              'KG',
-            ).getResult(),
+            exchangeFactor: 1,
+            unitOfMeasurement:
+              UnitOfMeasurementValueObject.create('KG').getResult(),
             category: ProductCategory.create({
               description: 'Pera Portuguesa',
             }).getResult(),

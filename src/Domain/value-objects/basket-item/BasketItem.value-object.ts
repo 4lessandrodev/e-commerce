@@ -6,8 +6,8 @@ import { ProductId } from '@domain/aggregates-root';
 import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from './BasketItemErrors.domain';
 
 export interface BasketItemValue {
-  exchangeFactor: number;
   productId: ProductId;
+  exchangeFactor: number;
   quantity: number;
   description: string;
 }

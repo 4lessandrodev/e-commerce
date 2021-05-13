@@ -1,22 +1,31 @@
 export const MAX_PRODUCT_DESCRIPTION_LENGTH = 80;
 export const MIN_PRODUCT_DESCRIPTION_LENGTH = 3;
 export const MAX_PRODUCT_RATING_AVERAGE = 5;
+export const MAX_PRODUCT_INFO_LENGTH = 250;
+import {
+  ImageValueObject,
+  MAX_EXCHANGE_FACTOR,
+  MIN_EXCHANGE_FACTOR,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import {
   ERROR_PRODUCT_AVAILABLE_QUANTITY,
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
+  ERROR_PRODUCT_INFO_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
+import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/BasketItemErrors.domain';
 import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import {
+  validateNumberBetweenMaxAndMin,
   validateNumberGreaterOrEqualToZero,
   validateNumberGreaterThanZero,
   validateStringLengthBetweenMaxAndMin,
 } from '@domain/utils';
 
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { ProductProps } from './Product.domain-aggregate-root-interface';
-import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -77,6 +86,10 @@ export class Product extends AggregateRoot<ProductProps> {
 
   get tags(): Tag[] {
     return this.props.tags ?? [];
+  }
+
+  get exchangeFactor(): number {
+    return this.props.exchangeFactor;
   }
 
   updateProductRating(props: {
@@ -200,17 +213,20 @@ export class Product extends AggregateRoot<ProductProps> {
     props: ProductProps,
     id?: UniqueEntityID,
   ): Result<Product> {
+    //
     const isValidDescription = validateStringLengthBetweenMaxAndMin({
       text: props.description,
       maxLength: MAX_PRODUCT_DESCRIPTION_LENGTH,
       minLength: MIN_PRODUCT_DESCRIPTION_LENGTH,
     });
+
     if (!isValidDescription) {
       return Result.fail<Product>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
     }
     const isValidQuantity = validateNumberGreaterOrEqualToZero(
       props.quantityAvailable,
     );
+
     if (!isValidQuantity) {
       return Result.fail<Product>(ERROR_PRODUCT_AVAILABLE_QUANTITY);
     }
@@ -218,6 +234,27 @@ export class Product extends AggregateRoot<ProductProps> {
     if (!props.price.isPositive()) {
       return Result.fail<Product>(ERROR_PRODUCT_PRICE);
     }
+
+    const isValidExchangeFactor = validateNumberBetweenMaxAndMin({
+      max: MAX_EXCHANGE_FACTOR,
+      min: MIN_EXCHANGE_FACTOR,
+      value: props.exchangeFactor,
+    });
+
+    if (!isValidExchangeFactor) {
+      return Result.fail<Product>(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+    }
+
+    const isValidInfoLength = validateStringLengthBetweenMaxAndMin({
+      maxLength: MAX_PRODUCT_INFO_LENGTH,
+      text: props.info ?? '',
+      minLength: 0,
+    });
+
+    if (!isValidInfoLength) {
+      return Result.fail<Product>(ERROR_PRODUCT_INFO_LENGTH);
+    }
+
     return Result.ok<Product>(new Product(props, id));
   }
 }

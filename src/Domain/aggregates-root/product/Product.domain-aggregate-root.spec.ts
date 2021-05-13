@@ -11,10 +11,12 @@ import { ProductProps } from './Product.domain-aggregate-root-interface';
 import {
   ERROR_PRODUCT_AVAILABLE_QUANTITY as ERROR_PRODUCT_AVAILABLE_QUANTITY,
   ERROR_PRODUCT_DESCRIPTION_LENGTH,
+  ERROR_PRODUCT_INFO_LENGTH,
   ERROR_PRODUCT_PRICE,
 } from './ProductErrors.domain-aggregate-root';
 import { ProductId } from './ProductId.domain-aggregate-root';
-import { UnitOfMeasurementValueObject } from '../../value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '../../value-objects/basket-item/BasketItemErrors.domain';
 
 describe('Product.domain-aggregate-root', () => {
   const makeCurrency = (value: number): Currency => {
@@ -31,6 +33,7 @@ describe('Product.domain-aggregate-root', () => {
   ): Result<Product> => {
     return Product.create(
       {
+        exchangeFactor: props?.exchangeFactor ?? 2,
         description: props?.description ?? 'Maçã Brasileira',
         unitOfMeasurement:
           props?.unitOfMeasurement ??
@@ -87,11 +90,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should fail if provide a long description to create', () => {
     const createdProductCustom = Product.create({
+      exchangeFactor: 2,
       description: String('invalid_long_description').repeat(50),
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      info:
-        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -105,11 +108,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should fail if provide a negative number as available quantity', () => {
     const createdProductCustom = Product.create({
+      exchangeFactor: 2,
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      info:
-        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -122,11 +125,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should fail if provide a negative number as price', () => {
     const product = Product.create({
+      exchangeFactor: 2,
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      info:
-        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(-10)).getResult(),
@@ -189,11 +192,11 @@ describe('Product.domain-aggregate-root', () => {
 
   it('Should fail if decrement stock until negative value', () => {
     const product = Product.create({
+      exchangeFactor: 2,
       description: 'Maçã Brasileira',
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-      info:
-        'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -212,13 +215,12 @@ describe('Product.domain-aggregate-root', () => {
     const id = ProductId.create().id;
     const product = Product.create(
       {
+        exchangeFactor: 2,
         description: 'Maçã Brasileira',
         category: ProductCategory.create({ description: 'Frutas' }).getResult(),
-        unitOfMeasurement: UnitOfMeasurementValueObject.create(
-          'KG',
-        ).getResult(),
-        info:
-          'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+        unitOfMeasurement:
+          UnitOfMeasurementValueObject.create('KG').getResult(),
+        info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
         isActive: true,
         isSpecial: false,
         price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
@@ -373,5 +375,60 @@ describe('Product.domain-aggregate-root', () => {
     const validPrice = MonetaryValueObject.create(makeCurrency(5)).getResult();
     createdProduct.changePrice(validPrice);
     expect(createdProduct.price.value).toBe(5);
+  });
+  it('Should fail if provide a negative exchange factor', () => {
+    const product = Product.create({
+      exchangeFactor: -1,
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: 2,
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+    });
+
+    expect(product.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+    expect(product.isFailure).toBe(true);
+  });
+
+  it('Should fail if provide a greater exchange factor', () => {
+    const product = Product.create({
+      exchangeFactor: 6,
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho',
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: 2,
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+    });
+
+    expect(product.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+    expect(product.isFailure).toBe(true);
+  });
+
+  it('Should fail if provide a long info description length', () => {
+    const product = Product.create({
+      exchangeFactor: 2,
+      description: 'Maçã Brasileira',
+      category: ProductCategory.create({ description: 'Frutas' }).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
+      info: 'maçã brasileira produzida no sul de santa catariana e cultivada com carinho'.repeat(
+        5,
+      ),
+      isActive: true,
+      isSpecial: false,
+      price: MonetaryValueObject.create(makeCurrency(10)).getResult(),
+      quantityAvailable: 2,
+      image: ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
+    });
+
+    expect(product.error).toBe(ERROR_PRODUCT_INFO_LENGTH);
+    expect(product.isFailure).toBe(true);
   });
 });

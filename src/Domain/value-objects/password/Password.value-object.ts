@@ -1,5 +1,5 @@
-export const PASSWORD_MIN_LENGTH = 5;
-export const PASSWORD_MAX_LENGTH = 21;
+export const MIN_PASSWORD_LENGTH = 5;
+export const MAX_PASSWORD_LENGTH = 21;
 export const PASSWORD_SALT = 10;
 import { Result, ValueObject } from 'types-ddd';
 import { hashSync, compareSync } from 'bcrypt';
@@ -68,12 +68,12 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
   static create(value: string): Result<PasswordValueObject> {
     const isHashed = isBcryptHash(value);
 
-    if (value.length < PASSWORD_MIN_LENGTH) {
+    if (value.length < MIN_PASSWORD_LENGTH) {
       return Result.fail<PasswordValueObject>(
         ERROR_INVALID_PASSWORD_MIN_LENGTH,
       );
     }
-    if (value.length > PASSWORD_MAX_LENGTH && !isHashed) {
+    if (value.length > MAX_PASSWORD_LENGTH && !isHashed) {
       return Result.fail<PasswordValueObject>(
         ERROR_INVALID_PASSWORD_MAX_LENGTH,
       );

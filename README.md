@@ -225,7 +225,7 @@ Check available endpoints on postman documentation
 
 - `Configure seu arquivo .env seguindo exemplo de .env.example`
 
-- `docker-compose up -d`
+- `$ docker-compose up -d`
 
 - `$ yarn start:dev `
 

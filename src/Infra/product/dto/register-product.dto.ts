@@ -11,13 +11,29 @@ import {
   IsString,
   IsUUID,
   Length,
+  Max,
   MaxLength,
+  Min,
 } from 'class-validator';
+import {
+  MAX_PRODUCT_DESCRIPTION_LENGTH,
+  MAX_PRODUCT_INFO_LENGTH,
+  MIN_PRODUCT_DESCRIPTION_LENGTH,
+} from '@domain/aggregates-root';
+import {
+  MAX_EXCHANGE_FACTOR,
+  MIN_EXCHANGE_FACTOR,
+} from '@domain/value-objects';
 
 export class RegisterProductDto {
   @IsString()
-  @Length(3, 80)
+  @Length(MIN_PRODUCT_DESCRIPTION_LENGTH, MAX_PRODUCT_DESCRIPTION_LENGTH)
   description!: string;
+
+  @IsPositive()
+  @Min(MIN_EXCHANGE_FACTOR)
+  @Max(MAX_EXCHANGE_FACTOR)
+  exchangeFactor!: number;
 
   @IsUUID()
   categoryId!: string;
@@ -40,7 +56,7 @@ export class RegisterProductDto {
   image?: File;
 
   @IsString()
-  @MaxLength(250)
+  @MaxLength(MAX_PRODUCT_INFO_LENGTH)
   info?: string;
 
   @IsOptional()
