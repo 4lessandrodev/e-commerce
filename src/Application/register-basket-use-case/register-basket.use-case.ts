@@ -92,7 +92,7 @@ export class RegisterBasketUseCase
         const ids = dto.items.map(({ productId }) => productId);
         const foundProducts = await this.productRepo.findProductsByIds(ids);
         if (foundProducts) {
-          this.domainService.addItemOnBasket(dto.items, basket, foundProducts);
+          this.domainService.addItemsOnBasket(dto.items, basket, foundProducts);
         }
       }
 

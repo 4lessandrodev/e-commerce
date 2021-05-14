@@ -18,6 +18,7 @@ import {
 } from './entities/basket-category.schema';
 import { ProductModule } from '../product/product.module';
 import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
+import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
     },
     RegisterBasketCategoryUseCase,
     RegisterBasketUseCase,
+    AddProductsOnBasketUseCase,
     BasketDomainService,
     BasketService,
   ],

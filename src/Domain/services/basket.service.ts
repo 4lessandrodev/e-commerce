@@ -9,7 +9,11 @@ import { UniqueEntityID } from 'types-ddd';
 @Injectable()
 export class BasketDomainService implements BasketServiceInterface {
   //
-  addItemOnBasket(items: ItemDto[], basket: Basket, products: Product[]): void {
+  addItemsOnBasket(
+    items: ItemDto[],
+    basket: Basket,
+    products: Product[],
+  ): void {
     for (const product of products) {
       //
       const itemFromDto = items.find(({ productId }) =>

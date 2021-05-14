@@ -66,13 +66,13 @@ describe('basket.service', () => {
   it('should not add products if ids does not match', () => {
     const service = new BasketDomainService();
     const invalidItemDto: ItemDto = { ...itemDto, productId: 'invalid_id' };
-    service.addItemOnBasket([invalidItemDto, itemDto], basket, [product]);
+    service.addItemsOnBasket([invalidItemDto, itemDto], basket, [product]);
     expect(basket.products.length).toBe(1);
   });
 
   it('should add products if provide valid ids', () => {
     const service = new BasketDomainService();
-    service.addItemOnBasket([itemDto, itemDto], basket, [product, product]);
+    service.addItemsOnBasket([itemDto, itemDto], basket, [product, product]);
     expect(basket.products.length).toBe(3);
     expect(basket.products[0].value.exchangeFactor).toBe(1);
   });

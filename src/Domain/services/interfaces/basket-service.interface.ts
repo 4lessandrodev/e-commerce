@@ -3,7 +3,7 @@ import { Basket, Product } from '@domain/aggregates-root';
 import { Tag } from '@domain/entities';
 
 export interface BasketServiceInterface {
-  addItemOnBasket: (
+  addItemsOnBasket: (
     items: ItemDto[],
     basket: Basket,
     products: Product[],
