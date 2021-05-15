@@ -9,6 +9,12 @@ import { UniqueEntityID } from 'types-ddd';
 @Injectable()
 export class BasketDomainService implements BasketServiceInterface {
   //
+  /**
+   *
+   * @param items array of ItemDto
+   * @param basket instance of Basket aggregate
+   * @param products array of aggregates Product
+   */
   addItemsOnBasket(
     items: ItemDto[],
     basket: Basket,
@@ -35,6 +41,23 @@ export class BasketDomainService implements BasketServiceInterface {
     }
   }
   //
+  /**
+   *
+   * @param basket instance of Basket aggregate
+   * @param productsIds array of string as productIds
+   */
+  removeItemsFromBasket(basket: Basket, productsIds: string[]): void {
+    for (const id of productsIds) {
+      const productId = ProductId.create(new UniqueEntityID(id));
+      basket.removeProduct(productId);
+    }
+  }
+  //
+  /**
+   *
+   * @param tags array of Entity Tag
+   * @param basket instance of Basket aggregate
+   */
   addTagsOnBasket(tags: Tag[], basket: Basket): void {
     for (const tag of tags) {
       basket.addTag(tag);

@@ -12,13 +12,12 @@ import { BasketCategoryMapper } from './mappers/basket-category.mapper';
 import { BasketDomainService } from '@domain/services/basket.service';
 import { Basket, BasketSchema } from './entities/basket.schema';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
-import {
-  BasketCategory,
-  BasketCategorySchema,
-} from './entities/basket-category.schema';
+import { BasketCategory } from './entities/basket-category.schema';
+import { BasketCategorySchema } from './entities/basket-category.schema';
 import { ProductModule } from '../product/product.module';
 import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
 import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
+import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.use-case';
 
 @Module({
   imports: [
@@ -45,6 +44,7 @@ import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case
     RegisterBasketCategoryUseCase,
     RegisterBasketUseCase,
     AddProductsOnBasketUseCase,
+    RemoveProductsFromBasketUseCase,
     BasketDomainService,
     BasketService,
   ],

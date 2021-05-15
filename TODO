@@ -40,7 +40,7 @@ Todo:
   ✔ Create use case - Login [ADMIN, DELIVERYMAN, CLIENT] @done(21-04-28 15:37)
   ☐ Create Repositories Interfaces @started(21-05-13 11:46)
   ✔ Create use case - Add item to a basket [ADMIN] @done(21-05-13 22:12)
-  ☐ Create use case - Remove item from a basket [ADMIN]
+  ✔ Create use case - Remove items from a basket [ADMIN] @started(21-05-14 19:56) @done(21-05-14 21:09) @lasted(1h13m50s)
   ☐ Create use case - DeactivateBasket [ADMIN]
   ☐ Create use case - Change basket description [ADMIN]
   ☐ Create use case - Change basket price [ADMIN]

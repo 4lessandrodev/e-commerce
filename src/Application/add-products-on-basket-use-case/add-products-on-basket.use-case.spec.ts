@@ -13,6 +13,10 @@ import { UniqueEntityID } from 'types-ddd/dist/src';
 
 describe('add-products-on-basket.use-case', () => {
   //
+  let basketRepo: BasketRepositoryInterface;
+  let productRepo: ProductRepositoryInterface;
+  const domainService = new BasketDomainService();
+  //
   const price = MonetaryValueObject.create(
     Currency.create({
       locale: 'pt-BR',
@@ -20,10 +24,6 @@ describe('add-products-on-basket.use-case', () => {
       value: 10,
     }).getResult(),
   ).getResult();
-  //
-  let basketRepo: BasketRepositoryInterface;
-  let productRepo: ProductRepositoryInterface;
-  const domainService = new BasketDomainService();
 
   // Mock basket
   const basket = Basket.create(

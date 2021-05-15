@@ -1,5 +1,5 @@
 import { RegisterBasketCategoryDto } from './dto/register-basket-category.dto';
-import { Controller, Put } from '@nestjs/common';
+import { Controller, Delete, Put } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BasketService } from './basket.service';
 import { RegisterBasketDto } from './dto/register-basket.dto';
@@ -8,6 +8,7 @@ import { Inject } from '@nestjs/common';
 import { Post } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common';
 import { Body, UseGuards, UsePipes } from '@nestjs/common';
+import { RemoveProductsFromBasketDto } from './dto/remove-products-from-basket.dto';
 
 @Controller('v1/basket')
 @UsePipes(new ValidationPipe())
@@ -32,5 +33,12 @@ export class BasketController {
   @Put('item')
   addProductsOnBasket(@Body() dto: AddProductsOnBasketDto): Promise<void> {
     return this.basketService.addProductsOnBasket(dto);
+  }
+
+  @Delete('item')
+  removeProductsFromBasket(
+    @Body() dto: RemoveProductsFromBasketDto,
+  ): Promise<void> {
+    return this.basketService.removeProductsFromBasket(dto);
   }
 }
