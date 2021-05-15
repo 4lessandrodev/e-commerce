@@ -3,6 +3,7 @@ import { ItemDto } from '@app/register-basket-use-case/register-basket.dto';
 import { BasketDomainService } from '../basket.service';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
+  BasketDescriptionValueObject,
   Currency,
   MonetaryValueObject,
   UnitOfMeasurementValueObject,
@@ -52,7 +53,8 @@ describe('basket.service', () => {
   //
   const basket: Basket = Basket.create({
     category: basketCategory,
-    description: 'valid_description',
+    description:
+      BasketDescriptionValueObject.create('valid_description').getResult(),
     isActive: true,
     price,
   }).getResult();

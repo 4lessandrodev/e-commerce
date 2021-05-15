@@ -2,9 +2,9 @@ import { File } from '@shared/services/upload-files/interfaces/uploader.interfac
 import { IsBoolean, IsObject, IsOptional, IsPositive } from 'class-validator';
 import { IsUUID, Length, Max, MaxLength } from 'class-validator';
 import { ValidateNested, IsString } from 'class-validator';
-import { MAX_BASKET_DESCRIPTION_LENGTH } from '@domain/aggregates-root';
-import { MIN_BASKET_DESCRIPTION_LENGTH } from '@domain/aggregates-root';
-import { MAX_BASKET_INFO_LENGTH } from '@domain/aggregates-root';
+import { MAX_BASKET_INFO_LENGTH } from '@domain/value-objects';
+import { MIN_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects';
+import { MAX_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects';
 
 export class ItemDto {
   @IsUUID('4')

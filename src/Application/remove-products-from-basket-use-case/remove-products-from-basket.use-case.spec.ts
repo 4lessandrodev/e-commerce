@@ -3,6 +3,7 @@ import { BasketDomainService } from '@domain/services/basket.service';
 import { RemoveProductsFromBasketUseCase } from './remove-products-from-basket.use-case';
 import { UniqueEntityID } from 'types-ddd/dist/src';
 import {
+  BasketDescriptionValueObject,
   BasketItemValueObject,
   Currency,
   MonetaryValueObject,
@@ -56,7 +57,8 @@ describe('remove-products-from-basket.use-case', () => {
           changesLimit: 1,
           description: 'valid_description',
         }).getResult(),
-        description: 'valid_description',
+        description:
+          BasketDescriptionValueObject.create('valid_description').getResult(),
         isActive: true,
         price,
         items: [itemA, itemB],

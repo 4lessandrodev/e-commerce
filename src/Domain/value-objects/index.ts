@@ -13,3 +13,5 @@ export * from './region-name/RegionName.value-object';
 export * from './user-name/UserName.value-object';
 export * from './unit-of-measurement/UnitOfMeasurement.value-objects';
 export * from './basket-item/BasketItem.value-object';
+export * from './basket-description/BasketDescription.value-object';
+export * from './basket-info/BasketInfo.value-object';

@@ -1,22 +1,13 @@
-export const MAX_BASKET_DESCRIPTION_LENGTH = 30;
-export const MIN_BASKET_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_RATING_AVERAGE = 5;
-export const MAX_BASKET_INFO_LENGTH = 250;
-import {
-  ERROR_BASKET_DESCRIPTION_LENGTH,
-  ERROR_BASKET_INFO_MAX_LENGTH,
-  ERROR_BASKET_PRICE,
-} from './BasketErrors.domain-aggregate-root';
-import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
-import {
-  BasketItemValueObject,
-  ImageValueObject,
-  MonetaryValueObject,
-} from '@domain/value-objects';
+import { ERROR_BASKET_PRICE } from './BasketErrors.domain-aggregate-root';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { BasketInfoValueObject } from '@domain/value-objects';
+import { BasketItemValueObject } from '@domain/value-objects';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import { BasketCategory, Tag, CommentId } from '@domain/entities';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-import { ProductId } from '../product/ProductId.domain-aggregate-root';
+import { ProductId } from '@domain/aggregates-root';
+import { BasketDescriptionValueObject } from '@domain/value-objects';
 
 export class Basket extends AggregateRoot<BasketProps> {
   private constructor(props: BasketProps, id?: UniqueEntityID) {
@@ -27,7 +18,7 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this._id;
   }
 
-  get description(): string {
+  get description(): BasketDescriptionValueObject {
     return this.props.description;
   }
 
@@ -47,8 +38,8 @@ export class Basket extends AggregateRoot<BasketProps> {
     return this.props.isActive;
   }
 
-  get info(): string {
-    return this.props.info ?? '';
+  get info(): BasketInfoValueObject | undefined {
+    return this.props.info;
   }
 
   get numberOfRatings(): number {
@@ -170,29 +161,20 @@ export class Basket extends AggregateRoot<BasketProps> {
     );
   }
 
+  changeDescription(description: BasketDescriptionValueObject): void {
+    this.props.description = description;
+    this.props.updatedAt = new Date();
+  }
+
+  changeInfo(info: BasketInfoValueObject | undefined): void {
+    this.props.info = info;
+    this.props.updatedAt = new Date();
+  }
+
   public static create(
     props: BasketProps,
     id?: UniqueEntityID,
   ): Result<Basket> {
-    const isValidDescription = validateStringLengthBetweenMaxAndMin({
-      text: props.description,
-      maxLength: MAX_BASKET_DESCRIPTION_LENGTH,
-      minLength: MIN_BASKET_DESCRIPTION_LENGTH,
-    });
-    if (!isValidDescription) {
-      return Result.fail<Basket>(ERROR_BASKET_DESCRIPTION_LENGTH);
-    }
-
-    const isValidInfoLength = validateStringLengthBetweenMaxAndMin({
-      maxLength: MAX_BASKET_INFO_LENGTH,
-      minLength: 0,
-      text: props.info ?? '',
-    });
-
-    if (!isValidInfoLength) {
-      return Result.fail<Basket>(ERROR_BASKET_INFO_MAX_LENGTH);
-    }
-
     if (!props.price.isPositive()) {
       return Result.fail<Basket>(ERROR_BASKET_PRICE);
     }

@@ -41,10 +41,12 @@ Todo:
   ☐ Create Repositories Interfaces @started(21-05-13 11:46)
   ✔ Create use case - Add item to a basket [ADMIN] @done(21-05-13 22:12)
   ✔ Create use case - Remove items from a basket [ADMIN] @started(21-05-14 19:56) @done(21-05-14 21:09) @lasted(1h13m50s)
-  ☐ Create use case - DeactivateBasket [ADMIN]
-  ☐ Create use case - Change basket description [ADMIN]
-  ☐ Create use case - Change basket price [ADMIN]
-  ☐ Create use case - Chage basket info [ADMIN]
+  ✔ Create use case - DeactivateBasket [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m29s)
+  ✔ Create use case - Change basket description [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m34s)
+  ✔ Create use case - Change basket price [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m35s)
+  ✔ Create use case - Chage basket info [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m37s)
+  ☐ Crete use case - DeactivateAllBasket [ADMIN]
+  ☐ Create use case - DeactivateAllProducts [ADMIN]
   ☐ Create use case - DeactivateProduct [ADMIN]
   ☐ Create use case - Change Product Description [ADMIN]
   ☐ Create use case - Change Product exchangeFactor [ADMIN]

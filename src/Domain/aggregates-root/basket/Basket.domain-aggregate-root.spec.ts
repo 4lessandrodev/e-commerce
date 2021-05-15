@@ -1,21 +1,16 @@
-import {
-  ERROR_BASKET_DESCRIPTION_LENGTH,
-  ERROR_BASKET_INFO_MAX_LENGTH,
-  ERROR_BASKET_PRICE,
-} from './BasketErrors.domain-aggregate-root';
-import { image, random } from 'faker';
+import { ERROR_BASKET_PRICE } from './BasketErrors.domain-aggregate-root';
+import { image } from 'faker';
 import { Result, UniqueEntityID } from 'types-ddd';
-import { Basket } from '..';
+import { Basket } from '@domain/aggregates-root';
 import { BasketCategory, Comment, CommentId, Tag } from '@domain/entities';
-import {
-  BasketItemValueObject,
-  ImageValueObject,
-  MonetaryValueObject,
-} from '@domain/value-objects';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { BasketItemValueObject } from '@domain/value-objects';
 import { Currency } from '@domain/value-objects/monetary/Currency.value-object';
 import { BasketProps } from './Basket.domain-aggregate-root-interface';
 import { BasketId } from './BasketId.domain-aggregate-root';
 import { ProductId } from '../product/ProductId.domain-aggregate-root';
+import { BasketDescriptionValueObject } from '@domain/value-objects';
+import { BasketInfoValueObject } from '@domain/value-objects';
 
 describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
@@ -31,7 +26,9 @@ describe('Basket.domain-aggregate-root', () => {
   ): Result<Basket> => {
     return Basket.create(
       {
-        description: props?.description ?? 'Basket 5 itens',
+        description:
+          props?.description ??
+          BasketDescriptionValueObject.create('Basket 5 itens').getResult(),
         category:
           props?.category ??
           BasketCategory.create({
@@ -50,7 +47,7 @@ describe('Basket.domain-aggregate-root', () => {
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
-        info: 'Information',
+        info: BasketInfoValueObject.create('Information').getResult(),
         comments: [],
       },
       id,
@@ -60,38 +57,18 @@ describe('Basket.domain-aggregate-root', () => {
   it('Should create a valid basket', () => {
     const createdBasket = makeSut();
     expect(createdBasket.isFailure).toBe(false);
-    expect(createdBasket.getResult().description).toBe('Basket 5 itens');
+    expect(createdBasket.getResult().description.value).toBe('basket 5 itens');
     expect(createdBasket.getResult().category.description).toBe('mini basket');
     expect(createdBasket.getResult().products?.length).toBe(1);
-    expect(createdBasket.getResult().info).toBe('Information');
-  });
-
-  it('Should fail if provide a long description to basket', () => {
-    const failBasket = makeSut({
-      description: random.words(20),
-      price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 10,
-        }).getResult(),
-      ).getResult(),
-      category: BasketCategory.create({
-        changesLimit: 1,
-        description: 'valid_desc',
-      }).getResult(),
-      images: [ImageValueObject.create('https://s3.aws.com').getResult()],
-      isActive: true,
-    });
-    expect(failBasket.isFailure).toBe(true);
-    expect(failBasket.error).toBe(ERROR_BASKET_DESCRIPTION_LENGTH);
+    expect(createdBasket.getResult().info?.value).toBe('information');
   });
 
   it('Should create a valid basket with provided id', () => {
     const id = BasketId.create().id;
     const createdBasket = Basket.create(
       {
-        description: 'valid_description',
+        description:
+          BasketDescriptionValueObject.create('valid_description').getResult(),
         price: MonetaryValueObject.create(
           Currency.create({
             locale: 'pt-BR',
@@ -143,7 +120,8 @@ describe('Basket.domain-aggregate-root', () => {
 
     const createdBasket = Basket.create(
       {
-        description: 'valid_description',
+        description:
+          BasketDescriptionValueObject.create('valid_description').getResult(),
         category: BasketCategory.create({
           changesLimit: 1,
           description: 'valid_desc',
@@ -342,7 +320,8 @@ describe('Basket.domain-aggregate-root', () => {
         changesLimit: 2,
         description: 'valid_description',
       }).getResult(),
-      description: 'valid_description',
+      description:
+        BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price: MonetaryValueObject.create(
         Currency.create({
@@ -358,27 +337,5 @@ describe('Basket.domain-aggregate-root', () => {
     basket.addComment(commentId);
     const oneCommentLength = basket.comments.length;
     expect(oneCommentLength).toBe(1);
-  });
-
-  it('Should fail if provide a long info description to basket', () => {
-    const failBasket = Basket.create({
-      category: BasketCategory.create({
-        changesLimit: 2,
-        description: 'valid_description',
-      }).getResult(),
-      description: 'valid_description',
-      info: 'invalid_info_description_length'.repeat(10),
-      isActive: true,
-      price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 20,
-        }).getResult(),
-      ).getResult(),
-    });
-
-    expect(failBasket.isFailure).toBe(true);
-    expect(failBasket.error).toBe(ERROR_BASKET_INFO_MAX_LENGTH);
   });
 });

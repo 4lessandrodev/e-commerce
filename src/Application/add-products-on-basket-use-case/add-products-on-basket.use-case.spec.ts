@@ -5,11 +5,12 @@ import { AddProductsOnBasketUseCase } from './add-products-on-basket.use-case';
 import { Basket, Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
+  BasketDescriptionValueObject,
   Currency,
   MonetaryValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
-import { UniqueEntityID } from 'types-ddd/dist/src';
+import { UniqueEntityID } from 'types-ddd';
 
 describe('add-products-on-basket.use-case', () => {
   //
@@ -32,7 +33,8 @@ describe('add-products-on-basket.use-case', () => {
         changesLimit: 1,
         description: 'valid_description',
       }).getResult(),
-      description: 'valid_description',
+      description:
+        BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price,
     },

@@ -2,15 +2,13 @@ import { Basket as Aggregate, ProductId } from '@domain/aggregates-root';
 import { UniqueEntityID } from 'types-ddd';
 import { BasketCategory, CommentId, Tag } from '@domain/entities';
 import { Basket as Schema } from '../entities/basket.schema';
-import {
-  BasketItemValueObject,
-  Currency,
-  ImageValueObject,
-  MonetaryValueObject,
-} from '@domain/value-objects';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { BasketItemValueObject } from '@domain/value-objects';
+import { Currency, BasketInfoValueObject } from '@domain/value-objects';
+import { BasketDescriptionValueObject } from '@domain/value-objects';
 import { BasketMapper } from './basket.mapper';
 import { BasketItemMapper } from './basket-item.mapper';
-import { TagMapper } from '../../product/mapper/tag.mapper';
+import { TagMapper } from '@infra/product/mapper/tag.mapper';
 import { EmbedBasketCategoryMapper } from './embed-category.mapper';
 
 describe('basket.mapper', () => {
@@ -29,7 +27,8 @@ describe('basket.mapper', () => {
         },
         new UniqueEntityID('valid_id'),
       ).getResult(),
-      description: 'valid_description',
+      description:
+        BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price: MonetaryValueObject.create(
         Currency.create({
@@ -44,7 +43,7 @@ describe('basket.mapper', () => {
           'https://username.s3.amazonaws.com/image.png',
         ).getResult(),
       ],
-      info: 'valid_info',
+      info: BasketInfoValueObject.create('valid_info').getResult(),
       items: [
         BasketItemValueObject.create({
           description: 'valid_description',

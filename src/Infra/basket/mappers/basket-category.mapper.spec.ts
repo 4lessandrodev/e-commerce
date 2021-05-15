@@ -1,5 +1,5 @@
 import { BasketCategory as Aggregate } from '@domain/entities';
-import { UniqueEntityID } from 'types-ddd/dist/src';
+import { UniqueEntityID } from 'types-ddd';
 import { BasketCategoryMapper } from './basket-category.mapper';
 import { BasketCategory } from '../entities/basket-category.schema';
 

@@ -1,5 +1,8 @@
 import { UniqueEntityID } from 'types-ddd';
-import { MonetaryValueObject } from '@domain/value-objects';
+import {
+  BasketDescriptionValueObject,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import { ERROR_ITEM_INVALID_QUANTITY } from './ItemErrors.domain-entity';
 import { ItemBasket } from './ItemBasket.domain-entity';
 import { Basket } from '@domain/aggregates-root';
@@ -16,7 +19,7 @@ describe('ItemBasket.domain-entity', () => {
           changesLimit: 2,
           description: 'valid',
         }).getResult(),
-        description: 'valid',
+        description: BasketDescriptionValueObject.create('valid').getResult(),
         images: [],
         price: MonetaryValueObject.create(
           Currency.create({
@@ -52,7 +55,7 @@ describe('ItemBasket.domain-entity', () => {
           changesLimit: 2,
           description: 'valid',
         }).getResult(),
-        description: 'valid',
+        description: BasketDescriptionValueObject.create('valid').getResult(),
         images: [],
         price: MonetaryValueObject.create(
           Currency.create({
@@ -88,7 +91,7 @@ describe('ItemBasket.domain-entity', () => {
             changesLimit: 2,
             description: 'valid',
           }).getResult(),
-          description: 'valid',
+          description: BasketDescriptionValueObject.create('valid').getResult(),
           images: [],
           price: MonetaryValueObject.create(
             Currency.create({

@@ -1,4 +1,3 @@
-import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/aggregates-root/basket/BasketErrors.domain-aggregate-root';
 import { BasketDomainService } from '@domain/services/basket.service';
 import { BasketCategoryRepositoryInterface } from '@repo/basket-category-repository.interface';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
@@ -8,11 +7,10 @@ import { UniqueEntityID } from 'types-ddd/dist/src';
 import { Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory, Tag } from '@domain/entities';
 import { RegisterBasketUseCase } from './register-basket.use-case';
-import {
-  Currency,
-  MonetaryValueObject,
-  UnitOfMeasurementValueObject,
-} from '@domain/value-objects';
+import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects';
+import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/BasketInfoErrors.domain';
+import { ERROR_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects/basket-description/BasketDescriptionErrors.domain';
 
 describe('register-basket.use-case', () => {
   //
@@ -200,6 +198,36 @@ describe('register-basket.use-case', () => {
 
     expect(result.isFailure).toBe(true);
     expect(result.error).toBe(ERROR_BASKET_INFO_MAX_LENGTH);
+  });
+
+  it('should fail if provide an invalid description length', async () => {
+    //
+    jest.spyOn(basketCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+    //
+    jest.spyOn(tagRepo, 'findTagsById').mockResolvedValueOnce([tag, tag]);
+
+    jest
+      .spyOn(productRepo, 'findProductsByIds')
+      .mockResolvedValueOnce([product, product, product]);
+
+    const useCase = new RegisterBasketUseCase(
+      basketCategoryRepo,
+      productRepo,
+      tagRepo,
+      basketRepo,
+      domainService,
+    );
+
+    const result = await useCase.execute({
+      categoryId: 'invalid_category_id',
+      description: 'invalid_description'.repeat(5),
+      info: 'valid_info_length',
+      isActive: true,
+      price: 50,
+    });
+
+    expect(result.isFailure).toBe(true);
+    expect(result.error).toBe(ERROR_BASKET_DESCRIPTION_LENGTH);
   });
 
   it('should save with success if provide items', async () => {

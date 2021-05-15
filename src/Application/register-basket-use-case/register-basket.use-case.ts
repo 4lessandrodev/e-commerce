@@ -7,6 +7,8 @@ import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { IUseCase, Result } from 'types-ddd';
 import { Inject, Injectable } from '@nestjs/common';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import { BasketDescriptionValueObject } from '@domain/value-objects';
+import { BasketInfoValueObject } from '@domain/value-objects';
 import { BasketDomainService } from '@domain/services/basket.service';
 
 @Injectable()
@@ -17,12 +19,16 @@ export class RegisterBasketUseCase
   constructor(
     @Inject('BasketCategoryRepository')
     private readonly basketCategoryRepo: BasketCategoryRepositoryInterface,
+
     @Inject('ProductRepository')
     private readonly productRepo: ProductRepositoryInterface,
+
     @Inject('TagRepository')
     private readonly tagRepo: TagRepositoryInterface,
+
     @Inject('BasketRepository')
     private readonly basketRepo: BasketRepositoryInterface,
+
     @Inject(BasketDomainService)
     private readonly domainService: BasketDomainService,
   ) {}
@@ -68,12 +74,34 @@ export class RegisterBasketUseCase
         );
       }
 
+      const infoOrErrorOrUndefined = dto.info
+        ? BasketInfoValueObject.create(dto.info)
+        : undefined;
+
+      if (infoOrErrorOrUndefined) {
+        if (infoOrErrorOrUndefined.isFailure) {
+          return Result.fail<void>(infoOrErrorOrUndefined.error.toString());
+        }
+      }
+
+      const info = infoOrErrorOrUndefined?.getResult();
+
+      const descriptionOrError = BasketDescriptionValueObject.create(
+        dto.description,
+      );
+
+      if (descriptionOrError.isFailure) {
+        return Result.fail<void>(descriptionOrError.error.toString());
+      }
+
+      const description = descriptionOrError.getResult();
+
       const basketOrError = Basket.create({
         price,
         category,
-        info: dto.info,
+        info,
+        description,
         isActive: dto.isActive,
-        description: dto.description,
       });
       //-------------------------------------------------------------
       if (basketOrError.isFailure) {
