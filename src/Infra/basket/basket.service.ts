@@ -4,6 +4,7 @@ import { RegisterBasketDto } from '@app/register-basket-use-case/register-basket
 import { RemoveProductsFromBasketDto } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.dto';
 import { UpdateBasketDto } from '@app/update-basket-use-case/update-basket.dto';
 import { RegisterBasketCategoryUseCase } from '@app/register-basket-category-use-case/register-basket-category.use-case';
+import { DeactivateAllBasketsUseCase } from '@app/deactivate-all-baskets-use-case/deactivate-all-baskets.use-case';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
 import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
 import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.use-case';
@@ -28,6 +29,9 @@ export class BasketService {
 
     @Inject(UpdateBasketUseCase)
     private readonly updateBasketUseCase: UpdateBasketUseCase,
+
+    @Inject(DeactivateAllBasketsUseCase)
+    private readonly deactivateAllBasketsUseCase: DeactivateAllBasketsUseCase,
   ) {}
 
   async registerBasketCategory(dto: RegisterBasketCategoryDto): Promise<void> {
@@ -62,6 +66,13 @@ export class BasketService {
 
   async updateBasket(dto: UpdateBasketDto): Promise<void> {
     const result = await this.updateBasketUseCase.execute(dto);
+    if (result.isFailure) {
+      throw new PreconditionFailedException(result.error);
+    }
+  }
+
+  async deactivateAllBaskets(): Promise<void> {
+    const result = await this.deactivateAllBasketsUseCase.execute();
     if (result.isFailure) {
       throw new PreconditionFailedException(result.error);
     }

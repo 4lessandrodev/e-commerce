@@ -19,6 +19,7 @@ import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
 import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
 import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.use-case';
 import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.use-case';
+import { DeactivateAllBasketsUseCase } from '@app/deactivate-all-baskets-use-case/deactivate-all-baskets.use-case';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.u
     AddProductsOnBasketUseCase,
     RemoveProductsFromBasketUseCase,
     UpdateBasketUseCase,
+    DeactivateAllBasketsUseCase,
     BasketDomainService,
     BasketService,
   ],

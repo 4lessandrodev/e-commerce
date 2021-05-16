@@ -65,6 +65,7 @@ describe('add-products-on-basket.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
+      deactivateAllBaskets: jest.fn(),
     };
     productRepo = {
       delete: jest.fn(),

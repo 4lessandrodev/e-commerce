@@ -52,4 +52,9 @@ export class BasketController {
     dto.basketId = param.id;
     return this.basketService.updateBasket(dto);
   }
+
+  @Patch()
+  deactivateAllBaskets(): Promise<void> {
+    return this.basketService.deactivateAllBaskets();
+  }
 }

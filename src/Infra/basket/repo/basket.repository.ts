@@ -15,6 +15,12 @@ export class BasketRepository implements BasketRepositoryInterface {
     @Inject(BasketMapper) private readonly mapper: BasketMapper,
   ) {}
   //
+  async deactivateAllBaskets(): Promise<void> {
+    await this.conn
+      .updateMany({ isActive: true }, { isActive: false }, { multi: true })
+      .exec();
+  }
+  //
   async find(filter: Filter): Promise<Basket[] | null> {
     const foundBaskets = await this.conn.find(filter).exec();
     if (foundBaskets.length === 0) {

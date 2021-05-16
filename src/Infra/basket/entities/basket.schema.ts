@@ -53,7 +53,6 @@ export class Basket {
   @Prop({
     type: String,
     index: true,
-    unique: true,
     required: true,
     text: true,
   })
