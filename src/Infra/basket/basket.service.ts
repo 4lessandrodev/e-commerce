@@ -11,6 +11,7 @@ import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-baske
 import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.use-case';
 import { Inject, Injectable } from '@nestjs/common';
 import { PreconditionFailedException } from '@nestjs/common';
+import { Result } from 'types-ddd';
 
 @Injectable()
 export class BasketService {
@@ -34,47 +35,41 @@ export class BasketService {
     private readonly deactivateAllBasketsUseCase: DeactivateAllBasketsUseCase,
   ) {}
 
-  async registerBasketCategory(dto: RegisterBasketCategoryDto): Promise<void> {
-    const result = await this.registerBasketCategoryUseCase.execute(dto);
+  private checkResult(result: Result<void>): void {
     if (result.isFailure) {
       throw new PreconditionFailedException(result.error);
     }
+  }
+
+  async registerBasketCategory(dto: RegisterBasketCategoryDto): Promise<void> {
+    const result = await this.registerBasketCategoryUseCase.execute(dto);
+    return this.checkResult(result);
   }
 
   async registerBasket(dto: RegisterBasketDto): Promise<void> {
     const result = await this.registerBasketUseCase.execute(dto);
-    if (result.isFailure) {
-      throw new PreconditionFailedException(result.error);
-    }
+    return this.checkResult(result);
   }
 
   async addProductsOnBasket(dto: AddProductsOnBasketDto): Promise<void> {
     const result = await this.addProductsOnBasketUseCase.execute(dto);
-    if (result.isFailure) {
-      throw new PreconditionFailedException(result.error);
-    }
+    return this.checkResult(result);
   }
 
   async removeProductsFromBasket(
     dto: RemoveProductsFromBasketDto,
   ): Promise<void> {
     const result = await this.removeProductsFromBasketUseCase.execute(dto);
-    if (result.isFailure) {
-      throw new PreconditionFailedException(result.error);
-    }
+    return this.checkResult(result);
   }
 
   async updateBasket(dto: UpdateBasketDto): Promise<void> {
     const result = await this.updateBasketUseCase.execute(dto);
-    if (result.isFailure) {
-      throw new PreconditionFailedException(result.error);
-    }
+    return this.checkResult(result);
   }
 
   async deactivateAllBaskets(): Promise<void> {
     const result = await this.deactivateAllBasketsUseCase.execute();
-    if (result.isFailure) {
-      throw new PreconditionFailedException(result.error);
-    }
+    return this.checkResult(result);
   }
 }
