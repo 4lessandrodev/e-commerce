@@ -36,7 +36,6 @@ export class Product {
   @Prop({
     type: String,
     index: true,
-    unique: true,
     required: true,
     text: true,
   })

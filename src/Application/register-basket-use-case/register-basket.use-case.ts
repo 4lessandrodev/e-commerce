@@ -78,10 +78,8 @@ export class RegisterBasketUseCase
         ? BasketInfoValueObject.create(dto.info)
         : undefined;
 
-      if (infoOrErrorOrUndefined) {
-        if (infoOrErrorOrUndefined.isFailure) {
-          return Result.fail<void>(infoOrErrorOrUndefined.error.toString());
-        }
+      if (infoOrErrorOrUndefined?.isFailure) {
+        return Result.fail<void>(infoOrErrorOrUndefined.error.toString());
       }
 
       const info = infoOrErrorOrUndefined?.getResult();

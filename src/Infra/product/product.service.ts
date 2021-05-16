@@ -1,7 +1,9 @@
 import { RegisterProductCategoryUseCase } from '@app/register-product-category-use-case/register-product-category.use-case';
 import { RegisterProductUseCase } from '@app/register-product-use-case/register-product.use-case';
 import { RegisterTagUseCase } from '@app/register-tag-use-case/register-tag.use-case';
+import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
 import { RegisterProductCategoryDto } from './dto/register-product-category.dto';
+import { UpdateProductDto } from '@app/update-product-use-case/update-product.dto';
 import { RegisterProductDto } from './dto/register-product.dto';
 import { RegisterTagDto } from './dto/register-tag.dto';
 import { Inject, Injectable } from '@nestjs/common';
@@ -22,6 +24,9 @@ export class ProductService {
 
     @Inject(RegisterProductUseCase)
     private readonly registerProductUseCase: RegisterProductUseCase,
+
+    @Inject(UpdateProductUseCase)
+    private readonly updateProductUseCase: UpdateProductUseCase,
 
     @Inject(ProductQuery) private readonly productQuery: ProductQuery,
   ) {}
@@ -46,6 +51,11 @@ export class ProductService {
 
   async registerProduct(dto: RegisterProductDto): Promise<void> {
     const result = await this.registerProductUseCase.execute(dto);
+    return this.checkResult(result);
+  }
+
+  async updateProduct(dto: UpdateProductDto): Promise<void> {
+    const result = await this.updateProductUseCase.execute(dto);
     return this.checkResult(result);
   }
 

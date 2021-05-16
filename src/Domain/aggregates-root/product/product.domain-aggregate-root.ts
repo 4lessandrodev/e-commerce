@@ -165,6 +165,26 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.tags = existTags.filter((tg) => !tg.id.equals(tag.id));
   }
 
+  changeExchangeFactor(factor: ExchangeFactorValueObject): void {
+    this.props.exchangeFactor = factor;
+  }
+
+  changeUnitOfMeasurement(unit: UnitOfMeasurementValueObject): void {
+    this.props.unitOfMeasurement = unit;
+  }
+
+  changeInfo(info: ProductInfoValueObject | undefined): void {
+    this.props.info = info;
+  }
+
+  setAsSpecial(): void {
+    this.props.isSpecial = true;
+  }
+
+  setAsNotSpecial(): void {
+    this.props.isSpecial = false;
+  }
+
   public static create(
     props: ProductProps,
     id?: UniqueEntityID,

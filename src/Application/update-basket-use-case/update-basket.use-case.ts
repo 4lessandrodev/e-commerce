@@ -33,10 +33,8 @@ export class UpdateBasketUseCase
       ? BasketInfoValueObject.create(dto.info)
       : undefined;
 
-    if (infoOrError) {
-      if (infoOrError.isFailure) {
-        return Result.fail<void>(infoOrError.error.toString());
-      }
+    if (infoOrError?.isFailure) {
+      return Result.fail<void>(infoOrError.error.toString());
     }
     const info = infoOrError?.getResult();
 
@@ -89,11 +87,7 @@ export class UpdateBasketUseCase
       basket.changeDescription(description);
       basket.changePrice(price);
 
-      if (keepActive) {
-        basket.activate();
-      } else {
-        basket.deactivate();
-      }
+      keepActive ? basket.activate() : basket.deactivate();
 
       basket.changeInfo(info);
 

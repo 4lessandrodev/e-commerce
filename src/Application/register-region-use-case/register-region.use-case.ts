@@ -14,6 +14,7 @@ export class RegisterRegionUseCase
   constructor(
     @Inject('RegionRepository')
     private readonly regionRepo: RegionRepositoryInterface,
+
     @Inject('CityRepository')
     private readonly cityRepo: CityRepositoryInterface,
   ) {}

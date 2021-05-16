@@ -5,18 +5,16 @@ import { Client, RegionId, UserId } from '@domain/aggregates-root';
 import { Address } from '@domain/entities';
 import { ClientRepositoryInterface } from '@repo/client-repository.interface';
 import { RegionRepositoryInterface } from '@repo/region-repository.interface';
-import {
-  AddressComplementValueObject,
-  AddressNumberValueObject,
-  ImageValueObject,
-  StreetNameValueObject,
-  UserNameValueObject,
-  ZipCodeValueObject,
-} from '@domain/value-objects';
+import { ImageValueObject, ZipCodeValueObject } from '@domain/value-objects';
+import { AddressComplementValueObject } from '@domain/value-objects';
+import { AddressNumberValueObject } from '@domain/value-objects';
+import { StreetNameValueObject } from '@domain/value-objects';
+import { UserNameValueObject } from '@domain/value-objects';
 
 @Injectable()
 export class RegisterClientUseCase
-  implements IUseCase<RegisterClientDto, Result<void>> {
+  implements IUseCase<RegisterClientDto, Result<void>>
+{
   /**
    *
    * @todo inject upload image service

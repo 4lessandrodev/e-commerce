@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 export class SignInUseCase implements IUseCase<SignInDto, Result<Payload>> {
   constructor(
     @Inject(JwtService) private readonly jwt: JwtService,
+
     @Inject('UserRepository')
     private readonly userRepo: UserRepositoryInterface,
   ) {}

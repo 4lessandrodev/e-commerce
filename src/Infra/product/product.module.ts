@@ -18,10 +18,9 @@ import { UserModule } from '../user/user.module';
 import { TagMapper } from './mapper/tag.mapper';
 import { ProductCategoryMapper } from './mapper/product-category.mapper';
 import { ProductCategoryRepository } from './repo/product-category.repository';
-import {
-  ProductCategory,
-  ProductCategorySchema,
-} from './entities/product-category.schema';
+import { ProductCategory } from './entities/product-category.schema';
+import { ProductCategorySchema } from './entities/product-category.schema';
+import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
 
 @Module({
   imports: [
@@ -54,6 +53,7 @@ import {
     RegisterProductCategoryUseCase,
     RegisterProductUseCase,
     RegisterTagUseCase,
+    UpdateProductUseCase,
     ProductService,
   ],
   controllers: [ProductController],

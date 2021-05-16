@@ -298,11 +298,45 @@ describe('Product.domain-aggregate-root', () => {
     expect(createdProduct.price.value).toBe(5);
   });
 
-  it('Should fail if provide a negative price to change it', () => {
+  it('Should change description with success', () => {
     const createdProduct = makeSut().getResult();
-    expect(createdProduct.price.value).toBe(10);
-    const validPrice = MonetaryValueObject.create(makeCurrency(5)).getResult();
-    createdProduct.changePrice(validPrice);
-    expect(createdProduct.price.value).toBe(5);
+    createdProduct.changeDescription(
+      ProductDescriptionValueObject.create(
+        'new changed description',
+      ).getResult(),
+    );
+    expect(createdProduct.description.value).toBe('new changed description');
+  });
+
+  it('Should change exchange factor with success', () => {
+    const createdProduct = makeSut().getResult();
+    createdProduct.changeExchangeFactor(
+      ExchangeFactorValueObject.create(7).getResult(),
+    );
+    expect(createdProduct.exchangeFactor.value).toBe(7);
+  });
+
+  it('Should change exchange change unit of measurement with success', () => {
+    const createdProduct = makeSut().getResult();
+    createdProduct.changeUnitOfMeasurement(
+      UnitOfMeasurementValueObject.create('MT').getResult(),
+    );
+    expect(createdProduct.unitOfMeasurement.value).toBe('MT');
+  });
+
+  it('Should change exchange change product info with success', () => {
+    const createdProduct = makeSut().getResult();
+    createdProduct.changeInfo(
+      ProductInfoValueObject.create('new information').getResult(),
+    );
+    expect(createdProduct.info?.value).toBe('new information');
+  });
+
+  it('Should change special and not special with success', () => {
+    const createdProduct = makeSut().getResult();
+    createdProduct.setAsNotSpecial();
+    expect(createdProduct.isSpecial).toBe(false);
+    createdProduct.setAsSpecial();
+    expect(createdProduct.isSpecial).toBe(true);
   });
 });

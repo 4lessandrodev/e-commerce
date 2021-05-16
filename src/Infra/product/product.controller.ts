@@ -4,18 +4,13 @@ import { ProductFilter } from './interfaces/product.filters.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { RegisterProductCategoryDto } from './dto/register-product-category.dto';
 import { ProductService } from './product.service';
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Post,
-  Query,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Inject, Param, Patch } from '@nestjs/common';
+import { Get, ValidationPipe } from '@nestjs/common';
+import { Post, Controller } from '@nestjs/common';
+import { Query, UseGuards } from '@nestjs/common';
+import { UsePipes } from '@nestjs/common';
 import { GetProductsResult } from './interfaces/product.query.interface';
+import { ProductIdDto, UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('v1/product')
 @UsePipes(new ValidationPipe())
@@ -45,5 +40,14 @@ export class ProductController {
   @Get()
   getProducts(@Query() filter: ProductFilter): Promise<GetProductsResult> {
     return this.productService.getProducts(filter);
+  }
+
+  @Patch('/:id')
+  updateProduct(
+    @Param() param: ProductIdDto,
+    @Body() dto: UpdateProductDto,
+  ): Promise<void> {
+    dto.productId = param.id;
+    return this.productService.updateProduct(dto);
   }
 }
