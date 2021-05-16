@@ -3,7 +3,13 @@ import { image } from 'faker';
 import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '@domain/aggregates-root';
 import { BasketCategory, Comment, CommentId, Tag } from '@domain/entities';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import {
+  ExchangeFactorValueObject,
+  ImageValueObject,
+  MonetaryValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
+} from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { Currency } from '@domain/value-objects/monetary/currency.value-object';
 import { BasketProps } from './basket.domain-aggregate-root-interface';
@@ -40,10 +46,13 @@ describe('Basket.domain-aggregate-root', () => {
           props?.price ?? MonetaryValueObject.create(makePrice(1)).getResult(),
         items: props?.items ?? [
           BasketItemValueObject.create({
-            exchangeFactor: 1,
+            exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
             productId: ProductId.create(),
-            description: 'valid_description',
-            quantity: 2,
+            description:
+              ProductDescriptionValueObject.create(
+                'valid_description',
+              ).getResult(),
+            quantity: QuantityInStockValueObject.create(2).getResult(),
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -283,10 +292,11 @@ describe('Basket.domain-aggregate-root', () => {
   it('Should add product on a basket', () => {
     const createdBasket = makeSut().getResult();
     const item = BasketItemValueObject.create({
-      exchangeFactor: 1,
+      exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
       productId: ProductId.create(),
-      description: 'valid_description',
-      quantity: 2,
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
+      quantity: QuantityInStockValueObject.create(2).getResult(),
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
 
@@ -299,10 +309,11 @@ describe('Basket.domain-aggregate-root', () => {
 
     const createdBasket = makeSut().getResult();
     const product = BasketItemValueObject.create({
-      exchangeFactor: 1,
+      exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
       productId,
-      description: 'valid_description',
-      quantity: 2,
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
+      quantity: QuantityInStockValueObject.create(2).getResult(),
     }).getResult();
 
     expect(createdBasket.products?.length).toBe(1);

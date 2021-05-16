@@ -45,13 +45,13 @@ Todo:
   ✔ Create use case - Change basket description [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m34s)
   ✔ Create use case - Change basket price [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m35s)
   ✔ Create use case - Chage basket info [ADMIN] @started(21-05-14 21:36) @done(21-05-15 01:16) @lasted(3h40m37s)
-  ☐ Crete use case - DeactivateAllBasket [ADMIN]
+  ✔ Crete use case - DeactivateAllBasket [ADMIN] @done(21-05-15 23:13)
+  ☐ Create use case - Change Product Description [ADMIN] @started(21-05-15 23:18)
+  ☐ Create use case - DeactivateProduct [ADMIN] @started(21-05-15 23:19)
+  ☐ Create use case - Change Product quantityAvailable [ADMIN] @started(21-05-15 23:19)
+  ☐ Create use case - Change Product price [ADMIN] @started(21-05-15 23:19)
+  ☐ Create use case - Change Product exchangeFactor [ADMIN] @started(21-05-15 23:21)
   ☐ Create use case - DeactivateAllProducts [ADMIN]
-  ☐ Create use case - DeactivateProduct [ADMIN]
-  ☐ Create use case - Change Product Description [ADMIN]
-  ☐ Create use case - Change Product exchangeFactor [ADMIN]
-  ☐ Create use case - Change Product quantityAvailable [ADMIN]
-  ☐ Create use case - Change Product price [ADMIN]
   ☐ Refactor Comment to Aggregate and add author
   ☐ Create Readme Structure for each aggregate and entity @started(21-05-13 11:40)
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket

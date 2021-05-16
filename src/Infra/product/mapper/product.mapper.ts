@@ -6,11 +6,11 @@ import { CommentId } from '@domain/entities';
 import { Inject, Injectable } from '@nestjs/common';
 import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
-import {
-  Currency,
-  ImageValueObject,
-  MonetaryValueObject,
-} from '@domain/value-objects';
+import { ProductInfoValueObject } from '@domain/value-objects';
+import { QuantityInStockValueObject } from '@domain/value-objects';
+import { ExchangeFactorValueObject } from '@domain/value-objects';
+import { MonetaryValueObject, ImageValueObject } from '@domain/value-objects';
+import { Currency, ProductDescriptionValueObject } from '@domain/value-objects';
 
 @Injectable()
 export class ProductMapper implements IMapper<Aggregate, Schema> {
@@ -25,13 +25,19 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
   toDomain(target: Schema): Aggregate {
     return Aggregate.create(
       {
-        description: target.description,
-        exchangeFactor: target.exchangeFactor,
+        description: ProductDescriptionValueObject.create(
+          target.description,
+        ).getResult(),
+        exchangeFactor: ExchangeFactorValueObject.create(
+          target.exchangeFactor,
+        ).getResult(),
         unitOfMeasurement: UnitOfMeasurementValueObject.create(
           target.unitOfMeasurement,
         ).getResult(),
         category: this.categoryMapper.toDomain(target.category),
-        info: target.info,
+        info: target.info
+          ? ProductInfoValueObject.create(target.info).getResult()
+          : undefined,
         isActive: target.isActive,
         isSpecial: target.isSpecial,
         numberOfRatings: target.numberOfRatings,
@@ -43,7 +49,9 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         price: MonetaryValueObject.create(
           Currency.create(target.price).getResult(),
         ).getResult(),
-        quantityAvailable: target.quantityAvailable,
+        quantityAvailable: QuantityInStockValueObject.create(
+          target.quantityAvailable,
+        ).getResult(),
         image: target.image
           ? ImageValueObject.create(target.image).getResult()
           : undefined,
@@ -57,8 +65,8 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
   toPersistence(target: Aggregate): Schema {
     return {
       id: target.id.toString(),
-      description: target.description,
-      exchangeFactor: target.exchangeFactor,
+      description: target.description.value,
+      exchangeFactor: target.exchangeFactor.value,
       unitOfMeasurement: target.unitOfMeasurement.value,
       category: this.categoryMapper.toPersistence(target.category),
       isActive: target.isActive,
@@ -69,11 +77,11 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         symbol: target.price.currency.symbol,
         value: target.price.currency.value,
       },
-      quantityAvailable: target.quantityAvailable,
+      quantityAvailable: target.quantityAvailable.value,
       ratingAverage: target.ratingAverage,
       comments: target.comments.map(({ id }) => id.toString()),
       image: target.image?.value,
-      info: target.info,
+      info: target.info?.value,
       tags: target.tags.map(this.tagMapper.toPersistence),
       createdAt: target.createdAt,
       updatedAt: target.updatedAt,

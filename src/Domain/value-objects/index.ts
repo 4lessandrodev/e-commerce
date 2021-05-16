@@ -15,3 +15,7 @@ export * from './unit-of-measurement/unit-of-measurement.value-objects';
 export * from './basket-item/basket-item.value-object';
 export * from './basket-description/basket-description.value-object';
 export * from './basket-info/basket-info.value-object';
+export * from './quantity-in-stock/quantity-in-stock.value-object';
+export * from './product-description/product-description.value-object';
+export * from './product-info/product-info.value-object';
+export * from './exchange-factor/exchange-factor.value-object';

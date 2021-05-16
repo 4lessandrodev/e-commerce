@@ -3,11 +3,12 @@ import { Product as Aggregate } from '@domain/aggregates-root';
 import { Product as Schema } from '@infra/product/entities/product.schema';
 import { UniqueEntityID } from 'types-ddd/dist/src';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
-import {
-  Currency,
-  ImageValueObject,
-  MonetaryValueObject,
-} from '@domain/value-objects';
+import { Currency, ImageValueObject } from '@domain/value-objects';
+import { MonetaryValueObject } from '@domain/value-objects';
+import { ProductDescriptionValueObject } from '@domain/value-objects';
+import { QuantityInStockValueObject } from '@domain/value-objects';
+import { ProductInfoValueObject } from '@domain/value-objects';
+import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { ProductMapper } from './product.mapper';
 import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
@@ -21,8 +22,9 @@ describe('product.mapper', () => {
   beforeEach(() => {
     domain = Aggregate.create(
       {
-        description: 'valid_description',
-        exchangeFactor: 1,
+        description:
+          ProductDescriptionValueObject.create('valid_description').getResult(),
+        exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
         unitOfMeasurement:
           UnitOfMeasurementValueObject.create('UN').getResult(),
         category: ProductCategory.create(
@@ -31,7 +33,7 @@ describe('product.mapper', () => {
           },
           new UniqueEntityID('valid_id'),
         ).getResult(),
-        info: 'valid_info',
+        info: ProductInfoValueObject.create('valid_info').getResult(),
         isActive: true,
         isSpecial: false,
         numberOfRatings: 10,
@@ -57,7 +59,7 @@ describe('product.mapper', () => {
             value: 100,
           }).getResult(),
         ).getResult(),
-        quantityAvailable: 10,
+        quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
         image: ImageValueObject.create(
           'https://aws.s3.bucket/OIPOUERT.589ASD89/image.jpeg',
         ).getResult(),

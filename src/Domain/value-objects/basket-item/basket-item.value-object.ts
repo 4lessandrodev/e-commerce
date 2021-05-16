@@ -1,15 +1,14 @@
 import { Result, ValueObject } from 'types-ddd';
-export const MAX_EXCHANGE_FACTOR = 5;
-export const MIN_EXCHANGE_FACTOR = 1;
-
 import { ProductId } from '@domain/aggregates-root';
-import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from './basket-item-errors.domain';
+import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.value-object';
+import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
+import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
 
 export interface BasketItemValue {
   productId: ProductId;
-  exchangeFactor: number;
-  quantity: number;
-  description: string;
+  exchangeFactor: ExchangeFactorValueObject;
+  quantity: QuantityInStockValueObject;
+  description: ProductDescriptionValueObject;
 }
 
 export interface BasketItemProps {
@@ -26,16 +25,6 @@ export class BasketItemValueObject extends ValueObject<BasketItemProps> {
   }
 
   public static create(props: BasketItemValue): Result<BasketItemValueObject> {
-    const isValidExchangeFactor =
-      props.exchangeFactor >= MIN_EXCHANGE_FACTOR &&
-      props.exchangeFactor < MAX_EXCHANGE_FACTOR;
-
-    if (!isValidExchangeFactor) {
-      return Result.fail<BasketItemValueObject>(
-        ERROR_INVALID_EXCHANGE_FACTOR_RANGE,
-      );
-    }
-
     return Result.ok<BasketItemValueObject>(
       new BasketItemValueObject({ value: props }),
     );

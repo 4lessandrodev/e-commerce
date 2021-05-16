@@ -3,6 +3,9 @@ import { UniqueEntityID } from 'types-ddd';
 import { BasketCategory, CommentId, Tag } from '@domain/entities';
 import { Basket as Schema } from '../entities/basket.schema';
 import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { ExchangeFactorValueObject } from '@domain/value-objects';
+import { QuantityInStockValueObject } from '@domain/value-objects';
+import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { Currency, BasketInfoValueObject } from '@domain/value-objects';
 import { BasketDescriptionValueObject } from '@domain/value-objects';
@@ -46,10 +49,13 @@ describe('basket.mapper', () => {
       info: BasketInfoValueObject.create('valid_info').getResult(),
       items: [
         BasketItemValueObject.create({
-          description: 'valid_description',
-          exchangeFactor: 2,
+          description:
+            ProductDescriptionValueObject.create(
+              'valid_description',
+            ).getResult(),
+          exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
           productId: ProductId.create(new UniqueEntityID('valid_id')),
-          quantity: 7,
+          quantity: QuantityInStockValueObject.create(7).getResult(),
         }).getResult(),
       ],
       numberOfRatings: 3,

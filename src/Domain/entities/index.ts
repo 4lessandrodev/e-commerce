@@ -14,7 +14,6 @@ export * from './city/city-id.domain-entity';
 export * from './comment/comment-id.domain-entity';
 export * from './coupon/coupon-id.domain-entity';
 export * from './delivery-status/delivery-status-id.domain-entity';
-export * from './item/item-id.domain-entity';
 export * from './product-category/product-category-id.domain-entity';
 export * from './state/state-id.domain-entity';
 export * from './tag/tag-id.domain-entity';

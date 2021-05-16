@@ -6,7 +6,10 @@ import {
   BasketDescriptionValueObject,
   BasketItemValueObject,
   Currency,
+  ExchangeFactorValueObject,
   MonetaryValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
 } from '@domain/value-objects';
 import { BasketCategory } from '@domain/entities';
 import { Basket, ProductId } from '@domain/aggregates-root';
@@ -18,17 +21,19 @@ describe('remove-products-from-basket.use-case', () => {
   //
   // Mock items
   const itemA = BasketItemValueObject.create({
-    description: 'valid_description',
-    exchangeFactor: 2,
+    description:
+      ProductDescriptionValueObject.create('valid_description').getResult(),
+    exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id1')),
-    quantity: 10,
+    quantity: QuantityInStockValueObject.create(10).getResult(),
   }).getResult();
   //
   const itemB = BasketItemValueObject.create({
-    description: 'valid_description',
-    exchangeFactor: 2,
+    description:
+      ProductDescriptionValueObject.create('valid_description').getResult(),
+    exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id2')),
-    quantity: 10,
+    quantity: QuantityInStockValueObject.create(10).getResult(),
   }).getResult();
   //
   const price = MonetaryValueObject.create(

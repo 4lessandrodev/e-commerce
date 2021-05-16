@@ -1,14 +1,14 @@
+export const MAX_REGION_DESCRIPTION_LENGTH = 20;
+export const MIN_REGION_DESCRIPTION_LENGTH = 3;
 import {
   ERROR_REGION_DESCRIPTION_LENGTH,
   ERROR_FREIGHT_PRICE_FOR_REGION,
 } from './region-errors.domain';
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-import { validateStringLengthBetweenMaxAndMin } from '../../utils';
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { RegionProps } from './region.domain-aggregate-root-interface';
 import { City } from '@domain/entities';
-export const MAX_REGION_DESCRIPTION_LENGTH = 20;
-export const MIN_REGION_DESCRIPTION_LENGTH = 3;
 
 export class Region extends AggregateRoot<RegionProps> {
   private constructor(props: RegionProps, id?: UniqueEntityID) {

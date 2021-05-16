@@ -7,7 +7,13 @@ import { UniqueEntityID } from 'types-ddd/dist/src';
 import { Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory, Tag } from '@domain/entities';
 import { RegisterBasketUseCase } from './register-basket.use-case';
-import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import {
+  Currency,
+  ExchangeFactorValueObject,
+  MonetaryValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
+} from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/basket-info-errors.domain';
 import { ERROR_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects/basket-description/basket-description-errors.domain';
@@ -23,11 +29,12 @@ describe('register-basket.use-case', () => {
   // fake product
   const product = Product.create(
     {
-      exchangeFactor: 1,
+      exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),
-      description: 'valid_description',
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(
@@ -37,7 +44,7 @@ describe('register-basket.use-case', () => {
           value: 100,
         }).getResult(),
       ).getResult(),
-      quantityAvailable: 10,
+      quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
     },
     new UniqueEntityID('valid_id'),

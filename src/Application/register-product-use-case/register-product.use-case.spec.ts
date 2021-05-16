@@ -4,7 +4,7 @@ import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 import { RegisterProductUseCase } from './register-product.use-case';
 import { UniqueEntityID } from 'types-ddd/dist/src';
 import { ProductCategory, Tag } from '@domain/entities';
-import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/basket-item-errors.domain';
+import { ERROR_INVALID_EXCHANGE_FACTOR } from '@domain/value-objects/exchange-factor/exchange-factor-errors.domain';
 
 describe('register-product.use-case', () => {
   //
@@ -97,7 +97,7 @@ describe('register-product.use-case', () => {
     });
 
     expect(result.isFailure).toBe(true);
-    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR);
   });
 
   it('should fail provide an invalid exchangeFactor', async () => {
@@ -110,7 +110,7 @@ describe('register-product.use-case', () => {
       tagRepo,
     );
     const result = await useCase.execute({
-      exchangeFactor: 6,
+      exchangeFactor: 8,
       categoryId: 'valid_id',
       description: 'valid_description',
       isActive: true,
@@ -122,7 +122,7 @@ describe('register-product.use-case', () => {
     });
 
     expect(result.isFailure).toBe(true);
-    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
+    expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR);
   });
 
   it('should fail if category does not exists', async () => {

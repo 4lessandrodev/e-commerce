@@ -1,5 +1,10 @@
 import { BasketItemMapper } from './basket-item.mapper';
-import { BasketItemValueObject as Aggregate } from '@domain/value-objects';
+import {
+  BasketItemValueObject as Aggregate,
+  ExchangeFactorValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
+} from '@domain/value-objects';
 import { Item as Schema } from '../entities/basket.schema';
 import { ProductId } from '@domain/aggregates-root';
 import { UniqueEntityID } from 'types-ddd/dist/src';
@@ -7,10 +12,11 @@ import { UniqueEntityID } from 'types-ddd/dist/src';
 describe('basket-item.mapper', () => {
   //
   const domain: Aggregate = Aggregate.create({
-    description: 'valid_description',
-    exchangeFactor: 2,
+    description:
+      ProductDescriptionValueObject.create('valid_description').getResult(),
+    exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id')),
-    quantity: 7,
+    quantity: QuantityInStockValueObject.create(7).getResult(),
   }).getResult();
   //
   const persistence: Schema = {

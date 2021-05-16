@@ -5,7 +5,10 @@ import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   BasketDescriptionValueObject,
   Currency,
+  ExchangeFactorValueObject,
   MonetaryValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd/dist/src';
@@ -30,12 +33,13 @@ describe('basket.service', () => {
   const product: Product = Product.create(
     {
       category,
-      exchangeFactor: 1,
-      description: 'valid_description',
+      exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       isSpecial: false,
       price,
-      quantityAvailable: 10,
+      quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
       unitOfMeasurement,
     },
     new UniqueEntityID('valid_id'),
@@ -76,6 +80,6 @@ describe('basket.service', () => {
     const service = new BasketDomainService();
     service.addItemsOnBasket([itemDto, itemDto], basket, [product, product]);
     expect(basket.products.length).toBe(3);
-    expect(basket.products[0].value.exchangeFactor).toBe(1);
+    expect(basket.products[0].value.exchangeFactor.value).toBe(1);
   });
 });

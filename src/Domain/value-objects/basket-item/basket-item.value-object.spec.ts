@@ -1,42 +1,19 @@
 import { ProductId } from '@domain/aggregates-root';
-import {
-  BasketItemValueObject,
-  MAX_EXCHANGE_FACTOR,
-  MIN_EXCHANGE_FACTOR,
-} from './basket-item.value-object';
-import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from './basket-item-errors.domain';
+import { BasketItemValueObject } from './basket-item.value-object';
+import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.value-object';
+import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
+import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
 
 describe('BasketItem.value-object', () => {
   it('should be defined', () => {
     const item = BasketItemValueObject.create({
-      exchangeFactor: 3,
+      exchangeFactor: ExchangeFactorValueObject.create(3).getResult(),
       productId: ProductId.create(),
-      description: 'valid_description',
-      quantity: 2,
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
+      quantity: QuantityInStockValueObject.create(2).getResult(),
     });
     expect(item).toBeDefined();
     expect(item.isSuccess).toBe(true);
-  });
-
-  it('should fail if provide a value greater than max permitted', () => {
-    const item = BasketItemValueObject.create({
-      exchangeFactor: MAX_EXCHANGE_FACTOR + 1,
-      productId: ProductId.create(),
-      description: 'valid_description',
-      quantity: 2,
-    });
-    expect(item.isFailure).toBe(true);
-    expect(item.error.toString()).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
-  });
-
-  it('should fail if provide a value greater than max permitted', () => {
-    const item = BasketItemValueObject.create({
-      exchangeFactor: MIN_EXCHANGE_FACTOR - 1,
-      productId: ProductId.create(),
-      description: 'valid_description',
-      quantity: 2,
-    });
-    expect(item.isFailure).toBe(true);
-    expect(item.error.toString()).toBe(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
   });
 });

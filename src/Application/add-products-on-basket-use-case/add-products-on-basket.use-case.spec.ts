@@ -7,7 +7,10 @@ import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   BasketDescriptionValueObject,
   Currency,
+  ExchangeFactorValueObject,
   MonetaryValueObject,
+  ProductDescriptionValueObject,
+  QuantityInStockValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd';
@@ -47,12 +50,13 @@ describe('add-products-on-basket.use-case', () => {
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),
-      description: 'valid_description',
-      exchangeFactor: 1,
+      description:
+        ProductDescriptionValueObject.create('valid_description').getResult(),
+      exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
       isActive: true,
       isSpecial: false,
       price,
-      quantityAvailable: 20,
+      quantityAvailable: QuantityInStockValueObject.create(20).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     },
     new UniqueEntityID('valid_id'),

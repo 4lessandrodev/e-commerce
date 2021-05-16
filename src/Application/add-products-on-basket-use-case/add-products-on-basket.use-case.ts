@@ -12,8 +12,10 @@ export class AddProductsOnBasketUseCase
   constructor(
     @Inject('ProductRepository')
     private readonly productRepo: ProductRepositoryInterface,
+
     @Inject('BasketRepository')
     private readonly basketRepo: BasketRepositoryInterface,
+
     @Inject(BasketDomainService)
     private readonly basketDomainService: BasketDomainService,
   ) {}

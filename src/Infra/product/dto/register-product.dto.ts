@@ -16,13 +16,11 @@ import {
   Min,
 } from 'class-validator';
 import {
+  MAX_EXCHANGE_FACTOR_VALUE,
   MAX_PRODUCT_DESCRIPTION_LENGTH,
   MAX_PRODUCT_INFO_LENGTH,
+  MIN_EXCHANGE_FACTOR_VALUE,
   MIN_PRODUCT_DESCRIPTION_LENGTH,
-} from '@domain/aggregates-root';
-import {
-  MAX_EXCHANGE_FACTOR,
-  MIN_EXCHANGE_FACTOR,
 } from '@domain/value-objects';
 
 export class RegisterProductDto {
@@ -31,8 +29,8 @@ export class RegisterProductDto {
   description!: string;
 
   @IsPositive()
-  @Min(MIN_EXCHANGE_FACTOR)
-  @Max(MAX_EXCHANGE_FACTOR)
+  @Min(MIN_EXCHANGE_FACTOR_VALUE)
+  @Max(MAX_EXCHANGE_FACTOR_VALUE)
   exchangeFactor!: number;
 
   @IsUUID()

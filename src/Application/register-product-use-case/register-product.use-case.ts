@@ -1,12 +1,16 @@
-import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { ProductCategoryRepositoryInterface } from '@repo/product-category-repository.interface';
-import { ProductRepositoryInterface } from '@repo/product-repository.interface';
 import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import { ProductInfoValueObject } from '@domain/value-objects';
+import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { RegisterProductDto } from './register-product.dto';
 import { Inject, Injectable } from '@nestjs/common';
+import { QuantityInStockValueObject } from '@domain/value-objects';
 import { Product } from '@domain/aggregates-root';
 import { IUseCase, Result } from 'types-ddd';
+import { ProductDescriptionValueObject } from '@domain/value-objects';
+import { ProductRepositoryInterface } from '@repo/product-repository.interface';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 
 @Injectable()
 export class RegisterProductUseCase
@@ -16,8 +20,10 @@ export class RegisterProductUseCase
   constructor(
     @Inject('ProductRepository')
     private readonly productRepo: ProductRepositoryInterface,
+
     @Inject('ProductCategoryRepository')
     private readonly productCategoryRepo: ProductCategoryRepositoryInterface,
+
     @Inject('TagRepository') private readonly tagRepo: TagRepositoryInterface,
   ) {}
   //
@@ -39,23 +45,39 @@ export class RegisterProductUseCase
 
     const priceOrError = MonetaryValueObject.create(currency);
 
-    if (priceOrError.isFailure) {
-      return Result.fail<void>(priceOrError.error.toString());
-    }
-
-    const price = priceOrError.getResult();
-
-    //----------------------------------------------------
-
     const unitOfMeasurementOrError = UnitOfMeasurementValueObject.create(
       dto.unitOfMeasurement,
     );
 
-    if (unitOfMeasurementOrError.isFailure) {
-      return Result.fail<void>(unitOfMeasurementOrError.error.toString());
+    const exchangeFactorOrError = ExchangeFactorValueObject.create(
+      dto.exchangeFactor,
+    );
+
+    const descriptionOrError = ProductDescriptionValueObject.create(
+      dto.description,
+    );
+
+    const quantityAvailableOrError = QuantityInStockValueObject.create(
+      dto.quantityAvailable,
+    );
+
+    const checkErrors = Result.combine([
+      priceOrError,
+      unitOfMeasurementOrError,
+      exchangeFactorOrError,
+      descriptionOrError,
+    ]);
+
+    if (checkErrors.isFailure) {
+      return Result.fail<void>(checkErrors.error);
     }
 
+    const price = priceOrError.getResult();
     const unitOfMeasurement = unitOfMeasurementOrError.getResult();
+    const exchangeFactor = exchangeFactorOrError.getResult();
+    const description = descriptionOrError.getResult();
+    const quantityAvailable = quantityAvailableOrError.getResult();
+    //----------------------------------------------------
 
     //----------------------------------------------------
 
@@ -78,20 +100,31 @@ export class RegisterProductUseCase
         return Result.fail<void>('Category does not exists');
       }
 
+      let info: ProductInfoValueObject | undefined;
+
+      if (dto.info) {
+        const infoOrError = ProductInfoValueObject.create(dto.info);
+        if (infoOrError.isFailure) {
+          return Result.fail<void>(infoOrError.error.toString());
+        }
+        info = infoOrError.getResult();
+      }
+
       //----------------------------------------------------
+
       /**
        * @todo Calls uploader service to save product image if provided
        */
       const productOrError = Product.create({
-        exchangeFactor: dto.exchangeFactor,
+        exchangeFactor,
         unitOfMeasurement,
         category,
         price,
-        description: dto.description,
+        description,
+        quantityAvailable,
+        info,
         isSpecial: dto.isSpecial,
         isActive: dto.isActive,
-        quantityAvailable: dto.quantityAvailable,
-        info: dto.info,
       });
       //
       if (productOrError.isFailure) {

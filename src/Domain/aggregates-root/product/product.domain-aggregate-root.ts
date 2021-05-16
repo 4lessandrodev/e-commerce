@@ -1,29 +1,12 @@
-export const MAX_PRODUCT_DESCRIPTION_LENGTH = 80;
-export const MIN_PRODUCT_DESCRIPTION_LENGTH = 3;
 export const MAX_PRODUCT_RATING_AVERAGE = 5;
-export const MAX_PRODUCT_INFO_LENGTH = 250;
-import {
-  ImageValueObject,
-  MAX_EXCHANGE_FACTOR,
-  MIN_EXCHANGE_FACTOR,
-  MonetaryValueObject,
-} from '@domain/value-objects';
-import {
-  ERROR_PRODUCT_AVAILABLE_QUANTITY,
-  ERROR_PRODUCT_DESCRIPTION_LENGTH,
-  ERROR_PRODUCT_INFO_LENGTH,
-  ERROR_PRODUCT_PRICE,
-} from './product-errors.domain-aggregate-root';
-import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/basket-item-errors.domain';
+import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import { ProductInfoValueObject } from '@domain/value-objects';
+import { ProductDescriptionValueObject } from '@domain/value-objects';
+import { ExchangeFactorValueObject } from '@domain/value-objects';
+import { QuantityInStockValueObject } from '@domain/value-objects';
+import { ERROR_PRODUCT_PRICE } from './product-errors.domain-aggregate-root';
 import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
-import {
-  validateNumberBetweenMaxAndMin,
-  validateNumberGreaterOrEqualToZero,
-  validateNumberGreaterThanZero,
-  validateStringLengthBetweenMaxAndMin,
-} from '@domain/utils';
-
 import { ProductProps } from './product.domain-aggregate-root-interface';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 
@@ -36,12 +19,12 @@ export class Product extends AggregateRoot<ProductProps> {
     return this._id;
   }
 
-  get info(): string {
-    return this.props.info?.toLowerCase() ?? '';
+  get info(): ProductInfoValueObject | undefined {
+    return this.props.info;
   }
 
-  get description(): string {
-    return this.props.description.toLowerCase();
+  get description(): ProductDescriptionValueObject {
+    return this.props.description;
   }
 
   get category(): ProductCategory {
@@ -56,7 +39,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.price;
   }
 
-  get quantityAvailable(): number {
+  get quantityAvailable(): QuantityInStockValueObject {
     return this.props.quantityAvailable;
   }
 
@@ -88,7 +71,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.tags ?? [];
   }
 
-  get exchangeFactor(): number {
+  get exchangeFactor(): ExchangeFactorValueObject {
     return this.props.exchangeFactor;
   }
 
@@ -123,40 +106,13 @@ export class Product extends AggregateRoot<ProductProps> {
     this.props.updatedAt = new Date();
   }
 
-  launchStock(quantity: number): void {
-    const isValidStock = validateNumberGreaterOrEqualToZero(quantity);
-    if (!isValidStock) {
-      return;
-    }
+  launchStock(quantity: QuantityInStockValueObject): void {
     this.props.quantityAvailable = quantity;
     this.props.updatedAt = new Date();
   }
 
-  incrementStock(): void {
-    this.props.quantityAvailable++;
-  }
-
-  decrementStock(): void {
-    const isValidStock = validateNumberGreaterThanZero(
-      this.props.quantityAvailable,
-    );
-    if (!isValidStock) {
-      return;
-    }
-    this.props.quantityAvailable--;
-    this.props.updatedAt = new Date();
-  }
-
-  changeDescription(value: string): Result<void> {
-    const isValidDescription = validateStringLengthBetweenMaxAndMin({
-      text: value,
-      maxLength: MAX_PRODUCT_DESCRIPTION_LENGTH,
-      minLength: MIN_PRODUCT_DESCRIPTION_LENGTH,
-    });
-    if (!isValidDescription) {
-      return Result.fail<void>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
-    }
-    this.props.description = value;
+  changeDescription(description: ProductDescriptionValueObject): Result<void> {
+    this.props.description = description;
     this.props.updatedAt = new Date();
     return Result.ok<void>();
   }
@@ -214,45 +170,9 @@ export class Product extends AggregateRoot<ProductProps> {
     id?: UniqueEntityID,
   ): Result<Product> {
     //
-    const isValidDescription = validateStringLengthBetweenMaxAndMin({
-      text: props.description,
-      maxLength: MAX_PRODUCT_DESCRIPTION_LENGTH,
-      minLength: MIN_PRODUCT_DESCRIPTION_LENGTH,
-    });
-
-    if (!isValidDescription) {
-      return Result.fail<Product>(ERROR_PRODUCT_DESCRIPTION_LENGTH);
-    }
-    const isValidQuantity = validateNumberGreaterOrEqualToZero(
-      props.quantityAvailable,
-    );
-
-    if (!isValidQuantity) {
-      return Result.fail<Product>(ERROR_PRODUCT_AVAILABLE_QUANTITY);
-    }
 
     if (!props.price.isPositive()) {
       return Result.fail<Product>(ERROR_PRODUCT_PRICE);
-    }
-
-    const isValidExchangeFactor = validateNumberBetweenMaxAndMin({
-      max: MAX_EXCHANGE_FACTOR,
-      min: MIN_EXCHANGE_FACTOR,
-      value: props.exchangeFactor,
-    });
-
-    if (!isValidExchangeFactor) {
-      return Result.fail<Product>(ERROR_INVALID_EXCHANGE_FACTOR_RANGE);
-    }
-
-    const isValidInfoLength = validateStringLengthBetweenMaxAndMin({
-      maxLength: MAX_PRODUCT_INFO_LENGTH,
-      text: props.info ?? '',
-      minLength: 0,
-    });
-
-    if (!isValidInfoLength) {
-      return Result.fail<Product>(ERROR_PRODUCT_INFO_LENGTH);
     }
 
     return Result.ok<Product>(new Product(props, id));
