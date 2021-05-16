@@ -56,4 +56,13 @@ export class ProductRepository implements ProductRepositoryInterface {
     }
     return foundProducts.map((product) => this.mapper.toDomain(product));
   }
+  //
+
+  async deactivateAllProducts(): Promise<void> {
+    await this.conn.updateMany(
+      { isActive: true },
+      { isActive: false },
+      { multi: true },
+    );
+  }
 }

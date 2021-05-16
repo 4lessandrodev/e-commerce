@@ -50,4 +50,9 @@ export class ProductController {
     dto.productId = param.id;
     return this.productService.updateProduct(dto);
   }
+
+  @Patch()
+  deactivateAllProducts(): Promise<void> {
+    return this.productService.deactivateAllProducts();
+  }
 }
