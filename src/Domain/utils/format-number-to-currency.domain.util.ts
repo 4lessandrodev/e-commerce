@@ -1,4 +1,4 @@
-import { Currency } from '../value-objects/monetary/Currency.value-object';
+import { Currency } from '../value-objects/monetary/currency.value-object';
 
 export const formatNumberToCurrency = (props: Currency): string =>
   props.value.toLocaleString(props.locale, {

@@ -2,7 +2,7 @@ import { File } from '@shared/services/upload-files/interfaces/uploader.interfac
 import {
   Units,
   UnitTypes,
-} from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+} from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import {
   IsBoolean,
   IsEnum,

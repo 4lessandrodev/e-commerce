@@ -1,4 +1,4 @@
-import { UnitTypes } from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { UnitTypes } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';

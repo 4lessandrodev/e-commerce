@@ -1,4 +1,4 @@
-import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { ProductCategoryRepositoryInterface } from '@repo/product-category-repository.interface';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
 import { TagRepositoryInterface } from '@repo/tag.repository.interface';

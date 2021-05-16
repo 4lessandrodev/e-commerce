@@ -9,8 +9,8 @@ import { BasketCategory, ProductCategory, Tag } from '@domain/entities';
 import { RegisterBasketUseCase } from './register-basket.use-case';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
-import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/BasketInfoErrors.domain';
-import { ERROR_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects/basket-description/BasketDescriptionErrors.domain';
+import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/basket-info-errors.domain';
+import { ERROR_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects/basket-description/basket-description-errors.domain';
 
 describe('register-basket.use-case', () => {
   //

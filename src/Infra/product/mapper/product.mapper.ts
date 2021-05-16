@@ -1,5 +1,5 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
-import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/UnitOfMeasurement.value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { Product as Aggregate } from '@domain/aggregates-root';
 import { Product as Schema } from '@infra/product/entities/product.schema';
 import { CommentId } from '@domain/entities';

@@ -4,7 +4,7 @@ import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 import { RegisterProductUseCase } from './register-product.use-case';
 import { UniqueEntityID } from 'types-ddd/dist/src';
 import { ProductCategory, Tag } from '@domain/entities';
-import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/BasketItemErrors.domain';
+import { ERROR_INVALID_EXCHANGE_FACTOR_RANGE } from '@domain/value-objects/basket-item/basket-item-errors.domain';
 
 describe('register-product.use-case', () => {
   //
