@@ -45,7 +45,7 @@ export class BasketRepository implements BasketRepositoryInterface {
   }
   //
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
   //
   async exists(filter: Filter): Promise<boolean> {
@@ -55,7 +55,7 @@ export class BasketRepository implements BasketRepositoryInterface {
   async save(target: Basket): Promise<void> {
     const persistence = this.mapper.toPersistence(target);
     await this.conn
-      .findOneAndUpdate({ id: persistence.id }, persistence, { upsert: true })
+      .updateOne({ id: persistence.id }, persistence, { upsert: true })
       .exec();
   }
   //

@@ -32,10 +32,12 @@ export class BasketDomainService implements BasketServiceInterface {
           itemFromDto.quantity,
         ).getResult();
         //
+
         const item = BasketItemValueObject.create({
           description: product.description,
           exchangeFactor: product.exchangeFactor,
           productId: ProductId.create(product.id),
+          availableStock: product.quantityAvailable,
           quantity,
         }).getResult();
 

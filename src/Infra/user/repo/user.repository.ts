@@ -28,7 +28,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
 
   async save(target: Aggregate): Promise<void> {

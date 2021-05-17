@@ -32,7 +32,7 @@ export class ProductRepository implements ProductRepositoryInterface {
   }
   //
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
   //
   async exists(filter: Filter): Promise<boolean> {
@@ -42,7 +42,7 @@ export class ProductRepository implements ProductRepositoryInterface {
   async save(target: Aggregate): Promise<void> {
     const persistence = this.mapper.toPersistence(target);
     await this.conn
-      .findOneAndUpdate({ id: persistence.id }, persistence, {
+      .updateOne({ id: persistence.id }, persistence, {
         upsert: true,
       })
       .exec();

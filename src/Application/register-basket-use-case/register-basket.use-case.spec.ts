@@ -1,4 +1,4 @@
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { BasketCategoryRepositoryInterface } from '@repo/basket-category-repository.interface';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';

@@ -23,6 +23,7 @@ import { ProductCategorySchema } from './entities/product-category.schema';
 import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
 import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
 import { ResetProductStockUseCase } from '@app/reset-product-stock-use-case/reset-product-stock.use-case';
+import { AfterProductUpdated } from '@domain/events/product-updated/after-update-product.domain-event';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { ResetProductStockUseCase } from '@app/reset-product-stock-use-case/rese
       provide: 'ProductRepository',
       useClass: ProductRepository,
     },
+    AfterProductUpdated,
     RegisterProductCategoryUseCase,
     RegisterProductUseCase,
     RegisterTagUseCase,

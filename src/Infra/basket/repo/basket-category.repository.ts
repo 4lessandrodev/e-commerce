@@ -26,7 +26,7 @@ export class BasketCategoryRepository
   async save(target: BasketCategory): Promise<void> {
     const persistence = this.mapper.toPersistence(target);
     await this.conn
-      .findOneAndUpdate({ id: persistence.id }, persistence, {
+      .updateOne({ id: persistence.id }, persistence, {
         upsert: true,
       })
       .exec();
@@ -34,7 +34,7 @@ export class BasketCategoryRepository
 
   //
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
 
   //

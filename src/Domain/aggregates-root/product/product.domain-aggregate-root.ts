@@ -5,10 +5,11 @@ import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { QuantityInStockValueObject } from '@domain/value-objects';
 import { ERROR_PRODUCT_PRICE } from './product-errors.domain-aggregate-root';
-import { Result, UniqueEntityID, AggregateRoot } from 'types-ddd';
+import { Result, UniqueEntityID, AggregateRoot, IDomainEvent } from 'types-ddd';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import { ProductProps } from './product.domain-aggregate-root-interface';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
+import { ProductDomainEvent } from '@domain/events/product-updated/product.domain-event';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -109,17 +110,22 @@ export class Product extends AggregateRoot<ProductProps> {
   launchStock(quantity: QuantityInStockValueObject): void {
     this.props.quantityAvailable = quantity;
     this.props.updatedAt = new Date();
+    // Add domain event to update embed basket item
+    this.addNewUniqueEvent(new ProductDomainEvent(this));
   }
 
-  changeDescription(description: ProductDescriptionValueObject): Result<void> {
+  changeDescription(description: ProductDescriptionValueObject): void {
     this.props.description = description;
     this.props.updatedAt = new Date();
-    return Result.ok<void>();
+    // Add domain event to update embed basket item
+    this.addNewUniqueEvent(new ProductDomainEvent(this));
   }
 
   deactivate(): void {
     this.props.isActive = false;
     this.props.updatedAt = new Date();
+    // Add domain event to update embed basket item: remove item from basket
+    this.addNewUniqueEvent(new ProductDomainEvent(this));
   }
 
   activate(): void {
@@ -167,6 +173,9 @@ export class Product extends AggregateRoot<ProductProps> {
 
   changeExchangeFactor(factor: ExchangeFactorValueObject): void {
     this.props.exchangeFactor = factor;
+    this.props.updatedAt = new Date();
+    // Add domain event to update embed basket item
+    this.addNewUniqueEvent(new ProductDomainEvent(this));
   }
 
   changeUnitOfMeasurement(unit: UnitOfMeasurementValueObject): void {
@@ -175,14 +184,32 @@ export class Product extends AggregateRoot<ProductProps> {
 
   changeInfo(info: ProductInfoValueObject | undefined): void {
     this.props.info = info;
+    this.props.updatedAt = new Date();
   }
 
   setAsSpecial(): void {
     this.props.isSpecial = true;
+    this.props.updatedAt = new Date();
   }
 
   setAsNotSpecial(): void {
     this.props.isSpecial = false;
+    this.props.updatedAt = new Date();
+  }
+
+  private addNewUniqueEvent(event: IDomainEvent): void {
+    const exists = this.checkIfEventAlreadyExists(event);
+    if (!exists) {
+      this.addDomainEvent(event);
+    }
+  }
+
+  private checkIfEventAlreadyExists(event: IDomainEvent): boolean {
+    const newEventName = new Object(event).constructor.name;
+    const existsEventsName = this.domainEvents.map((e) => {
+      return new Object(e).constructor.name;
+    });
+    return existsEventsName.includes(newEventName);
   }
 
   public static create(

@@ -31,7 +31,7 @@ export class RegionRepository implements RegionRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
 
   async exists(filter: Filter): Promise<boolean> {
@@ -41,7 +41,7 @@ export class RegionRepository implements RegionRepositoryInterface {
   async save(target: Aggregate): Promise<void> {
     const schema = this.mapper.toPersistence(target);
     await this.conn
-      .findOneAndUpdate({ id: target.id }, schema, {
+      .updateOne({ id: target.id }, schema, {
         upsert: true,
       })
       .exec();

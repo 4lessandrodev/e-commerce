@@ -9,7 +9,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { BasketDescriptionValueObject } from '@domain/value-objects';
 import { BasketInfoValueObject } from '@domain/value-objects';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 
 @Injectable()
 export class RegisterBasketUseCase

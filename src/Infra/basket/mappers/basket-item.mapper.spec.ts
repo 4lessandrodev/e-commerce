@@ -17,6 +17,7 @@ describe('basket-item.mapper', () => {
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id')),
     quantity: QuantityInStockValueObject.create(7).getResult(),
+    availableStock: QuantityInStockValueObject.create(10).getResult(),
   }).getResult();
   //
   const persistence: Schema = {
@@ -24,6 +25,7 @@ describe('basket-item.mapper', () => {
     exchangeFactor: 2,
     productId: 'valid_id',
     quantity: 7,
+    availableStock: 10,
   };
   //
   it('should be defined', () => {

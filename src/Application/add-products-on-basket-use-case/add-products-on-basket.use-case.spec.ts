@@ -1,6 +1,6 @@
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { AddProductsOnBasketUseCase } from './add-products-on-basket.use-case';
 import { Basket, Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory } from '@domain/entities';

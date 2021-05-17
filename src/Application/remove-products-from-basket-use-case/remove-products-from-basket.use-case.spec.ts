@@ -1,5 +1,5 @@
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { RemoveProductsFromBasketUseCase } from './remove-products-from-basket.use-case';
 import { UniqueEntityID } from 'types-ddd/dist/src';
 import {
@@ -26,6 +26,7 @@ describe('remove-products-from-basket.use-case', () => {
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id1')),
     quantity: QuantityInStockValueObject.create(10).getResult(),
+    availableStock: QuantityInStockValueObject.create(10).getResult(),
   }).getResult();
   //
   const itemB = BasketItemValueObject.create({
@@ -34,6 +35,7 @@ describe('remove-products-from-basket.use-case', () => {
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id2')),
     quantity: QuantityInStockValueObject.create(10).getResult(),
+    availableStock: QuantityInStockValueObject.create(10).getResult(),
   }).getResult();
   //
   const price = MonetaryValueObject.create(

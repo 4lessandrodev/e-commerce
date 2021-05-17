@@ -12,6 +12,7 @@ describe('BasketItem.value-object', () => {
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
+      availableStock: QuantityInStockValueObject.create(10).getResult(),
     });
     expect(item).toBeDefined();
     expect(item.isSuccess).toBe(true);

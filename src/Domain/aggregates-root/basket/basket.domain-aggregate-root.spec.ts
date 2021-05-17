@@ -53,6 +53,7 @@ describe('Basket.domain-aggregate-root', () => {
                 'valid_description',
               ).getResult(),
             quantity: QuantityInStockValueObject.create(2).getResult(),
+            availableStock: QuantityInStockValueObject.create(10).getResult(),
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -297,6 +298,7 @@ describe('Basket.domain-aggregate-root', () => {
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
+      availableStock: QuantityInStockValueObject.create(10).getResult(),
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
 
@@ -314,6 +316,7 @@ describe('Basket.domain-aggregate-root', () => {
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
+      availableStock: QuantityInStockValueObject.create(10).getResult(),
     }).getResult();
 
     expect(createdBasket.products?.length).toBe(1);

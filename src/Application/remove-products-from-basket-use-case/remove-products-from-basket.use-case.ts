@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { RemoveProductsFromBasketDto } from './remove-products-from-basket.dto';
 

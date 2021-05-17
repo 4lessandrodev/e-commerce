@@ -36,7 +36,7 @@ export class ClientRepository implements ClientRepositoryInterface {
   }
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
 
   async exists(filter: Filter): Promise<boolean> {

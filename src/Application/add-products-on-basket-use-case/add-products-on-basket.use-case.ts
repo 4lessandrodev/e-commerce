@@ -3,7 +3,7 @@ import { IUseCase, Result } from 'types-ddd';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
 import { AddProductsOnBasketDto } from './add-products-on-basket.dto';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
-import { BasketDomainService } from '@domain/services/basket.service';
+import { BasketDomainService } from '@domain/services/basket.domain-service';
 
 @Injectable()
 export class AddProductsOnBasketUseCase

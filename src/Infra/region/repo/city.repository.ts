@@ -29,7 +29,7 @@ export class CityRepository implements CityRepositoryInterface {
   //
 
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
   //
 

@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
 import { Category } from './category.schema';
 import { Tag } from './tag.schema';
+import { DomainEvents, UniqueEntityID } from 'types-ddd/dist/src';
 
 // ---------------------------------------------------------------
 type localeType = keyof typeof AvailableLocale;
@@ -94,6 +95,13 @@ ProductSchema.virtual('Category', {
   localField: 'category.id',
   foreignField: 'id',
   justOne: true,
+});
+
+// Hooks to call domain event
+ProductSchema.pre('updateOne', async function (): Promise<void> {
+  const id = this.get('id');
+  const aggregateId = new UniqueEntityID(id);
+  DomainEvents.dispatchEventsForAggregate(aggregateId);
 });
 
 export { ProductSchema };

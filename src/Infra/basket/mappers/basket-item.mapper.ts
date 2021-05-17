@@ -19,6 +19,9 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
       ).getResult(),
       productId: ProductId.create(new UniqueEntityID(target.productId)),
       quantity: QuantityInStockValueObject.create(target.quantity).getResult(),
+      availableStock: QuantityInStockValueObject.create(
+        target.availableStock,
+      ).getResult(),
     }).getResult();
   }
   //
@@ -28,6 +31,7 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
       exchangeFactor: target.value.exchangeFactor.value,
       productId: target.value.productId.id.toString(),
       quantity: target.value.quantity.value,
+      availableStock: target.value.availableStock.value,
     };
   }
 }

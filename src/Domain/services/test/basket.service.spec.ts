@@ -1,6 +1,6 @@
 import { Basket, Product } from '@domain/aggregates-root';
 import { ItemDto } from '@app/register-basket-use-case/register-basket.dto';
-import { BasketDomainService } from '../basket.service';
+import { BasketDomainService } from '../basket.domain-service';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   BasketDescriptionValueObject,

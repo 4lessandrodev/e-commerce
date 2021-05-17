@@ -85,8 +85,7 @@ describe('Product.domain-aggregate-root', () => {
     const newDescription = ProductDescriptionValueObject.create(
       'new valid description',
     ).getResult();
-    const change = createdProduct.getResult().changeDescription(newDescription);
-    expect(change.isFailure).toBe(false);
+    createdProduct.getResult().changeDescription(newDescription);
     expect(createdProduct.getResult().description.value).toBe(
       'new valid description',
     );

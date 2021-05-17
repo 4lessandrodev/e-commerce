@@ -33,6 +33,9 @@ export class Item {
 
   @Prop()
   description!: string;
+
+  @Prop()
+  availableStock!: number;
 }
 
 // ---------------------------------------------------------------

@@ -12,7 +12,8 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class ProductCategoryRepository
-  implements ProductCategoryRepositoryInterface {
+  implements ProductCategoryRepositoryInterface
+{
   constructor(
     @Inject(ProductCategoryMapper)
     private readonly mapper: ProductCategoryMapper,
@@ -32,7 +33,7 @@ export class ProductCategoryRepository
   }
   //
   async delete(filter: Filter): Promise<void> {
-    await this.conn.findOneAndDelete(filter).exec();
+    await this.conn.deleteOne(filter).exec();
   }
   //
   async findOne(filter: Filter): Promise<Entity | null> {

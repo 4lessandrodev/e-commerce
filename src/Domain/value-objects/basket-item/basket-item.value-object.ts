@@ -8,6 +8,7 @@ export interface BasketItemValue {
   productId: ProductId;
   exchangeFactor: ExchangeFactorValueObject;
   quantity: QuantityInStockValueObject;
+  availableStock: QuantityInStockValueObject;
   description: ProductDescriptionValueObject;
 }
 

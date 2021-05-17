@@ -17,7 +17,7 @@ export class TagRepository implements TagRepositoryInterface {
   async updateOrCreate(tag: Aggregate): Promise<void> {
     const persistence = this.mapper.toPersistence(tag);
 
-    await this.conn.findOneAndUpdate({ id: persistence.id }, persistence, {
+    await this.conn.updateOne({ id: persistence.id }, persistence, {
       upsert: true,
     });
   }
