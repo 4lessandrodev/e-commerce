@@ -28,4 +28,13 @@ describe('deactivate-many-baskets.use-case', () => {
 
     expect(deactivateMethod).toHaveBeenCalled();
   });
+
+  it('should call repository with success', async () => {
+    const deactivateMethod = jest.spyOn(basketRepo, 'deactivateManyBaskets');
+    const useCase = new DeactivateManyBasketsUseCase(basketRepo);
+
+    await useCase.execute({ basketsIds: ['valid_id'] });
+
+    expect(deactivateMethod).toHaveBeenCalled();
+  });
 });

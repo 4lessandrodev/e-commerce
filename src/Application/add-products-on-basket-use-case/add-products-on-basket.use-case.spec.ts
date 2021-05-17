@@ -79,6 +79,7 @@ describe('add-products-on-basket.use-case', () => {
       save: jest.fn(),
       findProductsByIds: jest.fn(),
       deactivateManyProducts: jest.fn(),
+      resetStock: jest.fn(),
     };
   });
   //

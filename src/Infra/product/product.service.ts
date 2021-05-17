@@ -13,6 +13,8 @@ import { ProductFilter } from './interfaces/product.filters.interface';
 import { GetProductsResult } from './interfaces/product.query.interface';
 import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
 import { DeactivateManyProductsDto } from '@app/deactivate-many-products-use-case/deactivate-many-products.dto';
+import { ResetProductStockUseCase } from '@app/reset-product-stock-use-case/reset-product-stock.use-case';
+import { ResetProductStockDto } from '@app/reset-product-stock-use-case/reset-product-stock.dto';
 import { Result } from 'types-ddd';
 
 @Injectable()
@@ -32,6 +34,9 @@ export class ProductService {
 
     @Inject(DeactivateManyProductsUseCase)
     private readonly deactivateManyProductsUseCase: DeactivateManyProductsUseCase,
+
+    @Inject(ResetProductStockUseCase)
+    private readonly resetProductStockUseCase: ResetProductStockUseCase,
 
     @Inject(ProductQuery) private readonly productQuery: ProductQuery,
   ) {}
@@ -66,6 +71,11 @@ export class ProductService {
 
   async deactivateAllProducts(dto: DeactivateManyProductsDto): Promise<void> {
     const result = await this.deactivateManyProductsUseCase.execute(dto);
+    return this.checkResult(result);
+  }
+
+  async resetProductStock(dto: ResetProductStockDto): Promise<void> {
+    const result = await this.resetProductStockUseCase.execute(dto);
     return this.checkResult(result);
   }
 

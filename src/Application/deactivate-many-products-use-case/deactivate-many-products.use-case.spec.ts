@@ -13,6 +13,7 @@ describe('deactivate-many-products.use-case', () => {
       findProductsByIds: jest.fn(),
       save: jest.fn(),
       deactivateManyProducts: jest.fn(),
+      resetStock: jest.fn(),
     };
   });
 
@@ -24,6 +25,12 @@ describe('deactivate-many-products.use-case', () => {
   it('should call repository with success', async () => {
     const useCase = new DeactivateManyProductsUseCase(productRepo);
     const result = await useCase.execute({ productsIds: [] });
+    expect(result.isSuccess).toBe(true);
+  });
+
+  it('should call repository with success', async () => {
+    const useCase = new DeactivateManyProductsUseCase(productRepo);
+    const result = await useCase.execute({ productsIds: ['valid_id'] });
     expect(result.isSuccess).toBe(true);
   });
 });

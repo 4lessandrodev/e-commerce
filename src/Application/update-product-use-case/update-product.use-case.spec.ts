@@ -42,6 +42,7 @@ describe('update-product.use-case', () => {
       findProductsByIds: jest.fn(),
       save: jest.fn(),
       deactivateManyProducts: jest.fn(),
+      resetStock: jest.fn(),
     };
   });
 

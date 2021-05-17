@@ -12,6 +12,7 @@ import { UsePipes } from '@nestjs/common';
 import { GetProductsResult } from './interfaces/product.query.interface';
 import { ProductIdDto, UpdateProductDto } from './dto/update-product.dto';
 import { DeactivateManyProductsDto } from './dto/deactivate-many-products.dto';
+import { ResetProductStockDto } from './dto/reset-product-stock.dto';
 
 @Controller('v1/product')
 @UsePipes(new ValidationPipe())
@@ -50,6 +51,11 @@ export class ProductController {
   ): Promise<void> {
     dto.productId = param.id;
     return this.productService.updateProduct(dto);
+  }
+
+  @Post('stock')
+  resetProductStock(@Body() dto: ResetProductStockDto): Promise<void> {
+    return this.productService.resetProductStock(dto);
   }
 
   @Patch()

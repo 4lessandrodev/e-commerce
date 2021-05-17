@@ -28,6 +28,7 @@ describe('register-product.use-case', () => {
       save: jest.fn(),
       findProductsByIds: jest.fn(),
       deactivateManyProducts: jest.fn(),
+      resetStock: jest.fn(),
     };
     productCategoryRepo = {
       exists: jest.fn(),

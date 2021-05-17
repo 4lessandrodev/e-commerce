@@ -22,6 +22,7 @@ import { ProductCategory } from './entities/product-category.schema';
 import { ProductCategorySchema } from './entities/product-category.schema';
 import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
 import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
+import { ResetProductStockUseCase } from '@app/reset-product-stock-use-case/reset-product-stock.use-case';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use
     RegisterTagUseCase,
     UpdateProductUseCase,
     DeactivateManyProductsUseCase,
+    ResetProductStockUseCase,
     ProductService,
   ],
   controllers: [ProductController],

@@ -77,6 +77,7 @@ describe('register-basket.use-case', () => {
       findProductsByIds: jest.fn(),
       save: jest.fn(),
       deactivateManyProducts: jest.fn(),
+      resetStock: jest.fn(),
     };
     //
     tagRepo = {

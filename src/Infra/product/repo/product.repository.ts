@@ -70,4 +70,25 @@ export class ProductRepository implements ProductRepositoryInterface {
       .updateMany({ isActive: true }, { isActive: false }, { multi: true })
       .exec();
   }
+
+  async resetStock(ids?: string[]): Promise<void> {
+    if (ids) {
+      await this.conn
+        .updateMany(
+          { id: { $in: ids } },
+          { quantityAvailable: 0 },
+          { multi: true },
+        )
+        .exec();
+      return;
+    }
+
+    await this.conn
+      .updateMany(
+        { quantityAvailable: { $gt: 0 } },
+        { quantityAvailable: 0 },
+        { multi: true },
+      )
+      .exec();
+  }
 }
