@@ -1,7 +1,7 @@
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
-import { DeactivateAllBasketsUseCase } from './deactivate-all-baskets.use-case';
+import { DeactivateManyBasketsUseCase } from './deactivate-many-baskets.use-case';
 
-describe('deactivate-all-baskets.use-case', () => {
+describe('deactivate-many-baskets.use-case', () => {
   let basketRepo: BasketRepositoryInterface;
 
   beforeEach(() => {
@@ -11,20 +11,20 @@ describe('deactivate-all-baskets.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
-      deactivateAllBaskets: jest.fn(),
+      deactivateManyBaskets: jest.fn(),
     };
   });
 
   it('should be defined', () => {
-    const useCase = new DeactivateAllBasketsUseCase(basketRepo);
+    const useCase = new DeactivateManyBasketsUseCase(basketRepo);
     expect(useCase).toBeDefined();
   });
 
   it('should call repository with success', async () => {
-    const deactivateMethod = jest.spyOn(basketRepo, 'deactivateAllBaskets');
-    const useCase = new DeactivateAllBasketsUseCase(basketRepo);
+    const deactivateMethod = jest.spyOn(basketRepo, 'deactivateManyBaskets');
+    const useCase = new DeactivateManyBasketsUseCase(basketRepo);
 
-    await useCase.execute();
+    await useCase.execute({ basketsIds: [] });
 
     expect(deactivateMethod).toHaveBeenCalled();
   });

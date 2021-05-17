@@ -8,10 +8,12 @@ import { Model } from 'mongoose';
 import { Inject } from '@nestjs/common';
 
 export class BasketCategoryRepository
-  implements BasketCategoryRepositoryInterface {
+  implements BasketCategoryRepositoryInterface
+{
   constructor(
     @InjectModel(BasketCategory.name)
     private readonly conn: Model<BasketCategoryDocument>,
+
     @Inject(BasketCategoryMapper)
     private readonly mapper: BasketCategoryMapper,
   ) {}

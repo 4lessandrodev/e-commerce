@@ -18,7 +18,7 @@ describe('update-basket.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
-      deactivateAllBaskets: jest.fn(),
+      deactivateManyBaskets: jest.fn(),
     };
 
     basket = Basket.create({

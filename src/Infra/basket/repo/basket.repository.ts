@@ -15,7 +15,14 @@ export class BasketRepository implements BasketRepositoryInterface {
     @Inject(BasketMapper) private readonly mapper: BasketMapper,
   ) {}
   //
-  async deactivateAllBaskets(): Promise<void> {
+  async deactivateManyBaskets(ids?: string[]): Promise<void> {
+    if (ids) {
+      await this.conn
+        .updateMany({ id: { $in: ids } }, { isActive: false }, { multi: true })
+        .exec();
+      return;
+    }
+
     await this.conn
       .updateMany({ isActive: true }, { isActive: false }, { multi: true })
       .exec();

@@ -11,6 +11,7 @@ import { Query, UseGuards } from '@nestjs/common';
 import { UsePipes } from '@nestjs/common';
 import { GetProductsResult } from './interfaces/product.query.interface';
 import { ProductIdDto, UpdateProductDto } from './dto/update-product.dto';
+import { DeactivateManyProductsDto } from './dto/deactivate-many-products.dto';
 
 @Controller('v1/product')
 @UsePipes(new ValidationPipe())
@@ -52,7 +53,9 @@ export class ProductController {
   }
 
   @Patch()
-  deactivateAllProducts(): Promise<void> {
-    return this.productService.deactivateAllProducts();
+  deactivateManyProducts(
+    @Body() dto: DeactivateManyProductsDto,
+  ): Promise<void> {
+    return this.productService.deactivateAllProducts(dto);
   }
 }

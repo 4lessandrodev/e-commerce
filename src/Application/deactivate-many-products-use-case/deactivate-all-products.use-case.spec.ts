@@ -1,7 +1,7 @@
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
-import { DeactivateAllProductsUseCase } from './deactivate-all-products.use-case';
+import { DeactivateManyProductsUseCase } from './deactivate-many-products.use-case';
 
-describe('deactivate-all-products.use-case', () => {
+describe('deactivate-many-products.use-case', () => {
   let productRepo: ProductRepositoryInterface;
 
   beforeEach(() => {
@@ -12,18 +12,18 @@ describe('deactivate-all-products.use-case', () => {
       findOne: jest.fn(),
       findProductsByIds: jest.fn(),
       save: jest.fn(),
-      deactivateAllProducts: jest.fn(),
+      deactivateManyProducts: jest.fn(),
     };
   });
 
   it('should be defined', () => {
-    const useCase = new DeactivateAllProductsUseCase(productRepo);
+    const useCase = new DeactivateManyProductsUseCase(productRepo);
     expect(useCase).toBeDefined();
   });
 
   it('should call repository with success', async () => {
-    const useCase = new DeactivateAllProductsUseCase(productRepo);
-    const result = await useCase.execute();
+    const useCase = new DeactivateManyProductsUseCase(productRepo);
+    const result = await useCase.execute({ productsIds: [] });
     expect(result.isSuccess).toBe(true);
   });
 });

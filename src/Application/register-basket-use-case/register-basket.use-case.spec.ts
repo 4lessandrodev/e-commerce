@@ -76,7 +76,7 @@ describe('register-basket.use-case', () => {
       findOne: jest.fn(),
       findProductsByIds: jest.fn(),
       save: jest.fn(),
-      deactivateAllProducts: jest.fn(),
+      deactivateManyProducts: jest.fn(),
     };
     //
     tagRepo = {
@@ -91,7 +91,7 @@ describe('register-basket.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
-      deactivateAllBaskets: jest.fn(),
+      deactivateManyBaskets: jest.fn(),
     };
     //
     domainService = new BasketDomainService();

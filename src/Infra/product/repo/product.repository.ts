@@ -58,11 +58,16 @@ export class ProductRepository implements ProductRepositoryInterface {
   }
   //
 
-  async deactivateAllProducts(): Promise<void> {
-    await this.conn.updateMany(
-      { isActive: true },
-      { isActive: false },
-      { multi: true },
-    );
+  async deactivateManyProducts(ids?: string[]): Promise<void> {
+    if (ids) {
+      await this.conn
+        .updateMany({ id: { $in: ids } }, { isActive: false }, { multi: true })
+        .exec();
+      return;
+    }
+
+    await this.conn
+      .updateMany({ isActive: true }, { isActive: false }, { multi: true })
+      .exec();
   }
 }

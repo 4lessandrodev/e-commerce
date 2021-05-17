@@ -11,7 +11,8 @@ import { PreconditionFailedException } from '@nestjs/common';
 import { ProductQuery } from './query/product.query';
 import { ProductFilter } from './interfaces/product.filters.interface';
 import { GetProductsResult } from './interfaces/product.query.interface';
-import { DeactivateAllProductsUseCase } from '@app/deactivate-all-products-use-case/deactivate-all-products.use-case';
+import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
+import { DeactivateManyProductsDto } from '@app/deactivate-many-products-use-case/deactivate-many-products.dto';
 import { Result } from 'types-ddd';
 
 @Injectable()
@@ -29,8 +30,8 @@ export class ProductService {
     @Inject(UpdateProductUseCase)
     private readonly updateProductUseCase: UpdateProductUseCase,
 
-    @Inject(DeactivateAllProductsUseCase)
-    private readonly deactivateAllProductsUseCase: DeactivateAllProductsUseCase,
+    @Inject(DeactivateManyProductsUseCase)
+    private readonly deactivateManyProductsUseCase: DeactivateManyProductsUseCase,
 
     @Inject(ProductQuery) private readonly productQuery: ProductQuery,
   ) {}
@@ -63,8 +64,8 @@ export class ProductService {
     return this.checkResult(result);
   }
 
-  async deactivateAllProducts(): Promise<void> {
-    const result = await this.deactivateAllProductsUseCase.execute();
+  async deactivateAllProducts(dto: DeactivateManyProductsDto): Promise<void> {
+    const result = await this.deactivateManyProductsUseCase.execute(dto);
     return this.checkResult(result);
   }
 

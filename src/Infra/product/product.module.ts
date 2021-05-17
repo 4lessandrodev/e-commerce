@@ -21,7 +21,7 @@ import { ProductCategoryRepository } from './repo/product-category.repository';
 import { ProductCategory } from './entities/product-category.schema';
 import { ProductCategorySchema } from './entities/product-category.schema';
 import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
-import { DeactivateAllProductsUseCase } from '@app/deactivate-all-products-use-case/deactivate-all-products.use-case';
+import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
 
 @Module({
   imports: [
@@ -55,7 +55,7 @@ import { DeactivateAllProductsUseCase } from '@app/deactivate-all-products-use-c
     RegisterProductUseCase,
     RegisterTagUseCase,
     UpdateProductUseCase,
-    DeactivateAllProductsUseCase,
+    DeactivateManyProductsUseCase,
     ProductService,
   ],
   controllers: [ProductController],

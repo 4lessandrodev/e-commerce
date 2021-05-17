@@ -4,7 +4,7 @@ import { RegisterBasketDto } from '@app/register-basket-use-case/register-basket
 import { RemoveProductsFromBasketDto } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.dto';
 import { UpdateBasketDto } from '@app/update-basket-use-case/update-basket.dto';
 import { RegisterBasketCategoryUseCase } from '@app/register-basket-category-use-case/register-basket-category.use-case';
-import { DeactivateAllBasketsUseCase } from '@app/deactivate-all-baskets-use-case/deactivate-all-baskets.use-case';
+import { DeactivateManyBasketsUseCase } from '@app/deactivate-many-baskets-use-case/deactivate-many-baskets.use-case';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
 import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
 import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.use-case';
@@ -12,6 +12,7 @@ import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.u
 import { Inject, Injectable } from '@nestjs/common';
 import { PreconditionFailedException } from '@nestjs/common';
 import { Result } from 'types-ddd';
+import { DeactivateManyBasketsDto } from '@app/deactivate-many-baskets-use-case/deactivate-many-baskets.dto';
 
 @Injectable()
 export class BasketService {
@@ -31,8 +32,8 @@ export class BasketService {
     @Inject(UpdateBasketUseCase)
     private readonly updateBasketUseCase: UpdateBasketUseCase,
 
-    @Inject(DeactivateAllBasketsUseCase)
-    private readonly deactivateAllBasketsUseCase: DeactivateAllBasketsUseCase,
+    @Inject(DeactivateManyBasketsUseCase)
+    private readonly deactivateManyBasketsUseCase: DeactivateManyBasketsUseCase,
   ) {}
 
   private checkResult(result: Result<void>): void {
@@ -68,8 +69,8 @@ export class BasketService {
     return this.checkResult(result);
   }
 
-  async deactivateAllBaskets(): Promise<void> {
-    const result = await this.deactivateAllBasketsUseCase.execute();
+  async deactivateAllBaskets(dto: DeactivateManyBasketsDto): Promise<void> {
+    const result = await this.deactivateManyBasketsUseCase.execute(dto);
     return this.checkResult(result);
   }
 }

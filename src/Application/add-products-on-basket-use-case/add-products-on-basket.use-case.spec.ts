@@ -69,7 +69,7 @@ describe('add-products-on-basket.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
-      deactivateAllBaskets: jest.fn(),
+      deactivateManyBaskets: jest.fn(),
     };
     productRepo = {
       delete: jest.fn(),
@@ -78,7 +78,7 @@ describe('add-products-on-basket.use-case', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       findProductsByIds: jest.fn(),
-      deactivateAllProducts: jest.fn(),
+      deactivateManyProducts: jest.fn(),
     };
   });
   //

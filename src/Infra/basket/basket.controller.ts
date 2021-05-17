@@ -11,6 +11,7 @@ import { Body, UseGuards, UsePipes } from '@nestjs/common';
 import { RemoveProductsFromBasketDto } from './dto/remove-products-from-basket.dto';
 import { Param } from '@nestjs/common';
 import { BasketId, UpdateBasketDto } from './dto/update-basket.dto';
+import { DeactivateManyBasketsDto } from './dto/deactivate-many-baskets.dto';
 
 @Controller('v1/basket')
 @UsePipes(new ValidationPipe())
@@ -54,7 +55,7 @@ export class BasketController {
   }
 
   @Patch()
-  deactivateAllBaskets(): Promise<void> {
-    return this.basketService.deactivateAllBaskets();
+  deactivateAllBaskets(@Body() dto: DeactivateManyBasketsDto): Promise<void> {
+    return this.basketService.deactivateAllBaskets(dto);
   }
 }
