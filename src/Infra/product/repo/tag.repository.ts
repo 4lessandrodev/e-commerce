@@ -5,7 +5,7 @@ import { TagMapper } from '../mapper/tag.mapper';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Tag, TagDocument } from '../entities/tag.schema';
-import { Filter } from 'types-ddd/dist/src';
+import { Filter } from 'types-ddd';
 
 export class TagRepository implements TagRepositoryInterface {
   //

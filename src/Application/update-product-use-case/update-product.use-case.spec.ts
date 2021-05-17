@@ -101,28 +101,6 @@ describe('update-product.use-case', () => {
     expect(result.error).toBe('Product does not exists');
   });
 
-  it('should fail if already exists a product with provided description', async () => {
-    jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
-    jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(true);
-
-    const useCase = new UpdateProductUseCase(productRepo);
-    const result = await useCase.execute({
-      description: 'invalid_description',
-      exchangeFactor: 2,
-      isActive: true,
-      isSpecial: false,
-      price: 20,
-      productId: 'valid_product_id',
-      quantityAvailable: 77,
-      unitOfMeasurement: 'LT',
-      info: 'new_valid_info',
-    });
-    expect(result.isFailure).toBe(true);
-    expect(result.error).toBe(
-      `Already exists product with description: invalid_description`,
-    );
-  });
-
   it('should update product with success', async () => {
     jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
     jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);

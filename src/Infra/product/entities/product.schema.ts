@@ -98,10 +98,14 @@ ProductSchema.virtual('Category', {
 });
 
 // Hooks to call domain event
-ProductSchema.pre('updateOne', async function (): Promise<void> {
-  const id = this.get('id');
-  const aggregateId = new UniqueEntityID(id);
-  DomainEvents.dispatchEventsForAggregate(aggregateId);
+ProductSchema.post('updateOne', { document: true }, function () {
+  try {
+    // @ts-expect-error
+    const aggregateId = new UniqueEntityID(this?._update?.$setOnInsert?.id);
+    DomainEvents.dispatchEventsForAggregate(aggregateId);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 export { ProductSchema };

@@ -84,16 +84,6 @@ export class UpdateProductUseCase
         return Result.fail<void>('Product does not exists');
       }
 
-      const alreadyExistProductWithDescription = await this.productRepo.exists({
-        description: dto.description.toLowerCase(),
-      });
-
-      if (alreadyExistProductWithDescription) {
-        return Result.fail<void>(
-          `Already exists product with description: ${dto.description}`,
-        );
-      }
-
       const product = productExists;
       product.changeDescription(description);
       product.changePrice(price);

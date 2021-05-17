@@ -41,11 +41,23 @@ export class ProductRepository implements ProductRepositoryInterface {
   //
   async save(target: Aggregate): Promise<void> {
     const persistence = this.mapper.toPersistence(target);
-    await this.conn
-      .updateOne({ id: persistence.id }, persistence, {
-        upsert: true,
-      })
-      .exec();
+
+    const productExists = await this.exists({ id: persistence.id });
+
+    if (productExists) {
+      /**
+       * @event updateItemsOnBaskets
+       * @description this method calls hooks to update item on baskets
+       * @see product.schema
+       */
+      await this.conn
+        .updateOne({ id: persistence.id }, persistence, {
+          upsert: true,
+        })
+        .exec();
+      return;
+    }
+    await new this.conn(persistence).save();
   }
   //
   async findProductsByIds(ids: string[]): Promise<Aggregate[] | null> {
