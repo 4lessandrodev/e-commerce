@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { BasketDocument } from '../entities/basket.schema';
 import { BasketMapper } from '../mappers/basket.mapper';
+import { UpdateBasketItemsDto } from '@app/update-basket-items-use-case/update-basket-items.dto';
 
 @Injectable()
 export class BasketRepository implements BasketRepositoryInterface {
@@ -59,4 +60,24 @@ export class BasketRepository implements BasketRepositoryInterface {
       .exec();
   }
   //
+
+  async updateAllBasketItemByProductId(
+    item: UpdateBasketItemsDto,
+  ): Promise<void> {
+    await this.conn
+      .updateMany(
+        {
+          'items.productId': item.productId,
+        },
+        {
+          $set: {
+            'items.$.availableStock': item.availableStock,
+            'items.$.description': item.description,
+            'items.$.exchangeFactor': item.exchangeFactor,
+          },
+        },
+        { multi: true },
+      )
+      .exec();
+  }
 }

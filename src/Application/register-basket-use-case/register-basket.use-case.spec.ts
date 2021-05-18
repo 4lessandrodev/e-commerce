@@ -93,6 +93,7 @@ describe('register-basket.use-case', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       deactivateManyBaskets: jest.fn(),
+      updateAllBasketItemByProductId: jest.fn(),
     };
     //
     domainService = new BasketDomainService();

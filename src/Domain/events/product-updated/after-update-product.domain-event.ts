@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DomainEvents, IHandle } from 'types-ddd';
+import { UpdateBasketItemUseCase } from '@app/update-basket-items-use-case/update-basket-items.use-case';
 import { ProductDomainEvent } from './product.domain-event';
+import { UpdateBasketItemsDto } from '@app/update-basket-items-use-case/update-basket-items.dto';
 
 @Injectable()
 export class AfterProductUpdated implements IHandle<ProductDomainEvent> {
   //
-  constructor() {
+  constructor(
+    @Inject(UpdateBasketItemUseCase)
+    private readonly updateBasketItemUseCase: UpdateBasketItemUseCase,
+  ) {
     this.setupSubscriptions();
   }
 
@@ -16,11 +21,14 @@ export class AfterProductUpdated implements IHandle<ProductDomainEvent> {
     );
   }
   async dispatch(event: ProductDomainEvent): Promise<void> {
-    console.log('CALLED EVENT');
-    console.log(event.dateTimeOccurred);
-    /**
-     * @todo: call update baskets use case.
-     * @description update all products on basket: product name and exchange factor
-     */
+    //
+    const item: UpdateBasketItemsDto = {
+      productId: event.product.id.toString(),
+      exchangeFactor: event.product.exchangeFactor.value,
+      description: event.product.description.value,
+      availableStock: event.product.quantityAvailable.value,
+    };
+
+    await this.updateBasketItemUseCase.execute(item);
   }
 }

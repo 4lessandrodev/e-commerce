@@ -57,6 +57,7 @@ describe('remove-products-from-basket.use-case', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       deactivateManyBaskets: jest.fn(),
+      updateAllBasketItemByProductId: jest.fn(),
     };
     //
     basket = Basket.create(

@@ -12,6 +12,7 @@ describe('deactivate-many-baskets.use-case', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       deactivateManyBaskets: jest.fn(),
+      updateAllBasketItemByProductId: jest.fn(),
     };
   });
 

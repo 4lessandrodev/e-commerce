@@ -20,6 +20,8 @@ import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case
 import { RemoveProductsFromBasketUseCase } from '@app/remove-products-from-basket-use-case/remove-products-from-basket.use-case';
 import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.use-case';
 import { DeactivateManyBasketsUseCase } from '@app/deactivate-many-baskets-use-case/deactivate-many-baskets.use-case';
+import { AfterProductUpdated } from '@domain/events/product-updated/after-update-product.domain-event';
+import { UpdateBasketItemUseCase } from '@app/update-basket-items-use-case/update-basket-items.use-case';
 
 @Module({
   imports: [
@@ -43,7 +45,9 @@ import { DeactivateManyBasketsUseCase } from '@app/deactivate-many-baskets-use-c
       provide: 'BasketRepository',
       useClass: BasketRepository,
     },
+    AfterProductUpdated,
     RegisterBasketCategoryUseCase,
+    UpdateBasketItemUseCase,
     RegisterBasketUseCase,
     AddProductsOnBasketUseCase,
     RemoveProductsFromBasketUseCase,
