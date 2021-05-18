@@ -205,8 +205,10 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   private checkIfEventAlreadyExists(event: IDomainEvent): boolean {
+    // deepcode ignore ObjectConstructor: <Get Domain Event Constructor Name>
     const newEventName = new Object(event).constructor.name;
     const existsEventsName = this.domainEvents.map((e) => {
+      // deepcode ignore ObjectConstructor: <Get Domain Event Constructor Name>
       return new Object(e).constructor.name;
     });
     return existsEventsName.includes(newEventName);

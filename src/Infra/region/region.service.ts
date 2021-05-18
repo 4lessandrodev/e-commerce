@@ -32,12 +32,12 @@ export class RegionService {
 
   async registerCity(dto: RegisterCityDto): Promise<void> {
     const result = await this.registerCityUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async registerRegion(dto: RegisterRegionDto): Promise<void> {
     const result = await this.registerRegionUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   // Queries

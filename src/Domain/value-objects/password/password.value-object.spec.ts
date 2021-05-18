@@ -33,9 +33,9 @@ describe('Password.value-object', () => {
   it('Should return a invalid password max length message', async () => {
     const createdPassword = PasswordValueObject.create('valid_password');
     await createdPassword.getResult().encryptPassword();
-    const isEncripted = createdPassword.getResult().isAlreadyEncrypted();
+    const isEncrypted = createdPassword.getResult().isAlreadyEncrypted();
     expect(createdPassword.isFailure).toBe(false);
-    expect(isEncripted).toBe(true);
+    expect(isEncrypted).toBe(true);
   });
 
   it('Should regenerate a password with encripted value', async () => {
@@ -43,16 +43,16 @@ describe('Password.value-object', () => {
     await createdPassword.getResult().encryptPassword();
     createdPassword.getResult().isAlreadyEncrypted();
 
-    const generateEncriptedValue = PasswordValueObject.create(
+    const generateEncryptedValue = PasswordValueObject.create(
       createdPassword.getResult().value,
     );
 
-    expect(generateEncriptedValue.isFailure).toBe(false);
+    expect(generateEncryptedValue.isFailure).toBe(false);
     expect(createdPassword.isFailure).toBe(false);
-    expect(generateEncriptedValue.getResult().value).toBe(
+    expect(generateEncryptedValue.getResult().value).toBe(
       createdPassword.getResult().value,
     );
-    expect(generateEncriptedValue.getResult().isAlreadyEncrypted()).toBe(true);
+    expect(generateEncryptedValue.getResult().isAlreadyEncrypted()).toBe(true);
   });
 
   it('Shoud compare a not encrypted password and return true if match and false if not', async () => {
@@ -64,7 +64,7 @@ describe('Password.value-object', () => {
     expect(notMatchPass).toBe(false);
   });
 
-  it('Shoud compare an encrypted password and return true if match and false if not', async () => {
+  it('Should compare an encrypted password and return true if match and false if not', async () => {
     const password = PasswordValueObject.create('valid_password').getResult();
     await password.encryptPassword();
 
@@ -75,7 +75,7 @@ describe('Password.value-object', () => {
     expect(notMatchPass).toBe(false);
   });
 
-  it('Shoud do nothing on try encripty a password already encrypted ', async () => {
+  it('Should do nothing on try encrypt a password already encrypted ', async () => {
     const password = PasswordValueObject.create('valid_password').getResult();
     await password.encryptPassword();
     const passwordBefore = password.value;

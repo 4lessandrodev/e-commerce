@@ -1,7 +1,7 @@
 const validateZipCodeWithHyphen = /[0-9]{5}(-[0-9]{3})/g;
 const validateZipCode = /[0-9]{8}/g;
 import { Result, ValueObject } from 'types-ddd';
-import { ERROR_INVALID_ZIP_CODE } from './zip-xode-errors.domain';
+import { ERROR_INVALID_ZIP_CODE } from './zip-code-errors.domain';
 
 interface ZipCodeValueObjectProps {
   value: string;
@@ -22,7 +22,7 @@ export class ZipCodeValueObject extends ValueObject<ZipCodeValueObjectProps> {
     const isValidZipCodeWithHyphen = validateZipCodeWithHyphen.test(zipCode);
 
     if (isValidZipCodeWithHyphen) {
-      zipCodeNormalized = zipCode.replace('-', '');
+      zipCodeNormalized = zipCode.replace(/\-/g, '');
     }
 
     const isValidZipCode = validateZipCode.test(zipCodeNormalized);

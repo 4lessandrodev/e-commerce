@@ -19,6 +19,6 @@ export class ClientService {
 
   async registerClient(dto: RegisterClientDto): Promise<void> {
     const result = await this.registerClientUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 }

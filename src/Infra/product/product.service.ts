@@ -51,32 +51,32 @@ export class ProductService {
     dto: RegisterProductCategoryDto,
   ): Promise<void> {
     const result = await this.registerProductCategoryUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async registerTag(dto: RegisterTagDto): Promise<void> {
     const result = await this.registerTagUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async registerProduct(dto: RegisterProductDto): Promise<void> {
     const result = await this.registerProductUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async updateProduct(dto: UpdateProductDto): Promise<void> {
     const result = await this.updateProductUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async deactivateAllProducts(dto: DeactivateManyProductsDto): Promise<void> {
     const result = await this.deactivateManyProductsUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async resetProductStock(dto: ResetProductStockDto): Promise<void> {
     const result = await this.resetProductStockUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   // Query methods

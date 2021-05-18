@@ -52,7 +52,8 @@ Todo:
   ✔ Create use case - Change Product price [ADMIN] @started(21-05-15 23:19) @done(21-05-16 14:44) @lasted(15h25m5s)
   ✔ Create use case - Change Product exchangeFactor [ADMIN] @started(21-05-15 23:21) @done(21-05-16 14:44) @lasted(15h23m22s)
   ✔ Create use case - DeactivateAllProducts [ADMIN] @done(21-05-16 19:31)
-  ☐ Create use case - Define All Products with 0 to Available Quantity [ADMIN] @started(21-05-16 22:11)
+  ✔ Create use case - Define All Products with 0 to Available Quantity [ADMIN] @started(21-05-16 22:11) @done(21-05-17 22:36) @lasted(1d25m14s)
+  ☐ Create Event to Reset All Basket Item Available Quantity When Reset Products Available Quantity
   ☐ Refactor Comment to Aggregate and add author
   ☐ Create Readme Structure for each aggregate and entity @started(21-05-13 11:40)
   ☐ Refactor BasketItem and ProductItem to have embeded generic produto and generic basket

@@ -1,8 +1,7 @@
 export const MIN_PASSWORD_LENGTH = 5;
 export const MAX_PASSWORD_LENGTH = 21;
-export const PASSWORD_SALT = 10;
 import { Result, ValueObject } from 'types-ddd';
-import { hashSync, compareSync } from 'bcrypt';
+import { hashSync, compareSync, genSaltSync } from 'bcrypt';
 import {
   ERROR_INVALID_PASSWORD_MAX_LENGTH,
   ERROR_INVALID_PASSWORD_MIN_LENGTH,
@@ -49,12 +48,13 @@ export class PasswordValueObject extends ValueObject<PasswordValueObjectProps> {
   }
 
   /**
-   * Only encripty the instance of class value
+   * Only encrypt the instance of class value
    */
   async encryptPassword(): Promise<void> {
     if (this.props.isHashed) {
       return;
     }
+    const PASSWORD_SALT = await genSaltSync();
     this.props.value = hashSync(this.props.value, PASSWORD_SALT);
     this.props.isHashed = true;
   }

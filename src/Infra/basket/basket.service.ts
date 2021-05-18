@@ -44,33 +44,33 @@ export class BasketService {
 
   async registerBasketCategory(dto: RegisterBasketCategoryDto): Promise<void> {
     const result = await this.registerBasketCategoryUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async registerBasket(dto: RegisterBasketDto): Promise<void> {
     const result = await this.registerBasketUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async addProductsOnBasket(dto: AddProductsOnBasketDto): Promise<void> {
     const result = await this.addProductsOnBasketUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async removeProductsFromBasket(
     dto: RemoveProductsFromBasketDto,
   ): Promise<void> {
     const result = await this.removeProductsFromBasketUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async updateBasket(dto: UpdateBasketDto): Promise<void> {
     const result = await this.updateBasketUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   async deactivateAllBaskets(dto: DeactivateManyBasketsDto): Promise<void> {
     const result = await this.deactivateManyBasketsUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 }

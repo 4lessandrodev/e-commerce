@@ -34,7 +34,7 @@ export class UserService {
 
   async SignUp(dto: SignUpDto): Promise<void> {
     const result = await this.signUpUseCase.execute(dto);
-    return this.checkResult(result);
+    this.checkResult(result);
   }
 
   // Query Repository
