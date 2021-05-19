@@ -3,6 +3,7 @@ import { BasketItemValueObject } from './basket-item.value-object';
 import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.value-object';
 import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
 import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
+import { UnitOfMeasurementValueObject } from '../unit-of-measurement/unit-of-measurement.value-objects';
 
 describe('BasketItem.value-object', () => {
   it('should be defined', () => {
@@ -13,6 +14,7 @@ describe('BasketItem.value-object', () => {
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
       availableStock: QuantityInStockValueObject.create(10).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     });
     expect(item).toBeDefined();
     expect(item.isSuccess).toBe(true);

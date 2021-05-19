@@ -27,6 +27,7 @@ export class AfterProductUpdated implements IHandle<ProductDomainEvent> {
       exchangeFactor: event.product.exchangeFactor.value,
       description: event.product.description.value,
       availableStock: event.product.quantityAvailable.value,
+      unitOfMeasurement: event.product.unitOfMeasurement.value,
     };
 
     await this.updateBasketItemUseCase.execute(item);

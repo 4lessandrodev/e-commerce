@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
 import { Category } from './category.schema';
 import { Tag } from './tag.schema';
-import { DomainEvents, UniqueEntityID } from 'types-ddd/dist/src';
+import { DomainEvents, UniqueEntityID } from 'types-ddd';
 
 // ---------------------------------------------------------------
 type localeType = keyof typeof AvailableLocale;

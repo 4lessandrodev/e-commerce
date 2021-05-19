@@ -29,6 +29,7 @@ describe('update-basket-items.use-case', () => {
       description: 'new description',
       exchangeFactor: 2,
       productId: 'valid_id',
+      unitOfMeasurement: 'CX',
     });
 
     expect(result.isSuccess).toBe(true);

@@ -3,6 +3,7 @@ import { ProductId } from '@domain/aggregates-root';
 import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.value-object';
 import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
 import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
+import { UnitOfMeasurementValueObject } from '../unit-of-measurement/unit-of-measurement.value-objects';
 
 export interface BasketItemValue {
   productId: ProductId;
@@ -10,6 +11,7 @@ export interface BasketItemValue {
   quantity: QuantityInStockValueObject;
   availableStock: QuantityInStockValueObject;
   description: ProductDescriptionValueObject;
+  unitOfMeasurement: UnitOfMeasurementValueObject;
 }
 
 export interface BasketItemProps {

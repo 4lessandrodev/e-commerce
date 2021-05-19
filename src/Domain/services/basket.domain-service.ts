@@ -38,6 +38,7 @@ export class BasketDomainService implements BasketServiceInterface {
           exchangeFactor: product.exchangeFactor,
           productId: ProductId.create(product.id),
           availableStock: product.quantityAvailable,
+          unitOfMeasurement: product.unitOfMeasurement,
           quantity,
         }).getResult();
 

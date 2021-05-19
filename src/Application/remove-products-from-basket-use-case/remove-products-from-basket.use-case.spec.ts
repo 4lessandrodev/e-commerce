@@ -1,7 +1,7 @@
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { RemoveProductsFromBasketUseCase } from './remove-products-from-basket.use-case';
-import { UniqueEntityID } from 'types-ddd/dist/src';
+import { UniqueEntityID } from 'types-ddd';
 import {
   BasketDescriptionValueObject,
   BasketItemValueObject,
@@ -10,6 +10,7 @@ import {
   MonetaryValueObject,
   ProductDescriptionValueObject,
   QuantityInStockValueObject,
+  UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { BasketCategory } from '@domain/entities';
 import { Basket, ProductId } from '@domain/aggregates-root';
@@ -27,6 +28,7 @@ describe('remove-products-from-basket.use-case', () => {
     productId: ProductId.create(new UniqueEntityID('valid_id1')),
     quantity: QuantityInStockValueObject.create(10).getResult(),
     availableStock: QuantityInStockValueObject.create(10).getResult(),
+    unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
   //
   const itemB = BasketItemValueObject.create({
@@ -36,6 +38,7 @@ describe('remove-products-from-basket.use-case', () => {
     productId: ProductId.create(new UniqueEntityID('valid_id2')),
     quantity: QuantityInStockValueObject.create(10).getResult(),
     availableStock: QuantityInStockValueObject.create(10).getResult(),
+    unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
   //
   const price = MonetaryValueObject.create(

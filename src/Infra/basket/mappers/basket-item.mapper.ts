@@ -1,5 +1,6 @@
 import { IMapper, UniqueEntityID } from 'types-ddd/dist/src';
 import { BasketItemValueObject as Aggregate } from '@domain/value-objects';
+import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { QuantityInStockValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
@@ -22,6 +23,9 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
       availableStock: QuantityInStockValueObject.create(
         target.availableStock,
       ).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create(
+        target.unitOfMeasurement,
+      ).getResult(),
     }).getResult();
   }
   //
@@ -32,6 +36,7 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
       productId: target.value.productId.id.toString(),
       quantity: target.value.quantity.value,
       availableStock: target.value.availableStock.value,
+      unitOfMeasurement: target.value.unitOfMeasurement.value,
     };
   }
 }

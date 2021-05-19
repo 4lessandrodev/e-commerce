@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import { Category } from './category.schema';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
 import { Tag } from '@infra/product/entities/tag.schema';
+import { UnitTypes } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 
 // ---------------------------------------------------------------
 type localeType = keyof typeof AvailableLocale;
@@ -33,6 +34,9 @@ export class Item {
 
   @Prop()
   description!: string;
+
+  @Prop()
+  unitOfMeasurement!: UnitTypes;
 
   @Prop()
   availableStock!: number;

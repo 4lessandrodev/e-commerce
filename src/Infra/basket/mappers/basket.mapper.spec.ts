@@ -2,7 +2,11 @@ import { Basket as Aggregate, ProductId } from '@domain/aggregates-root';
 import { UniqueEntityID } from 'types-ddd';
 import { BasketCategory, CommentId, Tag } from '@domain/entities';
 import { Basket as Schema } from '../entities/basket.schema';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
+import {
+  ImageValueObject,
+  MonetaryValueObject,
+  UnitOfMeasurementValueObject,
+} from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { QuantityInStockValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
@@ -57,6 +61,8 @@ describe('basket.mapper', () => {
           productId: ProductId.create(new UniqueEntityID('valid_id')),
           quantity: QuantityInStockValueObject.create(7).getResult(),
           availableStock: QuantityInStockValueObject.create(7).getResult(),
+          unitOfMeasurement:
+            UnitOfMeasurementValueObject.create('CX').getResult(),
         }).getResult(),
       ],
       numberOfRatings: 3,
@@ -99,6 +105,7 @@ describe('basket.mapper', () => {
         productId: 'valid_id',
         quantity: 7,
         availableStock: 7,
+        unitOfMeasurement: 'CX',
       },
     ],
     numberOfRatings: 3,

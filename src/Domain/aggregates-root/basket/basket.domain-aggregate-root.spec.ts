@@ -9,6 +9,7 @@ import {
   MonetaryValueObject,
   ProductDescriptionValueObject,
   QuantityInStockValueObject,
+  UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { Currency } from '@domain/value-objects/monetary/currency.value-object';
@@ -54,6 +55,8 @@ describe('Basket.domain-aggregate-root', () => {
               ).getResult(),
             quantity: QuantityInStockValueObject.create(2).getResult(),
             availableStock: QuantityInStockValueObject.create(10).getResult(),
+            unitOfMeasurement:
+              UnitOfMeasurementValueObject.create('CX').getResult(),
           }).getResult(),
         ],
         images: [ImageValueObject.create(image.imageUrl()).getResult()],
@@ -299,6 +302,7 @@ describe('Basket.domain-aggregate-root', () => {
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
       availableStock: QuantityInStockValueObject.create(10).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
 
@@ -317,6 +321,7 @@ describe('Basket.domain-aggregate-root', () => {
         ProductDescriptionValueObject.create('valid_description').getResult(),
       quantity: QuantityInStockValueObject.create(2).getResult(),
       availableStock: QuantityInStockValueObject.create(10).getResult(),
+      unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     }).getResult();
 
     expect(createdBasket.products?.length).toBe(1);
