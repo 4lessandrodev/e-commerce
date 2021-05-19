@@ -20,6 +20,7 @@ describe('update-basket.use-case', () => {
       save: jest.fn(),
       deactivateManyBaskets: jest.fn(),
       updateAllBasketItemByProductId: jest.fn(),
+      resetStockOnBasketItems: jest.fn(),
     };
 
     basket = Basket.create({

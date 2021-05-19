@@ -92,15 +92,39 @@ export class ProductRepository implements ProductRepositoryInterface {
           { multi: true },
         )
         .exec();
-      return;
+    } else {
+      await this.conn
+        .updateMany(
+          { quantityAvailable: { $gt: 0 } },
+          { quantityAvailable: 0 },
+          { multi: true },
+        )
+        .exec();
+    }
+  }
+
+  async findAllProductsOrFilteredByIds(
+    ids?: string[],
+  ): Promise<Aggregate[] | null> {
+    //
+
+    if (ids) {
+      const foundProducts = await this.conn.find({ id: { $in: ids } }).exec();
+      if (foundProducts.length === 0) {
+        return null;
+      }
+      return foundProducts.map((product) => this.mapper.toDomain(product));
     }
 
-    await this.conn
-      .updateMany(
-        { quantityAvailable: { $gt: 0 } },
-        { quantityAvailable: 0 },
-        { multi: true },
-      )
+    const foundProducts = await this.conn
+      .find({
+        quantityAvailable: { $gt: 0 },
+      })
       .exec();
+
+    if (foundProducts.length === 0) {
+      return null;
+    }
+    return foundProducts.map((product) => this.mapper.toDomain(product));
   }
 }

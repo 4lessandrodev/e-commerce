@@ -97,7 +97,7 @@ ProductSchema.virtual('Category', {
   justOne: true,
 });
 
-// Hooks to call domain event
+// Hooks to call domain event to update details on basket item
 ProductSchema.post('updateOne', { document: true }, function () {
   try {
     // @ts-expect-error
@@ -106,6 +106,11 @@ ProductSchema.post('updateOne', { document: true }, function () {
   } catch (error) {
     console.log(error.message);
   }
+});
+
+ProductSchema.post('updateMany', function () {
+  const id = new UniqueEntityID('PRODUCT_ONLY_FOR_DOMAIN_EVENT');
+  DomainEvents.dispatchEventsForAggregate(id);
 });
 
 export { ProductSchema };

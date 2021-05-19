@@ -14,6 +14,7 @@ describe('update-basket-items.use-case', () => {
       findOne: jest.fn(),
       save: jest.fn(),
       updateAllBasketItemByProductId: jest.fn(),
+      resetStockOnBasketItems: jest.fn(),
     };
   });
 

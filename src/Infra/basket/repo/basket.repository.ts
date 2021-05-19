@@ -71,13 +71,37 @@ export class BasketRepository implements BasketRepositoryInterface {
         },
         {
           $set: {
-            'items.$.availableStock': item.availableStock,
-            'items.$.description': item.description,
-            'items.$.exchangeFactor': item.exchangeFactor,
+            'items.$[].availableStock': item.availableStock,
+            'items.$[].description': item.description,
+            'items.$[].exchangeFactor': item.exchangeFactor,
+            'items.$[].unitOfMeasurement': item.unitOfMeasurement,
           },
         },
         { multi: true },
       )
       .exec();
+  }
+
+  async resetStockOnBasketItems(productIds?: string[]): Promise<void> {
+    if (productIds) {
+      await this.conn
+        .updateMany(
+          { 'items.productId': { $in: productIds } },
+          { $set: { 'items.$[].availableStock': 0 } },
+          { multi: true },
+        )
+        .exec();
+      return;
+    }
+
+    const result = await this.conn
+      .updateMany(
+        { 'items.availableStock': { $gt: 0 } },
+        { $set: { 'items.$[].availableStock': 0 } },
+        { multi: true },
+      )
+      .exec();
+
+    console.log(result);
   }
 }

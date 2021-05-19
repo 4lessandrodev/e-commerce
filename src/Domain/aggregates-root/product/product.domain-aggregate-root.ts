@@ -10,6 +10,7 @@ import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import { ProductProps } from './product.domain-aggregate-root-interface';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { ProductDomainEvent } from '@domain/events/product-updated/product.domain-event';
+import { BasketItemDomainEvent } from '../../events/product-updated/basket-item.domain-event';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -105,6 +106,16 @@ export class Product extends AggregateRoot<ProductProps> {
   removeImage(): void {
     this.props.image = undefined;
     this.props.updatedAt = new Date();
+  }
+
+  /**
+   *
+   * @param productsIds products to define 0 quantity on basket item by domain event
+   */
+  resetStockQuantityForProducts(productsIds?: string[]): void {
+    this.props.quantityAvailable =
+      QuantityInStockValueObject.create(0).getResult();
+    this.addNewUniqueEvent(new BasketItemDomainEvent(this, productsIds));
   }
 
   launchStock(quantity: QuantityInStockValueObject): void {

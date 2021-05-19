@@ -22,6 +22,8 @@ import { UpdateBasketUseCase } from '@app/update-basket-use-case/update-basket.u
 import { DeactivateManyBasketsUseCase } from '@app/deactivate-many-baskets-use-case/deactivate-many-baskets.use-case';
 import { AfterProductUpdated } from '@domain/events/product-updated/after-update-product.domain-event';
 import { UpdateBasketItemUseCase } from '@app/update-basket-items-use-case/update-basket-items.use-case';
+import { AfterProductStockResected } from '@domain/events/product-updated/after-reset-product-stock.domain-event';
+import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-case/reset-basket-item-stock.use-case';
 
 @Module({
   imports: [
@@ -46,6 +48,7 @@ import { UpdateBasketItemUseCase } from '@app/update-basket-items-use-case/updat
       useClass: BasketRepository,
     },
     AfterProductUpdated,
+    AfterProductStockResected,
     RegisterBasketCategoryUseCase,
     UpdateBasketItemUseCase,
     RegisterBasketUseCase,
@@ -53,6 +56,7 @@ import { UpdateBasketItemUseCase } from '@app/update-basket-items-use-case/updat
     RemoveProductsFromBasketUseCase,
     UpdateBasketUseCase,
     DeactivateManyBasketsUseCase,
+    ResetBasketItemStockUseCase,
     BasketDomainService,
     BasketService,
   ],
