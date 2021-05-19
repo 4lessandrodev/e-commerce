@@ -12,7 +12,6 @@ export class BasketItemDomainEvent implements IDomainEvent {
     this.product = product;
   }
   getAggregateId(): UniqueEntityID {
-    console.log(this.product.id);
     return this.product.id;
   }
 }

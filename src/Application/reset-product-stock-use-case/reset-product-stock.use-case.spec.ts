@@ -73,17 +73,4 @@ describe('reset-product-stock.use-case', () => {
     const result = await useCase.execute({ productsIds: [] });
     expect(result.isSuccess).toBe(true);
   });
-
-  it('should call reset method with success', async () => {
-    jest
-      .spyOn(productRepo, 'findAllProductsOrFilteredByIds')
-      .mockResolvedValueOnce([product]);
-
-    const events = product.domainEvents.length;
-
-    const useCase = new ResetProductStockUseCase(productRepo);
-    const result = await useCase.execute({ productsIds: ['valid_id'] });
-    expect(result.isSuccess).toBe(true);
-    expect(events).toBe(1);
-  });
 });
