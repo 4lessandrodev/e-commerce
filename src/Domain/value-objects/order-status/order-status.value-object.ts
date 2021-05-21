@@ -1,44 +1,151 @@
+export const MAX_ORDER_STATUS_LENGTH = 40;
+export const MIN_ORDER_STATUS_LENGTH = 2;
+
+import {
+  ERROR_ORDER_STATUS_INVALID,
+  ERROR_ORDER_STATUS_INVALID_LENGTH,
+} from './order-status-errors.domain';
+import { Result, ValueObject } from 'types-ddd';
+import {
+  validateEnumIncludesValue,
+  validateStringLengthBetweenMaxAndMin,
+} from '@domain/utils';
+
+export enum AvailableOrderStatus {
+  'PENDING',
+  'AWAITING_PAYMENT',
+  'AWAITING_FULFILLMENT',
+  'AWAITING_SHIPMENT',
+  'AWAITING_PICKUP',
+  'PARTIALLY_SHIPPED',
+  'COMPLETED',
+  'CANCELLED',
+  'DECLINED',
+  'REFUNDED',
+  'MANUAL_VERIFICATION_REQUIRED',
+  'PARTIALLY_REFUNDED',
+}
+
+export type AvailableOrderStatusType = keyof typeof AvailableOrderStatus;
+
+export interface OrderStatusProps {
+  value: AvailableOrderStatusType;
+}
+
 /**
- * Enum:
- * PENDING
+ * @enum
+ * `PENDING`
+ * @description
  * Customer started the checkout process but did not complete it. Incomplete orders are assigned a "Pending" status and can be found under the More tab in the View Orders screen.
  *
- * AWAITING_PAYMENT
+ * @enum
+ * `AWAITING_PAYMENT`
+ * @description
  * Customer has completed the checkout process, but payment has yet to be confirmed. Authorize only transactions that are not yet captured have this status.
  *
- * AWAITING_FULFILLMENT
+ * @enum
+ * `AWAITING_FULFILLMENT`
+ * @description
  * Customer has completed the checkout process and payment has been confirmed.
  *
- * AWAITING_SHIPMENT
+ * @enum
+ *`AWAITING_SHIPMENT`
+ * @description
  * Order has been pulled and packaged and is awaiting collection from a shipping provider.
  *
- * AWAITING_PICKUP
+ * @enum
+ *`AWAITING_PICKUP`
+ * @description
  * Order has been packaged and is awaiting customer pickup from a seller-specified location.
  *
- * PARTIALLY_SHIPPED
+ * @enum
+ *`PARTIALLY_SHIPPED`
+ * @description
  * Only some items in the order have been shipped.
  *
- * COMPLETED
+ * @enum
+ *`COMPLETED`
+ * @description
  * Order has been shipped/picked up, and receipt is confirmed; client has paid for their digital product, and their file(s) are available for download.
  *
- * SHIPPED
+ * @enum
+ *`SHIPPED`
+ * @description
  * Order has been shipped, but receipt has not been confirmed; seller has used the Ship Items action. A listing of all orders with a "Shipped" status can be found under the More tab of the View Orders screen.
  *
- * CANCELLED
+ * @enum
+ *`CANCELLED`
+ * @description
  * Seller has cancelled an order, due to a stock inconsistency or other reasons. Stock levels will automatically update depending on your Inventory Settings. Cancelling an order will not refund the order. This status is triggered automatically when
  *
- * DECLINED
+ * @enum
+ *`DECLINED`
+ * @description
  * Seller has marked the order as declined.
  *
- * REFUNDED
+ * @enum
+ *`REFUNDED`
+ * @description
  * Seller has used the Refund action to refund the whole order. A listing of all orders with a "Refunded" status can be found under the More tab of the View Orders screen.
  *
- * DISPUTED
+ * @enum
+ *`DISPUTED`
+ * @description
  * Customer has initiated a dispute resolution process for the PayPal transaction that paid for the order or the seller has marked the order as a fraudulent order.
  *
- * MANUAL_VERIFICATION_REQUIRED
+ * @enum
+ *`MANUAL_VERIFICATION_REQUIRED`
+ * @description
  * Order on hold while some aspect, such as tax-exempt documentation, is manually confirmed. Orders with this status must be updated manually. Capturing funds or other order actions will not automatically update the status of an order marked Manual Verification Required.
  *
- * PARTIALLY_REFUNDED
+ * @enum
+ *`PARTIALLY_REFUNDED`
+ * @description
  * Seller has partially refunded the order.
  */
+export class OrderStatusValueObject extends ValueObject<OrderStatusProps> {
+  private constructor(props: OrderStatusProps) {
+    super(props);
+  }
+
+  get value(): AvailableOrderStatusType {
+    return this.props.value;
+  }
+
+  private static isValidInitial = (initial: AvailableOrderStatusType) => {
+    return initial in AvailableOrderStatus;
+  };
+
+  public static create(
+    status: AvailableOrderStatusType,
+  ): Result<OrderStatusValueObject> {
+    const isValidString = validateStringLengthBetweenMaxAndMin({
+      text: status,
+      maxLength: MAX_ORDER_STATUS_LENGTH,
+      minLength: MIN_ORDER_STATUS_LENGTH,
+    });
+
+    if (!isValidString) {
+      return Result.fail<OrderStatusValueObject>(
+        ERROR_ORDER_STATUS_INVALID_LENGTH,
+      );
+    }
+
+    const isValid = validateEnumIncludesValue({
+      enum: AvailableOrderStatus,
+      value: status,
+    });
+
+    if (!isValid) {
+      return Result.fail<OrderStatusValueObject>(ERROR_ORDER_STATUS_INVALID);
+    }
+
+    if (!this.isValidInitial(status)) {
+      return Result.fail<OrderStatusValueObject>(ERROR_ORDER_STATUS_INVALID);
+    }
+
+    return Result.ok<OrderStatusValueObject>(
+      new OrderStatusValueObject({ value: status }),
+    );
+  }
+}

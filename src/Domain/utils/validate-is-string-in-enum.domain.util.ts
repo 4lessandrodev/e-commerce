@@ -13,13 +13,20 @@ interface paramsValue {
 /**
  *
  * @param props is an object with values.
- * `value` is string you want to compare.
+ * `key` is string you want to compare.
  * `enum` is an enum you have to check.
  *
- * Return is a boolean `true`if string is in enum and `false` if not
+ * @returns boolean `true`if enum includes provided key and `false` if not
  */
 export const validateEnumIncludesKey = (props: paramsKey): boolean =>
   Object.keys(props.enum).includes(props.key.toUpperCase());
 
+/**
+ *
+ * @param props is an object with values
+ * `value` is string you want to compare.
+ * `enum` is an enum you have to check.
+ * @returns boolean `true`if enum includes provided value and `false` if not
+ */
 export const validateEnumIncludesValue = (props: paramsValue): boolean =>
   Object.values(props.enum).includes(props.value);

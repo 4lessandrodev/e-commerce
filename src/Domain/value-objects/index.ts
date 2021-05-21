@@ -19,3 +19,5 @@ export * from './quantity-in-stock/quantity-in-stock.value-object';
 export * from './product-description/product-description.value-object';
 export * from './product-info/product-info.value-object';
 export * from './exchange-factor/exchange-factor.value-object';
+export * from './order-status/order-status.value-object';
+export * from './delivery-address/delivery-address.value-object';

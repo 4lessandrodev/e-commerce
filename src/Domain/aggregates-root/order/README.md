@@ -17,7 +17,7 @@
   },
   "separateProducts": [
     {
-      "productId": "String",
+      "id": "productId",
       "image": "String",
       "description": "String",
       "unitOfMeasurement": "Enum",
