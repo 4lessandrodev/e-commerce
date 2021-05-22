@@ -41,11 +41,7 @@ describe('region.mapper', () => {
       {
         description: 'valid_description',
         freightPrice: MonetaryValueObject.create(
-          Currency.create({
-            locale: 'pt-BR',
-            symbol: 'BRL',
-            value: 200,
-          }).getResult(),
+          Currency.create(200).getResult(),
         ).getResult(),
         isActive: true,
         createdAt: currentDate,

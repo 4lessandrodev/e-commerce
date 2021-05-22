@@ -38,11 +38,7 @@ describe('basket.mapper', () => {
         BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 10,
-        }).getResult(),
+        Currency.create(10).getResult(),
       ).getResult(),
       comments: [CommentId.create(new UniqueEntityID('valid_id'))],
       images: [

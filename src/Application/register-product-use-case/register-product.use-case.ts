@@ -29,11 +29,7 @@ export class RegisterProductUseCase
   //
   async execute(dto: RegisterProductDto): Promise<Result<void>> {
     //----------------------------------------------------
-    const currencyOrError = Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: dto.price,
-    });
+    const currencyOrError = Currency.create(dto.price);
 
     if (currencyOrError.isFailure) {
       return Result.fail<void>(currencyOrError.error.toString());

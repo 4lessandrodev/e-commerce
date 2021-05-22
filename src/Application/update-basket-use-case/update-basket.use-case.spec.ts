@@ -32,11 +32,7 @@ describe('update-basket.use-case', () => {
         BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 15,
-        }).getResult(),
+        Currency.create(15).getResult(),
       ).getResult(),
     }).getResult();
   });

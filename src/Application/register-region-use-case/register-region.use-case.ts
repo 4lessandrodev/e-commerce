@@ -22,11 +22,7 @@ export class RegisterRegionUseCase
   async execute(dto: RegisterRegionDto): Promise<Result<void>> {
     //
 
-    const currencyOrError = Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: dto.freightPrice,
-    });
+    const currencyOrError = Currency.create(dto.freightPrice);
 
     if (currencyOrError.isFailure) {
       return Result.fail<void>(currencyOrError.error as string);

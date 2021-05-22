@@ -31,7 +31,7 @@ export class BasketMapper implements IMapper<Aggregate, Schema> {
         ).getResult(),
         isActive: target.isActive,
         price: MonetaryValueObject.create(
-          Currency.create(target.price).getResult(),
+          Currency.create(target.price.value).getResult(),
         ).getResult(),
         comments: target.comments?.map((id) =>
           CommentId.create(new UniqueEntityID(id)),

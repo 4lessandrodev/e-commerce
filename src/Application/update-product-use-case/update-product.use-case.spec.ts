@@ -21,11 +21,7 @@ describe('update-product.use-case', () => {
     isActive: false,
     isSpecial: true,
     price: MonetaryValueObject.create(
-      Currency.create({
-        value: 11,
-        symbol: 'BRL',
-        locale: 'pt-BR',
-      }).getResult(),
+      Currency.create(11).getResult(),
     ).getResult(),
     quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),

@@ -9,11 +9,7 @@ describe('Monetary.value-object.ts', () => {
     monetary: Result<MonetaryValueObject>;
   }
   const makeSut = (value: number): ImakeSut => {
-    const currency = Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value,
-    });
+    const currency = Currency.create(value);
     const monetary = MonetaryValueObject.create(currency.getResult());
     return {
       currency,
@@ -71,19 +67,11 @@ describe('Monetary.value-object.ts', () => {
     //
 
     const valueA = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: 0.01,
-      }).getResult(),
+      Currency.create(0.01).getResult(),
     ).getResult();
 
     const valueB = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: 0.03,
-      }).getResult(),
+      Currency.create(0.03).getResult(),
     ).getResult();
 
     const result = currency(valueB.value).subtract(valueA.value).value;

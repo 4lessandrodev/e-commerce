@@ -22,11 +22,7 @@ describe('add-products-on-basket.use-case', () => {
   const domainService = new BasketDomainService();
   //
   const price = MonetaryValueObject.create(
-    Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: 10,
-    }).getResult(),
+    Currency.create(10).getResult(),
   ).getResult();
 
   // Mock basket

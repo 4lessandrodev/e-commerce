@@ -15,11 +15,7 @@ import { City } from '../../entities';
 
 describe('Region.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
-    return Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value,
-    }).getResult();
+    return Currency.create(value).getResult();
   };
   const makeSut = (
     props?: RegionProps,

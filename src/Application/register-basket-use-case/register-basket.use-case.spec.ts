@@ -38,11 +38,7 @@ describe('register-basket.use-case', () => {
       isActive: true,
       isSpecial: false,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 100,
-        }).getResult(),
+        Currency.create(100).getResult(),
       ).getResult(),
       quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),

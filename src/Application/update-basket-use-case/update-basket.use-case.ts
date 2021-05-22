@@ -39,11 +39,7 @@ export class UpdateBasketUseCase
     const info = infoOrError?.getResult();
 
     //---------------------------------------------------------
-    const currencyOrError = Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: dto.price,
-    });
+    const currencyOrError = Currency.create(dto.price);
 
     if (currencyOrError.isFailure) {
       return Result.fail<void>(currencyOrError.error.toString());

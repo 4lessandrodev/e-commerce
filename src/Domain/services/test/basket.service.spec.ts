@@ -20,11 +20,7 @@ describe('basket.service', () => {
   }).getResult();
   //
   const price: MonetaryValueObject = MonetaryValueObject.create(
-    Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: 10,
-    }).getResult(),
+    Currency.create(10).getResult(),
   ).getResult();
   //
   const unitOfMeasurement: UnitOfMeasurementValueObject =

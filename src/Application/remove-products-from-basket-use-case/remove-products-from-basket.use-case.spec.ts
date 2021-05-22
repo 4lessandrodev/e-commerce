@@ -42,11 +42,7 @@ describe('remove-products-from-basket.use-case', () => {
   }).getResult();
   //
   const price = MonetaryValueObject.create(
-    Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value: 10,
-    }).getResult(),
+    Currency.create(10).getResult(),
   ).getResult();
   //
   // Mock basket

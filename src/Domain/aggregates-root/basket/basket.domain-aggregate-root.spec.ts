@@ -21,11 +21,7 @@ import { BasketInfoValueObject } from '@domain/value-objects';
 
 describe('Basket.domain-aggregate-root', () => {
   const makePrice = (value: number): Currency => {
-    return Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value,
-    }).getResult();
+    return Currency.create(value).getResult();
   };
   const makeSut = (
     props?: BasketProps,
@@ -83,11 +79,7 @@ describe('Basket.domain-aggregate-root', () => {
         description:
           BasketDescriptionValueObject.create('valid_description').getResult(),
         price: MonetaryValueObject.create(
-          Currency.create({
-            locale: 'pt-BR',
-            symbol: 'BRL',
-            value: 10,
-          }).getResult(),
+          Currency.create(10).getResult(),
         ).getResult(),
         category: BasketCategory.create({
           changesLimit: 1,
@@ -343,11 +335,7 @@ describe('Basket.domain-aggregate-root', () => {
         BasketDescriptionValueObject.create('valid_description').getResult(),
       isActive: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 20,
-        }).getResult(),
+        Currency.create(20).getResult(),
       ).getResult(),
     }).getResult();
 

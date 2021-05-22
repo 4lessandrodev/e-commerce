@@ -48,11 +48,7 @@ export class SeparateProduct extends Entity<ProductProps> {
     const subTotal = currencyUtil(unitPrice).multiply(quantityOfItems);
 
     const subTotalAsValueObject = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: subTotal.value,
-      }).getResult(),
+      Currency.create(subTotal.value).getResult(),
     ).getResult();
 
     return subTotalAsValueObject;

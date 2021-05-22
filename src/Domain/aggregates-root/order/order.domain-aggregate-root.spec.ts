@@ -12,11 +12,7 @@ import { Order } from './order.domain-aggregate-root';
 describe('order.domain-aggregate-root.spec', () => {
   it('should be defined', () => {
     const monetary = MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: 10,
-      }).getResult(),
+      Currency.create(10).getResult(),
     ).getResult();
 
     const order = Order.create({

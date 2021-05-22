@@ -18,11 +18,7 @@ import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-meas
 
 describe('Product.domain-aggregate-root', () => {
   const makeCurrency = (value: number): Currency => {
-    return Currency.create({
-      locale: 'pt-BR',
-      symbol: 'BRL',
-      value,
-    }).getResult();
+    return Currency.create(value).getResult();
   };
 
   const makeSut = (

@@ -73,8 +73,14 @@ export class Currency extends ValueObject<CurrencyProps> {
     return validateEnumIncludesValue({ enum: AvailableLocale, value: locale });
   };
 
-  public static create(props: CurrencyProps): Result<Currency> {
+  public static create(value: number): Result<Currency> {
     //
+
+    const props: CurrencyProps = {
+      locale: 'pt-BR',
+      symbol: 'BRL',
+      value,
+    };
 
     const isNumber = typeof props.value === 'number';
     if (!isNumber) {

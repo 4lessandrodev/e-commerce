@@ -47,7 +47,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         ),
         tags: target.tags?.map(this.tagMapper.toDomain),
         price: MonetaryValueObject.create(
-          Currency.create(target.price).getResult(),
+          Currency.create(target.price.value).getResult(),
         ).getResult(),
         quantityAvailable: QuantityInStockValueObject.create(
           target.quantityAvailable,

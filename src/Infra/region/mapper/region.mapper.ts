@@ -21,11 +21,7 @@ export class RegionMapper implements IMapper<Region, Schema> {
         city: this.cityMapper.toDomain(target.city),
         description: target.description,
         freightPrice: MonetaryValueObject.create(
-          Currency.create({
-            locale: target.freightPrice.locale,
-            symbol: target.freightPrice.symbol,
-            value: target.freightPrice.value,
-          }).getResult(),
+          Currency.create(target.freightPrice.value).getResult(),
         ).getResult(),
         isActive: target.isActive,
         createdAt: target.createdAt,

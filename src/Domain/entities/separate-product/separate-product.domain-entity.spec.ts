@@ -20,11 +20,7 @@ describe('separate-product.domain-entity', () => {
       }).getResult(),
       isSpecial: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 21,
-        }).getResult(),
+        Currency.create(21).getResult(),
       ).getResult(),
       quantity: QuantityInStockValueObject.create(10).getResult(),
     });
@@ -42,11 +38,7 @@ describe('separate-product.domain-entity', () => {
       }).getResult(),
       isSpecial: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 21,
-        }).getResult(),
+        Currency.create(21).getResult(),
       ).getResult(),
       quantity: QuantityInStockValueObject.create(10).getResult(),
     }).getResult();
@@ -64,11 +56,7 @@ describe('separate-product.domain-entity', () => {
       }).getResult(),
       isSpecial: true,
       price: MonetaryValueObject.create(
-        Currency.create({
-          locale: 'pt-BR',
-          symbol: 'BRL',
-          value: 21,
-        }).getResult(),
+        Currency.create(21).getResult(),
       ).getResult(),
       quantity: QuantityInStockValueObject.create(0).getResult(),
     });

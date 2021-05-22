@@ -24,11 +24,7 @@ describe('reset-product-stock.use-case', () => {
     isActive: true,
     isSpecial: false,
     price: MonetaryValueObject.create(
-      Currency.create({
-        locale: 'pt-BR',
-        symbol: 'BRL',
-        value: 10,
-      }).getResult(),
+      Currency.create(10).getResult(),
     ).getResult(),
     quantityAvailable: QuantityInStockValueObject.create(7).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
