@@ -14,7 +14,7 @@ export class QuantityInStockValueObject extends ValueObject<QuantityInStockProps
   }
 
   get value(): number {
-    return this.props.value;
+    return parseInt(this.props.value.toFixed(0), 10);
   }
 
   public static create(quantity: number): Result<QuantityInStockValueObject> {

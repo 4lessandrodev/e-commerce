@@ -1,7 +1,8 @@
 import {
   Currency,
-  DeliveryAddressValueObject,
+  DeliveryOrCollectionAddressValueObject,
   MonetaryValueObject,
+  OrderIdValueObject,
   OrderStatusValueObject,
   UserNameValueObject,
 } from '@domain/value-objects';
@@ -25,18 +26,20 @@ describe('order.domain-aggregate-root.spec', () => {
       clientId: UserId.create(),
       clientName: UserNameValueObject.create('valid_name').getResult(),
       customBaskets: [],
-      deliveryAddress: DeliveryAddressValueObject.create({
-        city: 'valid_city',
-        complement: 'valid_complement',
-        number: '70b',
-        region: 'valid_region',
-        state: 'RJ',
-        street: 'valid_street',
-        zipCode: '75520-140',
-      }).getResult(),
+      isTheOrderForCollection: true,
+      deliveryOrCollectionAddress:
+        DeliveryOrCollectionAddressValueObject.create({
+          city: 'valid_city',
+          complement: 'valid_complement',
+          number: '70b',
+          region: 'valid_region',
+          state: 'RJ',
+          street: 'valid_street',
+          zipCode: '75520-140',
+        }).getResult(),
       ecobagFee: monetary,
       includesEcobag: false,
-      orderNumber: 1,
+      orderNumber: OrderIdValueObject.create().getResult(),
       separateProducts: [],
       status: OrderStatusValueObject.create('COMPLETED').getResult(),
     });

@@ -21,4 +21,10 @@ describe('quantity-in-stock.value-object', () => {
     expect(quantity.isSuccess).toBe(true);
     expect(quantity.getResult().value).toBe(101);
   });
+
+  it('should round if provide fraction value', () => {
+    const quantity = QuantityInStockValueObject.create(10.4);
+    expect(quantity.isSuccess).toBe(true);
+    expect(quantity.getResult().value).toBe(10);
+  });
 });

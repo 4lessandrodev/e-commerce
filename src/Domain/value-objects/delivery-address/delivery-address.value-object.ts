@@ -29,12 +29,14 @@ export interface DeliveryAddressProps {
   value: Props;
 }
 
-export class DeliveryAddressValueObject extends ValueObject<DeliveryAddressProps> {
+export class DeliveryOrCollectionAddressValueObject extends ValueObject<DeliveryAddressProps> {
   private constructor(props: DeliveryAddressProps) {
     super(props);
   }
 
-  public static create(props: Props): Result<DeliveryAddressValueObject> {
+  public static create(
+    props: Props,
+  ): Result<DeliveryOrCollectionAddressValueObject> {
     const isValidCity = validateStringLengthBetweenMaxAndMin({
       text: props.city,
       maxLength: MAX_CITY_NAME_LENGTH,
@@ -42,7 +44,9 @@ export class DeliveryAddressValueObject extends ValueObject<DeliveryAddressProps
     });
 
     if (!isValidCity) {
-      return Result.fail<DeliveryAddressValueObject>(ERROR_CITY_LENGTH_NAME);
+      return Result.fail<DeliveryOrCollectionAddressValueObject>(
+        ERROR_CITY_LENGTH_NAME,
+      );
     }
 
     const validateAttributes = Result.combine([
@@ -55,11 +59,13 @@ export class DeliveryAddressValueObject extends ValueObject<DeliveryAddressProps
     ]);
 
     if (validateAttributes.isFailure) {
-      return Result.fail<DeliveryAddressValueObject>(validateAttributes.error);
+      return Result.fail<DeliveryOrCollectionAddressValueObject>(
+        validateAttributes.error,
+      );
     }
 
-    return Result.ok<DeliveryAddressValueObject>(
-      new DeliveryAddressValueObject({ value: props }),
+    return Result.ok<DeliveryOrCollectionAddressValueObject>(
+      new DeliveryOrCollectionAddressValueObject({ value: props }),
     );
   }
 }

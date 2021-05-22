@@ -8,6 +8,7 @@ import {
   transformMonetaryValueInTwoDecimalsValue,
   validateEnumIncludesValue,
 } from '@domain/utils';
+import * as currencyUtil from 'currency.js';
 
 export enum AvailableCurrency {
   BRL = 'Brazilian Real',
@@ -46,7 +47,7 @@ export class Currency extends ValueObject<CurrencyProps> {
   }
 
   get value(): number {
-    return this.props.value;
+    return currencyUtil(this.props.value).value;
   }
 
   get symbol(): keyof typeof AvailableCurrency {

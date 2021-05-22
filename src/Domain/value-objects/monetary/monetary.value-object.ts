@@ -4,6 +4,7 @@ import {
   formatNumberToCurrency,
 } from '@domain/utils';
 import { Currency } from './currency.value-object';
+import * as currencyUtil from 'currency.js';
 
 export enum MonetaryType {
   POSITIVE = 'POSITIVE',
@@ -29,7 +30,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * Returns a real number value, if negative `-20.00` or positive `20.00`
    */
   get value(): number {
-    return this.props.currency.value;
+    return currencyUtil(this.props.currency.value).value;
   }
 
   get currency(): Currency {
@@ -67,7 +68,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
     if (this.type === 'NEGATIVE') {
       return convertNegativeNumberToPositive(this.value);
     }
-    return this.value;
+    return currencyUtil(this.value).value;
   }
 
   /**

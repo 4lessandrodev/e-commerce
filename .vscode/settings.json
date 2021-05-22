@@ -1,5 +1,8 @@
 {
     "javascript.preferences.importModuleSpecifier": "relative",
     "typescript.preferences.importModuleSpecifier": "relative",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "QWERTYUIOPASDFGHJKLZXCVBNM"
+    ]
 }

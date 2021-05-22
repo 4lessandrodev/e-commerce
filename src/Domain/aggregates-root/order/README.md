@@ -6,7 +6,8 @@
   "orderNumber": "String",
   "clientName": "string",
   "clientId": "string",
-  "deliveryAddress": {
+  "isTheOrderForCollection": "Boolean",
+  "deliveryOrCollectionAddress": {
     "zipCode": "String",
     "street": "String",
     "number": "String",

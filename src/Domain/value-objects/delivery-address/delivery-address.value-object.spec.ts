@@ -1,9 +1,9 @@
 import { ERROR_CITY_LENGTH_NAME } from '@domain/entities/city/city-errors.domain-entity';
-import { DeliveryAddressValueObject } from './delivery-address.value-object';
+import { DeliveryOrCollectionAddressValueObject } from './delivery-address.value-object';
 
 describe('delivery-address.value-object', () => {
   it('should create a valid address', () => {
-    const address = DeliveryAddressValueObject.create({
+    const address = DeliveryOrCollectionAddressValueObject.create({
       city: 'valid_city',
       complement: 'valid_complement',
       number: '70b',
@@ -19,7 +19,7 @@ describe('delivery-address.value-object', () => {
   });
 
   it('should fail if provide an invalid city length', () => {
-    const address = DeliveryAddressValueObject.create({
+    const address = DeliveryOrCollectionAddressValueObject.create({
       city: 'invalid_city'.repeat(50),
       complement: 'valid_complement',
       number: '77A',
@@ -34,7 +34,7 @@ describe('delivery-address.value-object', () => {
   });
 
   it('should validate attributes as value object', () => {
-    const address = DeliveryAddressValueObject.create({
+    const address = DeliveryOrCollectionAddressValueObject.create({
       city: 'valid_city',
       complement: 'valid_complement',
       number: 'valid_number',

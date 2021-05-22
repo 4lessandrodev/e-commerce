@@ -14,7 +14,7 @@ export class ExchangeFactorValueObject extends ValueObject<ExchangeFactorProps> 
   }
 
   get value(): number {
-    return this.props.value;
+    return parseInt(this.props.value.toFixed(0), 10);
   }
 
   public static create(factor: number): Result<ExchangeFactorValueObject> {
