@@ -1,5 +1,5 @@
-export const MIN_EXCHANGE_FACTOR_VALUE = 1;
-export const MAX_EXCHANGE_FACTOR_VALUE = 7;
+export const MIN_EXCHANGE_FACTOR_VALUE = 0;
+export const MAX_EXCHANGE_FACTOR_VALUE = 100;
 import { Result, ValueObject } from 'types-ddd';
 import { validateNumberBetweenMaxAndMin } from '@domain/utils';
 import { ERROR_INVALID_EXCHANGE_FACTOR } from './exchange-factor-errors.domain';
@@ -24,6 +24,7 @@ export class ExchangeFactorValueObject extends ValueObject<ExchangeFactorProps> 
       min: MIN_EXCHANGE_FACTOR_VALUE,
       value: factor,
     });
+
     if (!isValidFactor) {
       return Result.fail<ExchangeFactorValueObject>(
         ERROR_INVALID_EXCHANGE_FACTOR,

@@ -7,7 +7,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
 import { ProductInfoValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { MonetaryValueObject, ImageValueObject } from '@domain/value-objects';
 import { Currency, ProductDescriptionValueObject } from '@domain/value-objects';
@@ -49,7 +49,7 @@ export class ProductMapper implements IMapper<Aggregate, Schema> {
         price: MonetaryValueObject.create(
           Currency.create(target.price.value).getResult(),
         ).getResult(),
-        quantityAvailable: QuantityInStockValueObject.create(
+        quantityAvailable: QuantityAvailableValueObject.create(
           target.quantityAvailable,
         ).getResult(),
         image: target.image

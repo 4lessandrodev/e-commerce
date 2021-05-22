@@ -3,14 +3,15 @@ import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
 import { ProductInfoValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ERROR_PRODUCT_PRICE } from './product-errors.domain-aggregate-root';
+import { ERROR_INVALID_EXCHANGE_FACTOR_VALUE_FOR_PRODUCT } from './product-errors.domain-aggregate-root';
 import { Result, UniqueEntityID, AggregateRoot, IDomainEvent } from 'types-ddd';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import { ProductProps } from './product.domain-aggregate-root-interface';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import { ProductDomainEvent } from '@domain/events/product-updated/product.domain-event';
-import { BasketItemDomainEvent } from '../../events/product-updated/basket-item.domain-event';
+import { BasketItemDomainEvent } from '@domain/events/product-updated/basket-item.domain-event';
 
 export class Product extends AggregateRoot<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -41,7 +42,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.price;
   }
 
-  get quantityAvailable(): QuantityInStockValueObject {
+  get quantityAvailable(): QuantityAvailableValueObject {
     return this.props.quantityAvailable;
   }
 
@@ -114,11 +115,11 @@ export class Product extends AggregateRoot<ProductProps> {
    */
   resetStockQuantityForProducts(productsIds?: string[]): void {
     this.props.quantityAvailable =
-      QuantityInStockValueObject.create(0).getResult();
+      QuantityAvailableValueObject.create(0).getResult();
     this.addNewUniqueEvent(new BasketItemDomainEvent(this, productsIds));
   }
 
-  launchStock(quantity: QuantityInStockValueObject): void {
+  launchStock(quantity: QuantityAvailableValueObject): void {
     this.props.quantityAvailable = quantity;
     this.props.updatedAt = new Date();
     // Add domain event to update embed basket item
@@ -233,6 +234,12 @@ export class Product extends AggregateRoot<ProductProps> {
 
     if (!props.price.isPositive()) {
       return Result.fail<Product>(ERROR_PRODUCT_PRICE);
+    }
+
+    if (props.exchangeFactor.value < 1) {
+      return Result.fail<Product>(
+        ERROR_INVALID_EXCHANGE_FACTOR_VALUE_FOR_PRODUCT,
+      );
     }
 
     return Result.ok<Product>(new Product(props, id));

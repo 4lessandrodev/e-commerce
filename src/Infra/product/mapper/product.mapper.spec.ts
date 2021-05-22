@@ -6,7 +6,7 @@ import { CommentId, ProductCategory, Tag } from '@domain/entities';
 import { Currency, ImageValueObject } from '@domain/value-objects';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductInfoValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { ProductMapper } from './product.mapper';
@@ -55,7 +55,7 @@ describe('product.mapper', () => {
         price: MonetaryValueObject.create(
           Currency.create(100).getResult(),
         ).getResult(),
-        quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
+        quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
         image: ImageValueObject.create(
           'https://aws.s3.bucket/OIPOUERT.589ASD89/image.jpeg',
         ).getResult(),

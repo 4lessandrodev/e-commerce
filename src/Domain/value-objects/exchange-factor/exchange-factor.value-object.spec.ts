@@ -7,13 +7,13 @@ describe('exchange-factor.value-object', () => {
     expect(exchange).toBeDefined();
   });
 
-  it('should fail if provide zero', () => {
-    const exchange = ExchangeFactorValueObject.create(0);
+  it('should fail if provide negative', () => {
+    const exchange = ExchangeFactorValueObject.create(-1);
     expect(exchange.isFailure).toBe(true);
   });
 
-  it('should fail if provide greater than 7', () => {
-    const exchange = ExchangeFactorValueObject.create(10);
+  it('should fail if provide greater than 100', () => {
+    const exchange = ExchangeFactorValueObject.create(101);
     expect(exchange.isFailure).toBe(true);
   });
 

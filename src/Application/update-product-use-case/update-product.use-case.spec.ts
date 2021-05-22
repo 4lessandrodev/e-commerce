@@ -4,7 +4,7 @@ import { UpdateProductUseCase } from './update-product.use-case';
 import { ProductCategory } from '@domain/entities';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 
@@ -23,7 +23,7 @@ describe('update-product.use-case', () => {
     price: MonetaryValueObject.create(
       Currency.create(11).getResult(),
     ).getResult(),
-    quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
+    quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
 

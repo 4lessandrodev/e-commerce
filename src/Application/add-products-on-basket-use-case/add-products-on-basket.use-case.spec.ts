@@ -6,11 +6,12 @@ import { Basket, Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   BasketDescriptionValueObject,
+  ChangesLimitValueObject,
   Currency,
   ExchangeFactorValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd';
@@ -29,7 +30,7 @@ describe('add-products-on-basket.use-case', () => {
   const basket = Basket.create(
     {
       category: BasketCategory.create({
-        changesLimit: 1,
+        changesLimit: ChangesLimitValueObject.create(1).getResult(),
         description: 'valid_description',
       }).getResult(),
       description:
@@ -52,7 +53,7 @@ describe('add-products-on-basket.use-case', () => {
       isActive: true,
       isSpecial: false,
       price,
-      quantityAvailable: QuantityInStockValueObject.create(20).getResult(),
+      quantityAvailable: QuantityAvailableValueObject.create(20).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     },
     new UniqueEntityID('valid_id'),

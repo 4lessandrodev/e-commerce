@@ -4,11 +4,12 @@ import { Result, UniqueEntityID } from 'types-ddd';
 import { Basket } from '@domain/aggregates-root';
 import { BasketCategory, Comment, CommentId, Tag } from '@domain/entities';
 import {
+  ChangesLimitValueObject,
   ExchangeFactorValueObject,
   ImageValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
@@ -35,7 +36,7 @@ describe('Basket.domain-aggregate-root', () => {
         category:
           props?.category ??
           BasketCategory.create({
-            changesLimit: 3,
+            changesLimit: ChangesLimitValueObject.create(3).getResult(),
             description: 'Mini Basket',
           }).getResult(),
         isActive: props?.isActive ?? true,
@@ -49,8 +50,8 @@ describe('Basket.domain-aggregate-root', () => {
               ProductDescriptionValueObject.create(
                 'valid_description',
               ).getResult(),
-            quantity: QuantityInStockValueObject.create(2).getResult(),
-            availableStock: QuantityInStockValueObject.create(10).getResult(),
+            quantity: QuantityAvailableValueObject.create(2).getResult(),
+            availableStock: QuantityAvailableValueObject.create(10).getResult(),
             unitOfMeasurement:
               UnitOfMeasurementValueObject.create('CX').getResult(),
           }).getResult(),
@@ -82,7 +83,7 @@ describe('Basket.domain-aggregate-root', () => {
           Currency.create(10).getResult(),
         ).getResult(),
         category: BasketCategory.create({
-          changesLimit: 1,
+          changesLimit: ChangesLimitValueObject.create(1).getResult(),
           description: 'valid_desc',
         }).getResult(),
         images: [ImageValueObject.create('https://s3.aws.com').getResult()],
@@ -128,7 +129,7 @@ describe('Basket.domain-aggregate-root', () => {
         description:
           BasketDescriptionValueObject.create('valid_description').getResult(),
         category: BasketCategory.create({
-          changesLimit: 1,
+          changesLimit: ChangesLimitValueObject.create(1).getResult(),
           description: 'valid_desc',
         }).getResult(),
         images: [ImageValueObject.create('https://s3.aws.com').getResult()],
@@ -292,8 +293,8 @@ describe('Basket.domain-aggregate-root', () => {
       productId: ProductId.create(),
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
-      quantity: QuantityInStockValueObject.create(2).getResult(),
-      availableStock: QuantityInStockValueObject.create(10).getResult(),
+      quantity: QuantityAvailableValueObject.create(2).getResult(),
+      availableStock: QuantityAvailableValueObject.create(10).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     }).getResult();
     expect(createdBasket.products?.length).toBe(1);
@@ -311,8 +312,8 @@ describe('Basket.domain-aggregate-root', () => {
       productId,
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
-      quantity: QuantityInStockValueObject.create(2).getResult(),
-      availableStock: QuantityInStockValueObject.create(10).getResult(),
+      quantity: QuantityAvailableValueObject.create(2).getResult(),
+      availableStock: QuantityAvailableValueObject.create(10).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
     }).getResult();
 
@@ -328,7 +329,7 @@ describe('Basket.domain-aggregate-root', () => {
 
     const basket = Basket.create({
       category: BasketCategory.create({
-        changesLimit: 2,
+        changesLimit: ChangesLimitValueObject.create(2).getResult(),
         description: 'valid_description',
       }).getResult(),
       description:

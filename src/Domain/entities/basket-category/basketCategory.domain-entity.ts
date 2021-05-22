@@ -1,17 +1,10 @@
 import { Entity, Result, UniqueEntityID } from 'types-ddd';
-import {
-  convertNegativeNumberToPositive,
-  validateStringLengthBetweenMaxAndMin,
-} from '@domain/utils';
+import { validateStringLengthBetweenMaxAndMin } from '@domain/utils';
 import { BasketCategoryProps } from './basketCategory.domain-entity-interface';
-import {
-  ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
-  ERROR_BASKET_CATEGORY_MAX_VALUE,
-} from './basket-category-errors.domain-entity';
+import { ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH } from './basket-category-errors.domain-entity';
+import { ChangesLimitValueObject } from '@domain/value-objects';
 export const MIN_BASKET_CATEGORY_DESCRIPTION_LENGTH = 3;
 export const MAX_BASKET_CATEGORY_DESCRIPTION_LENGTH = 20;
-export const MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE = 20;
-const ZERO = 0;
 
 export class BasketCategory extends Entity<BasketCategoryProps> {
   private constructor(props: BasketCategoryProps, id?: UniqueEntityID) {
@@ -26,7 +19,7 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
     return this.props.description.toLowerCase();
   }
 
-  get changesLimit(): number {
+  get changesLimit(): ChangesLimitValueObject {
     return this.props.changesLimit;
   }
 
@@ -44,14 +37,6 @@ export class BasketCategory extends Entity<BasketCategoryProps> {
       minLength: MIN_BASKET_CATEGORY_DESCRIPTION_LENGTH,
       maxLength: MAX_BASKET_CATEGORY_DESCRIPTION_LENGTH,
     });
-
-    if (props.changesLimit < ZERO) {
-      props.changesLimit = convertNegativeNumberToPositive(props.changesLimit);
-    }
-
-    if (props.changesLimit > MAX_BASKET_CATEGORY_CHANGE_LIMIT_VALUE) {
-      return Result.fail<BasketCategory>(ERROR_BASKET_CATEGORY_MAX_VALUE);
-    }
 
     if (!isValidDescription) {
       return Result.fail<BasketCategory>(

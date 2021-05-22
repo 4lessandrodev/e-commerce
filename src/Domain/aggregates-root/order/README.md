@@ -38,7 +38,10 @@
       "basketId": "String",
       "image": "String",
       "description": "String",
-      "category": "String",
+      "category": {
+        "description": "String",
+        "changesLimit": "Number"
+      },
       "items": [
         {
           "exchangeFactor": "Number",

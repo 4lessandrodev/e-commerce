@@ -2,6 +2,7 @@ import { BasketCategory as Aggregate } from '@domain/entities';
 import { UniqueEntityID } from 'types-ddd';
 import { BasketCategoryMapper } from './basket-category.mapper';
 import { BasketCategory } from '../entities/basket-category.schema';
+import { ChangesLimitValueObject } from '@domain/value-objects';
 
 describe('basket-category.mapper', () => {
   //
@@ -13,7 +14,7 @@ describe('basket-category.mapper', () => {
     domain = Aggregate.create(
       {
         description: 'valid_description',
-        changesLimit: 2,
+        changesLimit: ChangesLimitValueObject.create(2).getResult(),
         createdAt: currentDate,
         updatedAt: currentDate,
       },

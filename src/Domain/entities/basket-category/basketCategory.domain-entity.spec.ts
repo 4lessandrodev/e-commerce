@@ -1,13 +1,11 @@
 import { BasketCategory } from './basketCategory.domain-entity';
-import {
-  ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
-  ERROR_BASKET_CATEGORY_MAX_VALUE,
-} from './basket-category-errors.domain-entity';
+import { ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH } from './basket-category-errors.domain-entity';
 import delay from 'delay';
 import { UniqueEntityID } from 'types-ddd';
 import { BasketCategoryId } from './basket-category-id.domain-entity';
 import { BasketCategoryProps } from './basketCategory.domain-entity-interface';
 import { random } from 'faker';
+import { ChangesLimitValueObject } from '../../value-objects';
 
 describe('BasketCategory', () => {
   const makeSut = (props?: BasketCategoryProps, id?: UniqueEntityID) => {
@@ -15,7 +13,8 @@ describe('BasketCategory', () => {
       {
         description: props?.description ?? 'Valid Category',
         isDeleted: props?.isDeleted ?? undefined,
-        changesLimit: props?.changesLimit ?? 1,
+        changesLimit:
+          props?.changesLimit ?? ChangesLimitValueObject.create(10).getResult(),
       },
       id,
     );
@@ -23,11 +22,11 @@ describe('BasketCategory', () => {
 
   it('Should create a valid Basket Category', () => {
     const BasketCategoryResult = makeSut({
-      changesLimit: 1,
+      changesLimit: ChangesLimitValueObject.create(1).getResult(),
       description: 'Valid Category',
     }).getResult();
     expect(BasketCategoryResult.description).toBe('valid category');
-    expect(BasketCategoryResult.changesLimit).toBe(1);
+    expect(BasketCategoryResult.changesLimit.value).toBe(1);
     expect(BasketCategoryResult.isDeleted).toBe(false);
   });
 
@@ -35,29 +34,22 @@ describe('BasketCategory', () => {
     const createdId = BasketCategoryId.create().id;
     const BasketCategoryResult = makeSut(
       {
-        changesLimit: 1,
+        changesLimit: ChangesLimitValueObject.create(1).getResult(),
         description: 'Valid Category',
       },
       createdId,
     ).getResult();
     expect(BasketCategoryResult.description).toBe('valid category');
-    expect(BasketCategoryResult.changesLimit).toBe(1);
+    expect(BasketCategoryResult.changesLimit.value).toBe(1);
     expect(BasketCategoryResult.isDeleted).toBe(false);
     expect(BasketCategoryResult.id.toString()).toBe(createdId.toString());
   });
 
-  it('Should create a valid Basket Category converting a negative changesLimit in positive value', () => {
-    const BasketCategoryResult = makeSut({
-      changesLimit: -5,
-      description: 'Valid Category',
-    }).getResult();
-    expect(BasketCategoryResult.description).toBe('valid category');
-    expect(BasketCategoryResult.changesLimit).toBe(5);
-    expect(BasketCategoryResult.isDeleted).toBe(false);
-  });
-
   it('Should fail if provide a short description', () => {
-    const BasketCategoryResult = makeSut({ description: 'a', changesLimit: 1 });
+    const BasketCategoryResult = makeSut({
+      description: 'a',
+      changesLimit: ChangesLimitValueObject.create(1).getResult(),
+    });
     expect(BasketCategoryResult.isFailure).toBe(true);
     expect(BasketCategoryResult.isSuccess).toBe(false);
     expect(BasketCategoryResult.error).toBe(
@@ -68,23 +60,13 @@ describe('BasketCategory', () => {
   it('Should fail if provide a long description', () => {
     const BasketCategoryResult = makeSut({
       description: 'this is a long description to fail the test',
-      changesLimit: 1,
+      changesLimit: ChangesLimitValueObject.create(1).getResult(),
     });
     expect(BasketCategoryResult.isFailure).toBe(true);
     expect(BasketCategoryResult.isSuccess).toBe(false);
     expect(BasketCategoryResult.error).toBe(
       ERROR_BASKET_CATEGORY_DESCRIPTION_LENGTH,
     );
-  });
-
-  it('Should fail if provide a change limit greater than 20', () => {
-    const BasketCategoryResult = makeSut({
-      description: 'Valid Description',
-      changesLimit: 21,
-    });
-    expect(BasketCategoryResult.isFailure).toBe(true);
-    expect(BasketCategoryResult.isSuccess).toBe(false);
-    expect(BasketCategoryResult.error).toBe(ERROR_BASKET_CATEGORY_MAX_VALUE);
   });
 
   it('Should create a not deleted entity', () => {
@@ -98,7 +80,7 @@ describe('BasketCategory', () => {
     const BasketCategoryResult = makeSut({
       description: 'Valid Category',
       isDeleted: true,
-      changesLimit: 1,
+      changesLimit: ChangesLimitValueObject.create(1).getResult(),
     });
     expect(BasketCategoryResult.isFailure).toBe(false);
     expect(BasketCategoryResult.isSuccess).toBe(true);
@@ -117,26 +99,9 @@ describe('BasketCategory', () => {
     expect(dateUpdatedAtAfterDelete).not.toEqual(dateUpdatedAtBeforeDelete);
   });
 
-  it('Should convert to positive a negative value provided as changeLimit ', async () => {
-    const category = makeSut({
-      changesLimit: -7,
-      description: 'Convert Negative',
-    });
-    expect(category.getResult().changesLimit).toBe(7);
-  });
-
-  it('Should fail if provide a change limit greater than 20 ', async () => {
-    const category = makeSut({
-      changesLimit: 21,
-      description: 'Invalid Category',
-    });
-    expect(category.isFailure).toBe(true);
-    expect(category.error).toBe(ERROR_BASKET_CATEGORY_MAX_VALUE);
-  });
-
   it('Should fail if provide description greater than 20 ', async () => {
     const category = makeSut({
-      changesLimit: 3,
+      changesLimit: ChangesLimitValueObject.create(1).getResult(),
       description: random.words(20),
     });
     expect(category.isFailure).toBe(true);

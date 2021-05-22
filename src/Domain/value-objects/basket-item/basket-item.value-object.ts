@@ -1,7 +1,7 @@
 import { Result, ValueObject } from 'types-ddd';
 import { ProductId } from '@domain/aggregates-root';
 import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.value-object';
-import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
+import { QuantityAvailableValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
 import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
 import { UnitOfMeasurementValueObject } from '../unit-of-measurement/unit-of-measurement.value-objects';
 import { ImageValueObject } from '../image/image.value-object';
@@ -9,8 +9,8 @@ import { ImageValueObject } from '../image/image.value-object';
 export interface BasketItemValue {
   productId: ProductId;
   exchangeFactor: ExchangeFactorValueObject;
-  quantity: QuantityInStockValueObject;
-  availableStock: QuantityInStockValueObject;
+  quantity: QuantityAvailableValueObject;
+  availableStock: QuantityAvailableValueObject;
   description: ProductDescriptionValueObject;
   unitOfMeasurement: UnitOfMeasurementValueObject;
   image?: ImageValueObject;

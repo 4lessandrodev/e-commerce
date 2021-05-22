@@ -4,11 +4,12 @@ import { BasketDomainService } from '../basket.domain-service';
 import { BasketCategory, ProductCategory } from '@domain/entities';
 import {
   BasketDescriptionValueObject,
+  ChangesLimitValueObject,
   Currency,
   ExchangeFactorValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd/dist/src';
@@ -35,7 +36,7 @@ describe('basket.service', () => {
       isActive: true,
       isSpecial: false,
       price,
-      quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
+      quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
       unitOfMeasurement,
     },
     new UniqueEntityID('valid_id'),
@@ -47,7 +48,7 @@ describe('basket.service', () => {
   };
   //
   const basketCategory: BasketCategory = BasketCategory.create({
-    changesLimit: 2,
+    changesLimit: ChangesLimitValueObject.create(2).getResult(),
     description: 'valid_description',
   }).getResult();
   //

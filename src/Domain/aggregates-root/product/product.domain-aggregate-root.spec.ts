@@ -8,7 +8,7 @@ import {
   ProductDescriptionValueObject,
   ExchangeFactorValueObject,
   ProductInfoValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
 } from '@domain/value-objects';
 import { Product } from './product.domain-aggregate-root';
 import { ProductProps } from './product.domain-aggregate-root-interface';
@@ -51,7 +51,7 @@ describe('Product.domain-aggregate-root', () => {
           MonetaryValueObject.create(makeCurrency(10)).getResult(),
         quantityAvailable:
           props?.quantityAvailable ??
-          QuantityInStockValueObject.create(10).getResult(),
+          QuantityAvailableValueObject.create(10).getResult(),
         image:
           props?.image ??
           ImageValueObject.create(image.imageUrl(200, 450)).getResult(),
@@ -91,7 +91,7 @@ describe('Product.domain-aggregate-root', () => {
     const product = Product.create({
       description:
         ProductDescriptionValueObject.create('Maçã Brasileira').getResult(),
-      quantityAvailable: QuantityInStockValueObject.create(2).getResult(),
+      quantityAvailable: QuantityAvailableValueObject.create(2).getResult(),
       exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
       category: ProductCategory.create({ description: 'Frutas' }).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
@@ -130,7 +130,7 @@ describe('Product.domain-aggregate-root', () => {
     const createdProduct = makeSut().getResult();
     expect(createdProduct.quantityAvailable.value).toBe(10);
     createdProduct.launchStock(
-      QuantityInStockValueObject.create(200).getResult(),
+      QuantityAvailableValueObject.create(200).getResult(),
     );
     expect(createdProduct.quantityAvailable.value).toBe(200);
   });
@@ -141,7 +141,7 @@ describe('Product.domain-aggregate-root', () => {
       {
         description:
           ProductDescriptionValueObject.create('Maçã Brasileira').getResult(),
-        quantityAvailable: QuantityInStockValueObject.create(2).getResult(),
+        quantityAvailable: QuantityAvailableValueObject.create(2).getResult(),
         exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
         category: ProductCategory.create({ description: 'Frutas' }).getResult(),
         unitOfMeasurement:

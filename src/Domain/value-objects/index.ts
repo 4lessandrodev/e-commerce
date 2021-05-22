@@ -22,3 +22,4 @@ export * from './exchange-factor/exchange-factor.value-object';
 export * from './order-status/order-status.value-object';
 export * from './delivery-address/delivery-address.value-object';
 export * from './order-id/order-id.value-object';
+export * from './changes-limit/changes-limit.value-object';

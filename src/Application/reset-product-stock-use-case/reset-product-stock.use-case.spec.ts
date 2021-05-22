@@ -6,7 +6,7 @@ import {
   ExchangeFactorValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { ProductCategory } from '@domain/entities';
@@ -26,7 +26,7 @@ describe('reset-product-stock.use-case', () => {
     price: MonetaryValueObject.create(
       Currency.create(10).getResult(),
     ).getResult(),
-    quantityAvailable: QuantityInStockValueObject.create(7).getResult(),
+    quantityAvailable: QuantityAvailableValueObject.create(7).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
 

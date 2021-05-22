@@ -1,7 +1,11 @@
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { Basket } from '@domain/aggregates-root';
 import { BasketCategory } from '@domain/entities';
-import { Currency, MonetaryValueObject } from '@domain/value-objects';
+import {
+  ChangesLimitValueObject,
+  Currency,
+  MonetaryValueObject,
+} from '@domain/value-objects';
 import { BasketDescriptionValueObject } from '@domain/value-objects';
 import { UpdateBasketUseCase } from './update-basket.use-case';
 
@@ -25,7 +29,7 @@ describe('update-basket.use-case', () => {
 
     basket = Basket.create({
       category: BasketCategory.create({
-        changesLimit: 1,
+        changesLimit: ChangesLimitValueObject.create(1).getResult(),
         description: 'valid_description',
       }).getResult(),
       description:

@@ -3,10 +3,12 @@ import { IUseCase, Result } from 'types-ddd';
 import { BasketCategoryRepositoryInterface } from '@repo/basket-category-repository.interface';
 import { RegisterBasketCategoryDto } from './register-basket-category.dto';
 import { BasketCategory } from '@domain/entities';
+import { ChangesLimitValueObject } from '@domain/value-objects';
 
 @Injectable()
 export class RegisterBasketCategoryUseCase
-  implements IUseCase<RegisterBasketCategoryDto, Result<void>> {
+  implements IUseCase<RegisterBasketCategoryDto, Result<void>>
+{
   //
   constructor(
     @Inject('BasketCategoryRepository')
@@ -15,8 +17,18 @@ export class RegisterBasketCategoryUseCase
 
   async execute(dto: RegisterBasketCategoryDto): Promise<Result<void>> {
     //
+    const changesLimitOrError = ChangesLimitValueObject.create(
+      dto.changesLimit,
+    );
+
+    if (changesLimitOrError.isFailure) {
+      return Result.fail<void>(changesLimitOrError.error.toString());
+    }
+
+    const changesLimit = changesLimitOrError.getResult();
+
     const categoryOrError = BasketCategory.create({
-      changesLimit: dto.changesLimit,
+      changesLimit,
       description: dto.description,
     });
 
@@ -27,9 +39,10 @@ export class RegisterBasketCategoryUseCase
     const category = categoryOrError.getResult();
 
     try {
-      const alreadyExistCategoryWithDescription = await this.basketCategoryRepo.exists(
-        { description: dto.description.toLowerCase() },
-      );
+      const alreadyExistCategoryWithDescription =
+        await this.basketCategoryRepo.exists({
+          description: dto.description.toLowerCase(),
+        });
 
       if (alreadyExistCategoryWithDescription) {
         return Result.fail<void>(

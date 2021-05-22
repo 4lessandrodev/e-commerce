@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ItemDto } from '@app/register-basket-use-case/register-basket.dto';
 import { Basket, Product, ProductId } from '../aggregates-root';
 import { BasketItemValueObject } from '../value-objects';
-import { QuantityInStockValueObject } from '../value-objects';
+import { QuantityAvailableValueObject } from '../value-objects';
 import { Tag } from '../entities';
 import { BasketServiceInterface } from './interfaces/basket-service.interface';
 import { UniqueEntityID } from 'types-ddd';
@@ -28,7 +28,7 @@ export class BasketDomainService implements BasketServiceInterface {
       );
       //
       if (itemFromDto) {
-        const quantity = QuantityInStockValueObject.create(
+        const quantity = QuantityAvailableValueObject.create(
           itemFromDto.quantity,
         ).getResult();
         //

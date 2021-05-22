@@ -3,7 +3,7 @@ import {
   ImageValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
 } from '@domain/value-objects';
 import { ProductCategory } from '@domain/entities';
 import { SeparateProduct } from './separate-product.domain-entity';
@@ -22,7 +22,7 @@ describe('separate-product.domain-entity', () => {
       price: MonetaryValueObject.create(
         Currency.create(21).getResult(),
       ).getResult(),
-      quantity: QuantityInStockValueObject.create(10).getResult(),
+      quantity: QuantityAvailableValueObject.create(10).getResult(),
     });
     expect(separateProduct.getResult()).toBeDefined();
   });
@@ -40,7 +40,7 @@ describe('separate-product.domain-entity', () => {
       price: MonetaryValueObject.create(
         Currency.create(21).getResult(),
       ).getResult(),
-      quantity: QuantityInStockValueObject.create(10).getResult(),
+      quantity: QuantityAvailableValueObject.create(10).getResult(),
     }).getResult();
     expect(separateProduct.subTotal.value).toBe(210);
   });
@@ -58,7 +58,7 @@ describe('separate-product.domain-entity', () => {
       price: MonetaryValueObject.create(
         Currency.create(21).getResult(),
       ).getResult(),
-      quantity: QuantityInStockValueObject.create(0).getResult(),
+      quantity: QuantityAvailableValueObject.create(0).getResult(),
     });
     expect(separateProduct.isFailure).toBe(true);
   });

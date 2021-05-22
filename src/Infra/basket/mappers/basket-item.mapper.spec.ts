@@ -3,7 +3,7 @@ import {
   BasketItemValueObject as Aggregate,
   ExchangeFactorValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { Item as Schema } from '../entities/basket.schema';
@@ -17,8 +17,8 @@ describe('basket-item.mapper', () => {
       ProductDescriptionValueObject.create('valid_description').getResult(),
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id')),
-    quantity: QuantityInStockValueObject.create(7).getResult(),
-    availableStock: QuantityInStockValueObject.create(10).getResult(),
+    quantity: QuantityAvailableValueObject.create(7).getResult(),
+    availableStock: QuantityAvailableValueObject.create(10).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
   //

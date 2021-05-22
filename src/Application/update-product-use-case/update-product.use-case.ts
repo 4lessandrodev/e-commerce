@@ -5,7 +5,7 @@ import { UpdateProductDto } from './update-product.dto';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { ProductInfoValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 
@@ -40,7 +40,7 @@ export class UpdateProductUseCase
     );
     const priceOrError = MonetaryValueObject.create(currency);
 
-    const quantityAvailableOrError = QuantityInStockValueObject.create(
+    const quantityAvailableOrError = QuantityAvailableValueObject.create(
       dto.quantityAvailable,
     );
 

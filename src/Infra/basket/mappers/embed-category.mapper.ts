@@ -2,6 +2,7 @@ import { IMapper, UniqueEntityID } from 'types-ddd';
 import { BasketCategory as Aggregate } from '@domain/entities';
 import { Category as Schema } from '../entities/category.schema';
 import { Injectable } from '@nestjs/common';
+import { ChangesLimitValueObject } from '@domain/value-objects';
 
 @Injectable()
 export class EmbedBasketCategoryMapper implements IMapper<Aggregate, Schema> {
@@ -10,7 +11,9 @@ export class EmbedBasketCategoryMapper implements IMapper<Aggregate, Schema> {
     return Aggregate.create(
       {
         description: target.description,
-        changesLimit: target.changesLimit,
+        changesLimit: ChangesLimitValueObject.create(
+          target.changesLimit,
+        ).getResult(),
       },
       new UniqueEntityID(target.id),
     ).getResult();
@@ -20,7 +23,7 @@ export class EmbedBasketCategoryMapper implements IMapper<Aggregate, Schema> {
     return {
       id: target.id.toString(),
       description: target.description,
-      changesLimit: target.changesLimit,
+      changesLimit: target.changesLimit.value,
     };
   }
   //

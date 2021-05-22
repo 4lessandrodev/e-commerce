@@ -5,11 +5,12 @@ import { UniqueEntityID } from 'types-ddd';
 import {
   BasketDescriptionValueObject,
   BasketItemValueObject,
+  ChangesLimitValueObject,
   Currency,
   ExchangeFactorValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { BasketCategory } from '@domain/entities';
@@ -26,8 +27,8 @@ describe('remove-products-from-basket.use-case', () => {
       ProductDescriptionValueObject.create('valid_description').getResult(),
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id1')),
-    quantity: QuantityInStockValueObject.create(10).getResult(),
-    availableStock: QuantityInStockValueObject.create(10).getResult(),
+    quantity: QuantityAvailableValueObject.create(10).getResult(),
+    availableStock: QuantityAvailableValueObject.create(10).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
   //
@@ -36,8 +37,8 @@ describe('remove-products-from-basket.use-case', () => {
       ProductDescriptionValueObject.create('valid_description').getResult(),
     exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
     productId: ProductId.create(new UniqueEntityID('valid_id2')),
-    quantity: QuantityInStockValueObject.create(10).getResult(),
-    availableStock: QuantityInStockValueObject.create(10).getResult(),
+    quantity: QuantityAvailableValueObject.create(10).getResult(),
+    availableStock: QuantityAvailableValueObject.create(10).getResult(),
     unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
   }).getResult();
   //
@@ -63,7 +64,7 @@ describe('remove-products-from-basket.use-case', () => {
     basket = Basket.create(
       {
         category: BasketCategory.create({
-          changesLimit: 1,
+          changesLimit: ChangesLimitValueObject.create(1).getResult(),
           description: 'valid_description',
         }).getResult(),
         description:

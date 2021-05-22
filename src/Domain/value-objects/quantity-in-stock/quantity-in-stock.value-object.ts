@@ -4,12 +4,12 @@ import { Result, ValueObject } from 'types-ddd';
 import { validateNumberBetweenMaxAndMin } from '@domain/utils';
 import { ERROR_INVALID_STOCK_VALUE } from './quantity-in-stock-errors.domain';
 
-export interface QuantityInStockProps {
+export interface QuantityAvailableProps {
   value: number;
 }
 
-export class QuantityInStockValueObject extends ValueObject<QuantityInStockProps> {
-  private constructor(props: QuantityInStockProps) {
+export class QuantityAvailableValueObject extends ValueObject<QuantityAvailableProps> {
+  private constructor(props: QuantityAvailableProps) {
     super(props);
   }
 
@@ -17,7 +17,7 @@ export class QuantityInStockValueObject extends ValueObject<QuantityInStockProps
     return parseInt(this.props.value.toFixed(0), 10);
   }
 
-  public static create(quantity: number): Result<QuantityInStockValueObject> {
+  public static create(quantity: number): Result<QuantityAvailableValueObject> {
     //
     const isValidQuantity = validateNumberBetweenMaxAndMin({
       max: MAX_STOCK_QUANTITY_VALUE,
@@ -25,10 +25,12 @@ export class QuantityInStockValueObject extends ValueObject<QuantityInStockProps
       value: quantity,
     });
     if (!isValidQuantity) {
-      return Result.fail<QuantityInStockValueObject>(ERROR_INVALID_STOCK_VALUE);
+      return Result.fail<QuantityAvailableValueObject>(
+        ERROR_INVALID_STOCK_VALUE,
+      );
     }
-    return Result.ok<QuantityInStockValueObject>(
-      new QuantityInStockValueObject({ value: quantity }),
+    return Result.ok<QuantityAvailableValueObject>(
+      new QuantityAvailableValueObject({ value: quantity }),
     );
   }
 }

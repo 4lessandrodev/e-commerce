@@ -4,7 +4,7 @@ import { Currency, ImageValueObject } from '@domain/value-objects';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { AvailableInitialsType } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductCategory } from '@domain/entities';
 import * as currencyUtil from 'currency.js';
 
@@ -37,7 +37,7 @@ export class SeparateProduct extends Entity<ProductProps> {
     return this.props.price;
   }
 
-  get quantity(): QuantityInStockValueObject {
+  get quantity(): QuantityAvailableValueObject {
     return this.props.quantity;
   }
 

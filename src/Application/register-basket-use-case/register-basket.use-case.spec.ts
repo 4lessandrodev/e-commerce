@@ -8,11 +8,12 @@ import { Product } from '@domain/aggregates-root';
 import { BasketCategory, ProductCategory, Tag } from '@domain/entities';
 import { RegisterBasketUseCase } from './register-basket.use-case';
 import {
+  ChangesLimitValueObject,
   Currency,
   ExchangeFactorValueObject,
   MonetaryValueObject,
   ProductDescriptionValueObject,
-  QuantityInStockValueObject,
+  QuantityAvailableValueObject,
 } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/basket-info-errors.domain';
@@ -40,7 +41,7 @@ describe('register-basket.use-case', () => {
       price: MonetaryValueObject.create(
         Currency.create(100).getResult(),
       ).getResult(),
-      quantityAvailable: QuantityInStockValueObject.create(10).getResult(),
+      quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
     },
     new UniqueEntityID('valid_id'),
@@ -48,7 +49,7 @@ describe('register-basket.use-case', () => {
   //
   // fake category
   const category = BasketCategory.create({
-    changesLimit: 2,
+    changesLimit: ChangesLimitValueObject.create(2).getResult(),
     description: 'valid_description',
   }).getResult();
   //

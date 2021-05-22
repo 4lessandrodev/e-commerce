@@ -3,12 +3,13 @@ import { UniqueEntityID } from 'types-ddd';
 import { BasketCategory, CommentId, Tag } from '@domain/entities';
 import { Basket as Schema } from '../entities/basket.schema';
 import {
+  ChangesLimitValueObject,
   ImageValueObject,
   MonetaryValueObject,
   UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { Currency, BasketInfoValueObject } from '@domain/value-objects';
@@ -29,7 +30,7 @@ describe('basket.mapper', () => {
     {
       category: BasketCategory.create(
         {
-          changesLimit: 2,
+          changesLimit: ChangesLimitValueObject.create(2).getResult(),
           description: 'valid_description',
         },
         new UniqueEntityID('valid_id'),
@@ -55,8 +56,8 @@ describe('basket.mapper', () => {
             ).getResult(),
           exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
           productId: ProductId.create(new UniqueEntityID('valid_id')),
-          quantity: QuantityInStockValueObject.create(7).getResult(),
-          availableStock: QuantityInStockValueObject.create(7).getResult(),
+          quantity: QuantityAvailableValueObject.create(7).getResult(),
+          availableStock: QuantityAvailableValueObject.create(7).getResult(),
           unitOfMeasurement:
             UnitOfMeasurementValueObject.create('CX').getResult(),
           image: undefined,

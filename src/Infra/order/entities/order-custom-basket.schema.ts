@@ -1,6 +1,7 @@
 import { Prop } from '@nestjs/mongoose';
 import { Currency } from './order.schema';
 import { Item } from './order-custom-basket-item.schema';
+import { CustomBasketCategory } from './order-custom-basket-category.schema';
 
 export class CustomBasket {
   @Prop({
@@ -29,8 +30,8 @@ export class CustomBasket {
   })
   description!: string;
 
-  @Prop({ type: String, required: false })
-  category!: string;
+  @Prop({ type: Object, required: false })
+  category!: CustomBasketCategory;
 
   @Prop({ type: { type: Object, required: false }, default: [] })
   items!: Item[];

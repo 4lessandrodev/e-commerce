@@ -5,7 +5,7 @@ import { ProductInfoValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { RegisterProductDto } from './register-product.dto';
 import { Inject, Injectable } from '@nestjs/common';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { Product } from '@domain/aggregates-root';
 import { IUseCase, Result } from 'types-ddd';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
@@ -53,7 +53,7 @@ export class RegisterProductUseCase
       dto.description,
     );
 
-    const quantityAvailableOrError = QuantityInStockValueObject.create(
+    const quantityAvailableOrError = QuantityAvailableValueObject.create(
       dto.quantityAvailable,
     );
 

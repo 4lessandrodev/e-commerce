@@ -5,7 +5,7 @@ import {
 } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { Item as Schema } from '../entities/basket.schema';
 import { ProductId } from '@domain/aggregates-root';
@@ -22,8 +22,10 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
         target.exchangeFactor,
       ).getResult(),
       productId: ProductId.create(new UniqueEntityID(target.productId)),
-      quantity: QuantityInStockValueObject.create(target.quantity).getResult(),
-      availableStock: QuantityInStockValueObject.create(
+      quantity: QuantityAvailableValueObject.create(
+        target.quantity,
+      ).getResult(),
+      availableStock: QuantityAvailableValueObject.create(
         target.availableStock,
       ).getResult(),
       unitOfMeasurement: UnitOfMeasurementValueObject.create(

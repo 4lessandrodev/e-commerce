@@ -5,7 +5,7 @@ import { ProductInfoValueObject } from '@domain/value-objects';
 import { ExchangeFactorValueObject } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { UnitOfMeasurementValueObject } from '@domain/value-objects';
-import { QuantityInStockValueObject } from '@domain/value-objects';
+import { QuantityAvailableValueObject } from '@domain/value-objects';
 
 export interface ProductProps extends BaseDomainEntity {
   description: ProductDescriptionValueObject;
@@ -15,7 +15,7 @@ export interface ProductProps extends BaseDomainEntity {
   isSpecial: boolean;
   price: MonetaryValueObject;
   isActive: boolean;
-  quantityAvailable: QuantityInStockValueObject;
+  quantityAvailable: QuantityAvailableValueObject;
   image?: ImageValueObject;
   numberOfRatings?: number;
   ratingAverage?: number;
