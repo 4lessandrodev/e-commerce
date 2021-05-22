@@ -28,6 +28,7 @@ export class AfterProductUpdated implements IHandle<ProductDomainEvent> {
       description: event.product.description.value,
       availableStock: event.product.quantityAvailable.value,
       unitOfMeasurement: event.product.unitOfMeasurement.value,
+      image: event.product.image?.value,
     };
 
     await this.updateBasketItemUseCase.execute(item);

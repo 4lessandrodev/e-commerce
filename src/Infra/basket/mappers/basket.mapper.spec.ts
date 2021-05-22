@@ -59,6 +59,7 @@ describe('basket.mapper', () => {
           availableStock: QuantityInStockValueObject.create(7).getResult(),
           unitOfMeasurement:
             UnitOfMeasurementValueObject.create('CX').getResult(),
+          image: undefined,
         }).getResult(),
       ],
       numberOfRatings: 3,
@@ -102,6 +103,7 @@ describe('basket.mapper', () => {
         quantity: 7,
         availableStock: 7,
         unitOfMeasurement: 'CX',
+        image: undefined,
       },
     ],
     numberOfRatings: 3,

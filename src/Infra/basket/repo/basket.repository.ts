@@ -75,6 +75,7 @@ export class BasketRepository implements BasketRepositoryInterface {
             'items.$[].description': item.description,
             'items.$[].exchangeFactor': item.exchangeFactor,
             'items.$[].unitOfMeasurement': item.unitOfMeasurement,
+            'items.$[].image': item.image,
           },
         },
         { multi: true },

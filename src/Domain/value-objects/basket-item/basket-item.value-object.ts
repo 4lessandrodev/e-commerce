@@ -4,6 +4,7 @@ import { ExchangeFactorValueObject } from '../exchange-factor/exchange-factor.va
 import { QuantityInStockValueObject } from '../quantity-in-stock/quantity-in-stock.value-object';
 import { ProductDescriptionValueObject } from '../product-description/product-description.value-object';
 import { UnitOfMeasurementValueObject } from '../unit-of-measurement/unit-of-measurement.value-objects';
+import { ImageValueObject } from '../image/image.value-object';
 
 export interface BasketItemValue {
   productId: ProductId;
@@ -12,6 +13,7 @@ export interface BasketItemValue {
   availableStock: QuantityInStockValueObject;
   description: ProductDescriptionValueObject;
   unitOfMeasurement: UnitOfMeasurementValueObject;
+  image?: ImageValueObject;
 }
 
 export interface BasketItemProps {

@@ -53,7 +53,7 @@ export class Order {
   clientId!: string;
 
   @Prop({ type: Object, required: true })
-  deliveryAddress!: OrderAddress;
+  deliveryOrCollectionAddress!: OrderAddress;
 
   @Prop({ type: [{ type: Object }], default: [] })
   separateProducts!: SeparateProducts[];
@@ -72,6 +72,9 @@ export class Order {
 
   @Prop({ type: Boolean, required: true })
   includesEcobag!: boolean;
+
+  @Prop({ type: Boolean, required: true })
+  isTheOrderForCollection!: boolean;
 
   @Prop({ type: Object, required: true, default: 0 })
   amount!: Currency;

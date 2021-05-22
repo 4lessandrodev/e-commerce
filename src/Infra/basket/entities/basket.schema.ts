@@ -36,6 +36,9 @@ export class Item {
   description!: string;
 
   @Prop()
+  image?: string;
+
+  @Prop()
   unitOfMeasurement!: UnitTypes;
 
   @Prop()
