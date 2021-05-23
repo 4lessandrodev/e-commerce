@@ -1,19 +1,19 @@
 import { MonetaryValueObject } from '@domain/value-objects';
 import { UserId } from '@domain/aggregates-root';
 import { OrderStatusValueObject } from '@domain/value-objects';
-import { DeliveryOrCollectionAddressValueObject } from '@domain/value-objects';
+import { DeliveryOrCollectionAddress } from '@domain/entities';
 import { OrderIdValueObject } from '@domain/value-objects';
 import { UserNameValueObject } from '@domain/value-objects';
-import { SeparateProduct } from '@domain/entities';
+import { CustomBasket, SeparateProduct } from '@domain/entities';
 
 export interface OrderProps {
   orderNumber: OrderIdValueObject;
   clientName: UserNameValueObject;
   clientId: UserId;
   isTheOrderForCollection: boolean;
-  deliveryOrCollectionAddress: DeliveryOrCollectionAddressValueObject;
+  deliveryOrCollectionAddress: DeliveryOrCollectionAddress;
   separateProducts: SeparateProduct[];
-  customBaskets: any[]; // Create Entity
+  customBaskets: CustomBasket[]; // Create Entity
   basketPacks: any[]; // Create Entity
   status: OrderStatusValueObject;
   CostOfFreight: MonetaryValueObject;

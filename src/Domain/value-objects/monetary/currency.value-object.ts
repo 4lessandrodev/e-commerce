@@ -11,9 +11,9 @@ import {
 import * as currencyUtil from 'currency.js';
 
 export enum AvailableCurrency {
-  BRL = 'Brazilian Real',
-  USD = 'American Dollar',
-  EUR = 'Euro',
+  BRL = 'BRL',
+  USD = 'USD',
+  EUR = 'EUR',
 }
 
 export enum AvailableLocale {
@@ -26,9 +26,12 @@ export enum AvailableLocale {
   'en-ZA' = 'en-ZA',
 }
 
+export type localeType = keyof typeof AvailableLocale;
+export type currencyType = keyof typeof AvailableCurrency;
+
 export interface CurrencyProps {
   value: number;
-  symbol: keyof typeof AvailableCurrency;
+  symbol: currencyType;
   /**
    * BR = `pt-BR`
    * PT = `pt-PT`
@@ -38,7 +41,7 @@ export interface CurrencyProps {
    * US = `en-US`
    * ZA = `en-ZA`
    */
-  locale: keyof typeof AvailableLocale;
+  locale: localeType;
 }
 
 export class Currency extends ValueObject<CurrencyProps> {
@@ -72,6 +75,30 @@ export class Currency extends ValueObject<CurrencyProps> {
   private static isValidLocale = (locale: AvailableLocale) => {
     return validateEnumIncludesValue({ enum: AvailableLocale, value: locale });
   };
+
+  multiply(value: number): void {
+    this.props.value = currencyUtil(this.props.value).multiply(value).value;
+  }
+
+  divide(value: number): void {
+    this.props.value = currencyUtil(this.props.value).divide(value).value;
+  }
+
+  sum(value: number): void {
+    this.props.value = currencyUtil(this.props.value).add(value).value;
+  }
+
+  subtract(value: number) {
+    this.props.value = currencyUtil(this.props.value).subtract(value).value;
+  }
+
+  setLocale(locale: localeType): void {
+    this.props.locale = locale;
+  }
+
+  setSymbol(symbol: currencyType): void {
+    this.props.symbol = symbol;
+  }
 
   public static create(value: number): Result<Currency> {
     //

@@ -1,11 +1,16 @@
 import {
+  AddressComplementValueObject,
+  AddressNumberValueObject,
   Currency,
-  DeliveryOrCollectionAddressValueObject,
   MonetaryValueObject,
   OrderIdValueObject,
   OrderStatusValueObject,
+  StreetNameValueObject,
   UserNameValueObject,
+  ZipCodeValueObject,
 } from '@domain/value-objects';
+import { DeliveryOrCollectionAddress } from '@domain/entities';
+import { RegionId } from '../region/region-id.domain-aggregate-root';
 import { UserId } from '../user/UserId.domain-aggregate-root';
 import { Order } from './order.domain-aggregate-root';
 
@@ -23,16 +28,14 @@ describe('order.domain-aggregate-root.spec', () => {
       clientName: UserNameValueObject.create('valid_name').getResult(),
       customBaskets: [],
       isTheOrderForCollection: true,
-      deliveryOrCollectionAddress:
-        DeliveryOrCollectionAddressValueObject.create({
-          city: 'valid_city',
-          complement: 'valid_complement',
-          number: '70b',
-          region: 'valid_region',
-          state: 'RJ',
-          street: 'valid_street',
-          zipCode: '75520-140',
-        }).getResult(),
+      deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
+        complement:
+          AddressComplementValueObject.create('valid_street').getResult(),
+        number: AddressNumberValueObject.create('77b').getResult(),
+        regionId: RegionId.create(),
+        street: StreetNameValueObject.create('valid_street').getResult(),
+        zipCode: ZipCodeValueObject.create('75520104').getResult(),
+      }).getResult(),
       ecobagFee: monetary,
       includesEcobag: false,
       orderNumber: OrderIdValueObject.create().getResult(),

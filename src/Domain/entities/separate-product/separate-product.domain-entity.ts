@@ -1,4 +1,4 @@
-import { Entity, Result } from 'types-ddd/dist/src';
+import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
 import { ProductProps } from './separate-product.domain-entity.interface';
 import { Currency, ImageValueObject } from '@domain/value-objects';
 import { MonetaryValueObject } from '@domain/value-objects';
@@ -9,8 +9,8 @@ import { ProductCategory } from '@domain/entities';
 import * as currencyUtil from 'currency.js';
 
 export class SeparateProduct extends Entity<ProductProps> {
-  private constructor(props: ProductProps) {
-    super(props);
+  private constructor(props: ProductProps, id?: UniqueEntityID) {
+    super(props, id);
   }
 
   get description(): ProductDescriptionValueObject {
@@ -54,13 +54,16 @@ export class SeparateProduct extends Entity<ProductProps> {
     return subTotalAsValueObject;
   }
 
-  public static create(props: ProductProps): Result<SeparateProduct> {
+  public static create(
+    props: ProductProps,
+    id?: UniqueEntityID,
+  ): Result<SeparateProduct> {
     const isValidQuantity = props.quantity.value >= 1;
     if (!isValidQuantity) {
       return Result.fail<SeparateProduct>(
         'Invalid quantity to individual product. Quantity must be greater than 0',
       );
     }
-    return Result.ok<SeparateProduct>(new SeparateProduct(props));
+    return Result.ok<SeparateProduct>(new SeparateProduct(props, id));
   }
 }

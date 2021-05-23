@@ -2,7 +2,7 @@ import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
 import { SeparateProduct } from '@domain/entities';
 import { MonetaryValueObject } from '@domain/value-objects';
 import { UserNameValueObject } from '@domain/value-objects';
-import { DeliveryOrCollectionAddressValueObject } from '@domain/value-objects';
+import { DeliveryOrCollectionAddress } from '@domain/entities';
 import { OrderStatusValueObject } from '@domain/value-objects';
 import { OrderIdValueObject } from '@domain/value-objects';
 import { UserId } from '../user/UserId.domain-aggregate-root';
@@ -29,7 +29,7 @@ export class Order extends AggregateRoot<OrderProps> {
   get isTheOrderForCollection(): boolean {
     return this.props.isTheOrderForCollection;
   }
-  get deliveryOrCollectionAddress(): DeliveryOrCollectionAddressValueObject {
+  get deliveryOrCollectionAddress(): DeliveryOrCollectionAddress {
     return this.props.deliveryOrCollectionAddress;
   }
   get separateProducts(): SeparateProduct[] {

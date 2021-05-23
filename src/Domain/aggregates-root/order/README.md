@@ -12,9 +12,7 @@
     "street": "String",
     "number": "String",
     "complement": "String",
-    "region": "String",
-    "city": "String",
-    "state": "Enum"
+    "regionId": "String"
   },
   "separateProducts": [
     {

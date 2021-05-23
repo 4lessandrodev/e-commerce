@@ -9,8 +9,8 @@ import { MonetaryValueObject } from '@domain/value-objects';
 import { BasketCategory } from '@domain/entities';
 
 export class CustomBasket extends Entity<CustomBasketProps> {
-  private constructor(props: CustomBasketProps) {
-    super(props);
+  private constructor(props: CustomBasketProps, id?: UniqueEntityID) {
+    super(props, id);
   }
 
   get id(): UniqueEntityID {
@@ -158,7 +158,10 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     );
   }
 
-  public static create(props: CustomBasketProps): Result<CustomBasket> {
-    return Result.ok<CustomBasket>(new CustomBasket(props));
+  public static create(
+    props: CustomBasketProps,
+    id?: UniqueEntityID,
+  ): Result<CustomBasket> {
+    return Result.ok<CustomBasket>(new CustomBasket(props, id));
   }
 }

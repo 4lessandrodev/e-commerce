@@ -17,11 +17,11 @@ export class AddressNumberValueObject extends ValueObject<AddressNumberProps> {
     return this.props.value;
   }
 
-  public static create(street: string): Result<AddressNumberValueObject> {
+  public static create(number: string): Result<AddressNumberValueObject> {
     const isValidStreetLength = validateStringLengthBetweenMaxAndMin({
       maxLength: MAX_ADDRESS_NUMBER_LENGTH,
       minLength: MIN_ADDRESS_NUMBER_LENGTH,
-      text: street,
+      text: number,
     });
 
     if (!isValidStreetLength) {
@@ -29,7 +29,7 @@ export class AddressNumberValueObject extends ValueObject<AddressNumberProps> {
     }
 
     return Result.ok<AddressNumberValueObject>(
-      new AddressNumberValueObject({ value: street }),
+      new AddressNumberValueObject({ value: number }),
     );
   }
 }
