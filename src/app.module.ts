@@ -7,6 +7,7 @@ import { RegionModule } from './Infra/region/region.module';
 import { ProductModule } from './Infra/product/product.module';
 import { BasketModule } from './Infra/basket/basket.module';
 import { Configs } from './Infra/configs/mongo.config';
+import { OrderAddressModule } from './Infra/order-address/order-address.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Configs } from './Infra/configs/mongo.config';
     RegionModule,
     ProductModule,
     BasketModule,
+    OrderAddressModule,
   ],
   controllers: [],
   providers: [],

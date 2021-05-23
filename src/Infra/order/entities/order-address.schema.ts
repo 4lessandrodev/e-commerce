@@ -16,7 +16,7 @@ export class OrderAddress {
   complement!: string;
 
   @Prop({ type: String, required: true, index: true })
-  region!: string;
+  regionId!: string;
 
   @Prop({ required: true, type: String })
   city!: string;

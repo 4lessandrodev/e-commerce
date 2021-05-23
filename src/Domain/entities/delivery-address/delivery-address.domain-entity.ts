@@ -18,6 +18,30 @@ export class DeliveryOrCollectionAddress extends Entity<DeliveryAddressProps> {
     super(props, id);
   }
 
+  get id(): UniqueEntityID {
+    return this._id;
+  }
+
+  get zipCode(): ZipCodeValueObject {
+    return this.props.zipCode;
+  }
+
+  get street(): StreetNameValueObject {
+    return this.props.street;
+  }
+
+  get number(): AddressNumberValueObject {
+    return this.props.number;
+  }
+
+  get complement(): AddressComplementValueObject {
+    return this.props.complement;
+  }
+
+  get regionId(): RegionId {
+    return this.props.regionId;
+  }
+
   public static create(
     props: DeliveryAddressProps,
     id?: UniqueEntityID,
