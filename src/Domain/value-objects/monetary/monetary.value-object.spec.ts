@@ -38,10 +38,12 @@ describe('Monetary.value-object.ts', () => {
 
   it('Should return a string currency format', () => {
     const MonetaryCreateResult = makeSut(10).monetary.getResult();
-    expect(MonetaryCreateResult.getCurrencyStringValue()).toBeDefined();
+    expect(
+      MonetaryCreateResult.getCurrencyStringValueWithSymbol(),
+    ).toBeDefined();
     expect(MonetaryCreateResult.isPositive()).toBe(true);
     expect(
-      MonetaryCreateResult.getCurrencyStringValue()
+      MonetaryCreateResult.getCurrencyStringValueWithSymbol()
         .toString()
         .trim()
         .replace(/\s/g, ''),

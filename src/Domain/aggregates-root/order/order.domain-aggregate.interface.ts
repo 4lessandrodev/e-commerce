@@ -13,11 +13,10 @@ export interface OrderProps {
   isTheOrderForCollection: boolean;
   deliveryOrCollectionAddress: DeliveryOrCollectionAddress;
   separateProducts: SeparateProduct[];
-  customBaskets: CustomBasket[]; // Create Entity
+  customBaskets: CustomBasket[];
   basketPacks: any[]; // Create Entity
   status: OrderStatusValueObject;
-  CostOfFreight: MonetaryValueObject;
+  costOfFreight: MonetaryValueObject;
   includesEcobag: boolean;
-  ecobagFee: MonetaryValueObject;
-  amount: MonetaryValueObject;
+  ecoBagFee: MonetaryValueObject;
 }

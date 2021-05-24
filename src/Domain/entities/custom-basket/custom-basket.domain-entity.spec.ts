@@ -137,4 +137,26 @@ describe('custom-basket.domain-entity', () => {
 
     expect(customBasket.exchangesFactorAvailable).toBe(0);
   });
+
+  it('should calculate subtotal quantity * unit price', () => {
+    const customBasket = CustomBasket.create({
+      basketId: BasketId.create(),
+      category: BasketCategory.create({
+        description: 'valid_description',
+        changesLimit: ChangesLimitValueObject.create(5).getResult(),
+      }).getResult(),
+      currentItems: [],
+      description:
+        BasketDescriptionValueObject.create('valid_description').getResult(),
+      itemsAdded: [],
+      itemsRemoved: [],
+      quantity: QuantityAvailableValueObject.create(2).getResult(),
+      price: MonetaryValueObject.create(
+        Currency.create(10).getResult(),
+      ).getResult(),
+      image: undefined,
+    }).getResult();
+
+    expect(customBasket.subTotal.value).toBe(20);
+  });
 });

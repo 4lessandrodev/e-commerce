@@ -6,7 +6,6 @@ import { AvailableInitialsType } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductCategory } from '@domain/entities';
-import * as currencyUtil from 'currency.js';
 
 export class SeparateProduct extends Entity<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
@@ -45,11 +44,12 @@ export class SeparateProduct extends Entity<ProductProps> {
     //
     const quantityOfItems = this.quantity.value;
     const unitPrice = this.price.getAlwaysPositiveValue();
-    const subTotal = currencyUtil(unitPrice).multiply(quantityOfItems);
+    const subTotal = Currency.create(unitPrice).getResult();
 
-    const subTotalAsValueObject = MonetaryValueObject.create(
-      Currency.create(subTotal.value).getResult(),
-    ).getResult();
+    subTotal.multiply(quantityOfItems);
+
+    const subTotalAsValueObject =
+      MonetaryValueObject.create(subTotal).getResult();
 
     return subTotalAsValueObject;
   }

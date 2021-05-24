@@ -1,6 +1,6 @@
 import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-import { SeparateProduct } from '@domain/entities';
-import { MonetaryValueObject } from '@domain/value-objects';
+import { CustomBasket, SeparateProduct } from '@domain/entities';
+import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { UserNameValueObject } from '@domain/value-objects';
 import { DeliveryOrCollectionAddress } from '@domain/entities';
 import { OrderStatusValueObject } from '@domain/value-objects';
@@ -20,44 +20,85 @@ export class Order extends AggregateRoot<OrderProps> {
   get orderNumber(): OrderIdValueObject {
     return this.props.orderNumber;
   }
+
   get clientName(): UserNameValueObject {
     return this.props.clientName;
   }
+
   get clientId(): UserId {
     return this.props.clientId;
   }
+
   get isTheOrderForCollection(): boolean {
     return this.props.isTheOrderForCollection;
   }
+
   get deliveryOrCollectionAddress(): DeliveryOrCollectionAddress {
     return this.props.deliveryOrCollectionAddress;
   }
+
   get separateProducts(): SeparateProduct[] {
     return this.props.separateProducts;
   }
-  get customBaskets(): any[] {
+
+  get customBaskets(): CustomBasket[] {
     return this.props.customBaskets;
   }
+
   get basketPacks(): any[] {
     return this.props.basketPacks;
   }
+
   get status(): OrderStatusValueObject {
     return this.props.status;
   }
-  get CostOfFreight(): MonetaryValueObject {
-    return this.props.CostOfFreight;
+
+  get costOfFreight(): MonetaryValueObject {
+    return this.props.costOfFreight;
   }
+
   get includesEcobag(): boolean {
     return this.props.includesEcobag;
   }
+
   get ecobagFee(): MonetaryValueObject {
-    return this.props.ecobagFee;
+    if (this.includesEcobag) {
+      return this.props.ecoBagFee;
+    }
+    return MonetaryValueObject.create(
+      Currency.create(0).getResult(),
+    ).getResult();
   }
+
   get amount(): MonetaryValueObject {
-    /**
-     * @todo calculate total
-     */
-    return this.props.amount;
+    const subtotalCustomBaskets = this.calculateSubTotalForCustomBaskets();
+    const subtotalSeparateProducts =
+      this.calculateSubTotalForSeparateProducts();
+    const currency = Currency.create(0).getResult();
+
+    currency.sum(subtotalSeparateProducts);
+    currency.sum(subtotalCustomBaskets);
+    currency.sum(this.ecobagFee.value);
+    currency.sum(this.costOfFreight.value);
+
+    const amount = MonetaryValueObject.create(currency).getResult();
+    return amount;
+  }
+
+  private calculateSubTotalForSeparateProducts(): number {
+    const subtotalForSeparateProducts = this.separateProducts.reduce(
+      (total, product) => product.subTotal.value + total,
+      0,
+    );
+    return subtotalForSeparateProducts;
+  }
+
+  private calculateSubTotalForCustomBaskets(): number {
+    const subtotalForCustomBaskets = this.customBaskets.reduce(
+      (total, basket) => basket.subTotal.value + total,
+      0,
+    );
+    return subtotalForCustomBaskets;
   }
 
   public static create(props: OrderProps): Result<Order> {

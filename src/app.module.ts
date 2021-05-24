@@ -8,6 +8,7 @@ import { ProductModule } from './Infra/product/product.module';
 import { BasketModule } from './Infra/basket/basket.module';
 import { Configs } from './Infra/configs/mongo.config';
 import { OrderAddressModule } from './Infra/order-address/order-address.module';
+import { EcobagModule } from './Infra/ecobag/ecobag.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OrderAddressModule } from './Infra/order-address/order-address.module';
     ProductModule,
     BasketModule,
     OrderAddressModule,
+    EcobagModule,
   ],
   controllers: [],
   providers: [],

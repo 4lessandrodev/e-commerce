@@ -33,8 +33,8 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
     return currencyUtil(this.props.currency.value).value;
   }
 
-  get currency(): Currency {
-    return this.props.currency;
+  get currency(): Readonly<Currency> {
+    return Object.freeze(this.props.currency);
   }
 
   /**
@@ -49,7 +49,7 @@ export class MonetaryValueObject extends ValueObject<MonetaryProps> {
    * Returns a string currency format value always positive
    * `"R$ 20,00"`
    */
-  getCurrencyStringValue(): string {
+  getCurrencyStringValueWithSymbol(): string {
     return formatNumberToCurrency(this.props.currency);
   }
 

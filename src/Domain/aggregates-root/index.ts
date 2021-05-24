@@ -8,3 +8,4 @@ export * from './user/User.domain-aggregate-root-interface';
 export * from './region/region.domain-aggregate-root';
 export * from './region/region-id.domain-aggregate-root';
 export * from './client/client.domain-aggregate-root';
+export * from './order/order.domain-aggregate-root';

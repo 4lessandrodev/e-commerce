@@ -1,7 +1,7 @@
 import { Entity, Result, UniqueEntityID } from 'types-ddd';
 import { BasketId } from '@domain/aggregates-root';
 import { CustomBasketProps } from './custom-basket.domain-entity-interface';
-import { ImageValueObject } from '@domain/value-objects';
+import { Currency, ImageValueObject } from '@domain/value-objects';
 import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { BasketDescriptionValueObject } from '@domain/value-objects';
 import { BasketItemValueObject } from '@domain/value-objects';
@@ -111,12 +111,12 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     return availableExchangesFactor;
   }
 
-  get price(): MonetaryValueObject {
-    return this.props.price;
+  get price(): Readonly<MonetaryValueObject> {
+    return Object.freeze(this.props.price);
   }
 
-  get quantity(): QuantityAvailableValueObject {
-    return this.props.quantity;
+  get quantity(): Readonly<QuantityAvailableValueObject> {
+    return Object.freeze(this.props.quantity);
   }
 
   updateOrAddOneCurrentItemOnCustomBasket(item: BasketItemValueObject): void {
@@ -156,6 +156,20 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     this.props.itemsAdded = this.props.itemsAdded.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
     );
+  }
+
+  get subTotal(): Readonly<MonetaryValueObject> {
+    //
+    const quantity = this.quantity.value;
+    const unitPrice = this.price.value;
+    const subTotal = Currency.create(unitPrice).getResult();
+
+    subTotal.multiply(quantity);
+
+    const subTotalAsValueObject =
+      MonetaryValueObject.create(subTotal).getResult();
+
+    return Object.freeze(subTotalAsValueObject);
   }
 
   public static create(

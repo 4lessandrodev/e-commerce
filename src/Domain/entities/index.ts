@@ -20,3 +20,4 @@ export * from './address/address.domain-entity';
 export * from './separate-product/separate-product.domain-entity';
 export * from './custom-basket/custom-basket.domain-entity';
 export * from './delivery-address/delivery-address.domain-entity';
+export * from './ecobag/ecobag.domain-entity';
