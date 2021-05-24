@@ -30,7 +30,8 @@ describe('open-order.use-case', () => {
       find: jest.fn(),
       findOne: jest.fn(),
       save: jest.fn(),
-      clientHasOpenedOrder: jest.fn(),
+      hasClientOpenedOrder: jest.fn(),
+      getClientOpenedOrder: jest.fn(),
     };
 
     clientRepo = {
@@ -108,7 +109,7 @@ describe('open-order.use-case', () => {
 
   it('should open a new order', async () => {
     jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
-    jest.spyOn(orderRepo, 'clientHasOpenedOrder').mockResolvedValueOnce(false);
+    jest.spyOn(orderRepo, 'hasClientOpenedOrder').mockResolvedValueOnce(false);
     jest.spyOn(ecobagRepo, 'getPrice').mockResolvedValueOnce(ecobagPrice);
     jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
 
@@ -121,5 +122,57 @@ describe('open-order.use-case', () => {
 
     const result = await useCase.execute({ userId: 'valid_id' });
     expect(result.isSuccess).toBe(true);
+  });
+
+  it('should fail if client does not exists', async () => {
+    jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(null);
+    jest.spyOn(orderRepo, 'hasClientOpenedOrder').mockResolvedValueOnce(false);
+    jest.spyOn(ecobagRepo, 'getPrice').mockResolvedValueOnce(ecobagPrice);
+    jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
+
+    const useCase = new OpenOrderUseCase(
+      orderRepo,
+      clientRepo,
+      regionRepo,
+      ecobagRepo,
+    );
+
+    const result = await useCase.execute({ userId: 'valid_id' });
+    expect(result.isFailure).toBe(true);
+  });
+
+  it('should fail if client has an opened order', async () => {
+    jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
+    jest.spyOn(orderRepo, 'hasClientOpenedOrder').mockResolvedValueOnce(true);
+    jest.spyOn(ecobagRepo, 'getPrice').mockResolvedValueOnce(ecobagPrice);
+    jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
+
+    const useCase = new OpenOrderUseCase(
+      orderRepo,
+      clientRepo,
+      regionRepo,
+      ecobagRepo,
+    );
+
+    const result = await useCase.execute({ userId: 'valid_id' });
+    expect(result.isFailure).toBe(true);
+  });
+
+  it('should fail if client region is not active', async () => {
+    region.deactivate();
+    jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
+    jest.spyOn(orderRepo, 'hasClientOpenedOrder').mockResolvedValueOnce(false);
+    jest.spyOn(ecobagRepo, 'getPrice').mockResolvedValueOnce(ecobagPrice);
+    jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
+
+    const useCase = new OpenOrderUseCase(
+      orderRepo,
+      clientRepo,
+      regionRepo,
+      ecobagRepo,
+    );
+
+    const result = await useCase.execute({ userId: 'valid_id' });
+    expect(result.isFailure).toBe(true);
   });
 });

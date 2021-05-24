@@ -16,4 +16,5 @@ export interface CustomBasketProps extends BaseDomainEntity {
   itemsRemoved: BasketItemValueObject[];
   price: MonetaryValueObject;
   quantity: QuantityAvailableValueObject;
+  isDraft: boolean;
 }

@@ -45,6 +45,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     });
 
     expect(customBasket.getResult()).toBeDefined();
@@ -67,6 +68,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     expect(customBasket.changesLimitAvailable).toBe(2);
@@ -89,6 +91,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     expect(customBasket.exchangesFactorAvailable).toBe(6);
@@ -111,6 +114,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     expect(customBasket.exchangesFactorAvailable).toBe(4);
@@ -133,6 +137,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     expect(customBasket.exchangesFactorAvailable).toBe(0);
@@ -155,6 +160,7 @@ describe('custom-basket.domain-entity', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     expect(customBasket.subTotal.value).toBe(20);

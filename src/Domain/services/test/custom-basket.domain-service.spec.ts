@@ -49,6 +49,7 @@ describe('custom-basket.domain-service', () => {
         Currency.create(100).getResult(),
       ).getResult(),
       quantity: QuantityAvailableValueObject.create(10).getResult(),
+      isDraft: true,
     }).getResult();
 
     //

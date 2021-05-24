@@ -125,6 +125,7 @@ describe('order.domain-aggregate-root.spec', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     const separateProduct = SeparateProduct.create({
@@ -205,6 +206,7 @@ describe('order.domain-aggregate-root.spec', () => {
         Currency.create(10).getResult(),
       ).getResult(),
       image: undefined,
+      isDraft: true,
     }).getResult();
 
     const separateProduct = SeparateProduct.create({

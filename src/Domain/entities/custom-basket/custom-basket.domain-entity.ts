@@ -49,6 +49,10 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     return this.props.category.changesLimit.value;
   }
 
+  get isDraft(): boolean {
+    return this.props.isDraft;
+  }
+
   private calculateTotalExchangesFactorOnRemovedItems(): number {
     const itemsRemoved = this.itemsRemoved;
     // Calculate based on removed items (sum quantity removed)
@@ -170,6 +174,10 @@ export class CustomBasket extends Entity<CustomBasketProps> {
       MonetaryValueObject.create(subTotal).getResult();
 
     return Object.freeze(subTotalAsValueObject);
+  }
+
+  finishCustomization(): void {
+    this.props.isDraft = false;
   }
 
   public static create(

@@ -77,7 +77,8 @@
         "locale": "Enum",
         "Symbol": "Enum"
       },
-      "quantity": "Number"
+      "quantity": "Number",
+      "isDraft": "Boolean"
     }
   ],
   "basketPacks": [

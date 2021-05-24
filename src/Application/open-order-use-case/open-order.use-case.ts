@@ -37,7 +37,7 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
       }
 
       const clientAlreadyHasPendingOrder =
-        await this.orderRepo.clientHasOpenedOrder({
+        await this.orderRepo.hasClientOpenedOrder({
           clientId: client.id.toString(),
           status: 'PENDING',
         });
@@ -62,6 +62,12 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 
       if (!clientRegion) {
         return Result.fail<void>('Client region is not available for delivery');
+      }
+
+      if (!clientRegion.isActive) {
+        return Result.fail<void>(
+          'The client region is not active for delivery',
+        );
       }
 
       const ecoBagPrice = Currency.create(0).getResult();

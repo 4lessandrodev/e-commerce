@@ -48,6 +48,9 @@ export class CustomBasket {
   @Prop({ type: Number, required: true })
   exchangesFactorAvailable!: number;
 
+  @Prop({ type: Boolean, required: true })
+  isDraft!: boolean;
+
   @Prop({ type: Currency, required: true })
   price!: Currency;
 
