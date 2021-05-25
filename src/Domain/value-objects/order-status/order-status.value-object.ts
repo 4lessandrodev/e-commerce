@@ -13,6 +13,8 @@ import {
 
 export enum AvailableOrderStatus {
   'PENDING',
+  'IN_PREPARATION',
+  'OUT_FOR_DELIVERY',
   'AWAITING_PAYMENT',
   'AWAITING_FULFILLMENT',
   'AWAITING_SHIPMENT',
@@ -36,12 +38,22 @@ export interface OrderStatusProps {
  * @enum
  * `PENDING`
  * @description
- * Customer started the checkout process but did not complete it. Incomplete orders are assigned a "Pending" status and can be found under the More tab in the View Orders screen.
+ * Customer started the checkout process but did not complete it.
+ * Incomplete orders are assigned a "Pending" status and can be found under the More tab in the View Orders screen.
+ *
+ * @enum
+ * `IN_PREPARATION`
+ * Customer has completed the checkout, and the products are being prepared for delivery
+ *
+ * @enum
+ * `OUT_FOR_DELIVERY`
+ * The products have been prepared and are in transit for delivery
  *
  * @enum
  * `AWAITING_PAYMENT`
  * @description
- * Customer has completed the checkout process, but payment has yet to be confirmed. Authorize only transactions that are not yet captured have this status.
+ * Customer has completed the checkout process, but payment has yet to be confirmed.
+ * Authorize only transactions that are not yet captured have this status.
  *
  * @enum
  * `AWAITING_FULFILLMENT`
@@ -66,17 +78,21 @@ export interface OrderStatusProps {
  * @enum
  *`COMPLETED`
  * @description
- * Order has been shipped/picked up, and receipt is confirmed; client has paid for their digital product, and their file(s) are available for download.
+ * Order has been shipped/picked up, and receipt is confirmed; client has paid for their
+ * digital product, and their file(s) are available for download.
  *
  * @enum
  *`SHIPPED`
  * @description
- * Order has been shipped, but receipt has not been confirmed; seller has used the Ship Items action. A listing of all orders with a "Shipped" status can be found under the More tab of the View Orders screen.
+ * Order has been shipped, but receipt has not been confirmed; seller has used the Ship Items action.
+ * A listing of all orders with a "Shipped" status can be found under the More tab of the View Orders screen.
  *
  * @enum
  *`CANCELLED`
  * @description
- * Seller has cancelled an order, due to a stock inconsistency or other reasons. Stock levels will automatically update depending on your Inventory Settings. Cancelling an order will not refund the order. This status is triggered automatically when
+ * Seller has cancelled an order, due to a stock inconsistency or other reasons.
+ * Stock levels will automatically update depending on your Inventory Settings. Cancelling an order will not refund the order.
+ * This status is triggered automatically when
  *
  * @enum
  *`DECLINED`
@@ -86,17 +102,21 @@ export interface OrderStatusProps {
  * @enum
  *`REFUNDED`
  * @description
- * Seller has used the Refund action to refund the whole order. A listing of all orders with a "Refunded" status can be found under the More tab of the View Orders screen.
+ * Seller has used the Refund action to refund the whole order.
+ * A listing of all orders with a "Refunded" status can be found under the More tab of the View Orders screen.
  *
  * @enum
  *`DISPUTED`
  * @description
- * Customer has initiated a dispute resolution process for the PayPal transaction that paid for the order or the seller has marked the order as a fraudulent order.
+ * Customer has initiated a dispute resolution process for the PayPal transaction that paid for the order
+ * or the seller has marked the order as a fraudulent order.
  *
  * @enum
  *`MANUAL_VERIFICATION_REQUIRED`
  * @description
- * Order on hold while some aspect, such as tax-exempt documentation, is manually confirmed. Orders with this status must be updated manually. Capturing funds or other order actions will not automatically update the status of an order marked Manual Verification Required.
+ * Order on hold while some aspect, such as tax-exempt documentation, is manually confirmed.
+ * Orders with this status must be updated manually. Capturing funds or other order actions
+ * will not automatically update the status of an order marked Manual Verification Required.
  *
  * @enum
  *`PARTIALLY_REFUNDED`

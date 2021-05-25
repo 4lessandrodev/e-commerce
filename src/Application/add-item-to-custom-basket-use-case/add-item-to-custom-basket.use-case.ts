@@ -32,13 +32,29 @@ export class AddItemToCustomBasketUseCase
     private readonly openOrderUseCase: OpenOrderUseCase,
   ) {}
 
+  /**
+   *
+   * @param dto @link AddItemToCustomBasketDto
+   * @returns Result
+   *
+   * @description
+   * This use case is quite complex.
+   * It refer to application core. Basket Customization .
+   *
+   * @method getClientOpenedOrder check if client has an opened order, if not it opens a new one
+   * @method findOne check if product to add on basket exists, if not it return result of fail
+   * @method find check if custom basket already exists on draft, if not it create a new one
+   * @method findOne on create a new custom basket check if basket is active if not return result of fail
+   * @method addItemToCustomBasket calls domain service to add item on custom basket
+   * @method save finally calls save order
+   */
   async execute(dto: AddItemToCustomBasketDto): Promise<Result<void>> {
     try {
       //
-      let order: Order | null;
-      let customBasket: CustomBasket | undefined;
+      let order: Order | null; // global order
+      let customBasket: CustomBasket | undefined; // global custom basket
       const quantityToAddOrError = QuantityAvailableValueObject.create(
-        dto.quantityOfItemToAdd,
+        dto.quantityOfItemToAdd, // global quantity of item to add on custom basket
       );
 
       // Check if is valid quantity
@@ -51,22 +67,23 @@ export class AddItemToCustomBasketUseCase
       // Check if client has an opened order
       order = await this.orderRepo.getClientOpenedOrder({
         clientId: dto.clientId,
-        status: 'PENDING',
+        status: 'PENDING', // Pending is the initial status
       });
 
       if (!order) {
         // Open a new order
-        const result = await this.openOrderUseCase.execute({
+        const newOrder = await this.openOrderUseCase.execute({
           userId: dto.clientId,
         });
 
-        if (result.isFailure) {
-          return Result.fail<void>(String(result.error));
+        if (newOrder.isFailure) {
+          return Result.fail<void>(String(newOrder.error));
         }
 
+        // get created order
         order = await this.orderRepo.getClientOpenedOrder({
           clientId: dto.clientId,
-          status: 'PENDING',
+          status: 'PENDING', // Pending is the initial status
         });
       }
 
@@ -84,11 +101,14 @@ export class AddItemToCustomBasketUseCase
 
       const product = productExists;
 
-      // Custom basket on order (draft and basket id match)
+      // Custom basket on order (get custom basket by id or draft and basket id match)
+      const basketId = new UniqueEntityID(dto.basketId);
+      const customBasketId = new UniqueEntityID(dto.customBasketId);
+
       customBasket = order.customBaskets.find(
         (basket) =>
-          basket.isDraft &&
-          basket.basketId.id.equals(new UniqueEntityID(dto.basketId)),
+          basket.id.equals(customBasketId) ||
+          (basket.isDraft && basket.basketId.id.equals(basketId)),
       );
 
       // Create a new custom basket if it does not exists
@@ -129,16 +149,23 @@ export class AddItemToCustomBasketUseCase
       }).getResult();
 
       // Add item to custom basket
-      this.customBasketDomainService.addItemToCustomBasket({
-        customBasket,
-        item,
-        quantityToAdd,
-      });
+      const itemAddedOrError =
+        this.customBasketDomainService.addItemToCustomBasket({
+          customBasket,
+          item,
+          quantityToAdd,
+        });
+
+      if (itemAddedOrError.isFailure) {
+        return itemAddedOrError;
+      }
 
       await this.orderRepo.save(order);
 
       return Result.ok<void>();
+      //
     } catch (error) {
+      //
       return Result.fail<void>(
         'Internal Server Error on Add Item to Custom Basket Use Case',
       );

@@ -123,6 +123,7 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     return Object.freeze(this.props.quantity);
   }
 
+  /**@todo test updateOrAddOneCurrentItemOnCustomBasket */
   updateOrAddOneCurrentItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.currentItems = this.props.currentItems.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
@@ -130,12 +131,14 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     this.props.currentItems.push(item);
   }
 
+  /** @todo test removeItemFromCurrentItemOnCustomBasket */
   removeItemFromCurrentItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.currentItems = this.props.currentItems.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
     );
   }
 
+  /** @todo test updateOrAddOneRemovedItemOnCustomBasket */
   updateOrAddOneRemovedItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.itemsRemoved = this.props.itemsRemoved.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
@@ -143,12 +146,14 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     this.props.itemsRemoved.push(item);
   }
 
+  /** @todo test removeItemFromRemovedItemOnCustomBasket */
   removeItemFromRemovedItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.itemsRemoved = this.props.itemsRemoved.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
     );
   }
 
+  /** @todo test updateOrAddOneAddedItemOnCustomBasket */
   updateOrAddOneAddedItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.itemsAdded = this.props.itemsAdded.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
@@ -156,6 +161,7 @@ export class CustomBasket extends Entity<CustomBasketProps> {
     this.props.itemsAdded.push(item);
   }
 
+  /** @todo test removeItemFromAddedItemOnCustomBasket */
   removeItemFromAddedItemOnCustomBasket(item: BasketItemValueObject): void {
     this.props.itemsAdded = this.props.itemsAdded.filter(
       ({ value }) => !value.productId.id.equals(item.value.productId.id),
