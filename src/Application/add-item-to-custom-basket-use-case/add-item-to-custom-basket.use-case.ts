@@ -166,6 +166,9 @@ export class AddItemToCustomBasketUseCase
       //
     } catch (error) {
       //
+
+      console.log(error);
+
       return Result.fail<void>(
         'Internal Server Error on Add Item to Custom Basket Use Case',
       );
