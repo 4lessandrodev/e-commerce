@@ -14,7 +14,7 @@ describe('separate-product.domain-entity', () => {
       image: ImageValueObject.create('https://aws.com/image.jpeg').getResult(),
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
-      unitOfMeasurement: 'RJ',
+      unitOfMeasurement: 'KG',
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),
@@ -32,7 +32,7 @@ describe('separate-product.domain-entity', () => {
       image: ImageValueObject.create('https://aws.com/image.jpeg').getResult(),
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
-      unitOfMeasurement: 'RJ',
+      unitOfMeasurement: 'KG',
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),
@@ -50,7 +50,7 @@ describe('separate-product.domain-entity', () => {
       image: ImageValueObject.create('https://aws.com/image.jpeg').getResult(),
       description:
         ProductDescriptionValueObject.create('valid_description').getResult(),
-      unitOfMeasurement: 'RJ',
+      unitOfMeasurement: 'KG',
       category: ProductCategory.create({
         description: 'valid_description',
       }).getResult(),

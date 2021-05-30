@@ -19,5 +19,5 @@ export class Item {
   unitOfMeasurement!: UnitTypes;
 
   @Prop()
-  image!: string;
+  image?: string;
 }

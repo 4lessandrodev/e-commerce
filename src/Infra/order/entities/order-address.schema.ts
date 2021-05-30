@@ -1,6 +1,4 @@
 import { Prop } from '@nestjs/mongoose';
-import { AvailableInitials } from '@domain/value-objects';
-import { AvailableInitialsType } from '@domain/value-objects';
 
 export class OrderAddress {
   @Prop({ type: String, required: true, index: true })
@@ -17,10 +15,4 @@ export class OrderAddress {
 
   @Prop({ type: String, required: true, index: true })
   regionId!: string;
-
-  @Prop({ required: true, type: String })
-  city!: string;
-
-  @Prop({ required: true, enum: AvailableInitials })
-  state!: AvailableInitialsType;
 }

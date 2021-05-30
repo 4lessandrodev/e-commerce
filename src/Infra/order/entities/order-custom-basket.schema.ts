@@ -20,8 +20,8 @@ export class CustomBasket {
   })
   basketId!: string;
 
-  @Prop({ type: String, required: true })
-  image!: string;
+  @Prop({ type: String, required: false })
+  image?: string;
 
   @Prop({
     type: String,

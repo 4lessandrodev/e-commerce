@@ -11,8 +11,8 @@ export class SeparateProducts {
   })
   productId!: string;
 
-  @Prop({ type: String, required: true })
-  image!: string;
+  @Prop({ type: String, required: false })
+  image?: string;
 
   @Prop({
     type: String,

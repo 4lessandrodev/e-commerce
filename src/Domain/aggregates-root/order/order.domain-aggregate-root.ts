@@ -9,8 +9,8 @@ import { UserId } from '../user/UserId.domain-aggregate-root';
 import { OrderProps } from './order.domain-aggregate.interface';
 
 export class Order extends AggregateRoot<OrderProps> {
-  private constructor(props: OrderProps) {
-    super(props);
+  private constructor(props: OrderProps, id?: UniqueEntityID) {
+    super(props, id);
   }
 
   get id(): UniqueEntityID {
@@ -101,7 +101,7 @@ export class Order extends AggregateRoot<OrderProps> {
     return subtotalForCustomBaskets;
   }
 
-  public static create(props: OrderProps): Result<Order> {
-    return Result.ok<Order>(new Order(props));
+  public static create(props: OrderProps, id?: UniqueEntityID): Result<Order> {
+    return Result.ok<Order>(new Order(props, id));
   }
 }

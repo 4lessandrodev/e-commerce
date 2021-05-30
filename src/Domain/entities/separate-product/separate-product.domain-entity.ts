@@ -1,8 +1,7 @@
 import { Entity, Result, UniqueEntityID } from 'types-ddd/dist/src';
 import { ProductProps } from './separate-product.domain-entity.interface';
-import { Currency, ImageValueObject } from '@domain/value-objects';
+import { Currency, ImageValueObject, UnitTypes } from '@domain/value-objects';
 import { MonetaryValueObject } from '@domain/value-objects';
-import { AvailableInitialsType } from '@domain/value-objects';
 import { ProductDescriptionValueObject } from '@domain/value-objects';
 import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { ProductCategory } from '@domain/entities';
@@ -10,6 +9,10 @@ import { ProductCategory } from '@domain/entities';
 export class SeparateProduct extends Entity<ProductProps> {
   private constructor(props: ProductProps, id?: UniqueEntityID) {
     super(props, id);
+  }
+
+  get id(): UniqueEntityID {
+    return this._id;
   }
 
   get description(): ProductDescriptionValueObject {
@@ -20,7 +23,7 @@ export class SeparateProduct extends Entity<ProductProps> {
     return this.props.image;
   }
 
-  get unitOfMeasurement(): AvailableInitialsType {
+  get unitOfMeasurement(): UnitTypes {
     return this.props.unitOfMeasurement;
   }
 

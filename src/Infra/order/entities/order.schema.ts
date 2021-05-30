@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
+import { AvailableOrderStatusType } from '@domain/value-objects';
 import { OrderAddress } from './order-address.schema';
 import { SeparateProducts } from './order-separate-product.schema';
 import { CustomBasket } from './order-custom-basket.schema';
@@ -65,7 +66,7 @@ export class Order {
   basketPacks!: BasketPack[];
 
   @Prop({ type: String, required: true })
-  status!: string;
+  status!: AvailableOrderStatusType;
 
   @Prop({ type: Object, required: true, default: 0 })
   CostOfFreight!: Currency;

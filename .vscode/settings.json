@@ -4,5 +4,7 @@
     "editor.formatOnSave": true,
     "cSpell.words": [
         "QWERTYUIOPASDFGHJKLZXCVBNM"
-    ]
+    ],
+    "editor.insertSpaces": false,
+    "editor.wrappingIndent": "indent"
 }
