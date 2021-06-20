@@ -4,53 +4,53 @@ import { Region } from '@infra/region/entities/region.schema';
 
 export type AddressDocument = Address & Document;
 
-@Schema({
+@Schema( {
   autoCreate: true,
   timestamps: true,
   autoIndex: true,
-})
-export class Address {
-  @Prop({
+} )
+export class Address
+{
+  @Prop( {
     type: String,
     required: true,
     index: true,
     immutable: true,
     unique: true,
-  })
+  } )
   readonly id!: string;
 
-  @Prop({ type: String, required: true, index: true })
+  @Prop( { type: String, required: true, index: true } )
   zipCode!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop( { type: String, required: true } )
   street!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop( { type: String, required: true } )
   number!: string;
 
-  @Prop({ type: String, required: false })
+  @Prop( { type: String, required: false } )
   complement!: string;
 
-  @Prop({ type: String, required: true })
+  @Prop( { type: String, required: true } )
   region!: Region;
 
-  @Prop({ type: Boolean, required: true })
+  @Prop( { type: Boolean, required: true } )
   isMainAddress!: boolean;
 
-  @Prop({ type: Date, required: true, default: new Date() })
+  @Prop( { type: Date, required: true, default: new Date() } )
   createdAt!: Date;
 
-  @Prop({ type: Date, required: true, default: new Date() })
+  @Prop( { type: Date, required: true, default: new Date() } )
   updatedAt!: Date;
 }
 
-export const AddressSchema = SchemaFactory.createForClass(Address);
+export const AddressSchema = SchemaFactory.createForClass( Address );
 
-AddressSchema.virtual('Region', {
+AddressSchema.virtual( 'Region', {
   ref: 'Region',
   localField: 'region',
-  foreignField: 'id',
-  autopopulate: true,
-});
+  foreignField: 'id'
+} );
 
-AddressSchema.plugin(require('mongoose-autopopulate'));
+AddressSchema.plugin( require( 'mongoose-autopopulate' ) );
