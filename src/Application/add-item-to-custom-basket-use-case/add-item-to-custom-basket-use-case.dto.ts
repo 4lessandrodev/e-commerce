@@ -6,9 +6,9 @@
  * @param customBasketId  If Its the first item to add on custom basket it does not exist
  */
 export interface AddItemToCustomBasketDto {
-  productId: string;
-  basketId: string;
-  clientId: string;
-  quantityOfItemToAdd: number;
-  customBasketId?: string;
+	productId: string;
+	basketId: string;
+	clientId: string;
+	quantityOfItemToAdd: number;
+	customBasketId?: string;
 }

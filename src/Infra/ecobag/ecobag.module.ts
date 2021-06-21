@@ -9,19 +9,20 @@ import { EcobagRepository } from './repo/ecobag.repository';
 import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [
-    UserModule,
-    MongooseModule.forFeature([{ name: Ecobag.name, schema: EcobagSchema }]),
-  ],
-  controllers: [EcobagController],
-  providers: [
-    EcobagService,
-    DefineEcobagPriceUseCase,
-    EcobagMapper,
-    {
-      provide: 'EcobagRepository',
-      useClass: EcobagRepository,
-    },
-  ],
+	imports: [
+		UserModule,
+		MongooseModule.forFeature([{ name: Ecobag.name, schema: EcobagSchema }]),
+	],
+	controllers: [EcobagController],
+	providers: [
+		EcobagService,
+		DefineEcobagPriceUseCase,
+		EcobagMapper,
+		{
+			provide: 'EcobagRepository',
+			useClass: EcobagRepository,
+		},
+	],
+	exports: ['EcobagRepository']
 })
-export class EcobagModule {}
+export class EcobagModule { }

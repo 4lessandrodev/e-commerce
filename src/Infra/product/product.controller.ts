@@ -18,50 +18,50 @@ import { ResetProductStockDto } from './dto/reset-product-stock.dto';
 @UsePipes(new ValidationPipe())
 @UseGuards(AuthGuard())
 export class ProductController {
-  constructor(
-    @Inject(ProductService) private readonly productService: ProductService,
-  ) {}
+	constructor (
+		@Inject(ProductService) private readonly productService: ProductService,
+	) { }
 
-  @Post()
-  registerProduct(@Body() dto: RegisterProductDto): Promise<void> {
-    return this.productService.registerProduct(dto);
-  }
+	@Post()
+	registerProduct (@Body() dto: RegisterProductDto): Promise<void> {
+		return this.productService.registerProduct(dto);
+	}
 
-  @Post('category')
-  registerProductCategory(
-    @Body() dto: RegisterProductCategoryDto,
-  ): Promise<void> {
-    return this.productService.registerProductCategory(dto);
-  }
+	@Post('category')
+	registerProductCategory (
+		@Body() dto: RegisterProductCategoryDto,
+	): Promise<void> {
+		return this.productService.registerProductCategory(dto);
+	}
 
-  @Post('tag')
-  registerTag(@Body() dto: RegisterTagDto): Promise<void> {
-    return this.productService.registerTag(dto);
-  }
+	@Post('tag')
+	registerTag (@Body() dto: RegisterTagDto): Promise<void> {
+		return this.productService.registerTag(dto);
+	}
 
-  @Get()
-  getProducts(@Query() filter: ProductFilter): Promise<GetProductsResult> {
-    return this.productService.getProducts(filter);
-  }
+	@Get()
+	getProducts (@Query() filter: ProductFilter): Promise<GetProductsResult> {
+		return this.productService.getProducts(filter);
+	}
 
-  @Patch('/:id')
-  updateProduct(
-    @Param() param: ProductIdDto,
-    @Body() dto: UpdateProductDto,
-  ): Promise<void> {
-    dto.productId = param.id;
-    return this.productService.updateProduct(dto);
-  }
+	@Patch('/:id')
+	updateProduct (
+		@Param() param: ProductIdDto,
+		@Body() dto: UpdateProductDto,
+	): Promise<void> {
+		dto.productId = param.id;
+		return this.productService.updateProduct(dto);
+	}
 
-  @Post('stock')
-  resetProductStock(@Body() dto: ResetProductStockDto): Promise<void> {
-    return this.productService.resetProductStock(dto);
-  }
+	@Post('stock')
+	resetProductStock (@Body() dto: ResetProductStockDto): Promise<void> {
+		return this.productService.resetProductStock(dto);
+	}
 
-  @Patch()
-  deactivateManyProducts(
-    @Body() dto: DeactivateManyProductsDto,
-  ): Promise<void> {
-    return this.productService.deactivateAllProducts(dto);
-  }
+	@Patch()
+	deactivateManyProducts (
+		@Body() dto: DeactivateManyProductsDto,
+	): Promise<void> {
+		return this.productService.deactivateAllProducts(dto);
+	}
 }

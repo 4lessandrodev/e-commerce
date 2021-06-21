@@ -26,40 +26,41 @@ import { AfterProductStockResected } from '@domain/events/product-updated/after-
 import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-case/reset-basket-item-stock.use-case';
 
 @Module({
-  imports: [
-    UserModule,
-    ProductModule,
-    MongooseModule.forFeature([
-      { name: BasketCategory.name, schema: BasketCategorySchema },
-      { name: Basket.name, schema: BasketSchema },
-    ]),
-  ],
-  providers: [
-    BasketCategoryMapper,
-    BasketItemMapper,
-    BasketMapper,
-    EmbedBasketCategoryMapper,
-    {
-      provide: 'BasketCategoryRepository',
-      useClass: BasketCategoryRepository,
-    },
-    {
-      provide: 'BasketRepository',
-      useClass: BasketRepository,
-    },
-    AfterProductUpdated,
-    AfterProductStockResected,
-    RegisterBasketCategoryUseCase,
-    UpdateBasketItemUseCase,
-    RegisterBasketUseCase,
-    AddProductsOnBasketUseCase,
-    RemoveProductsFromBasketUseCase,
-    UpdateBasketUseCase,
-    DeactivateManyBasketsUseCase,
-    ResetBasketItemStockUseCase,
-    BasketDomainService,
-    BasketService,
-  ],
-  controllers: [BasketController],
+	imports: [
+		UserModule,
+		ProductModule,
+		MongooseModule.forFeature([
+			{ name: BasketCategory.name, schema: BasketCategorySchema },
+			{ name: Basket.name, schema: BasketSchema },
+		]),
+	],
+	providers: [
+		BasketCategoryMapper,
+		BasketItemMapper,
+		BasketMapper,
+		EmbedBasketCategoryMapper,
+		{
+			provide: 'BasketCategoryRepository',
+			useClass: BasketCategoryRepository,
+		},
+		{
+			provide: 'BasketRepository',
+			useClass: BasketRepository,
+		},
+		AfterProductUpdated,
+		AfterProductStockResected,
+		RegisterBasketCategoryUseCase,
+		UpdateBasketItemUseCase,
+		RegisterBasketUseCase,
+		AddProductsOnBasketUseCase,
+		RemoveProductsFromBasketUseCase,
+		UpdateBasketUseCase,
+		DeactivateManyBasketsUseCase,
+		ResetBasketItemStockUseCase,
+		BasketDomainService,
+		BasketService,
+	],
+	controllers: [BasketController],
+	exports: ['BasketRepository']
 })
-export class BasketModule {}
+export class BasketModule { }

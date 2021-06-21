@@ -6,5 +6,5 @@
         "QWERTYUIOPASDFGHJKLZXCVBNM"
     ],
     "editor.insertSpaces": false,
-    "editor.wrappingIndent": "indent"
+	"editor.wrappingIndent": "indent"
 }

@@ -14,31 +14,32 @@ import { ClientController } from './client.controller';
 import { ClientService } from './client.service';
 
 @Module({
-  imports: [
-    UserModule,
-    MongooseModule.forFeature([
-      { name: Client.name, schema: ClientSchema },
-      { name: Region.name, schema: RegionSchema },
-    ]),
-  ],
-  providers: [
-    CityMapper,
-    RegionMapper,
-    AddressMapper,
-    ClientMapper,
-    ClientRepository,
-    RegionRepository,
-    {
-      provide: 'ClientRepository',
-      useClass: ClientRepository,
-    },
-    {
-      provide: 'RegionRepository',
-      useClass: RegionRepository,
-    },
-    RegisterClientUseCase,
-    ClientService,
-  ],
-  controllers: [ClientController],
+	imports: [
+		UserModule,
+		MongooseModule.forFeature([
+			{ name: Client.name, schema: ClientSchema },
+			{ name: Region.name, schema: RegionSchema },
+		]),
+	],
+	providers: [
+		CityMapper,
+		RegionMapper,
+		AddressMapper,
+		ClientMapper,
+		ClientRepository,
+		RegionRepository,
+		{
+			provide: 'ClientRepository',
+			useClass: ClientRepository,
+		},
+		{
+			provide: 'RegionRepository',
+			useClass: RegionRepository,
+		},
+		RegisterClientUseCase,
+		ClientService,
+	],
+	controllers: [ClientController],
+	exports: ['ClientRepository']
 })
-export class ClientModule {}
+export class ClientModule { }

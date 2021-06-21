@@ -9,19 +9,21 @@ import { BasketModule } from './Infra/basket/basket.module';
 import { Configs } from './Infra/configs/mongo.config';
 import { OrderAddressModule } from './Infra/order-address/order-address.module';
 import { EcobagModule } from './Infra/ecobag/ecobag.module';
+import { OrderModule } from './Infra/order/order.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(MONGO_URL, Configs),
-    UserModule,
-    ClientModule,
-    RegionModule,
-    ProductModule,
-    BasketModule,
-    OrderAddressModule,
-    EcobagModule,
-  ],
-  controllers: [],
-  providers: [],
+	imports: [
+		MongooseModule.forRoot(MONGO_URL, Configs),
+		UserModule,
+		ClientModule,
+		RegionModule,
+		ProductModule,
+		BasketModule,
+		OrderAddressModule,
+		EcobagModule,
+		OrderModule
+	],
+	controllers: [],
+	providers: [],
 })
-export class AppModule {}
+export class AppModule { }
