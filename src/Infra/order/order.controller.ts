@@ -1,8 +1,14 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Inject, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtPayload } from '../user/interfaces/jwt.payload.interface';
+import { GetUser } from '../user/services/get-user.decorator';
 import { AddItemToCustomBasketDto } from './dto/add-item-to-custom-basket.dto';
+import { RemoveItemFromCustomBasketDto } from './dto/remove-item-from-custom-basket.dto';
 import { OrderService } from './order.service';
 
 @Controller('v1/order')
+@UsePipes(new ValidationPipe())
+@UseGuards(AuthGuard())
 export class OrderController {
 	constructor (
 		@Inject(OrderService)
@@ -10,7 +16,19 @@ export class OrderController {
 	) { }
 
 	@Post('add-item')
-	addItemToCustomBasket (@Body() dto: AddItemToCustomBasketDto): Promise<void> {
+	addItemToCustomBasket (
+		@GetUser() user: JwtPayload,
+		@Body() dto: AddItemToCustomBasketDto): Promise<void> {
+		dto.clientId = user.id;
 		return this.service.addItemToCustomBasket(dto);
+	};
+
+	@Delete('remove-item')
+	removeItemFromCustomBasket (
+		@GetUser() user: JwtPayload,
+		@Body() dto: RemoveItemFromCustomBasketDto
+	): Promise<void> {
+		dto.clientId = user.id;
+		return this.service.removeItemFromCustomBasket(dto);
 	};
 }

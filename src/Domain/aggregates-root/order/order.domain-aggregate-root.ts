@@ -1,5 +1,4 @@
-import { AggregateRoot, Result, UniqueEntityID } from 'types-ddd';
-import { CustomBasket, SeparateProduct } from '@domain/entities';
+import { AggregateRoot, DomainId, Result, UniqueEntityID } from 'types-ddd';
 import { Currency, MonetaryValueObject } from '@domain/value-objects';
 import { UserNameValueObject } from '@domain/value-objects';
 import { DeliveryOrCollectionAddress } from '@domain/entities';
@@ -9,99 +8,117 @@ import { UserId } from '../user/UserId.domain-aggregate-root';
 import { OrderProps } from './order.domain-aggregate.interface';
 
 export class Order extends AggregateRoot<OrderProps> {
-  private constructor(props: OrderProps, id?: UniqueEntityID) {
-    super(props, id);
-  }
+	private constructor (props: OrderProps, id?: UniqueEntityID) {
+		super(props, id);
+	}
 
-  get id(): UniqueEntityID {
-    return this._id;
-  }
+	get id (): UniqueEntityID {
+		return this._id;
+	}
 
-  get orderNumber(): OrderIdValueObject {
-    return this.props.orderNumber;
-  }
+	get orderNumber (): OrderIdValueObject {
+		return this.props.orderNumber;
+	}
 
-  get clientName(): UserNameValueObject {
-    return this.props.clientName;
-  }
+	get clientName (): UserNameValueObject {
+		return this.props.clientName;
+	}
 
-  get clientId(): UserId {
-    return this.props.clientId;
-  }
+	get clientId (): UserId {
+		return this.props.clientId;
+	}
 
-  get isTheOrderForCollection(): boolean {
-    return this.props.isTheOrderForCollection;
-  }
+	get isTheOrderForCollection (): boolean {
+		return this.props.isTheOrderForCollection;
+	}
 
-  get deliveryOrCollectionAddress(): DeliveryOrCollectionAddress {
-    return this.props.deliveryOrCollectionAddress;
-  }
+	get deliveryOrCollectionAddress (): DeliveryOrCollectionAddress {
+		return this.props.deliveryOrCollectionAddress;
+	}
 
-  get separateProducts(): SeparateProduct[] {
-    return this.props.separateProducts;
-  }
+	get separateProducts (): DomainId[] {
+		return this.props.separateProducts ?? [];
+	}
 
-  get customBaskets(): CustomBasket[] {
-    return this.props.customBaskets;
-  }
+	get customBaskets (): DomainId[] {
+		return this.props.customBaskets ?? [];
+	}
 
-  get basketPacks(): any[] {
-    return this.props.basketPacks;
-  }
+	get basketPacks (): DomainId[] {
+		return this.props.basketPacks ?? [];
+	}
 
-  get status(): OrderStatusValueObject {
-    return this.props.status;
-  }
+	get status (): OrderStatusValueObject {
+		return this.props.status;
+	}
 
-  get costOfFreight(): MonetaryValueObject {
-    return this.props.costOfFreight;
-  }
+	get costOfFreight (): MonetaryValueObject {
+		return this.props.costOfFreight;
+	}
 
-  get includesEcobag(): boolean {
-    return this.props.includesEcobag;
-  }
+	get includesEcobag (): boolean {
+		return this.props.includesEcobag;
+	}
 
-  get ecobagFee(): MonetaryValueObject {
-    if (this.includesEcobag) {
-      return this.props.ecoBagFee;
-    }
-    return MonetaryValueObject.create(
-      Currency.create(0).getResult(),
-    ).getResult();
-  }
+	get ecobagFee (): MonetaryValueObject {
+		if (this.includesEcobag) {
+			return this.props.ecoBagFee;
+		}
+		return MonetaryValueObject.create(
+			Currency.create(0).getResult(),
+		).getResult();
+	}
 
-  get amount(): MonetaryValueObject {
-    const subtotalCustomBaskets = this.calculateSubTotalForCustomBaskets();
-    const subtotalSeparateProducts =
-      this.calculateSubTotalForSeparateProducts();
-    const currency = Currency.create(0).getResult();
+	get subTotalSeparateProducts (): MonetaryValueObject {
+		if (!this.props.subTotalSeparateProducts) {
+			this.props.subTotalSeparateProducts = MonetaryValueObject.create(
+				Currency.create(0).getResult()
+			).getResult();
+		}
+		return this.props.subTotalSeparateProducts;
+	}
 
-    currency.sum(subtotalSeparateProducts);
-    currency.sum(subtotalCustomBaskets);
-    currency.sum(this.ecobagFee.value);
-    currency.sum(this.costOfFreight.value);
+	get subTotalCustomBaskets (): MonetaryValueObject {
+		if (!this.props.subTotalCustomBaskets) {
+			this.props.subTotalCustomBaskets = MonetaryValueObject.create(
+				Currency.create(0).getResult()
+			).getResult();
+		}
+		return this.props.subTotalCustomBaskets;
+	}
 
-    const amount = MonetaryValueObject.create(currency).getResult();
-    return amount;
-  }
+	get subtotalBasketPacks (): MonetaryValueObject {
+		if (!this.props.subtotalBasketPacks) {
+			this.props.subtotalBasketPacks = MonetaryValueObject.create(
+				Currency.create(0).getResult()
+			).getResult();
+		}
+		return this.props.subtotalBasketPacks;
+	}
 
-  private calculateSubTotalForSeparateProducts(): number {
-    const subtotalForSeparateProducts = this.separateProducts.reduce(
-      (total, product) => product.subTotal.value + total,
-      0,
-    );
-    return subtotalForSeparateProducts;
-  }
+	get amount (): MonetaryValueObject {
+		const subtotal =
+			this.subTotalCustomBaskets.value + this.subTotalSeparateProducts.value + this.subtotalBasketPacks.value + this.props.costOfFreight.value + this.props.ecoBagFee.value;
+		const total = MonetaryValueObject.create(
+			Currency.create(subtotal).getResult()
+		).getResult();
+		return total;
+	}
 
-  private calculateSubTotalForCustomBaskets(): number {
-    const subtotalForCustomBaskets = this.customBaskets.reduce(
-      (total, basket) => basket.subTotal.value + total,
-      0,
-    );
-    return subtotalForCustomBaskets;
-  }
+	removeCustomBasket (customBasket: DomainId): void {
+		this.props.customBaskets = this.props?.customBaskets?.filter((cb) => !cb.id.equals(customBasket.id));
+	}
 
-  public static create(props: OrderProps, id?: UniqueEntityID): Result<Order> {
-    return Result.ok<Order>(new Order(props, id));
-  }
+	addCustomBasket (customBasket: DomainId): void {
+		this.customBaskets.push(customBasket);
+	}
+	/** Removes and readded item */
+	updateCustomBasket (customBasket: DomainId): void {
+		this.removeCustomBasket(customBasket);
+		this.addCustomBasket(customBasket);
+	}
+
+	public static create (props: OrderProps, id?: UniqueEntityID): Result<Order> {
+		return Result.ok<Order>(new Order(props, id));
+	}
 }

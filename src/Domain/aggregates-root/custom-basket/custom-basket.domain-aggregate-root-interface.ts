@@ -7,14 +7,14 @@ import { BasketCategory } from '@domain/entities';
 import { BaseDomainEntity } from 'types-ddd';
 
 export interface CustomBasketProps extends BaseDomainEntity {
-  basketId: BasketId;
-  image?: ImageValueObject;
-  description: BasketDescriptionValueObject;
-  category: BasketCategory;
-  currentItems: BasketItemValueObject[];
-  itemsAdded: BasketItemValueObject[];
-  itemsRemoved: BasketItemValueObject[];
-  price: MonetaryValueObject;
-  quantity: QuantityAvailableValueObject;
-  isDraft: boolean;
+	basketId: BasketId;
+	image?: ImageValueObject;
+	description: BasketDescriptionValueObject;
+	category: BasketCategory;
+	currentItems: BasketItemValueObject[];
+	itemsAdded: BasketItemValueObject[];
+	itemsRemoved: BasketItemValueObject[];
+	price: MonetaryValueObject;
+	quantity: QuantityAvailableValueObject;
+	isDraft: boolean;
 }

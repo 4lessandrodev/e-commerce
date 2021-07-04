@@ -15,7 +15,7 @@ import {
 	UserId,
 } from '@domain/aggregates-root';
 import { OpenOrderUseCase } from '../open-order-use-case/open-order.use-case';
-import { AddItemToCustomBasketUseCase } from './add-item-to-custom-basket.use-case';
+import { RemoveItemFromCustomBasketUseCase } from './remove-item-from-custom-basket.use-case';
 import {
 	AddressComplementValueObject,
 	AddressNumberValueObject,
@@ -47,9 +47,8 @@ import { ClientRepositoryInterface } from '@repo/client-repository.interface';
 import { EcobagRepositoryInterface } from '@repo/ecobag.repository.interface';
 import { RegionRepositoryInterface } from '@repo/region-repository.interface';
 import { UniqueEntityID } from 'types-ddd/dist/src';
+import { OrderDomainService } from '@domain/services/order.domain-service';
 import { CustomBasketRepositoryInterface } from '../../Repo/custom-basket-repository.interface';
-import { OrderDomainServiceInterface } from '../../Domain/services/interfaces/order.domain-service.interface';
-import { OrderDomainService } from '../../Domain/services/order.domain-service';
 
 describe('add-item-to-custom-basket-item', () => {
 	// MOck zip code
@@ -83,7 +82,7 @@ describe('add-item-to-custom-basket-item', () => {
 
 	let basketRepo: BasketRepositoryInterface;
 
-	let useCase: AddItemToCustomBasketUseCase;
+	let useCase: RemoveItemFromCustomBasketUseCase;
 
 	let clientRepo: ClientRepositoryInterface;
 
@@ -93,8 +92,10 @@ describe('add-item-to-custom-basket-item', () => {
 
 	let customBasketRepo: CustomBasketRepositoryInterface;
 
-	const orderDomainService: OrderDomainServiceInterface =
-		new OrderDomainService(new CustomBasketDomainService());
+	const customBasketDomainService: OrderDomainService =
+		new OrderDomainService(
+			new CustomBasketDomainService()
+		);
 
 	let openOrderUseCase: OpenOrderUseCase;
 
@@ -294,9 +295,13 @@ describe('add-item-to-custom-basket-item', () => {
 			ecobagRepo,
 		);
 
-		useCase = new AddItemToCustomBasketUseCase(
-			orderRepo, productRepo, basketRepo,
-			orderDomainService, openOrderUseCase, customBasketRepo
+		useCase = new RemoveItemFromCustomBasketUseCase(
+			orderRepo,
+			productRepo,
+			basketRepo,
+			customBasketDomainService,
+			openOrderUseCase,
+			customBasketRepo
 		);
 	});
 
@@ -311,7 +316,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -324,7 +329,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -338,7 +343,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -353,7 +358,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -373,7 +378,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -393,7 +398,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 10,
+			quantityOfItemToRemove: 10,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -410,7 +415,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 1001,
+			quantityOfItemToRemove: 1001,
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -427,9 +432,9 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToAdd: 1,
+			quantityOfItemToRemove: 1,
 		});
-
+		console.log(result);
 		expect(result.isSuccess).toBe(true);
 	});
 });

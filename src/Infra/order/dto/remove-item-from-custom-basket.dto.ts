@@ -1,6 +1,6 @@
 import { IsOptional, IsPositive, IsUUID } from 'class-validator';
 
-export class AddItemToCustomBasketDto {
+export class RemoveItemFromCustomBasketDto {
 	@IsUUID()
 	productId!: string;
 
@@ -11,7 +11,7 @@ export class AddItemToCustomBasketDto {
 	clientId!: string; // get from session
 
 	@IsPositive()
-	quantityOfItemToAdd!: number;
+	quantityOfItemToRemove!: number;
 
 	@IsUUID()
 	@IsOptional()

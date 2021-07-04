@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DomainId, IUseCase, Result } from 'types-ddd';
 import { OrderRepositoryInterface } from '@repo/order-repository.interface';
-import { AddItemToCustomBasketDto } from './add-item-to-custom-basket-use-case.dto';
+import { RemoveItemFromCustomBasketDto } from './remove-item-from-custom-basket-use-case.dto';
 import { OpenOrderUseCase } from '../open-order-use-case/open-order.use-case';
 import { BasketId, Order, ProductId } from '@domain/aggregates-root';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
@@ -9,13 +9,12 @@ import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { CustomBasket } from '@domain/aggregates-root';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { CustomBasketRepositoryInterface } from '@repo/custom-basket-repository.interface';
 import { OrderDomainService } from '@domain/services/order.domain-service';
-import { OrderDomainServiceInterface } from '@domain/services/interfaces/order.domain-service.interface';
+import { CustomBasketRepositoryInterface } from '@repo/custom-basket-repository.interface';
 
 @Injectable()
-export class AddItemToCustomBasketUseCase
-	implements IUseCase<AddItemToCustomBasketDto, Result<void>>
+export class RemoveItemFromCustomBasketUseCase
+	implements IUseCase<RemoveItemFromCustomBasketDto, Result<void>>
 {
 	constructor (
 		@Inject('OrderRepository')
@@ -28,7 +27,7 @@ export class AddItemToCustomBasketUseCase
 		private readonly basketRepo: BasketRepositoryInterface,
 
 		@Inject(OrderDomainService)
-		private readonly orderDomainService: OrderDomainServiceInterface,
+		private readonly orderDomainService: OrderDomainService,
 
 		@Inject(OpenOrderUseCase)
 		private readonly openOrderUseCase: OpenOrderUseCase,
@@ -39,7 +38,7 @@ export class AddItemToCustomBasketUseCase
 
 	/**
 	 *
-	 * @param dto @link AddItemToCustomBasketDto
+	 * @param dto @link RemoveItemFromCustomBasketDto
 	 * @returns Result
 	 *
 	 * @description
@@ -53,21 +52,25 @@ export class AddItemToCustomBasketUseCase
 	 * @method addItemToCustomBasket calls domain service to add item on custom basket, fails if can't add item to basket
 	 * @method save finally calls save order
 	 */
-	async execute (dto: AddItemToCustomBasketDto): Promise<Result<void>> {
+	async execute (dto: RemoveItemFromCustomBasketDto): Promise<Result<void>> {
 		try {
 			//
-			let order: Order | null; // global order
-			let customBasket: CustomBasket | undefined | null; // global custom basket
-			const quantityToAddOrError = QuantityAvailableValueObject.create(
-				dto.quantityOfItemToAdd, // global quantity of item to add on custom basket
+			// global order on block
+			let order: Order | null;
+			// global custom basket
+			let customBasket: CustomBasket | undefined | null;
+			const quantityToRemoveOrError = QuantityAvailableValueObject.create(
+				dto.quantityOfItemToRemove, // global on block - quantity of item to add on custom basket
 			);
 
 			// Check if is valid quantity
-			if (quantityToAddOrError.isFailure) {
-				return Result.fail<void>(quantityToAddOrError.error.toString());
+			if (quantityToRemoveOrError.isFailure) {
+				return Result.fail<void>(
+					quantityToRemoveOrError.error.toString()
+				);
 			}
 
-			const quantityToAdd = quantityToAddOrError.getResult();
+			const quantityToRemove = quantityToRemoveOrError.getResult();
 
 			// Check if client has an opened order
 			order = await this.orderRepo.getClientOpenedOrder({
@@ -106,6 +109,7 @@ export class AddItemToCustomBasketUseCase
 
 			const product = productExists;
 
+			// Custom basket on order (get custom basket by id or draft and basket id match)
 			// Custom basket on order 
 			const customBasketId = DomainId.create(dto.customBasketId);
 
@@ -134,18 +138,17 @@ export class AddItemToCustomBasketUseCase
 					category: basket.category,
 					currentItems: basket.products,
 					description: basket.description,
+					image: basket.images[0],
 					isDraft: true,
 					itemsAdded: [],
 					itemsRemoved: [],
 					price: basket.price,
 					quantity: QuantityAvailableValueObject.create(1).getResult(),
-					image: basket.images[0],
 				}).getResult();
-
 				order.subTotalCustomBaskets.currency.sum(basket.price.value);
 			}
 
-			// Create item to add on custom basket
+			// Create item to remove from custom basket
 			const item = BasketItemValueObject.create({
 				availableStock: product.quantityAvailable,
 				description: product.description,
@@ -156,19 +159,19 @@ export class AddItemToCustomBasketUseCase
 				unitOfMeasurement: product.unitOfMeasurement,
 			}).getResult();
 
-			// Add item to custom basket
-			const itemAddedOrError =
-				this.orderDomainService.addItemToCustomBasket({
+			// Remove item from custom basket
+			const removedItemOrError =
+				this.orderDomainService.removeItemFromCustomBasket({
 					customBasket,
 					item,
-					quantityToAdd,
+					quantityToRemove,
 					order
 				});
 
-			if (itemAddedOrError.isFailure) {
-				return itemAddedOrError;
+			if (removedItemOrError.isFailure) {
+				return removedItemOrError;
 			}
-
+			// update custom basket on order
 			await this.orderRepo.save(order);
 			await this.customBasketRepo.save(customBasket);
 
@@ -176,7 +179,6 @@ export class AddItemToCustomBasketUseCase
 			//
 		} catch (error) {
 			//
-
 			console.log(error);
 
 			return Result.fail<void>(

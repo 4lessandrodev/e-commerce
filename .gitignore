@@ -37,3 +37,5 @@ docs
 .env.production
 .dccache
 dccache
+
+data/

@@ -7,9 +7,10 @@ import { Order as Aggregate } from '@domain/aggregates-root';
 import { InjectModel } from '@nestjs/mongoose';
 import { Order, OrderDocument } from '../entities/order.schema';
 import { Model } from 'mongoose';
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { OrderMapper } from '../mapper/order.mapper';
 
+@Injectable()
 export class OrderRepository implements OrderRepositoryInterface {
 	constructor (
 		@InjectModel(Order.name)
@@ -29,7 +30,7 @@ export class OrderRepository implements OrderRepositoryInterface {
 		props: hasClientOpenedOrderProps,
 	): Promise<Aggregate | null> {
 		const { clientId, status } = props;
-		const foundOrder = await this.conn.findOne({ id: clientId, status }).exec();
+		const foundOrder = await this.conn.findOne({ clientId, status }).exec();
 		if (!foundOrder) {
 			return null;
 		}
@@ -64,6 +65,7 @@ export class OrderRepository implements OrderRepositoryInterface {
 	}
 
 	async save (target: Aggregate): Promise<void> {
+
 		const schema = this.mapper.toPersistence(target);
 		const exists = await this.exists({ id: schema.id });
 		if (exists) {

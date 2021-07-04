@@ -11,18 +11,20 @@ import { OrderMapper } from './mapper/order.mapper';
 import { OrderAddressMapper } from '../order-address/mapper/order-address.mapper';
 import { ProductModule } from '../product/product.module';
 import { BasketModule } from '../basket/basket.module';
-import { CustomBasketMapper } from './mapper/custom-basket.mapper';
 import { BasketPackMapper } from './mapper/basket-pack.mapper';
 import { SeparateProductMapper } from './mapper/separate-product.mapper';
-import { CustomBasketItemMapper } from './mapper/custom-basket-item.mapper';
 import { ClientModule } from '../client/client.module';
 import { RegionModule } from '../region/region.module';
 import { EcobagModule } from '../ecobag/ecobag.module';
 import { OrderService } from './order.service';
+import { RemoveItemFromCustomBasketUseCase } from '@app/remove-item-from-custom-basket-use-case/remove-item-from-custom-basket.use-case';
+import { OrderDomainService } from '@domain/services/order.domain-service';
+import { CustomBasketModule } from '../custom-basket/custom-basket.module';
 
 @Module({
 	imports: [
 		UserModule,
+		CustomBasketModule,
 		ProductModule,
 		BasketModule,
 		ClientModule,
@@ -42,14 +44,15 @@ import { OrderService } from './order.service';
 		OrderService,
 		OrderMapper,
 		OrderAddressMapper,
-		CustomBasketMapper,
 		BasketPackMapper,
 		SeparateProductMapper,
-		CustomBasketItemMapper,
 		AddItemToCustomBasketUseCase,
+		RemoveItemFromCustomBasketUseCase,
+		OrderDomainService,
 		{
 			provide: 'OrderRepository',
-			useClass: OrderRepository
+			useClass: OrderRepository,
+			inject: [OrderMapper]
 		},
 		CustomBasketDomainService,
 		OpenOrderUseCase

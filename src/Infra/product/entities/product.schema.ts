@@ -11,106 +11,106 @@ type localeType = keyof typeof AvailableLocale;
 type symbolType = keyof typeof AvailableCurrency;
 
 export class Currency {
-  @Prop({ type: Number, required: true })
-  value!: number;
+	@Prop({ type: Number, required: true })
+	value!: number;
 
-  @Prop({ type: String, required: true })
-  symbol!: symbolType;
+	@Prop({ type: String, required: true })
+	symbol!: symbolType;
 
-  @Prop({ type: String, required: true })
-  locale!: localeType;
+	@Prop({ type: String, required: true })
+	locale!: localeType;
 }
 
 export type ProductDocument = Product & Document;
 
 @Schema({ timestamps: true, autoCreate: true, autoIndex: true })
 export class Product {
-  @Prop({
-    unique: true,
-    index: true,
-    type: String,
-    immutable: true,
-    required: true,
-  })
-  id!: string;
+	@Prop({
+		unique: true,
+		index: true,
+		type: String,
+		immutable: true,
+		required: true,
+	})
+	id!: string;
 
-  @Prop({
-    type: String,
-    index: true,
-    required: true,
-    text: true,
-  })
-  description!: string;
+	@Prop({
+		type: String,
+		index: true,
+		required: true,
+		text: true,
+	})
+	description!: string;
 
-  @Prop({ type: String, required: true })
-  unitOfMeasurement!: UnitTypes;
+	@Prop({ type: String, required: true })
+	unitOfMeasurement!: UnitTypes;
 
-  @Prop({ type: Object, required: true, index: true })
-  category!: Category;
+	@Prop({ type: Object, required: true, index: true })
+	category!: Category;
 
-  @Prop({ type: String, required: false })
-  image?: string;
+	@Prop({ type: String, required: false })
+	image?: string;
 
-  @Prop({ type: Boolean, required: true })
-  isSpecial!: boolean;
+	@Prop({ type: Boolean, required: true })
+	isSpecial!: boolean;
 
-  @Prop({ type: Currency, required: true })
-  price!: Currency;
+	@Prop({ type: Currency, required: true })
+	price!: Currency;
 
-  @Prop({ type: Boolean, required: true })
-  isActive!: boolean;
+	@Prop({ type: Boolean, required: true })
+	isActive!: boolean;
 
-  @Prop({ type: Number, required: true, default: 0 })
-  quantityAvailable!: number;
+	@Prop({ type: Number, required: true, default: 0 })
+	quantityAvailable!: number;
 
-  @Prop({ type: Number, required: true, default: 0 })
-  numberOfRatings!: number;
+	@Prop({ type: Number, required: true, default: 0 })
+	numberOfRatings!: number;
 
-  @Prop({ type: Number, required: true, default: 1, index: true })
-  exchangeFactor!: number;
+	@Prop({ type: Number, required: true, default: 1, index: true })
+	exchangeFactor!: number;
 
-  @Prop({ type: Number, required: true, default: 0 })
-  ratingAverage!: number;
+	@Prop({ type: Number, required: true, default: 0 })
+	ratingAverage!: number;
 
-  @Prop({ type: Array, required: false, default: [] })
-  comments?: string[];
+	@Prop({ type: Array, required: false, default: [] })
+	comments?: string[];
 
-  @Prop({ type: String, required: false })
-  info?: string;
+	@Prop({ type: String, required: false })
+	info?: string;
 
-  @Prop({ type: [{ type: Object }] })
-  tags?: Tag[];
+	@Prop({ type: [{ type: Object }] })
+	tags?: Tag[];
 
-  @Prop({ type: Date, default: new Date() })
-  createdAt!: Date;
+	@Prop({ type: Date, default: new Date() })
+	createdAt!: Date;
 
-  @Prop({ type: Date, default: new Date() })
-  updatedAt!: Date;
+	@Prop({ type: Date, default: new Date() })
+	updatedAt!: Date;
 }
 
 const ProductSchema = SchemaFactory.createForClass(Product);
 
 ProductSchema.virtual('Category', {
-  ref: 'ProductCategory',
-  localField: 'category.id',
-  foreignField: 'id',
-  justOne: true,
+	ref: 'ProductCategory',
+	localField: 'category.id',
+	foreignField: 'id',
+	justOne: true,
 });
 
 // Hooks to call domain event to update details on basket item
 ProductSchema.post('updateOne', { document: true }, function () {
-  try {
-    // @ts-expect-error
-    const aggregateId = new UniqueEntityID(this?._update?.$setOnInsert?.id);
-    DomainEvents.dispatchEventsForAggregate(aggregateId);
-  } catch (error) {
-    console.log(error.message);
-  }
+	try {
+		// @ts-expect-error
+		const aggregateId = new UniqueEntityID(this?._update?.$setOnInsert?.id);
+		DomainEvents.dispatchEventsForAggregate(aggregateId);
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 ProductSchema.post('updateMany', function () {
-  const id = new UniqueEntityID('PRODUCT_ONLY_FOR_DOMAIN_EVENT');
-  DomainEvents.dispatchEventsForAggregate(id);
+	const id = new UniqueEntityID('PRODUCT_ONLY_FOR_DOMAIN_EVENT');
+	DomainEvents.dispatchEventsForAggregate(id);
 });
 
 export { ProductSchema };

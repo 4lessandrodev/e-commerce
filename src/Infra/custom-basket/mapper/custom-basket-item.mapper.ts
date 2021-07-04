@@ -1,20 +1,25 @@
-import { IMapper, UniqueEntityID } from 'types-ddd/dist/src';
+import { IMapper, UniqueEntityID } from 'types-ddd';
 import {
-	BasketItemValueObject as Aggregate,
+	BasketItemValueObject,
+	ExchangeFactorValueObject,
 	ImageValueObject,
+	ProductDescriptionValueObject,
+	QuantityAvailableValueObject,
+	UnitOfMeasurementValueObject,
 } from '@domain/value-objects';
-import { UnitOfMeasurementValueObject } from '@domain/value-objects';
-import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { ProductDescriptionValueObject } from '@domain/value-objects';
-import { Item as Schema } from '../entities/basket.schema';
+import { Item } from '../entities/custom-basket-item.schema';
 import { ProductId } from '@domain/aggregates-root';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class BasketItemMapper implements IMapper<Aggregate, Schema> {
-	toDomain (target: Schema): Aggregate {
-		return Aggregate.create({
+export class CustomBasketItemMapper
+	implements IMapper<BasketItemValueObject, Item>
+{
+	toDomain (target: Item): BasketItemValueObject {
+		return BasketItemValueObject.create({
+			availableStock: QuantityAvailableValueObject.create(
+				target.quantity,
+			).getResult(),
 			description: ProductDescriptionValueObject.create(
 				target.description,
 			).getResult(),
@@ -25,27 +30,23 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
 			quantity: QuantityAvailableValueObject.create(
 				target.quantity,
 			).getResult(),
-			availableStock: QuantityAvailableValueObject.create(
-				target.availableStock,
-			).getResult(),
 			unitOfMeasurement: UnitOfMeasurementValueObject.create(
 				target.unitOfMeasurement,
 			).getResult(),
-			image: target?.image
+			image: target.image
 				? ImageValueObject.create(target.image).getResult()
 				: undefined,
 		}).getResult();
 	}
-	//
-	toPersistence (target: Aggregate): Schema {
+
+	toPersistence (target: BasketItemValueObject): Item {
 		return {
 			description: target.value.description.value,
 			exchangeFactor: target.value.exchangeFactor.value,
+			image: target.value.image?.value,
 			productId: target.value.productId.id.toString(),
 			quantity: target.value.quantity.value,
-			availableStock: target.value.availableStock.value,
 			unitOfMeasurement: target.value.unitOfMeasurement.value,
-			image: target.value.image?.value,
 		};
 	}
 }

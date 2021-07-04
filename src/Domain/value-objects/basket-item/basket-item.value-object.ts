@@ -7,31 +7,31 @@ import { UnitOfMeasurementValueObject } from '../unit-of-measurement/unit-of-mea
 import { ImageValueObject } from '../image/image.value-object';
 
 export interface BasketItemValue {
-  productId: ProductId;
-  exchangeFactor: ExchangeFactorValueObject;
-  quantity: QuantityAvailableValueObject;
-  availableStock: QuantityAvailableValueObject;
-  description: ProductDescriptionValueObject;
-  unitOfMeasurement: UnitOfMeasurementValueObject;
-  image?: ImageValueObject;
+	productId: ProductId;
+	exchangeFactor: ExchangeFactorValueObject;
+	quantity: QuantityAvailableValueObject;
+	availableStock: QuantityAvailableValueObject;
+	description: ProductDescriptionValueObject;
+	unitOfMeasurement: UnitOfMeasurementValueObject;
+	image?: ImageValueObject;
 }
 
 export interface BasketItemProps {
-  value: BasketItemValue;
+	value: BasketItemValue;
 }
 
 export class BasketItemValueObject extends ValueObject<BasketItemProps> {
-  constructor(props: BasketItemProps) {
-    super(props);
-  }
+	constructor (props: BasketItemProps) {
+		super(props);
+	}
 
-  get value(): BasketItemValue {
-    return this.props.value;
-  }
+	get value (): BasketItemValue {
+		return this.props.value;
+	}
 
-  public static create(props: BasketItemValue): Result<BasketItemValueObject> {
-    return Result.ok<BasketItemValueObject>(
-      new BasketItemValueObject({ value: props }),
-    );
-  }
+	public static create (props: BasketItemValue): Result<BasketItemValueObject> {
+		return Result.ok<BasketItemValueObject>(
+			new BasketItemValueObject({ value: props }),
+		);
+	}
 }

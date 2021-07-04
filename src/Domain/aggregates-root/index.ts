@@ -9,3 +9,4 @@ export * from './region/region.domain-aggregate-root';
 export * from './region/region-id.domain-aggregate-root';
 export * from './client/client.domain-aggregate-root';
 export * from './order/order.domain-aggregate-root';
+export * from './custom-basket/custom-basket.domain-aggregate-root';

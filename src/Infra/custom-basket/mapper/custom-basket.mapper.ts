@@ -1,6 +1,7 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
-import { BasketCategory, CustomBasket as Aggregate } from '@domain/entities';
-import { CustomBasket } from '../entities/order-custom-basket.schema';
+import { BasketCategory } from '@domain/entities';
+import { CustomBasket as Aggregate } from '@domain/aggregates-root';
+import { CustomBasket } from '../entities/custom-basket.schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { CustomBasketItemMapper } from './custom-basket-item.mapper';
 import { Currency, ImageValueObject } from '@domain/value-objects';

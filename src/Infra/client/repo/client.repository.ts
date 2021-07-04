@@ -9,44 +9,44 @@ import { ClientMapper } from '../mapper/client.mapper';
 
 @Injectable()
 export class ClientRepository implements ClientRepositoryInterface {
-  //
-  constructor(
-    @InjectModel(Client.name) private readonly conn: Model<ClientDocument>,
-    @Inject(ClientMapper) private readonly mapper: ClientMapper,
-  ) {}
+	//
+	constructor (
+		@InjectModel(Client.name) private readonly conn: Model<ClientDocument>,
+		@Inject(ClientMapper) private readonly mapper: ClientMapper,
+	) { }
 
-  async find(filter: Filter): Promise<Aggregate[] | null> {
-    const clientsFound = await this.conn.find(filter).exec();
+	async find (filter: Filter): Promise<Aggregate[] | null> {
+		const clientsFound = await this.conn.find(filter).exec();
 
-    if (!clientsFound) {
-      return null;
-    }
+		if (!clientsFound) {
+			return null;
+		}
 
-    return clientsFound.map(this.mapper.toDomain);
-  }
+		return clientsFound.map(this.mapper.toDomain);
+	}
 
-  async findOne(filter: Filter): Promise<Aggregate | null> {
-    const clientFound = await this.conn.findOne(filter).exec();
+	async findOne (filter: Filter): Promise<Aggregate | null> {
+		const clientFound = await this.conn.findOne(filter).exec();
 
-    if (!clientFound) {
-      return null;
-    }
+		if (!clientFound) {
+			return null;
+		}
 
-    return this.mapper.toDomain(clientFound);
-  }
+		return this.mapper.toDomain(clientFound);
+	}
 
-  async delete(filter: Filter): Promise<void> {
-    await this.conn.deleteOne(filter).exec();
-  }
+	async delete (filter: Filter): Promise<void> {
+		await this.conn.deleteOne(filter).exec();
+	}
 
-  async exists(filter: Filter): Promise<boolean> {
-    return await this.conn.exists(filter);
-  }
+	async exists (filter: Filter): Promise<boolean> {
+		return await this.conn.exists(filter);
+	}
 
-  async save(target: Aggregate): Promise<void> {
-    const schema = this.mapper.toPersistence(target);
-    await this.conn
-      .updateOne({ id: schema.id }, schema, { upsert: true })
-      .exec();
-  }
+	async save (target: Aggregate): Promise<void> {
+		const schema = this.mapper.toPersistence(target);
+		await this.conn
+			.updateOne({ id: schema.id }, schema, { upsert: true })
+			.exec();
+	}
 }
