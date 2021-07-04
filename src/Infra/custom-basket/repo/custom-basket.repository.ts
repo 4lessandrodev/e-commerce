@@ -50,7 +50,6 @@ export class CustomBasketRepository implements CustomBasketRepositoryInterface {
 				schema,
 				{ upsert: true }).exec();
 		} else {
-			console.log(schema);
 			await new this.conn(schema).save();
 		}
 	}

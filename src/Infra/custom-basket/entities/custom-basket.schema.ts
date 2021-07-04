@@ -1,4 +1,4 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Item } from './custom-basket-item.schema';
 import { CustomBasketCategory } from './custom-basket-category.schema';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
@@ -24,6 +24,7 @@ export class Currency {
 
 export type CustomBasketDocument = CustomBasket & Document;
 
+@Schema({ timestamps: true, autoCreate: true, autoIndex: true })
 export class CustomBasket {
 	@Prop({
 		index: true,
@@ -54,13 +55,13 @@ export class CustomBasket {
 	@Prop({ type: Object, required: false })
 	category!: CustomBasketCategory;
 
-	@Prop({ type: { type: Object, required: false }, default: [] })
+	@Prop({ type: [{ type: Object, required: false }], default: [] })
 	items!: Item[];
 
-	@Prop({ type: { type: Object, required: false }, default: [] })
+	@Prop({ type: [{ type: Object, required: false }], default: [] })
 	itemsAdded!: Item[];
 
-	@Prop({ type: { type: Object, required: false }, default: [] })
+	@Prop({ type: [{ type: Object, required: false }], default: [] })
 	itemsRemoved!: Item[];
 
 	@Prop({ type: Number, required: true })
