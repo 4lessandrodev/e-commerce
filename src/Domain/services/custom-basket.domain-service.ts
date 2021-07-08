@@ -104,9 +104,8 @@ export class CustomBasketDomainService
 			return Result.fail<void>('Reached Changes limit');
 		}
 
-		const itemExistOnBasket = customBasket.currentItems.find(({ value }) =>
-			value.productId.id.equals(item.value.productId.id),
-		);
+
+		const itemExistOnBasket = customBasket.currentItems.find(({ value }) => value.productId.id.equals(item.value.productId.id));
 
 		if (!itemExistOnBasket) {
 			return Result.fail<void>('Item does not exists on Custom Basket');

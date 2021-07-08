@@ -106,7 +106,7 @@ describe('add-item-to-custom-basket-item', () => {
 			description:
 				ProductDescriptionValueObject.create('valid_description').getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
-			productId: ProductId.create(new UniqueEntityID('valid_id')),
+			productId: ProductId.create(new UniqueEntityID('valid_product_id')),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
 			unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
 		}).getResult();
@@ -123,7 +123,7 @@ describe('add-item-to-custom-basket-item', () => {
 				description:
 					BasketDescriptionValueObject.create('valid_description').getResult(),
 				isDraft: true,
-				itemsAdded: [],
+				itemsAdded: [item],
 				itemsRemoved: [item],
 				price: MonetaryValueObject.create(
 					Currency.create(10).getResult(),
@@ -176,7 +176,7 @@ describe('add-item-to-custom-basket-item', () => {
 			image: ImageValueObject.create(
 				'https://aws.com/fake-s3/image.jpeg',
 			).getResult(),
-		}).getResult();
+		}, new UniqueEntityID('valid_product_id')).getResult();
 
 		// Mock client for each interaction
 		client = Client.create({
@@ -294,6 +294,16 @@ describe('add-item-to-custom-basket-item', () => {
 			regionRepo,
 			ecobagRepo,
 		);
+
+		// Mock customBasketRepo
+		customBasketRepo = {
+			delete: jest.fn(),
+			exists: jest.fn(),
+			find: jest.fn(),
+			findOne: jest.fn(),
+			save: jest.fn(),
+			getCustomBasketFromOrder: jest.fn()
+		};
 
 		useCase = new RemoveItemFromCustomBasketUseCase(
 			orderRepo,
@@ -427,6 +437,7 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
 		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
+		jest.spyOn(customBasketRepo, 'getCustomBasketFromOrder').mockImplementationOnce(async () => customBasket);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
@@ -434,7 +445,6 @@ describe('add-item-to-custom-basket-item', () => {
 			productId: 'valid_product_id',
 			quantityOfItemToRemove: 1,
 		});
-		console.log(result);
 		expect(result.isSuccess).toBe(true);
 	});
 });
