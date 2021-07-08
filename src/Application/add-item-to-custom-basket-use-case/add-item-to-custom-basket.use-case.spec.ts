@@ -294,6 +294,16 @@ describe('add-item-to-custom-basket-item', () => {
 			ecobagRepo,
 		);
 
+		// Mock customBasketRepo
+		customBasketRepo = {
+			delete: jest.fn(),
+			exists: jest.fn(),
+			find: jest.fn(),
+			findOne: jest.fn(),
+			save: jest.fn(),
+			getCustomBasketFromOrder: jest.fn()
+		};
+
 		useCase = new AddItemToCustomBasketUseCase(
 			orderRepo, productRepo, basketRepo,
 			orderDomainService, openOrderUseCase, customBasketRepo
@@ -422,7 +432,7 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
 		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
-
+		jest.spyOn(customBasketRepo, 'getCustomBasketFromOrder').mockImplementationOnce(async () => customBasket);
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
