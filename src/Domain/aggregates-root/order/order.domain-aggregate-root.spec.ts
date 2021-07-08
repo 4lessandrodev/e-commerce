@@ -165,6 +165,8 @@ describe('order.domain-aggregate-root.spec', () => {
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [separateProduct, separateProduct], // 63,00 + 63,00
 			status: OrderStatusValueObject.create('COMPLETED').getResult(),
+			subTotalCustomBaskets: MonetaryValueObject.create(Currency.create(40).getResult()).getResult(),
+			subTotalSeparateProducts: MonetaryValueObject.create(Currency.create(126).getResult()).getResult(),
 		}).getResult();
 
 		// total = 186,00
@@ -203,7 +205,7 @@ describe('order.domain-aggregate-root.spec', () => {
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(20).getResult(),
 			).getResult(),
 			image: undefined,
 			isDraft: true,
@@ -241,11 +243,13 @@ describe('order.domain-aggregate-root.spec', () => {
 				street: StreetNameValueObject.create('valid_street').getResult(),
 				zipCode,
 			}).getResult(),
-			ecoBagFee: monetary, // 00,00 not included
+			ecoBagFee: MonetaryValueObject.create(Currency.create(0).getResult()).getResult(), // 00,00 not included
 			includesEcobag: false,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [separateProduct, separateProduct], // 63,00 + 63,00
 			status: OrderStatusValueObject.create('COMPLETED').getResult(),
+			subTotalCustomBaskets: MonetaryValueObject.create(Currency.create(40).getResult()).getResult(),
+			subTotalSeparateProducts: MonetaryValueObject.create(Currency.create(126).getResult()).getResult(),
 		});
 
 		// total = 176,00
