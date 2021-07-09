@@ -57,7 +57,7 @@
 	},
 	"devDependencies": {
 		"@microsoft/tsdoc": "^0.13.2",
-		"@nestjs/cli": "7.6.18",
+		"@nestjs/cli": "7.6.0",
 		"@nestjs/schematics": "7.3.1",
 		"@nestjs/testing": "7.6.18",
 		"@types/bcrypt": "^3.0.1",
