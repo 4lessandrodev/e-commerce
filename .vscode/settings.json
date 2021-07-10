@@ -6,5 +6,8 @@
         "QWERTYUIOPASDFGHJKLZXCVBNM"
     ],
     "editor.insertSpaces": false,
-	"editor.wrappingIndent": "indent"
+	"editor.wrappingIndent": "indent",
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	}
 }
