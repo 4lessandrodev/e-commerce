@@ -16,7 +16,7 @@ export class GetUsersDto {
 
 	@IsOptional()
 	@IsBooleanString()
-	isTheEmailConfirmed?: boolean;
+	is_the_email_confirmed?: boolean;
 
 	@IsOptional()
 	@IsNumberString()

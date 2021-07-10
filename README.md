@@ -1,10 +1,9 @@
 # Projeto e-commerce
 
----
 
-### Projeto com DDD, SOLID, TDD, CLEAN CODE e POO
+> SOLID, TDD, CLEAN CODE e POO, TYPESCRIPT, EVENTS
 
-#### Resumo
+## Resumo da regra de negócio
 
 Uma aplicação para comercialização de produtos orgânicos.
 O sistema deve permitir cadastro e gestão de produtos orgânigos,
@@ -63,157 +62,125 @@ Check available endpoints on postman documentation
 ---
 
 ## DDD (Domain Driven Design)
+### Entidade (Entity)
 
-- [ 1. Ubiquitous language](#1-ubiquitous-language)
-- [ 2. Rich domain model](#2-rich-domain-model)
-- [ 3. Thin domain service working on rich domain models](#3-thin-domain-service-working-on-rich-domain-models)
-- [ 4. Layers in a DDD application](#4-layers-in-a-ddd-application)
-- [ 5. Entities](#5-entities)
-- [ 6. Value objects](#6-value-objects)
-- [ 7. Factories](#7-factories)
-- [ 8. Aggregates](#8-aggregates)
-- [ 9. Repositories](#9-repositories)
-- [10. Shared kernel](#10-shared-kernel)
-- [11. Domain events](#11-domain-events)
-- [12. Anti-corruption layer](#12-anti-corruption-layer)
+- Tem um id (de preferência um GUID em vez de um int gerado pelo banco de dados, porque as transações de negócios não dependem da persistência, podem ser persistidas após outras operações realizadas no comportamento da model)
+- A classe de entidade não deve ter setters de propriedade pública, definir uma propriedade deve ser um método de comportamento da classe.
+- As relações de entidade não devem conter uma referência a outra classe de entidade, podem apenas manter o id de outra entidade
+- Se uma transação de negócios precisa de uma referência a outras entidades em relação, agregados devem ser usados ​​em seu lugar (agregados podem conter uma referência a outras raízes agregadas, que são classes de entidade por definição)
+- Deve validar seu estado e impedir qualquer estado inválido.
 
-## 1. Ubiquitous language:
+### Objeto de Valor (Value Object)
 
-- Language and terms agreed upon by both business users and developers, within a bounded context
-- Entities with the same name in a different context can have different behavior and data
-- Bounded context helps in single responsibility for domain models
+- São identificados apenas por seus valores, não por seus ids (por exemplo, dinheiro é um objeto de valor, desde que não estejamos rastreando notas individuais, se precisarmos rastrear notas individuais, então deve ser uma entidade de notas)
+- Pode ser usado para medir ou descrever coisas (nome, descrição, quantidade, altura, data, hora, intervalo, endereço, etc.)
+- Você pode combinar outros tipos de valor que geralmente vão juntos em um novo tipo de objeto de valor, como endereço (cidade, rua, país, código postal) ou ... intervalo ou ... tipo
+- Prefira colocar o comportamento em objetos de valor em vez de entidades porque os objetos de valor são imutáveis ​​e não têm efeitos colaterais (como alterar seu estado ou alterar o estado de qualquer entidade)
+- Pode ser parte de uma entidade
+- Devem ser imutáveis, os comportamentos não devem alterar o estado de um objeto de valor, mas podem, em vez disso, criar um novo objeto de valor
+- Pode ser persistente, mas apenas como parte de uma entidade, não individualmente
 
-## 2. Rich domain model:
+### Agregado (Aggregate)
 
-- Models (entities, value objects, aggregates) with rich behavior are preferred over anemic domain models (entities without behavior, which only keep data and represent the DB tables)
-- Due to single responsibility principle (a class or method should have only one reason to change), non-cohesive behavior should be delegated to other classes (or even handled inside domain services) when necessary
-- Model methods can also delegate the task to domain services by raising domain events
+- Encapsulam e são compostos por classes de entidade e objetos de valor que mudam juntos em uma transação de negócio
+- A Agregado Raiz deve ser uma entidade, um agregado pode até ser uma única entidade
+- O agregado pode manter uma referência a outros agregados raizes, mas não a outras classes de entidade que não são as próprias raízes agregadas
+- O agregado não deve manter uma referência a outras classes de entidade raiz agregada se essas outras entidades não mudarem junto com esta entidade raiz agregada
+- O agregado também pode manter o id de outra entidade, mas manter muitos ids de chave estrangeira é um cheiro de erro de modelagem de domínio.
+- Se a exclusão de uma entidade tiver um efeito em cascata sobre as outras entidades referenciadas por classe, essas entidades fazem parte do mesmo agregado, caso contrário, não deveriam estar dentro deste agregado.
 
-## 3. Thin domain service working on rich domain models:
+### Evento de Domínio (Domain Event)
 
-- Domain services should not hold state (application services are not domain services, they are on the outer layer close to the UI layer, and can hold application/task state)
-- Domain services have very little behavior and only which does not fit cohesively in any domain model
-- Domain services sit in the core domain layer along with entities, value objects, aggregates and domain events, and expose domain models in their interfaces
+- Pode ser gerado quando ocorre uma mudança de estado em uma entidade.
+- Desacopla models uma das outras
+- Usado apenas quando um evento precisa ser tratado dentro de uma model diferente daquela que gerou este evento, ou tratado dentro de um serviço de domínio ou mesmo um serviço de aplicativo.
+- São classes imutáveis, que representam o passado, nomeadas no pretérito e não podem mudar (... Alterado, ... Acontecido, etc.)
+- Deve incluir a hora em que este evento foi gerado, bem como qualquer outra informação útil para lidar com o evento, bem como o id da entidade que gerou o evento.
+- Não deve ter comportamento.
+- Os eventos de domínio são gerados de forma síncrona, se uma tarefa assíncrona precisa ser realizada, isso pode ser feito dentro do manipulador de eventos (padrão async-await).
+- Aplicativos externos também podem ser acionados usando uma fila de mensagens ou um barramento de serviço.
 
-## 4. Layers in a DDD application:
+### Serviço de Domínio (Domin Service)
 
-- Core domain layer (domain services, entities, value objects, aggregates and domain events)
-- Core domain layer is surrounded by the UI/Application layer and Infrastructure layer
-- UI/Application layer (UI and application service facade with messaging, JSON, XML capabilities, session, etc.)
-- Infrastructure layer (persistence, file system, network, mail, logging, etc.)
+- Os serviços de domínio não devem manter o estado (os serviços de aplicação não são serviços de domínio, eles estão na camada externa perto da camada de IU e podem manter o estado do aplicativo / tarefa).
+- Os serviços de domínio têm muito pouco comportamento e apenas o que não se encaixa de forma coesa em nenhuma domain model.
+- Os serviços de domínio ficam na camada de domínio central junto com entidades, objetos de valor, agregados e eventos de domínio e expõem modelos de domínio em suas interfaces.
 
-## 5. Entities:
+### Repositório (Repository)
 
-- Live longer than the application, should endure restarts, and are persisted and read from data sources (DB, file system, network, etc.)
-- Have an id (preferably a GUID rather than a DB generated int because business transactions do not rely on persistence, can be persisted after other operations carried out in model's behavior)
-- Have entity semantics (equality and `GetHashCode()` defined by class name + id)
-- Behavior in an entity mostly orchestrates value objects for a use case
-- Entity class should not have public property setters, setting a property should be a behavior method
-- Entities should not have bidirectional relations (depending on the bounded context, either an egg can have a chicken or a chicken can have eggs, but not both)
-- Entity relations should not reflect the complete set of DB foreign key relationships, should be bare down to the minimum for performing the behavior inside the bounded context
-- Entity relations should not hold a reference to another entity class, it can only keep the id of another entity
-- If a business transaction needs a reference to other entities in relation, aggregates should be used instead (aggregates can hold a reference to other aggregate roots, which are entity classes by definition)
+- Persistir e ler agregados de / para banco de dados ou sistema de arquivos.
+- Deve ter uma interface próxima a uma coleção, mas deve permitir apenas as operações necessárias para este agregado (por exemplo, um agregado pode não precisar ser atualizado ou excluído).
+- Não deve ser genérico (deve ser específico para o tipo de agregado).
+- Pode ter métodos de consulta específicos, se necessário (como FindByName () etc.).
+- Não use o carregamento lento, em vez disso, use o carregamento antecipado (use Include (...) na Model de Infra), caso contrário, você pode enfrentar "N + 1 problema" e número excessivo de consultas enviadas ao banco de dados
+- Pode ter métodos específicos que carregam apenas algumas das colunas de uma tabela
+- A operação de adicionar / atualizar / remover, o repositório deve se comprometer com o banco de dados por si mesmo (chame ... Context.Save () no final), porque as operações agregadas devem ser transações ACID
+- A interface do repositório fica dentro da camada de domínio, mas as implementações estão dentro da camada de infraestrutura.
+- Repositórios não são usados ​​dentro das models de domínio (entidades, objetos de valor, agregados).
 
-## 6. Value objects:
+### Casos de Uso (Serviço de Aplicação)
 
-- Are only identified by their values, not by their ids (for example money is a value object as long as we are not tracking individual banknotes, if we need to track individual banknotes then it should be a banknote entity)
-- Can be used to measure or describe things (name, description, amount, height, date, time, range, address, etc.)
-- You can combine other value types that usually go together into a new value object type, like address (city, street, country, postal code) or ...range, or ...type
-- Prefer to put the behavior on value objects rather than on entities because value objects are immutable and do not have side effects (like changing their state or changing the state of any entity)
-- Can be part of an entity
-- Have value semantics (equality and `GetHashCode()` defined by property values)
-- Should be immutable, behaviors should not change the state of a value object, but can rather create a new value object (should act similar to C# strings, structs, ints, and other value types)
-- Can be persisted but only as part of an entity, not individually
+- Casos de Uso ou Serviço de Aplicação são classes que executam comando para a realização de uma operação na camada de aplicação.
+- Não contêm lógica de negócios específica de domínio.
+- São usados para buscar entidades de domínio (e qualquer outra coisa) da persistência e do mundo externo.
+- Passa o controle para um agregado para executar a lógica do domínio usando um método do agregado.
+- Passa várias entidades para um serviço de domínio para facilitar sua interação.
+- Têm baixos níveis de Complexidade Ciclomática.
 
-## 7. Factories:
+### Mapper
 
-- Create, build aggregates and entities:
-- Static Create...() factory method on a model class is used to guard against the construction of an invalid or incomplete model
-- The model class should not have a public default constructor (however if it is to be persisted, for Entity Framework to work, it can have a protected or private default constructor)
+- Responsável por traduzir a estrutura de um modelo de domínio para uma estrutura de infra e persistência e vice versa.
+- Não possui lógica de negócio.
+- Não realiza validações de estado.
 
-## 8. Aggregates:
+### As Camadas
 
-- Encapsulate and are composed of entity classes and value objects that change together in a business transaction
-- Aggregates are a transactional graph of model objects
-- Aggregate root should be an entity, an aggregate can even be a single entity
-- Aggregate can keep a reference to other aggregate roots, but not to other entity classes which are not aggregate roots themselves
-- Aggregate should not keep a reference to other aggregate root entity classes if those other entities do not change together with this aggregate root entity
-- Aggregate can also keep the id of another entity, but keeping too many foreign key ids is a code smell (why?)
-- If deleting an entity has a cascade effect on the other entities referenced by class in the object graph, these entities are part of the same aggregate, if not, they should not be inside this aggregate
+DDD não é uma arquitetura. O DDD (Domain Driven Design) é uma modelagem de software cujo objetivo é facilitar a implementação de regras e processos complexos, onde visa a divisão de responsabilidades por camadas e é independente da tecnologia utilizada. Ou seja, o DDD é uma filosofia voltado para o domínio do negócio.
 
-## 9. Repositories:
+1. Camada de aplicação: responsável pelo projeto principal, pois é onde será desenvolvido os controladores e serviços da API. Tem a função de receber todas as requisições e direcioná-las a algum serviço para executar uma determinada ação.
+   Possui referências das camadas Service e Domain.
+2. Camada de domínio: responsável pela implementação de classes/modelos, as quais serão mapeadas para o banco de dados, além de obter as declarações de interfaces, constantes, DTOs (Data Transfer Object) e enums.
+3. Camada de serviço / Caso de Uso: seria o “coração” do projeto, pois é nela que é feita todas as regras de negócio e todas as validações, antes de persistir os dados no banco de dados.
+   Possui referências das camadas Domain e Infra.
+4. Camada de infraestrutura: é quem realiza a persistência com o banco de dados, utilizando, ou não, algum ORM.
 
-- Persist and read aggregates to/from DB or file system
-- Should have an interface close to a collection but should allow only the necessary operations needed for this aggregate (for example an aggregate might not need to be allowed to get updated or deleted)
-- Should not be generic (should be specific for the aggregate type)
-- Can have specific query methods if needed (like `FindByName()` etc.)
-- Do not use lazy loading, instead use eager loading (use Include(...) in Entity Framework), else you can face "N+1 problem"s and excessive number of queries sent to DB
-- Can have specific methods that only load some of the columns from a table
-- Repository add/update/remove operation should commit to DB by itself (call Entity Framework ...Context.SaveChanges() at the end), because aggregate operations should be ACID transactions
-- Repository interface sits inside Core domain layer, but implementations are inside Infrastructure layer
-- Repositories are not used inside the domain models (entities, value objects, aggregates)
-
-## 10. Shared kernel:
-
-- Is where cross-cutting concerns or common types shared by all bounded contexts sit (like entity abstract base type, value object abstract base type, common value objects, authorization, etc.)
-
-## 11. Domain events:
-
-- Can be raised when a state change occurs in an entity
-- Decouple models from each other
-- Only used when an event needs to be handled inside a different model than the one raising this event, or handled inside a domain service or even an application service
-- Are immutable classes, that represent past, named in the past tense, and cannot change (...Changed, ...Happened, etc.)
-- Should include the time that this event was raised, as well as any other useful info for handling the event, as well as the id of the entity which raised the event
-- Should not have behavior
-- Domain events are subscribed to with a callback (lambda), or using pub sub interfaces, on a singleton or static event message bus
-- Domain events implemented this way can be subscribed to and handled in the aggregate root of the entity which raised the event, or in domain services, or even in UI/Application layer
-- Domain events are raised synchronously, if an asynchronous task needs to be carried out, it can be done inside the event handler (async-await pattern)
-- Outside applications can also be triggered by using a message queue or an enterprise service bus (ESB) inside the domain event handler
-
-## 12. Anti-corruption layer:
-
-- Used to translate models from outside systems or legacy apps to models inside the bounded context and vice versa, and also to ease the communication with legacy services
-- Can use service facades and model adapters
-
-#### Modelagem do sistema
-
-##### Arquitetura da aplicação
+### Arquitetura da aplicação
 
 ---
 
 ![](./readme/Api-Architecture.png)
 
-##### Mapa de artefatos da aplicação
+### Mapa de artefatos da aplicação
 
 ---
 
 ![](./readme/Artifacts.png)
 
-##### Casos de uso
+### Casos de uso
 
 ---
 
 ![](./readme/UseCase.png)
 
-##### Experts
+### Experts
 
 ---
 
 ![](./readme/experts.png)
 
-##### Events
+### Events
 
 ---
 
 ![](./readme/events.png)
 
-##### Diagrama de classe
+### Diagrama de classe
 
 ---
 
 ![](./readme/ClassesDiagram.png)
 
-##### Como usar esse projeto
+### Como usar esse projeto
 
 ---
 

@@ -52,6 +52,9 @@ export class UserController {
 	@Get('users')
 	@UseGuards(AuthGuard())
 	getUsers (@Query() dto: GetUsersDto): Promise<GetUsersPayload> {
-		return this.userService.getUsers({ ...dto }, { ...dto });
+		const isTheEmailConfirmed = dto.is_the_email_confirmed;
+		return this.userService.getUsers(
+			{ ...dto, isTheEmailConfirmed }, { ...dto }
+		);
 	}
 }
