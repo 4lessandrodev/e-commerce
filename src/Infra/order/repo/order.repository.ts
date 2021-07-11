@@ -2,7 +2,7 @@ import {
 	hasClientOpenedOrderProps,
 	OrderRepositoryInterface,
 } from '@repo/order-repository.interface';
-import { Filter } from 'types-ddd/dist/src';
+import { Filter } from 'types-ddd';
 import { Order as Aggregate } from '@domain/aggregates-root';
 import { InjectModel } from '@nestjs/mongoose';
 import { Order, OrderDocument } from '../entities/order.schema';

@@ -43,6 +43,7 @@
 		"currency.js": "^2.0.4",
 		"date-fns": "^2.21.2",
 		"env-var": "^7.0.0",
+		"keys-converter": "2.0.1",
 		"module-alias": "^2.2.2",
 		"mongoose": "^5.12.7",
 		"mongoose-autopopulate": "^0.13.0",
@@ -51,7 +52,7 @@
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "<6.6.8",
-		"types-ddd": "^0.0.9",
+		"types-ddd": "1.0.1",
 		"ua-parser-js": "^0.7.28",
 		"uuid": "^8.3.1"
 	},

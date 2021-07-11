@@ -1,4 +1,4 @@
-import { IMapper, UniqueEntityID } from 'types-ddd/dist/src';
+import { IMapper, UniqueEntityID } from 'types-ddd';
 import {
 	BasketItemValueObject as Aggregate,
 	ImageValueObject,

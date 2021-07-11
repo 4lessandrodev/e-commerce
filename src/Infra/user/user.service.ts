@@ -7,7 +7,7 @@ import { Payload } from './interfaces/payload.interface';
 import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
 import { User } from './entities/user.schema';
 import { UserQuery } from './query/user.query';
-import { Result } from 'types-ddd/dist/src';
+import { Result } from 'types-ddd';
 import { Pagination, GetUsersFilter } from './interfaces/query-filter.interface';
 import { GetUsersPayload } from './interfaces/get-users-payload.interface';
 

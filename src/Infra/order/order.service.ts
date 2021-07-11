@@ -1,5 +1,5 @@
 import { Inject, PreconditionFailedException } from '@nestjs/common';
-import { Result } from 'types-ddd/dist/src';
+import { Result } from 'types-ddd';
 import { AddItemToCustomBasketUseCase } from '@app/add-item-to-custom-basket-use-case/add-item-to-custom-basket.use-case';
 import { AddItemToCustomBasketDto } from '@app/add-item-to-custom-basket-use-case/add-item-to-custom-basket-use-case.dto';
 import { RemoveItemFromCustomBasketUseCase } from '@app/remove-item-from-custom-basket-use-case/remove-item-from-custom-basket.use-case';
