@@ -8,7 +8,7 @@ import { Term, User } from './entities/user.schema';
 import { UserService } from './user.service';
 import { GetUserAgent } from './services/get-user-agent.decorator';
 import { GetUsersPayload } from './interfaces/get-users-payload.interface';
-import { objectKeysToCamelCase } from 'keys-converter';
+import { objectKeysToCamelCaseV2 } from 'keys-converter';
 import {
 	Body,
 	Controller,
@@ -53,12 +53,10 @@ export class UserController {
 	@Get('users')
 	@UseGuards(AuthGuard())
 	getUsers (@Query() dto: GetUsersDto): Promise<GetUsersPayload> {
-		const converter = objectKeysToCamelCase(dto);
-
-		console.log(converter);
+		const converted = objectKeysToCamelCaseV2(dto);
 
 		return this.userService.getUsers(
-			{ ...dto }, { ...dto }
+			{ ...converted }, { ...dto }
 		);
 	}
 }
