@@ -1,4 +1,4 @@
-import { Result } from 'types-ddd/dist/src';
+import { Result } from 'types-ddd';
 import { BasketItemValueObject } from '@domain/value-objects';
 import { QuantityAvailableValueObject } from '@domain/value-objects';
 import { AddProps } from './interfaces/custom-basket-domain-service.interface';

@@ -9,7 +9,7 @@ import {
 } from '@domain/value-objects';
 import { CustomBasketMapper } from '../mapper/custom-basket.mapper';
 import { CustomBasket as Schema } from '../entities/custom-basket.schema';
-import { UniqueEntityID } from 'types-ddd/dist/src';
+import { UniqueEntityID } from 'types-ddd';
 import { BasketItemMapper } from '../../basket/mappers/basket-item.mapper';
 describe('custom-basket-item.mapper', () => {
 	const domain: CustomBasket = CustomBasket.create(

@@ -46,9 +46,9 @@ import {
 import { ClientRepositoryInterface } from '@repo/client-repository.interface';
 import { EcobagRepositoryInterface } from '@repo/ecobag.repository.interface';
 import { RegionRepositoryInterface } from '@repo/region-repository.interface';
-import { UniqueEntityID } from 'types-ddd/dist/src';
+import { UniqueEntityID } from 'types-ddd';
 import { OrderDomainService } from '@domain/services/order.domain-service';
-import { CustomBasketRepositoryInterface } from '../../Repo/custom-basket-repository.interface';
+import { CustomBasketRepositoryInterface } from '@repo/custom-basket-repository.interface';
 
 describe('add-item-to-custom-basket-item', () => {
 	// MOck zip code

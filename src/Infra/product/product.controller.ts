@@ -9,7 +9,7 @@ import { Get, ValidationPipe } from '@nestjs/common';
 import { Post, Controller } from '@nestjs/common';
 import { Query, UseGuards } from '@nestjs/common';
 import { UsePipes } from '@nestjs/common';
-import { GetProductsResult } from './interfaces/product.query.interface';
+import { GetProductsPayload } from './interfaces/product.query.interface';
 import { ProductIdDto, UpdateProductDto } from './dto/update-product.dto';
 import { DeactivateManyProductsDto } from './dto/deactivate-many-products.dto';
 import { ResetProductStockDto } from './dto/reset-product-stock.dto';
@@ -40,7 +40,7 @@ export class ProductController {
 	}
 
 	@Get()
-	getProducts (@Query() filter: ProductFilter): Promise<GetProductsResult> {
+	getProducts (@Query() filter: ProductFilter): Promise<GetProductsPayload> {
 		return this.productService.getProducts(filter);
 	}
 
