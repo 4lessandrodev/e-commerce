@@ -55,9 +55,9 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ## Documentation
 
-Check available endpoints on postman documentation
+Documentação disponível no postman
 
-[Link Postman Api Documentation](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
+[Link Postman](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
 
 ---
 
@@ -168,7 +168,7 @@ DDD não é uma arquitetura. O DDD (Domain Driven Design) é uma modelagem de so
 
 ![](./readme/experts.png)
 
-### Events
+### Eventos (Events)
 
 ---
 
@@ -196,8 +196,8 @@ DDD não é uma arquitetura. O DDD (Domain Driven Design) é uma modelagem de so
 
 - `$ yarn start:dev `
 
-### Documentation
+### Documentação
 
-Check available endpoints on postman documentation
+Documentação disponível no postman
 
-[Link Postman Api Documentation](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
+[Link Postman](https://documenter.getpostman.com/view/9702967/TzK2ZZU6)
