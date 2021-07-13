@@ -46,7 +46,7 @@
 		"keys-converter": "3.0.0",
 		"module-alias": "^2.2.2",
 		"mongoose": "^5.12.7",
-		"mongoose-autopopulate": "^0.13.0",
+    "mongoose-autopopulate": "^0.14.0",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"reflect-metadata": "^0.1.13",
