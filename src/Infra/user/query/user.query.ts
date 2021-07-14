@@ -50,4 +50,13 @@ export class UserQuery implements UserQueryInterface {
 			users: [...users]
 		};
 	}
+
+	async getUserById (id: string): Promise<User | null> {
+		const userExists = await this.conn.findOne({ id },
+			{ _id: 0, role: 0, __v: 0, terms: 0, password: 0 });
+		if (!userExists) {
+			return null;
+		}
+		return userExists;
+	}
 }

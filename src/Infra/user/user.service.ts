@@ -47,4 +47,8 @@ export class UserService {
 	async getUsers (filter: GetUsersFilter, pagination: Pagination): Promise<GetUsersPayload> {
 		return this.userQuery.getUsers(filter, pagination);
 	}
+
+	async getUserById (id: string): Promise<User | null> {
+		return this.userQuery.getUserById(id);
+	}
 }
