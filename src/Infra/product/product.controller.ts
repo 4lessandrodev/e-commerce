@@ -64,4 +64,18 @@ export class ProductController {
 	): Promise<void> {
 		return this.productService.deactivateAllProducts(dto);
 	}
+
+	@Get('category/:id')
+	getProductByCategory (
+		@Param('id') id: string,
+		@Query() filter: ProductFilter): Promise<GetProductsPayload> {
+		return this.productService.getProductByCategoryId(id, filter);
+	}
+
+	@Get('tag/:id')
+	getProductByTag (
+		@Param('id') id: string,
+		@Query() filter: ProductFilter): Promise<GetProductsPayload> {
+		return this.productService.getProductByTagId(id, filter);
+	}
 }
