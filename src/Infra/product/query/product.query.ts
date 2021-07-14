@@ -90,9 +90,58 @@ export class ProductQuery implements ProductQueryInterface {
 			totalOfRegisters,
 		};
 
-		return {
-			pageInfo,
-			products,
+		return { pageInfo, products };
+	}
+
+	async getProductsByCategoryId (categoryId: string, filter: ProductFilter):
+		Promise<GetProductsPayload> {
+
+		const { limit = 10, offset = 0 } = filter;
+		const limitNumber = parseInt(String(limit), 10);
+		const skipNumber = parseInt(String(offset), 10);
+
+		// Count
+		const totalOfRegisters = await this.conn
+			.find({ 'category.id': categoryId })
+			.countDocuments();
+
+		const pageInfo: PageInfo = {
+			hasNextPage: skipNumber + limitNumber < totalOfRegisters,
+			hasPreviousPage: skipNumber > 0,
+			totalOfRegisters,
 		};
+
+		const products = await this.conn
+			.find({ 'category.id': categoryId },
+				{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 },
+			).skip(skipNumber).limit(limitNumber);;
+
+		return { pageInfo, products };
+	}
+
+	async getProductsByTagId (tag: string, filter: ProductFilter):
+		Promise<GetProductsPayload> {
+
+		const { limit = 10, offset = 0 } = filter;
+		const limitNumber = parseInt(String(limit), 10);
+		const skipNumber = parseInt(String(offset), 10);
+
+		// Count
+		const totalOfRegisters = await this.conn
+			.find({ tags: { $elemMatch: { id: tag } } })
+			.countDocuments();
+
+		const pageInfo: PageInfo = {
+			hasNextPage: skipNumber + limitNumber < totalOfRegisters,
+			hasPreviousPage: skipNumber > 0,
+			totalOfRegisters,
+		};
+
+		const products = await this.conn.find(
+			{ tags: { $elemMatch: { id: tag } } },
+			{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 },
+		).skip(skipNumber).limit(limitNumber);;
+
+		return { pageInfo, products };
 	}
 }

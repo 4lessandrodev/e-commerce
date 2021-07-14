@@ -83,4 +83,12 @@ export class ProductService {
 	async getProducts (filter: ProductFilter): Promise<GetProductsPayload> {
 		return this.productQuery.getProducts(filter);
 	}
+
+	getProductByCategoryId (categoryId: string, filter: ProductFilter): Promise<GetProductsPayload> {
+		return this.productQuery.getProductsByCategoryId(categoryId, filter);
+	}
+
+	getProductByTagId (tagId: string, filter: ProductFilter): Promise<GetProductsPayload> {
+		return this.productQuery.getProductsByTagId(tagId, filter);
+	}
 }

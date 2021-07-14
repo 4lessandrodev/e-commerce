@@ -18,7 +18,8 @@ import {
 	ValidationPipe,
 	UseGuards,
 	Ip,
-	Query
+	Query,
+	Param
 } from '@nestjs/common';
 import { GetUsersDto } from './dto/get-users.dto';
 
@@ -58,5 +59,11 @@ export class UserController {
 		return this.userService.getUsers(
 			{ ...converted }, { ...dto }
 		);
+	}
+
+	@Get('users/:id')
+	@UseGuards(AuthGuard())
+	getUserById (@Param('id') id: string): Promise<User | null> {
+		return this.userService.getUserById(id);
 	}
 }
