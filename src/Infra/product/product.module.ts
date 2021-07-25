@@ -18,58 +18,61 @@ import { UserModule } from '../user/user.module';
 import { TagMapper } from './mapper/tag.mapper';
 import { ProductCategoryMapper } from './mapper/product-category.mapper';
 import { ProductCategoryRepository } from './repo/product-category.repository';
-import { ProductCategory } from './entities/product-category.schema';
-import { ProductCategorySchema } from './entities/product-category.schema';
+import {
+	ProductCategory,
+	ProductCategorySchema
+} from './entities/product-category.schema';
+
 import { UpdateProductUseCase } from '@app/update-product-use-case/update-product.use-case';
 import { DeactivateManyProductsUseCase } from '@app/deactivate-many-products-use-case/deactivate-many-products.use-case';
 import { ResetProductStockUseCase } from '@app/reset-product-stock-use-case/reset-product-stock.use-case';
 
 @Module({
-  imports: [
-    UserModule,
-    MongooseModule.forFeature([
-      { name: ProductCategory.name, schema: ProductCategorySchema },
-      { name: Product.name, schema: ProductSchema },
-      { name: Tag.name, schema: TagSchema },
-    ]),
-  ],
-  providers: [
-    ProductCategoryMapper,
-    ProductTagMapper,
-    TagMapper,
-    EmbedProductCategoryMapper,
-    ProductMapper,
-    ProductQuery,
-    {
-      provide: 'ProductCategoryRepository',
-      useClass: ProductCategoryRepository,
-    },
-    {
-      provide: 'TagRepository',
-      useClass: TagRepository,
-    },
-    {
-      provide: 'ProductRepository',
-      useClass: ProductRepository,
-    },
-    RegisterProductUseCase,
-    RegisterTagUseCase,
-    UpdateProductUseCase,
-    DeactivateManyProductsUseCase,
-    ResetProductStockUseCase,
-    RegisterProductCategoryUseCase,
-    ProductService,
-  ],
-  controllers: [ProductController],
-  exports: [
-    'ProductCategoryRepository',
-    'TagRepository',
-    'ProductRepository',
-    ProductCategoryMapper,
-    ProductTagMapper,
-    TagMapper,
-    ProductMapper,
-    EmbedProductCategoryMapper,
-  ],
+	imports: [
+		UserModule,
+		MongooseModule.forFeature([
+			{ name: ProductCategory.name, schema: ProductCategorySchema },
+			{ name: Product.name, schema: ProductSchema },
+			{ name: Tag.name, schema: TagSchema }
+		])
+	],
+	providers: [
+		ProductCategoryMapper,
+		ProductTagMapper,
+		TagMapper,
+		EmbedProductCategoryMapper,
+		ProductMapper,
+		ProductQuery,
+		{
+			provide: 'ProductCategoryRepository',
+			useClass: ProductCategoryRepository
+		},
+		{
+			provide: 'TagRepository',
+			useClass: TagRepository
+		},
+		{
+			provide: 'ProductRepository',
+			useClass: ProductRepository
+		},
+		RegisterProductUseCase,
+		RegisterTagUseCase,
+		UpdateProductUseCase,
+		DeactivateManyProductsUseCase,
+		ResetProductStockUseCase,
+		RegisterProductCategoryUseCase,
+		ProductService
+	],
+	controllers: [ProductController],
+	exports: [
+		'ProductCategoryRepository',
+		'TagRepository',
+		'ProductRepository',
+		ProductCategoryMapper,
+		ProductTagMapper,
+		TagMapper,
+		ProductMapper,
+		EmbedProductCategoryMapper
+	]
 })
 export class ProductModule {}

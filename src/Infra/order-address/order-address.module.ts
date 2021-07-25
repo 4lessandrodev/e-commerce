@@ -11,26 +11,26 @@ import { CollectionAddressRepository } from './repo/order-address.repository';
 import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [
-    UserModule,
-    MongooseModule.forFeature([
-      {
-        name: OrderAddress.name,
-        schema: AddressSchema,
-      },
-    ]),
-  ],
-  controllers: [OrderAddressController],
-  providers: [
-    OrderAddressMapper,
-    OrderAddressService,
-    {
-      provide: 'CollectionAddressRepository',
-      useClass: CollectionAddressRepository,
-    },
-    UpdateCollectionAddressUseCase,
-    RegisterCollectionAddressUseCase,
-    DeleteCollectionAddressUseCase,
-  ],
+	imports: [
+		UserModule,
+		MongooseModule.forFeature([
+			{
+				name: OrderAddress.name,
+				schema: AddressSchema
+			}
+		])
+	],
+	controllers: [OrderAddressController],
+	providers: [
+		OrderAddressMapper,
+		OrderAddressService,
+		{
+			provide: 'CollectionAddressRepository',
+			useClass: CollectionAddressRepository
+		},
+		UpdateCollectionAddressUseCase,
+		RegisterCollectionAddressUseCase,
+		DeleteCollectionAddressUseCase
+	]
 })
 export class OrderAddressModule {}

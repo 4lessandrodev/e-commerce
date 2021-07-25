@@ -53,7 +53,7 @@ das mesmas e indicar se um cliente realizou a devolução ou não.
 
 ---
 
-## Documentation
+## Documentação
 
 Documentação disponível no postman
 
@@ -127,7 +127,7 @@ Documentação disponível no postman
 - Passa várias entidades para um serviço de domínio para facilitar sua interação.
 - Têm baixos níveis de Complexidade Ciclomática.
 
-### Mapper
+### Mapeadores (Mapper)
 
 - Responsável por traduzir a estrutura de um modelo de domínio para uma estrutura de infra e persistência e vice versa.
 - Não possui lógica de negócio.
@@ -180,7 +180,7 @@ DDD não é uma arquitetura. O DDD (Domain Driven Design) é uma modelagem de so
 
 ![](./readme/ClassesDiagram.png)
 
-### Como usar esse projeto
+### Como usar este projeto
 
 ---
 

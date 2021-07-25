@@ -7,5 +7,5 @@ export const Configs: MongooseModuleOptions = {
 	useCreateIndex: true,
 	useFindAndModify: false,
 	ignoreUndefined: true,
-	dbName: MONGO_DB,
+	dbName: MONGO_DB
 };

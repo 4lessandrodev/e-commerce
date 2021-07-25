@@ -4,26 +4,26 @@ import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { UpdateBasketItemsDto } from './update-basket-items.dto';
 
 export class UpdateBasketItemUseCase
-  implements IUseCase<UpdateBasketItemsDto, Result<void>>
+	implements IUseCase<UpdateBasketItemsDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('BasketRepository')
-    private readonly basketRepository: BasketRepositoryInterface,
-  ) {}
+	//
+	constructor(
+		@Inject('BasketRepository')
+		private readonly basketRepository: BasketRepositoryInterface
+	) {}
 
-  async execute(dto: UpdateBasketItemsDto): Promise<Result<void>> {
-    try {
-      //
-      await this.basketRepository.updateAllBasketItemByProductId(dto);
+	async execute(dto: UpdateBasketItemsDto): Promise<Result<void>> {
+		try {
+			//
+			await this.basketRepository.updateAllBasketItemByProductId(dto);
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>(
-        'Internal Server Error on Update Basket Item Use Case',
-      );
-    }
-  }
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>(
+				'Internal Server Error on Update Basket Item Use Case'
+			);
+		}
+	}
 }

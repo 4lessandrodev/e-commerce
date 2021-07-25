@@ -1,14 +1,20 @@
 import { Result } from 'types-ddd';
-import { BasketItemValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { AddProps } from './interfaces/custom-basket-domain-service.interface';
-import { RemoveProps } from './interfaces/custom-basket-domain-service.interface';
-import { CustomBasketDomainServiceInterface } from './interfaces/custom-basket-domain-service.interface';
+import {
+	BasketItemValueObject,
+	QuantityAvailableValueObject
+} from '@domain/value-objects';
+
+import {
+	AddProps,
+	RemoveProps,
+	CustomBasketDomainServiceInterface
+} from './interfaces/custom-basket-domain-service.interface';
 
 export class CustomBasketDomainService
-	implements CustomBasketDomainServiceInterface {
+	implements CustomBasketDomainServiceInterface
+{
 	//
-	addItemToCustomBasket (props: AddProps): Result<void> {
+	addItemToCustomBasket(props: AddProps): Result<void> {
 		//
 		const customBasket = props.customBasket;
 		const item = props.item;
@@ -23,25 +29,26 @@ export class CustomBasketDomainService
 			customBasket.exchangesFactorAvailable > 0;
 
 		if (!canAddNewItems) {
-			return Result.fail<void>('Reached Changes limit or Exchange Factor');
+			return Result.fail<void>(
+				'Reached Changes limit or Exchange Factor'
+			);
 		}
 
-		const basketAlreadyHasItem = customBasket.currentItems.find(({ value }) =>
-			value.productId.id.equals(item.value.productId.id),
+		const basketAlreadyHasItem = customBasket.currentItems.find(
+			({ value }) => value.productId.id.equals(item.value.productId.id)
 		);
 
-		//The item already on custom basket just increment quantity
+		// The item already on custom basket just increment quantity
 		if (basketAlreadyHasItem) {
 			const updatedQuantityOfItems =
 				basketAlreadyHasItem.value.quantity.value + quantity.value;
 
-			const updatedQuantityOfItemsOrError = QuantityAvailableValueObject.create(
-				updatedQuantityOfItems,
-			);
+			const updatedQuantityOfItemsOrError =
+				QuantityAvailableValueObject.create(updatedQuantityOfItems);
 
 			if (updatedQuantityOfItemsOrError.isFailure) {
 				return Result.fail<void>(
-					updatedQuantityOfItemsOrError.error.toString(),
+					updatedQuantityOfItemsOrError.error.toString()
 				);
 			}
 
@@ -49,7 +56,7 @@ export class CustomBasketDomainService
 
 			const itemToAddOrError = BasketItemValueObject.create({
 				...item.value,
-				quantity: updatedQuantity,
+				quantity: updatedQuantity
 			});
 
 			if (itemToAddOrError.isFailure) {
@@ -65,8 +72,8 @@ export class CustomBasketDomainService
 			customBasket.updateOrAddOneAddedItemOnCustomBasket(
 				BasketItemValueObject.create({
 					...item.value,
-					quantity,
-				}).getResult(),
+					quantity
+				}).getResult()
 			);
 
 			// if it is not original item count as an added item. One change
@@ -81,14 +88,14 @@ export class CustomBasketDomainService
 		customBasket.updateOrAddOneAddedItemOnCustomBasket(
 			BasketItemValueObject.create({
 				...item.value,
-				quantity,
-			}).getResult(),
+				quantity
+			}).getResult()
 		);
 
 		return Result.ok<void>();
 	}
 
-	removeItemFromCustomBasket (props: RemoveProps): Result<void> {
+	removeItemFromCustomBasket(props: RemoveProps): Result<void> {
 		//
 		const customBasket = props.customBasket;
 		const item = props.item;
@@ -104,8 +111,9 @@ export class CustomBasketDomainService
 			return Result.fail<void>('Reached Changes limit');
 		}
 
-
-		const itemExistOnBasket = customBasket.currentItems.find(({ value }) => value.productId.id.equals(item.value.productId.id));
+		const itemExistOnBasket = customBasket.currentItems.find(({ value }) =>
+			value.productId.id.equals(item.value.productId.id)
+		);
 
 		if (!itemExistOnBasket) {
 			return Result.fail<void>('Item does not exists on Custom Basket');
@@ -134,7 +142,7 @@ export class CustomBasketDomainService
 
 		const itemToUpdateOrError = BasketItemValueObject.create({
 			...item.value,
-			quantity: quantityToUpdate,
+			quantity: quantityToUpdate
 		});
 
 		if (itemToUpdateOrError.isFailure) {
@@ -147,8 +155,8 @@ export class CustomBasketDomainService
 		customBasket.updateOrAddOneRemovedItemOnCustomBasket(
 			BasketItemValueObject.create({
 				...item.value,
-				quantity,
-			}).getResult(),
+				quantity
+			}).getResult()
 		);
 
 		customBasket.updateOrAddOneRemovedItemOnCustomBasket(item);

@@ -3,13 +3,13 @@ import {
 	IsString,
 	IsUUID,
 	Length,
-	MaxLength,
+	MaxLength
 } from 'class-validator';
 import {
 	MAX_ADDRESS_COMPLEMENT_LENGTH,
 	MAX_ADDRESS_NUMBER_LENGTH,
 	MAX_STREET_NAME_LENGTH,
-	MIN_STREET_NAME_LENGTH,
+	MIN_STREET_NAME_LENGTH
 } from '@domain/value-objects';
 
 export class CreateAddressDto {

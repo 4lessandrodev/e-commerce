@@ -5,31 +5,31 @@ import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 
 @Injectable()
 export class ResetBasketItemStockUseCase
-  implements IUseCase<ResetProductStockDto, Result<void>>
+	implements IUseCase<ResetProductStockDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('BasketRepository')
-    private readonly basketRepo: BasketRepositoryInterface,
-  ) {}
+	//
+	constructor(
+		@Inject('BasketRepository')
+		private readonly basketRepo: BasketRepositoryInterface
+	) {}
 
-  async execute(dto: ResetProductStockDto): Promise<Result<void>> {
-    try {
-      //
-      const hasIds = (dto?.productsIds?.length ?? 0) > 0;
+	async execute(dto: ResetProductStockDto): Promise<Result<void>> {
+		try {
+			//
+			const hasIds = (dto?.productsIds?.length ?? 0) > 0;
 
-      const ids = hasIds ? dto.productsIds : undefined;
+			const ids = hasIds ? dto.productsIds : undefined;
 
-      await this.basketRepo.resetStockOnBasketItems(ids);
+			await this.basketRepo.resetStockOnBasketItems(ids);
 
-      return Result.ok<void>();
+			return Result.ok<void>();
 
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>(
-        'Internal Server Error on Reset Basket Item Stock Use Case',
-      );
-    }
-  }
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>(
+				'Internal Server Error on Reset Basket Item Stock Use Case'
+			);
+		}
+	}
 }

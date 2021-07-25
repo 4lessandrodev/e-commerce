@@ -1,6 +1,6 @@
 export interface RegisterRegionDto {
-  description: string;
-  freightPrice: number;
-  isActive: boolean;
-  cityId: string;
+	description: string;
+	freightPrice: number;
+	isActive: boolean;
+	cityId: string;
 }

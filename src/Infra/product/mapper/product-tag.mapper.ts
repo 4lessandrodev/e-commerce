@@ -5,23 +5,24 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductTagMapper implements IMapper<Aggregate, Schema> {
-  toDomain(target: Schema): Aggregate {
-    return Aggregate.create(
-      {
-        description: target.description,
-        createdAt: target.createdAt,
-        updatedAt: target.updatedAt,
-      },
-      new UniqueEntityID(target.id),
-    ).getResult();
-  }
-  //
-  toPersistence(target: Aggregate): Schema {
-    return {
-      id: target.id.toString(),
-      description: target.description,
-      createdAt: target.createdAt,
-      updatedAt: target.updatedAt,
-    };
-  }
+	toDomain(target: Schema): Aggregate {
+		return Aggregate.create(
+			{
+				description: target.description,
+				createdAt: target.createdAt,
+				updatedAt: target.updatedAt
+			},
+			new UniqueEntityID(target.id)
+		).getResult();
+	}
+
+	//
+	toPersistence(target: Aggregate): Schema {
+		return {
+			id: target.id.toString(),
+			description: target.description,
+			createdAt: target.createdAt,
+			updatedAt: target.updatedAt
+		};
+	}
 }

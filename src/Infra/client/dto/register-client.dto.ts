@@ -9,7 +9,7 @@ import {
 	IsUUID,
 	Length,
 	MaxLength,
-	ValidateNested,
+	ValidateNested
 } from 'class-validator';
 import {
 	MAX_ADDRESS_COMPLEMENT_LENGTH,
@@ -17,7 +17,7 @@ import {
 	MAX_STREET_NAME_LENGTH,
 	MAX_USER_NAME_LENGTH,
 	MIN_STREET_NAME_LENGTH,
-	MIN_USER_NAME_LENGTH,
+	MIN_USER_NAME_LENGTH
 } from '@domain/value-objects';
 export class AddressDto {
 	@Length(8, 8)

@@ -6,12 +6,8 @@
         "QWERTYUIOPASDFGHJKLZXCVBNM"
     ],
     "editor.insertSpaces": false,
-	"editor.wrappingIndent": "indent",
-	"[typescript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	},
-
-
+	"eslint.format.enable": true,
+	
 	"editor.fontSize": 14,
   
 	// Controls if quick suggestions should show up while typing

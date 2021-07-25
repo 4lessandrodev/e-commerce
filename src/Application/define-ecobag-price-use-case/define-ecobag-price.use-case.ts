@@ -7,47 +7,48 @@ import { Currency, MonetaryValueObject } from '@domain/value-objects';
 
 @Injectable()
 export class DefineEcobagPriceUseCase
-  implements IUseCase<DefineEcobagPriceDto, Result<void>>
+	implements IUseCase<DefineEcobagPriceDto, Result<void>>
 {
-  constructor(
-    @Inject('EcobagRepository')
-    private readonly ecobagRepo: EcobagRepositoryInterface,
-  ) {}
-  async execute(dto: DefineEcobagPriceDto): Promise<Result<void>> {
-    try {
-      const currencyOrError = Currency.create(dto.price);
+	constructor(
+		@Inject('EcobagRepository')
+		private readonly ecobagRepo: EcobagRepositoryInterface
+	) {}
 
-      if (currencyOrError.isFailure) {
-        return Result.fail<void>(currencyOrError.error.toString());
-      }
+	async execute(dto: DefineEcobagPriceDto): Promise<Result<void>> {
+		try {
+			const currencyOrError = Currency.create(dto.price);
 
-      const currency = currencyOrError.getResult();
+			if (currencyOrError.isFailure) {
+				return Result.fail<void>(currencyOrError.error.toString());
+			}
 
-      const priceOrError = MonetaryValueObject.create(currency);
+			const currency = currencyOrError.getResult();
 
-      if (priceOrError.isFailure) {
-        return Result.fail<void>(priceOrError.error.toString());
-      }
+			const priceOrError = MonetaryValueObject.create(currency);
 
-      const price = priceOrError.getResult();
+			if (priceOrError.isFailure) {
+				return Result.fail<void>(priceOrError.error.toString());
+			}
 
-      const ecobagOrError = Ecobag.create(price);
+			const price = priceOrError.getResult();
 
-      if (ecobagOrError.isFailure) {
-        return Result.fail<void>(ecobagOrError.error.toString());
-      }
+			const ecobagOrError = Ecobag.create(price);
 
-      const ecobag = ecobagOrError.getResult();
+			if (ecobagOrError.isFailure) {
+				return Result.fail<void>(ecobagOrError.error.toString());
+			}
 
-      await this.ecobagRepo.definePrice(ecobag);
+			const ecobag = ecobagOrError.getResult();
 
-      return Result.ok<void>();
+			await this.ecobagRepo.definePrice(ecobag);
 
-      //
-    } catch (error) {
-      return Result.fail<void>(
-        'Internal Server Error on Define Ecobag Price Use Case',
-      );
-    }
-  }
+			return Result.ok<void>();
+
+			//
+		} catch (error) {
+			return Result.fail<void>(
+				'Internal Server Error on Define Ecobag Price Use Case'
+			);
+		}
+	}
 }

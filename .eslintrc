@@ -1,0 +1,39 @@
+{
+	"extends": [
+			"prettier",
+			"eslint:recommended",
+			"plugin:@typescript-eslint/recommended",
+			"standard-with-typescript"
+	],
+	"parserOptions": {
+	  "project": "./tsconfig.json",
+	  "sourceType": "module"
+	},
+	"root": true,
+	"env": {
+		"node": true,
+		"jest": true
+	},
+	"rules": {
+	  "@typescript-eslint/strict-boolean-expressions": "off",
+	  "@typescript-eslint/explicit-function-return-type": "off",
+	  "@typescript-eslint/space-before-function-paren": "off",
+	  "@typescript-eslint/indent": "off",
+	  "@typescript-eslint/explicit-module-boundary-types": "off",
+	  "@typescript-eslint/semi": [
+		"error",
+		"always"
+	  ],
+	  "no-extra-semi": "off",
+	  "@typescript-eslint/no-extra-semi": ["off"],
+	  "@typescript-eslint/member-delimiter-style": "off",
+	  "semi": ["error", "always"],
+	  "@typescript-eslint/no-floating-promises": "off",
+	  "@typescript-eslint/brace-style": "off",
+	  "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+	  "no-tabs": 0,
+	  "indent": ["error", "tab"],
+	  "space-before-function-paren": ["error", "always"],
+	  "@typescript-eslint/no-explicit-any": "off"
+  }
+}

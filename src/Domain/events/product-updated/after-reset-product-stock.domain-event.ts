@@ -5,26 +5,27 @@ import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-ca
 
 @Injectable()
 export class AfterProductStockResected
-  implements IHandle<BasketItemDomainEvent>
+	implements IHandle<BasketItemDomainEvent>
 {
-  //
-  constructor(
-    @Inject(ResetBasketItemStockUseCase)
-    private readonly resetBasketItemStockUseCase: ResetBasketItemStockUseCase,
-  ) {
-    this.setupSubscriptions();
-  }
+	//
+	constructor(
+		@Inject(ResetBasketItemStockUseCase)
+		private readonly resetBasketItemStockUseCase: ResetBasketItemStockUseCase
+	) {
+		this.setupSubscriptions();
+	}
 
-  setupSubscriptions(): void {
-    DomainEvents.register(
-      (event) => this.dispatch(Object.assign(event)),
-      BasketItemDomainEvent.name,
-    );
-  }
-  async dispatch(event: BasketItemDomainEvent): Promise<void> {
-    //
-    await this.resetBasketItemStockUseCase.execute({
-      productsIds: event.productIds,
-    });
-  }
+	setupSubscriptions(): void {
+		DomainEvents.register(
+			(event) => this.dispatch(Object.assign(event)),
+			BasketItemDomainEvent.name
+		);
+	}
+
+	async dispatch(event: BasketItemDomainEvent): Promise<void> {
+		//
+		await this.resetBasketItemStockUseCase.execute({
+			productsIds: event.productIds
+		});
+	}
 }

@@ -3,19 +3,27 @@ import { DomainId, IUseCase, Result } from 'types-ddd';
 import { OrderRepositoryInterface } from '@repo/order-repository.interface';
 import { AddItemToCustomBasketDto } from './add-item-to-custom-basket-use-case.dto';
 import { OpenOrderUseCase } from '../open-order-use-case/open-order.use-case';
-import { BasketId, Order, ProductId } from '@domain/aggregates-root';
+import {
+	BasketId,
+	Order,
+	ProductId,
+	CustomBasket
+} from '@domain/aggregates-root';
 import { ProductRepositoryInterface } from '@repo/product-repository.interface';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
-import { CustomBasket } from '@domain/aggregates-root';
-import { BasketItemValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
+
+import {
+	BasketItemValueObject,
+	QuantityAvailableValueObject
+} from '@domain/value-objects';
+
 import { CustomBasketRepositoryInterface } from '@repo/custom-basket-repository.interface';
 import { OrderDomainService } from '@domain/services/order.domain-service';
 import { OrderDomainServiceInterface } from '@domain/services/interfaces/order.domain-service.interface';
 
 @Injectable()
 export class AddItemToCustomBasketUseCase
-	implements IUseCase<AddItemToCustomBasketDto, Result<void>>
+implements IUseCase<AddItemToCustomBasketDto, Result<void>>
 {
 	constructor (
 		@Inject('OrderRepository')
@@ -35,7 +43,7 @@ export class AddItemToCustomBasketUseCase
 
 		@Inject('CustomBasketRepository')
 		private readonly customBasketRepo: CustomBasketRepositoryInterface
-	) { }
+	) {}
 
 	/**
 	 *
@@ -59,7 +67,7 @@ export class AddItemToCustomBasketUseCase
 			let order: Order | null; // global order
 			let customBasket: CustomBasket | undefined | null; // global custom basket
 			const quantityToAddOrError = QuantityAvailableValueObject.create(
-				dto.quantityOfItemToAdd, // global quantity of item to add on custom basket
+				dto.quantityOfItemToAdd // global quantity of item to add on custom basket
 			);
 
 			// Check if is valid quantity
@@ -72,13 +80,13 @@ export class AddItemToCustomBasketUseCase
 			// Check if client has an opened order
 			order = await this.orderRepo.getClientOpenedOrder({
 				clientId: dto.clientId,
-				status: 'PENDING', // Pending is the initial status
+				status: 'PENDING' // Pending is the initial status
 			});
 
 			if (!order) {
 				// Open a new order
 				const newOrder = await this.openOrderUseCase.execute({
-					userId: dto.clientId,
+					userId: dto.clientId
 				});
 
 				if (newOrder.isFailure) {
@@ -88,7 +96,7 @@ export class AddItemToCustomBasketUseCase
 				// get created order
 				order = await this.orderRepo.getClientOpenedOrder({
 					clientId: dto.clientId,
-					status: 'PENDING', // Pending is the initial status
+					status: 'PENDING' // Pending is the initial status
 				});
 			}
 
@@ -97,7 +105,7 @@ export class AddItemToCustomBasketUseCase
 			}
 
 			const productExists = await this.productRepo.findOne({
-				id: dto.productId,
+				id: dto.productId
 			});
 
 			if (!productExists) {
@@ -106,20 +114,25 @@ export class AddItemToCustomBasketUseCase
 
 			const product = productExists;
 
-			// Custom basket on order 
+			// Custom basket on order
 			const customBasketId = DomainId.create(dto.customBasketId);
 
 			const existCustomBasketOnOrder = order.customBaskets.find(
-				(basket) =>
-					basket.id.equals(customBasketId.id)
+				(basket) => basket.id.equals(customBasketId.id)
 			);
 
 			if (!existCustomBasketOnOrder) {
-				customBasket = await this.customBasketRepo.getCustomBasketFromOrder({ orderId: order.id.toString(), basketId: dto.basketId });
+				customBasket =
+					await this.customBasketRepo.getCustomBasketFromOrder({
+						orderId: order.id.toString(),
+						basketId: dto.basketId
+					});
 			}
 			// Create a new custom basket if it does not exists
 			if (!customBasket) {
-				const basket = await this.basketRepo.findOne({ id: dto.basketId });
+				const basket = await this.basketRepo.findOne({
+					id: dto.basketId
+				});
 				if (!basket) {
 					return Result.fail<void>('Basket does not exists');
 				}
@@ -138,8 +151,9 @@ export class AddItemToCustomBasketUseCase
 					itemsAdded: [],
 					itemsRemoved: [],
 					price: basket.price,
-					quantity: QuantityAvailableValueObject.create(1).getResult(),
-					image: basket.images[0],
+					quantity:
+						QuantityAvailableValueObject.create(1).getResult(),
+					image: basket.images[0]
 				}).getResult();
 
 				order.subTotalCustomBaskets.currency.sum(basket.price.value);
@@ -153,7 +167,7 @@ export class AddItemToCustomBasketUseCase
 				image: product.image,
 				productId: ProductId.create(product.id),
 				quantity: product.quantityAvailable,
-				unitOfMeasurement: product.unitOfMeasurement,
+				unitOfMeasurement: product.unitOfMeasurement
 			}).getResult();
 
 			// Add item to custom basket
@@ -180,7 +194,7 @@ export class AddItemToCustomBasketUseCase
 			console.log(error);
 
 			return Result.fail<void>(
-				'Internal Server Error on Add Item to Custom Basket Use Case',
+				'Internal Server Error on Add Item to Custom Basket Use Case'
 			);
 		}
 	}

@@ -21,17 +21,19 @@ export interface BasketItemProps {
 }
 
 export class BasketItemValueObject extends ValueObject<BasketItemProps> {
-	constructor (props: BasketItemProps) {
+	constructor(props: BasketItemProps) {
 		super(props);
 	}
 
-	get value (): BasketItemValue {
+	get value(): BasketItemValue {
 		return this.props.value;
 	}
 
-	public static create (props: BasketItemValue): Result<BasketItemValueObject> {
+	public static create(
+		props: BasketItemValue
+	): Result<BasketItemValueObject> {
 		return Result.ok<BasketItemValueObject>(
-			new BasketItemValueObject({ value: props }),
+			new BasketItemValueObject({ value: props })
 		);
 	}
 }

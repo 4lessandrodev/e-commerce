@@ -14,15 +14,15 @@ describe('product-category.mapper', () => {
 			{
 				description: 'valid_description',
 				createdAt: currentDate,
-				updatedAt: currentDate,
+				updatedAt: currentDate
 			},
-			new UniqueEntityID('valid_id'),
+			new UniqueEntityID('valid_id')
 		).getResult();
 		persistence = {
 			id: 'valid_id',
 			description: 'valid_description',
 			createdAt: currentDate,
-			updatedAt: currentDate,
+			updatedAt: currentDate
 		};
 	});
 	//

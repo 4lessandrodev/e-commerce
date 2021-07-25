@@ -12,7 +12,7 @@ import {
 	ProductId,
 	Region,
 	RegionId,
-	UserId,
+	UserId
 } from '@domain/aggregates-root';
 import { OpenOrderUseCase } from '../open-order-use-case/open-order.use-case';
 import { RemoveItemFromCustomBasketUseCase } from './remove-item-from-custom-basket.use-case';
@@ -34,14 +34,14 @@ import {
 	StreetNameValueObject,
 	UnitOfMeasurementValueObject,
 	UserNameValueObject,
-	ZipCodeValueObject,
+	ZipCodeValueObject
 } from '@domain/value-objects';
 import {
 	Address,
 	BasketCategory,
 	City,
 	DeliveryOrCollectionAddress,
-	ProductCategory,
+	ProductCategory
 } from '@domain/entities';
 import { ClientRepositoryInterface } from '@repo/client-repository.interface';
 import { EcobagRepositoryInterface } from '@repo/ecobag.repository.interface';
@@ -93,9 +93,7 @@ describe('add-item-to-custom-basket-item', () => {
 	let customBasketRepo: CustomBasketRepositoryInterface;
 
 	const customBasketDomainService: OrderDomainService =
-		new OrderDomainService(
-			new CustomBasketDomainService()
-		);
+		new OrderDomainService(new CustomBasketDomainService());
 
 	let openOrderUseCase: OpenOrderUseCase;
 
@@ -104,33 +102,40 @@ describe('add-item-to-custom-basket-item', () => {
 		item = BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(10).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 			productId: ProductId.create(new UniqueEntityID('valid_product_id')),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('KG').getResult()
 		}).getResult();
 
 		// Mock custom basket on each interaction
 		customBasket = CustomBasket.create(
 			{
-				basketId: BasketId.create(new UniqueEntityID('valid_basket_id')),
+				basketId: BasketId.create(
+					new UniqueEntityID('valid_basket_id')
+				),
 				category: BasketCategory.create({
 					description: 'valid_description',
-					changesLimit: ChangesLimitValueObject.create(10).getResult(),
+					changesLimit: ChangesLimitValueObject.create(10).getResult()
 				}).getResult(),
 				currentItems: [item],
 				description:
-					BasketDescriptionValueObject.create('valid_description').getResult(),
+					BasketDescriptionValueObject.create(
+						'valid_description'
+					).getResult(),
 				isDraft: true,
 				itemsAdded: [item],
 				itemsRemoved: [item],
 				price: MonetaryValueObject.create(
-					Currency.create(10).getResult(),
+					Currency.create(10).getResult()
 				).getResult(),
-				quantity: QuantityAvailableValueObject.create(1).getResult(),
+				quantity: QuantityAvailableValueObject.create(1).getResult()
 			},
-			new UniqueEntityID('valid_basket_id'),
+			new UniqueEntityID('valid_basket_id')
 		).getResult();
 
 		// Mock order on each interaction
@@ -139,60 +144,77 @@ describe('add-item-to-custom-basket-item', () => {
 			clientId: UserId.create(),
 			clientName: UserNameValueObject.create('valid_name').getResult(),
 			costOfFreight: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			customBaskets: [customBasket],
 			deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
 				complement:
-					AddressComplementValueObject.create('valid_street').getResult(),
+					AddressComplementValueObject.create(
+						'valid_street'
+					).getResult(),
 				number: AddressNumberValueObject.create('77b').getResult(),
 				regionId: RegionId.create(),
-				street: StreetNameValueObject.create('valid_street').getResult(),
-				zipCode,
+				street: StreetNameValueObject.create(
+					'valid_street'
+				).getResult(),
+				zipCode
 			}).getResult(),
 			ecoBagFee: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			includesEcobag: false,
 			isTheOrderForCollection: true,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [],
-			status: OrderStatusValueObject.create('COMPLETED').getResult(),
+			status: OrderStatusValueObject.create('COMPLETED').getResult()
 		}).getResult();
 
 		// Mock product for each interaction
-		product = Product.create({
-			description:
-				ProductDescriptionValueObject.create('Maçã Brasileira').getResult(),
-			quantityAvailable: QuantityAvailableValueObject.create(2).getResult(),
-			exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
-			category: ProductCategory.create({ description: 'Frutas' }).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
-			isActive: true,
-			isSpecial: false,
-			price: MonetaryValueObject.create(
-				Currency.create(100).getResult(),
-			).getResult(),
-			image: ImageValueObject.create(
-				'https://aws.com/fake-s3/image.jpeg',
-			).getResult(),
-		}, new UniqueEntityID('valid_product_id')).getResult();
+		product = Product.create(
+			{
+				description:
+					ProductDescriptionValueObject.create(
+						'Maçã Brasileira'
+					).getResult(),
+				quantityAvailable:
+					QuantityAvailableValueObject.create(2).getResult(),
+				exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
+				category: ProductCategory.create({
+					description: 'Frutas'
+				}).getResult(),
+				unitOfMeasurement:
+					UnitOfMeasurementValueObject.create('KG').getResult(),
+				isActive: true,
+				isSpecial: false,
+				price: MonetaryValueObject.create(
+					Currency.create(100).getResult()
+				).getResult(),
+				image: ImageValueObject.create(
+					'https://aws.com/fake-s3/image.jpeg'
+				).getResult()
+			},
+			new UniqueEntityID('valid_product_id')
+		).getResult();
 
 		// Mock client for each interaction
 		client = Client.create({
 			addresses: [
 				Address.create({
 					complement:
-						AddressComplementValueObject.create('valid_address').getResult(),
+						AddressComplementValueObject.create(
+							'valid_address'
+						).getResult(),
 					isMainAddress: true,
 					number: AddressNumberValueObject.create('42b').getResult(),
 					regionId: RegionId.create(),
-					street: StreetNameValueObject.create('valid_street').getResult(),
-					zipCode,
-				}).getResult(),
+					street: StreetNameValueObject.create(
+						'valid_street'
+					).getResult(),
+					zipCode
+				}).getResult()
 			],
 			hasEcobag: false,
-			name: UserNameValueObject.create('valid_name').getResult(),
+			name: UserNameValueObject.create('valid_name').getResult()
 		}).getResult();
 
 		// Mock region for each interaction
@@ -200,13 +222,13 @@ describe('add-item-to-custom-basket-item', () => {
 			city: City.create({
 				geoCode: 5000,
 				name: 'valid_city_name',
-				stateInitial: InitialStateValueObject.create('SP').getResult(),
+				stateInitial: InitialStateValueObject.create('SP').getResult()
 			}).getResult(),
 			description: 'valid_description',
 			freightPrice: MonetaryValueObject.create(
-				Currency.create(100).getResult(),
+				Currency.create(100).getResult()
 			).getResult(),
-			isActive: true,
+			isActive: true
 		}).getResult();
 
 		// Mock basket for each interaction
@@ -214,17 +236,20 @@ describe('add-item-to-custom-basket-item', () => {
 		basket = Basket.create(
 			{
 				category: BasketCategory.create({
-					changesLimit: ChangesLimitValueObject.create(10).getResult(),
-					description: 'valid_description',
+					changesLimit:
+						ChangesLimitValueObject.create(10).getResult(),
+					description: 'valid_description'
 				}).getResult(),
 				description:
-					BasketDescriptionValueObject.create('valid_description').getResult(),
+					BasketDescriptionValueObject.create(
+						'valid_description'
+					).getResult(),
 				isActive: true,
 				price: MonetaryValueObject.create(
-					Currency.create(50).getResult(),
-				).getResult(),
+					Currency.create(50).getResult()
+				).getResult()
 			},
-			new UniqueEntityID('valid_basket_id'),
+			new UniqueEntityID('valid_basket_id')
 		).getResult();
 
 		// Mock order repository
@@ -235,7 +260,7 @@ describe('add-item-to-custom-basket-item', () => {
 			findOne: jest.fn(),
 			getClientOpenedOrder: jest.fn(),
 			hasClientOpenedOrder: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 
 		// Mock product repository
@@ -248,7 +273,7 @@ describe('add-item-to-custom-basket-item', () => {
 			findOne: jest.fn(),
 			findProductsByIds: jest.fn(),
 			resetStock: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 
 		// Mock basket repository
@@ -260,7 +285,7 @@ describe('add-item-to-custom-basket-item', () => {
 			findOne: jest.fn(),
 			resetStockOnBasketItems: jest.fn(),
 			save: jest.fn(),
-			updateAllBasketItemByProductId: jest.fn(),
+			updateAllBasketItemByProductId: jest.fn()
 		};
 
 		// mock client repository
@@ -269,13 +294,13 @@ describe('add-item-to-custom-basket-item', () => {
 			exists: jest.fn(),
 			find: jest.fn(),
 			findOne: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 
 		// Mock ecobag repository
 		ecobagRepo = {
 			definePrice: jest.fn(),
-			getPrice: jest.fn(),
+			getPrice: jest.fn()
 		};
 
 		// Mock region repository
@@ -284,7 +309,7 @@ describe('add-item-to-custom-basket-item', () => {
 			exists: jest.fn(),
 			find: jest.fn(),
 			findOne: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 
 		// Mock order use case
@@ -292,7 +317,7 @@ describe('add-item-to-custom-basket-item', () => {
 			orderRepo,
 			clientRepo,
 			regionRepo,
-			ecobagRepo,
+			ecobagRepo
 		);
 
 		// Mock customBasketRepo
@@ -320,13 +345,15 @@ describe('add-item-to-custom-basket-item', () => {
 	});
 
 	it('should fail if product does not exists', async () => {
-		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
+		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(
+			order
+		);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -339,7 +366,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -353,7 +380,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -368,7 +395,7 @@ describe('add-item-to-custom-basket-item', () => {
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -381,14 +408,16 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
 		jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
-		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
+		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(
+			order
+		);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(null);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -401,14 +430,16 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
 		jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
-		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
+		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(
+			order
+		);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 10,
+			quantityOfItemToRemove: 10
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -418,14 +449,16 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
 		jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
-		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
+		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(
+			order
+		);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 1001,
+			quantityOfItemToRemove: 1001
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -435,15 +468,20 @@ describe('add-item-to-custom-basket-item', () => {
 		jest.spyOn(productRepo, 'findOne').mockResolvedValueOnce(product);
 		jest.spyOn(clientRepo, 'findOne').mockResolvedValueOnce(client);
 		jest.spyOn(regionRepo, 'findOne').mockResolvedValueOnce(region);
-		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(order);
+		jest.spyOn(orderRepo, 'getClientOpenedOrder').mockResolvedValueOnce(
+			order
+		);
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
-		jest.spyOn(customBasketRepo, 'getCustomBasketFromOrder').mockImplementationOnce(async () => customBasket);
+		jest.spyOn(
+			customBasketRepo,
+			'getCustomBasketFromOrder'
+		).mockImplementationOnce(async () => customBasket);
 
 		const result = await useCase.execute({
 			basketId: 'valid_basket_id',
 			clientId: 'valid_client_id',
 			productId: 'valid_product_id',
-			quantityOfItemToRemove: 1,
+			quantityOfItemToRemove: 1
 		});
 		expect(result.isSuccess).toBe(true);
 	});

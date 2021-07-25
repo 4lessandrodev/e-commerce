@@ -6,8 +6,12 @@ import { RegisterProductCategoryDto } from './dto/register-product-category.dto'
 import { UpdateProductDto } from '@app/update-product-use-case/update-product.dto';
 import { RegisterProductDto } from './dto/register-product.dto';
 import { RegisterTagDto } from './dto/register-tag.dto';
-import { Inject, Injectable } from '@nestjs/common';
-import { PreconditionFailedException } from '@nestjs/common';
+import {
+	Inject,
+	Injectable,
+	PreconditionFailedException
+} from '@nestjs/common';
+
 import { ProductQuery } from './query/product.query';
 import { ProductFilter } from './interfaces/product.filters.interface';
 import { GetProductsPayload } from './interfaces/product.query.interface';
@@ -19,7 +23,7 @@ import { Result } from 'types-ddd';
 
 @Injectable()
 export class ProductService {
-	constructor (
+	constructor(
 		@Inject(RegisterProductCategoryUseCase)
 		private readonly registerProductCategoryUseCase: RegisterProductCategoryUseCase,
 
@@ -38,57 +42,63 @@ export class ProductService {
 		@Inject(ResetProductStockUseCase)
 		private readonly resetProductStockUseCase: ResetProductStockUseCase,
 
-		@Inject(ProductQuery) private readonly productQuery: ProductQuery,
-	) { }
+		@Inject(ProductQuery) private readonly productQuery: ProductQuery
+	) {}
 
-	private checkResult (result: Result<void>): void {
+	private checkResult(result: Result<void>): void {
 		if (result.isFailure) {
 			throw new PreconditionFailedException(result.error);
 		}
 	}
 
-	async registerProductCategory (
-		dto: RegisterProductCategoryDto,
+	async registerProductCategory(
+		dto: RegisterProductCategoryDto
 	): Promise<void> {
 		const result = await this.registerProductCategoryUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
-	async registerTag (dto: RegisterTagDto): Promise<void> {
+	async registerTag(dto: RegisterTagDto): Promise<void> {
 		const result = await this.registerTagUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
-	async registerProduct (dto: RegisterProductDto): Promise<void> {
+	async registerProduct(dto: RegisterProductDto): Promise<void> {
 		const result = await this.registerProductUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
-	async updateProduct (dto: UpdateProductDto): Promise<void> {
+	async updateProduct(dto: UpdateProductDto): Promise<void> {
 		const result = await this.updateProductUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
-	async deactivateAllProducts (dto: DeactivateManyProductsDto): Promise<void> {
+	async deactivateAllProducts(dto: DeactivateManyProductsDto): Promise<void> {
 		const result = await this.deactivateManyProductsUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
-	async resetProductStock (dto: ResetProductStockDto): Promise<void> {
+	async resetProductStock(dto: ResetProductStockDto): Promise<void> {
 		const result = await this.resetProductStockUseCase.execute(dto);
 		this.checkResult(result);
 	}
 
 	// Query methods
-	async getProducts (filter: ProductFilter): Promise<GetProductsPayload> {
-		return this.productQuery.getProducts(filter);
+	async getProducts(filter: ProductFilter): Promise<GetProductsPayload> {
+		return await this.productQuery.getProducts(filter);
 	}
 
-	getProductByCategoryId (categoryId: string, filter: ProductFilter): Promise<GetProductsPayload> {
+	getProductByCategoryId(
+		categoryId: string,
+		filter: ProductFilter
+	): Promise<GetProductsPayload> {
 		return this.productQuery.getProductsByCategoryId(categoryId, filter);
 	}
 
-	getProductByTagId (tagId: string, filter: ProductFilter): Promise<GetProductsPayload> {
+	getProductByTagId(
+		tagId: string,
+		filter: ProductFilter
+	): Promise<GetProductsPayload> {
 		return this.productQuery.getProductsByTagId(tagId, filter);
 	}
 }

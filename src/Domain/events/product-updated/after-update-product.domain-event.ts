@@ -6,31 +6,32 @@ import { UpdateBasketItemsDto } from '@app/update-basket-items-use-case/update-b
 
 @Injectable()
 export class AfterProductUpdated implements IHandle<ProductDomainEvent> {
-  //
-  constructor(
-    @Inject(UpdateBasketItemUseCase)
-    private readonly updateBasketItemUseCase: UpdateBasketItemUseCase,
-  ) {
-    this.setupSubscriptions();
-  }
+	//
+	constructor(
+		@Inject(UpdateBasketItemUseCase)
+		private readonly updateBasketItemUseCase: UpdateBasketItemUseCase
+	) {
+		this.setupSubscriptions();
+	}
 
-  setupSubscriptions(): void {
-    DomainEvents.register(
-      (event) => this.dispatch(Object.assign(event)),
-      ProductDomainEvent.name,
-    );
-  }
-  async dispatch(event: ProductDomainEvent): Promise<void> {
-    //
-    const item: UpdateBasketItemsDto = {
-      productId: event.product.id.toString(),
-      exchangeFactor: event.product.exchangeFactor.value,
-      description: event.product.description.value,
-      availableStock: event.product.quantityAvailable.value,
-      unitOfMeasurement: event.product.unitOfMeasurement.value,
-      image: event.product.image?.value,
-    };
+	setupSubscriptions(): void {
+		DomainEvents.register(
+			(event) => this.dispatch(Object.assign(event)),
+			ProductDomainEvent.name
+		);
+	}
 
-    await this.updateBasketItemUseCase.execute(item);
-  }
+	async dispatch(event: ProductDomainEvent): Promise<void> {
+		//
+		const item: UpdateBasketItemsDto = {
+			productId: event.product.id.toString(),
+			exchangeFactor: event.product.exchangeFactor.value,
+			description: event.product.description.value,
+			availableStock: event.product.quantityAvailable.value,
+			unitOfMeasurement: event.product.unitOfMeasurement.value,
+			image: event.product.image?.value
+		};
+
+		await this.updateBasketItemUseCase.execute(item);
+	}
 }

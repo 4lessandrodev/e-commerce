@@ -15,9 +15,9 @@ describe('register-product.use-case', () => {
 	//
 	const category = ProductCategory.create(
 		{
-			description: 'valid_description',
+			description: 'valid_description'
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 
 	beforeEach(() => {
@@ -30,18 +30,18 @@ describe('register-product.use-case', () => {
 			findProductsByIds: jest.fn(),
 			deactivateManyProducts: jest.fn(),
 			resetStock: jest.fn(),
-			findAllProductsOrFilteredByIds: jest.fn(),
+			findAllProductsOrFilteredByIds: jest.fn()
 		};
 		productCategoryRepo = {
 			exists: jest.fn(),
 			delete: jest.fn(),
 			findOne: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 		tagRepo = {
 			exists: jest.fn(),
 			findTagsById: jest.fn(),
-			updateOrCreate: jest.fn(),
+			updateOrCreate: jest.fn()
 		};
 	});
 	//
@@ -49,7 +49,7 @@ describe('register-product.use-case', () => {
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		expect(useCase).toBeDefined();
 	});
@@ -60,7 +60,7 @@ describe('register-product.use-case', () => {
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		const result = await useCase.execute({
 			exchangeFactor: 2,
@@ -72,7 +72,7 @@ describe('register-product.use-case', () => {
 			quantityAvailable: 10,
 			unitOfMeasurement: 'UN',
 			info: 'valid_info',
-			tagsIds: ['valid_tag'],
+			tagsIds: ['valid_tag']
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -81,12 +81,14 @@ describe('register-product.use-case', () => {
 
 	it('should fail provide an invalid exchangeFactor', async () => {
 		jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
-		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(
+			category
+		);
 
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		const result = await useCase.execute({
 			exchangeFactor: -1,
@@ -97,7 +99,7 @@ describe('register-product.use-case', () => {
 			price: 20,
 			quantityAvailable: 10,
 			unitOfMeasurement: 'UN',
-			info: 'valid_info',
+			info: 'valid_info'
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -106,12 +108,14 @@ describe('register-product.use-case', () => {
 
 	it('should fail provide an invalid exchangeFactor', async () => {
 		jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
-		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(
+			category
+		);
 
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		const result = await useCase.execute({
 			exchangeFactor: 0,
@@ -122,11 +126,13 @@ describe('register-product.use-case', () => {
 			price: 20,
 			quantityAvailable: 10,
 			unitOfMeasurement: 'UN',
-			info: 'valid_info',
+			info: 'valid_info'
 		});
 
 		expect(result.isFailure).toBe(true);
-		expect(result.error).toBe(ERROR_INVALID_EXCHANGE_FACTOR_VALUE_FOR_PRODUCT);
+		expect(result.error).toBe(
+			ERROR_INVALID_EXCHANGE_FACTOR_VALUE_FOR_PRODUCT
+		);
 	});
 
 	it('should fail if category does not exists', async () => {
@@ -136,7 +142,7 @@ describe('register-product.use-case', () => {
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		const result = await useCase.execute({
 			exchangeFactor: 2,
@@ -148,7 +154,7 @@ describe('register-product.use-case', () => {
 			quantityAvailable: 10,
 			unitOfMeasurement: 'UN',
 			info: 'valid_info',
-			tagsIds: ['valid_tag'],
+			tagsIds: ['valid_tag']
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -159,15 +165,17 @@ describe('register-product.use-case', () => {
 		jest.spyOn(productRepo, 'exists').mockResolvedValueOnce(false);
 		jest.spyOn(tagRepo, 'findTagsById').mockResolvedValueOnce([
 			Tag.create({
-				description: 'valid_description',
-			}).getResult(),
+				description: 'valid_description'
+			}).getResult()
 		]);
-		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(category);
+		jest.spyOn(productCategoryRepo, 'findOne').mockResolvedValueOnce(
+			category
+		);
 
 		const useCase = new RegisterProductUseCase(
 			productRepo,
 			productCategoryRepo,
-			tagRepo,
+			tagRepo
 		);
 		const result = await useCase.execute({
 			exchangeFactor: 2,
@@ -179,7 +187,7 @@ describe('register-product.use-case', () => {
 			quantityAvailable: 10,
 			unitOfMeasurement: 'UN',
 			info: 'valid_info',
-			tagsIds: ['valid_tag'],
+			tagsIds: ['valid_tag']
 		});
 
 		expect(result.isSuccess).toBe(true);

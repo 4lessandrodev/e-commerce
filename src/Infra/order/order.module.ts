@@ -37,9 +37,7 @@ import { CustomBasketModule } from '../custom-basket/custom-basket.module';
 			}
 		])
 	],
-	controllers: [
-		OrderController
-	],
+	controllers: [OrderController],
 	providers: [
 		OrderService,
 		OrderMapper,
@@ -58,4 +56,4 @@ import { CustomBasketModule } from '../custom-basket/custom-basket.module';
 		OpenOrderUseCase
 	]
 })
-export class OrderModule { }
+export class OrderModule {}

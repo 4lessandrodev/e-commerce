@@ -9,42 +9,42 @@ import { UserMapper } from './user.mapper';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
-  constructor(
-    @InjectModel(User.name) private readonly conn: Model<UserDocument>,
-    @Inject(UserMapper) private readonly mapper: UserMapper,
-  ) {}
+	constructor(
+		@InjectModel(User.name) private readonly conn: Model<UserDocument>,
+		@Inject(UserMapper) private readonly mapper: UserMapper
+	) {}
 
-  async exists(filter: Filter): Promise<boolean> {
-    return await this.conn.exists(filter);
-  }
+	async exists(filter: Filter): Promise<boolean> {
+		return await this.conn.exists(filter);
+	}
 
-  async find(filter: Filter): Promise<Aggregate[] | null> {
-    const usersFound = await this.conn.find(filter).exec();
-    if (!usersFound) {
-      return null;
-    }
+	async find(filter: Filter): Promise<Aggregate[] | null> {
+		const usersFound = await this.conn.find(filter).exec();
+		if (!usersFound) {
+			return null;
+		}
 
-    return usersFound.map((user) => this.mapper.toDomain(user));
-  }
+		return usersFound.map((user) => this.mapper.toDomain(user));
+	}
 
-  async delete(filter: Filter): Promise<void> {
-    await this.conn.deleteOne(filter).exec();
-  }
+	async delete(filter: Filter): Promise<void> {
+		await this.conn.deleteOne(filter).exec();
+	}
 
-  async save(target: Aggregate): Promise<void> {
-    const schema = this.mapper.toPersistence(target);
-    await this.conn
-      .updateOne({ id: target.id }, schema, { upsert: true })
-      .exec();
-  }
+	async save(target: Aggregate): Promise<void> {
+		const schema = this.mapper.toPersistence(target);
+		await this.conn
+			.updateOne({ id: target.id }, schema, { upsert: true })
+			.exec();
+	}
 
-  async findOne(filter: Filter): Promise<Aggregate | null> {
-    const userFound = await this.conn.findOne(filter).exec();
+	async findOne(filter: Filter): Promise<Aggregate | null> {
+		const userFound = await this.conn.findOne(filter).exec();
 
-    if (!userFound) {
-      return null;
-    }
+		if (!userFound) {
+			return null;
+		}
 
-    return this.mapper.toDomain(userFound);
-  }
+		return this.mapper.toDomain(userFound);
+	}
 }

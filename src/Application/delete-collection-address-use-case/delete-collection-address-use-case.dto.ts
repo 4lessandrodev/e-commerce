@@ -1,3 +1,3 @@
 export interface DeleteCollectionAddressDto {
-  id: string;
+	id: string;
 }

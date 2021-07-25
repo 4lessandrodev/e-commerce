@@ -9,30 +9,30 @@ import { EcobagMapper } from '../mapper/ecobag.mapper';
 
 @Injectable()
 export class EcobagRepository implements EcobagRepositoryInterface {
-  constructor(
-    @InjectModel(Ecobag.name)
-    private readonly conn: Model<EcobagDocument>,
+	constructor(
+		@InjectModel(Ecobag.name)
+		private readonly conn: Model<EcobagDocument>,
 
-    @Inject(EcobagMapper)
-    private readonly mapper: EcobagMapper,
-  ) {}
+		@Inject(EcobagMapper)
+		private readonly mapper: EcobagMapper
+	) {}
 
-  async definePrice(ecobag: Aggregate): Promise<void> {
-    const schema = this.mapper.toPersistence(ecobag);
-    await this.conn.updateOne({ id: schema.id }, schema, { upsert: true });
-  }
+	async definePrice(ecobag: Aggregate): Promise<void> {
+		const schema = this.mapper.toPersistence(ecobag);
+		await this.conn.updateOne({ id: schema.id }, schema, { upsert: true });
+	}
 
-  async getPrice(id: string): Promise<MonetaryValueObject> {
-    const price = MonetaryValueObject.create(
-      Currency.create(0).getResult(),
-    ).getResult();
+	async getPrice(id: string): Promise<MonetaryValueObject> {
+		const price = MonetaryValueObject.create(
+			Currency.create(0).getResult()
+		).getResult();
 
-    const foundEcobag = await this.conn.findOne({ id });
-    if (!foundEcobag) {
-      return price; // 0.00
-    }
+		const foundEcobag = await this.conn.findOne({ id });
+		if (foundEcobag == null) {
+			return price; // 0.00
+		}
 
-    price.currency.sum(foundEcobag.price);
-    return price;
-  }
+		price.currency.sum(foundEcobag.price);
+		return price;
+	}
 }

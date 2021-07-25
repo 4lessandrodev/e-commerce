@@ -1,7 +1,7 @@
 interface validateParams {
-  value: number;
-  max: number;
-  min: number;
+	value: number;
+	max: number;
+	min: number;
 }
 /**
  *
@@ -11,7 +11,7 @@ interface validateParams {
  * @returns `true` if value is between range or `false`if not
  */
 export const validateNumberBetweenMaxAndMin = (
-  props: validateParams,
+	props: validateParams
 ): boolean => {
-  return props.value >= props.min && props.value <= props.max;
+	return props.value >= props.min && props.value <= props.max;
 };

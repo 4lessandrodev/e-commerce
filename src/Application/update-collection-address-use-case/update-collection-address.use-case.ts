@@ -3,78 +3,84 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase, Result, UniqueEntityID } from 'types-ddd';
 import { DeliveryOrCollectionAddress } from '@domain/entities';
 import { CollectionAddressRepositoryInterface } from '@repo/collection-address-repository.interface';
-import { StreetNameValueObject } from '@domain/value-objects';
-import { ZipCodeValueObject } from '@domain/value-objects';
-import { AddressComplementValueObject } from '@domain/value-objects';
-import { AddressNumberValueObject } from '@domain/value-objects';
+import {
+	StreetNameValueObject,
+	ZipCodeValueObject,
+	AddressComplementValueObject,
+	AddressNumberValueObject
+} from '@domain/value-objects';
+
 import { RegionId } from '@domain/aggregates-root';
 
 @Injectable()
 export class UpdateCollectionAddressUseCase
-  implements IUseCase<UpdateCollectionAddressDto, Result<void>>
+	implements IUseCase<UpdateCollectionAddressDto, Result<void>>
 {
-  constructor(
-    @Inject('CollectionAddressRepository')
-    private readonly collectionAddressRepo: CollectionAddressRepositoryInterface,
-  ) {}
-  async execute(dto: UpdateCollectionAddressDto): Promise<Result<void>> {
-    const id = dto.id;
+	constructor(
+		@Inject('CollectionAddressRepository')
+		private readonly collectionAddressRepo: CollectionAddressRepositoryInterface
+	) {}
 
-    const complementOrError = AddressComplementValueObject.create(
-      dto.complement,
-    );
-    const numberOrError = AddressNumberValueObject.create(dto.number);
-    const streetOrError = StreetNameValueObject.create(dto.street);
-    const zipCodeOrError = ZipCodeValueObject.create(dto.zipCode);
+	async execute(dto: UpdateCollectionAddressDto): Promise<Result<void>> {
+		const id = dto.id;
 
-    const checkValueObjects = Result.combine([
-      complementOrError,
-      numberOrError,
-      streetOrError,
-      zipCodeOrError,
-    ]);
+		const complementOrError = AddressComplementValueObject.create(
+			dto.complement
+		);
+		const numberOrError = AddressNumberValueObject.create(dto.number);
+		const streetOrError = StreetNameValueObject.create(dto.street);
+		const zipCodeOrError = ZipCodeValueObject.create(dto.zipCode);
 
-    if (checkValueObjects.isFailure) {
-      return Result.fail<void>(checkValueObjects.error);
-    }
+		const checkValueObjects = Result.combine([
+			complementOrError,
+			numberOrError,
+			streetOrError,
+			zipCodeOrError
+		]);
 
-    const complement = complementOrError.getResult();
-    const number = numberOrError.getResult();
-    const street = streetOrError.getResult();
-    const zipCode = zipCodeOrError.getResult();
+		if (checkValueObjects.isFailure) {
+			return Result.fail<void>(checkValueObjects.error);
+		}
 
-    const regionId = RegionId.create(new UniqueEntityID(dto.regionId));
+		const complement = complementOrError.getResult();
+		const number = numberOrError.getResult();
+		const street = streetOrError.getResult();
+		const zipCode = zipCodeOrError.getResult();
 
-    const addressOrError = DeliveryOrCollectionAddress.create(
-      {
-        regionId,
-        complement,
-        number,
-        street,
-        zipCode,
-      },
-      new UniqueEntityID(id),
-    );
+		const regionId = RegionId.create(new UniqueEntityID(dto.regionId));
 
-    if (addressOrError.isFailure) {
-      return Result.fail<void>(addressOrError.error.toString());
-    }
+		const addressOrError = DeliveryOrCollectionAddress.create(
+			{
+				regionId,
+				complement,
+				number,
+				street,
+				zipCode
+			},
+			new UniqueEntityID(id)
+		);
 
-    const address = addressOrError.getResult();
+		if (addressOrError.isFailure) {
+			return Result.fail<void>(addressOrError.error.toString());
+		}
 
-    try {
-      const addressExists = await this.collectionAddressRepo.exists({ id });
+		const address = addressOrError.getResult();
 
-      if (!addressExists) {
-        return Result.fail<void>('Address does not exists');
-      }
+		try {
+			const addressExists = await this.collectionAddressRepo.exists({
+				id
+			});
 
-      await this.collectionAddressRepo.save(address);
-      return Result.ok<void>();
-    } catch (error) {
-      return Result.fail<void>(
-        'Internal Server Error on Update Collection Address Use Case',
-      );
-    }
-  }
+			if (!addressExists) {
+				return Result.fail<void>('Address does not exists');
+			}
+
+			await this.collectionAddressRepo.save(address);
+			return Result.ok<void>();
+		} catch (error) {
+			return Result.fail<void>(
+				'Internal Server Error on Update Collection Address Use Case'
+			);
+		}
+	}
 }

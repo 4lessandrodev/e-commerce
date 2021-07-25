@@ -12,8 +12,11 @@ import { BasketCategoryMapper } from './mappers/basket-category.mapper';
 import { BasketDomainService } from '@domain/services/basket.domain-service';
 import { Basket, BasketSchema } from './entities/basket.schema';
 import { RegisterBasketUseCase } from '@app/register-basket-use-case/register-basket.use-case';
-import { BasketCategory } from './entities/basket-category.schema';
-import { BasketCategorySchema } from './entities/basket-category.schema';
+import {
+	BasketCategory,
+	BasketCategorySchema
+} from './entities/basket-category.schema';
+
 import { ProductModule } from '../product/product.module';
 import { EmbedBasketCategoryMapper } from './mappers/embed-category.mapper';
 import { AddProductsOnBasketUseCase } from '@app/add-products-on-basket-use-case/add-products-on-basket.use-case';
@@ -31,8 +34,8 @@ import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-ca
 		ProductModule,
 		MongooseModule.forFeature([
 			{ name: BasketCategory.name, schema: BasketCategorySchema },
-			{ name: Basket.name, schema: BasketSchema },
-		]),
+			{ name: Basket.name, schema: BasketSchema }
+		])
 	],
 	providers: [
 		BasketCategoryMapper,
@@ -41,11 +44,11 @@ import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-ca
 		EmbedBasketCategoryMapper,
 		{
 			provide: 'BasketCategoryRepository',
-			useClass: BasketCategoryRepository,
+			useClass: BasketCategoryRepository
 		},
 		{
 			provide: 'BasketRepository',
-			useClass: BasketRepository,
+			useClass: BasketRepository
 		},
 		AfterProductUpdated,
 		AfterProductStockResected,
@@ -58,9 +61,9 @@ import { ResetBasketItemStockUseCase } from '@app/reset-basket-item-stock-use-ca
 		DeactivateManyBasketsUseCase,
 		ResetBasketItemStockUseCase,
 		BasketDomainService,
-		BasketService,
+		BasketService
 	],
 	controllers: [BasketController],
 	exports: ['BasketRepository']
 })
-export class BasketModule { }
+export class BasketModule {}

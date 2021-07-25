@@ -15,13 +15,13 @@ import {
 	StreetNameValueObject,
 	UnitOfMeasurementValueObject,
 	UserNameValueObject,
-	ZipCodeValueObject,
+	ZipCodeValueObject
 } from '@domain/value-objects';
 import {
 	BasketCategory,
 	DeliveryOrCollectionAddress,
 	ProductCategory,
-	SeparateProduct,
+	SeparateProduct
 } from '@domain/entities';
 import { RegionId } from '../region/region-id.domain-aggregate-root';
 import { UserId } from '../user/UserId.domain-aggregate-root';
@@ -35,7 +35,7 @@ describe('order.domain-aggregate-root.spec', () => {
 
 	it('should be defined', () => {
 		const monetary = MonetaryValueObject.create(
-			Currency.create(10).getResult(),
+			Currency.create(10).getResult()
 		).getResult();
 
 		const order = Order.create({
@@ -47,17 +47,21 @@ describe('order.domain-aggregate-root.spec', () => {
 			isTheOrderForCollection: true,
 			deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
 				complement:
-					AddressComplementValueObject.create('valid_street').getResult(),
+					AddressComplementValueObject.create(
+						'valid_street'
+					).getResult(),
 				number: AddressNumberValueObject.create('77b').getResult(),
 				regionId: RegionId.create(),
-				street: StreetNameValueObject.create('valid_street').getResult(),
-				zipCode,
+				street: StreetNameValueObject.create(
+					'valid_street'
+				).getResult(),
+				zipCode
 			}).getResult(),
 			ecoBagFee: monetary,
 			includesEcobag: true,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [],
-			status: OrderStatusValueObject.create('COMPLETED').getResult(),
+			status: OrderStatusValueObject.create('COMPLETED').getResult()
 		});
 
 		expect(order).toBeDefined();
@@ -65,7 +69,7 @@ describe('order.domain-aggregate-root.spec', () => {
 
 	it('should return 0 as ecobag fee if it is not included on order', () => {
 		const monetary = MonetaryValueObject.create(
-			Currency.create(10).getResult(),
+			Currency.create(10).getResult()
 		).getResult();
 
 		const order = Order.create({
@@ -77,17 +81,21 @@ describe('order.domain-aggregate-root.spec', () => {
 			isTheOrderForCollection: true,
 			deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
 				complement:
-					AddressComplementValueObject.create('valid_street').getResult(),
+					AddressComplementValueObject.create(
+						'valid_street'
+					).getResult(),
 				number: AddressNumberValueObject.create('77b').getResult(),
 				regionId: RegionId.create(),
-				street: StreetNameValueObject.create('valid_street').getResult(),
-				zipCode,
+				street: StreetNameValueObject.create(
+					'valid_street'
+				).getResult(),
+				zipCode
 			}).getResult(),
 			ecoBagFee: monetary,
 			includesEcobag: false,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [],
-			status: OrderStatusValueObject.create('COMPLETED').getResult(),
+			status: OrderStatusValueObject.create('COMPLETED').getResult()
 		}).getResult();
 
 		expect(order.includesEcobag).toBe(false);
@@ -96,51 +104,60 @@ describe('order.domain-aggregate-root.spec', () => {
 
 	it('should calculate amount based on products, basket include, freight and ecobag fee ', () => {
 		const monetary = MonetaryValueObject.create(
-			Currency.create(10).getResult(),
+			Currency.create(10).getResult()
 		).getResult();
 
 		const item = BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(20).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
 			productId: ProductId.create(),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('CX').getResult()
 		}).getResult();
 
 		const customBasket = CustomBasket.create({
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(1).getResult(),
+				changesLimit: ChangesLimitValueObject.create(1).getResult()
 			}).getResult(),
 			currentItems: [item, item, item],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		const separateProduct = SeparateProduct.create({
-			image: ImageValueObject.create('https://aws.com/image.jpeg').getResult(),
+			image: ImageValueObject.create(
+				'https://aws.com/image.jpeg'
+			).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			unitOfMeasurement: 'KG',
 			category: ProductCategory.create({
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			isSpecial: true,
 			price: MonetaryValueObject.create(
-				Currency.create(21).getResult(),
+				Currency.create(21).getResult()
 			).getResult(),
-			quantity: QuantityAvailableValueObject.create(3).getResult(),
+			quantity: QuantityAvailableValueObject.create(3).getResult()
 		}).getResult();
 
 		//
@@ -154,19 +171,27 @@ describe('order.domain-aggregate-root.spec', () => {
 			isTheOrderForCollection: true,
 			deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
 				complement:
-					AddressComplementValueObject.create('valid_street').getResult(),
+					AddressComplementValueObject.create(
+						'valid_street'
+					).getResult(),
 				number: AddressNumberValueObject.create('77b').getResult(),
 				regionId: RegionId.create(),
-				street: StreetNameValueObject.create('valid_street').getResult(),
-				zipCode,
+				street: StreetNameValueObject.create(
+					'valid_street'
+				).getResult(),
+				zipCode
 			}).getResult(),
 			ecoBagFee: monetary, // 10,00
 			includesEcobag: true,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [separateProduct, separateProduct], // 63,00 + 63,00
 			status: OrderStatusValueObject.create('COMPLETED').getResult(),
-			subTotalCustomBaskets: MonetaryValueObject.create(Currency.create(40).getResult()).getResult(),
-			subTotalSeparateProducts: MonetaryValueObject.create(Currency.create(126).getResult()).getResult(),
+			subTotalCustomBaskets: MonetaryValueObject.create(
+				Currency.create(40).getResult()
+			).getResult(),
+			subTotalSeparateProducts: MonetaryValueObject.create(
+				Currency.create(126).getResult()
+			).getResult()
 		}).getResult();
 
 		// total = 186,00
@@ -179,51 +204,60 @@ describe('order.domain-aggregate-root.spec', () => {
 
 	it('should calculate amount based on products, basket include, freight and not ecobag fee ', () => {
 		const monetary = MonetaryValueObject.create(
-			Currency.create(10).getResult(),
+			Currency.create(10).getResult()
 		).getResult();
 
 		const item = BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(20).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
 			productId: ProductId.create(),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('CX').getResult()
 		}).getResult();
 
 		const customBasket = CustomBasket.create({
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(1).getResult(),
+				changesLimit: ChangesLimitValueObject.create(1).getResult()
 			}).getResult(),
 			currentItems: [item, item, item],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(20).getResult(),
+				Currency.create(20).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		const separateProduct = SeparateProduct.create({
-			image: ImageValueObject.create('https://aws.com/image.jpeg').getResult(),
+			image: ImageValueObject.create(
+				'https://aws.com/image.jpeg'
+			).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			unitOfMeasurement: 'KG',
 			category: ProductCategory.create({
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			isSpecial: true,
 			price: MonetaryValueObject.create(
-				Currency.create(21).getResult(),
+				Currency.create(21).getResult()
 			).getResult(),
-			quantity: QuantityAvailableValueObject.create(3).getResult(),
+			quantity: QuantityAvailableValueObject.create(3).getResult()
 		}).getResult();
 
 		//
@@ -237,19 +271,29 @@ describe('order.domain-aggregate-root.spec', () => {
 			isTheOrderForCollection: true,
 			deliveryOrCollectionAddress: DeliveryOrCollectionAddress.create({
 				complement:
-					AddressComplementValueObject.create('valid_street').getResult(),
+					AddressComplementValueObject.create(
+						'valid_street'
+					).getResult(),
 				number: AddressNumberValueObject.create('77b').getResult(),
 				regionId: RegionId.create(),
-				street: StreetNameValueObject.create('valid_street').getResult(),
-				zipCode,
+				street: StreetNameValueObject.create(
+					'valid_street'
+				).getResult(),
+				zipCode
 			}).getResult(),
-			ecoBagFee: MonetaryValueObject.create(Currency.create(0).getResult()).getResult(), // 00,00 not included
+			ecoBagFee: MonetaryValueObject.create(
+				Currency.create(0).getResult()
+			).getResult(), // 00,00 not included
 			includesEcobag: false,
 			orderNumber: OrderIdValueObject.create().getResult(),
 			separateProducts: [separateProduct, separateProduct], // 63,00 + 63,00
 			status: OrderStatusValueObject.create('COMPLETED').getResult(),
-			subTotalCustomBaskets: MonetaryValueObject.create(Currency.create(40).getResult()).getResult(),
-			subTotalSeparateProducts: MonetaryValueObject.create(Currency.create(126).getResult()).getResult(),
+			subTotalCustomBaskets: MonetaryValueObject.create(
+				Currency.create(40).getResult()
+			).getResult(),
+			subTotalSeparateProducts: MonetaryValueObject.create(
+				Currency.create(126).getResult()
+			).getResult()
 		});
 
 		// total = 176,00

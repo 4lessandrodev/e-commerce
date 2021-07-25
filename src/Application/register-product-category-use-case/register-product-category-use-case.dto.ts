@@ -1,3 +1,3 @@
 export interface RegisterProductCategoryDto {
-  description: string;
+	description: string;
 }

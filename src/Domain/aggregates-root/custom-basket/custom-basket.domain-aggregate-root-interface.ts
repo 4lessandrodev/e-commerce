@@ -1,8 +1,12 @@
 import { BasketId } from '@domain/aggregates-root';
-import { ImageValueObject, MonetaryValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { BasketDescriptionValueObject } from '@domain/value-objects';
-import { BasketItemValueObject } from '@domain/value-objects';
+import {
+	ImageValueObject,
+	MonetaryValueObject,
+	QuantityAvailableValueObject,
+	BasketDescriptionValueObject,
+	BasketItemValueObject
+} from '@domain/value-objects';
+
 import { BasketCategory } from '@domain/entities';
 import { BaseDomainEntity } from 'types-ddd';
 

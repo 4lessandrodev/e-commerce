@@ -1,25 +1,25 @@
 import {
-  IsObject,
-  IsPositive,
-  IsUUID,
-  Max,
-  ValidateNested,
+	IsObject,
+	IsPositive,
+	IsUUID,
+	Max,
+	ValidateNested
 } from 'class-validator';
 
 export class ItemDto {
-  @IsUUID('4')
-  productId!: string;
+	@IsUUID('4')
+	productId!: string;
 
-  @IsPositive()
-  @Max(1000)
-  quantity!: number;
+	@IsPositive()
+	@Max(1000)
+	quantity!: number;
 }
 
 export class AddProductsOnBasketDto {
-  @IsUUID()
-  basketId!: string;
+	@IsUUID()
+	basketId!: string;
 
-  @IsObject({ each: true })
-  @ValidateNested()
-  items!: ItemDto[];
+	@IsObject({ each: true })
+	@ValidateNested()
+	items!: ItemDto[];
 }

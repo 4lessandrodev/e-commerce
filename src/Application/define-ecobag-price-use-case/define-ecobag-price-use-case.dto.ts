@@ -1,3 +1,3 @@
 export interface DefineEcobagPriceDto {
-  price: number;
+	price: number;
 }

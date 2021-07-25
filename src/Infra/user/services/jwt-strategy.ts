@@ -10,28 +10,28 @@ import { JWT_SECRET } from '@infra/configs/env';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy<any>(Strategy) {
-  constructor(
-    @InjectModel(User.name) private readonly conn: Model<UserDocument>,
-  ) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: JWT_SECRET,
-    });
-  }
+	constructor(
+		@InjectModel(User.name) private readonly conn: Model<UserDocument>
+	) {
+		super({
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+			secretOrKey: JWT_SECRET
+		});
+	}
 
-  async validate(payload: JwtPayload): Promise<JwtPayload> {
-    const { id } = payload;
+	async validate(payload: JwtPayload): Promise<JwtPayload> {
+		const { id } = payload;
 
-    const userDatabase = await this.conn.findOne({ id });
+		const userDatabase = await this.conn.findOne({ id });
 
-    if (!userDatabase) {
-      throw new UnauthorizedException();
-    }
+		if (userDatabase == null) {
+			throw new UnauthorizedException();
+		}
 
-    const user = {
-      id: userDatabase.id,
-      role: userDatabase.role,
-    };
-    return user;
-  }
+		const user = {
+			id: userDatabase.id,
+			role: userDatabase.role
+		};
+		return user;
+	}
 }

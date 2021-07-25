@@ -1,6 +1,6 @@
 import {
 	BasketItemValueObject,
-	QuantityAvailableValueObject,
+	QuantityAvailableValueObject
 } from '@domain/value-objects';
 import { Result } from 'types-ddd';
 import { CustomBasket } from '@domain/aggregates-root';

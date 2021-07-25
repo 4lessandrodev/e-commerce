@@ -3,7 +3,6 @@ import { Item } from './custom-basket-item.schema';
 import { CustomBasketCategory } from './custom-basket-category.schema';
 import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
 
-
 // ------------------------------------------------------
 
 type localeType = keyof typeof AvailableLocale;
@@ -30,7 +29,7 @@ export class CustomBasket {
 		index: true,
 		type: String,
 		immutable: true,
-		required: true,
+		required: true
 	})
 	id!: string;
 
@@ -38,7 +37,7 @@ export class CustomBasket {
 		index: true,
 		type: String,
 		immutable: true,
-		required: true,
+		required: true
 	})
 	basketId!: string;
 
@@ -48,7 +47,7 @@ export class CustomBasket {
 	@Prop({
 		type: String,
 		index: true,
-		required: true,
+		required: true
 	})
 	description!: string;
 

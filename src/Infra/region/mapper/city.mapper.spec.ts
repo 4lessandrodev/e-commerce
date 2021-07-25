@@ -18,9 +18,9 @@ describe('city.mapper', () => {
 				stateInitial: InitialStateValueObject.create('RJ').getResult(),
 				geoCode: 960,
 				createdAt: currentDate,
-				updatedAt: currentDate,
+				updatedAt: currentDate
 			},
-			new UniqueEntityID('valid_id'),
+			new UniqueEntityID('valid_id')
 		).getResult();
 		//
 		persistence = {
@@ -29,7 +29,7 @@ describe('city.mapper', () => {
 			stateInitial: 'RJ',
 			geoCode: 960,
 			createdAt: currentDate,
-			updatedAt: currentDate,
+			updatedAt: currentDate
 		};
 	});
 

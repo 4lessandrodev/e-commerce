@@ -19,27 +19,27 @@ import { RegionQuery } from './query/region.query';
 		UserModule,
 		MongooseModule.forFeature([
 			{ name: City.name, schema: CitySchema },
-			{ name: Region.name, schema: RegionSchema },
-		]),
+			{ name: Region.name, schema: RegionSchema }
+		])
 	],
 	providers: [
 		CityMapper,
 		RegionMapper,
 		{
 			provide: 'CityRepository',
-			useClass: CityRepository,
+			useClass: CityRepository
 		},
 		{
 			provide: 'RegionRepository',
-			useClass: RegionRepository,
+			useClass: RegionRepository
 		},
 		CityQuery,
 		RegionQuery,
 		RegisterCityUseCase,
 		RegisterRegionUseCase,
-		RegionService,
+		RegionService
 	],
 	controllers: [RegionController],
 	exports: ['RegionRepository']
 })
-export class RegionModule { }
+export class RegionModule {}

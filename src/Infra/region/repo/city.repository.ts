@@ -8,37 +8,38 @@ import { City, CityDocument } from '../entities/city.schema';
 import { Model } from 'mongoose';
 
 export class CityRepository implements CityRepositoryInterface {
-  //
-  constructor(
-    @InjectModel(City.name) private readonly conn: Model<CityDocument>,
-    @Inject(CityMapper)
-    private readonly mapper: CityMapper,
-  ) {}
-  //
-  async exists(filter: Filter): Promise<boolean> {
-    return await this.conn.exists(filter);
-  }
-  //
+	//
+	constructor(
+		@InjectModel(City.name) private readonly conn: Model<CityDocument>,
+		@Inject(CityMapper)
+		private readonly mapper: CityMapper
+	) {}
 
-  async save(target: Entity): Promise<void> {
-    const schema = this.mapper.toPersistence(target);
-    await this.conn
-      .updateOne({ id: schema.id }, schema, { upsert: true })
-      .exec();
-  }
-  //
+	//
+	async exists(filter: Filter): Promise<boolean> {
+		return await this.conn.exists(filter);
+	}
+	//
 
-  async delete(filter: Filter): Promise<void> {
-    await this.conn.deleteOne(filter).exec();
-  }
-  //
+	async save(target: Entity): Promise<void> {
+		const schema = this.mapper.toPersistence(target);
+		await this.conn
+			.updateOne({ id: schema.id }, schema, { upsert: true })
+			.exec();
+	}
+	//
 
-  async findOne(filter: Filter): Promise<Entity | null> {
-    const foundCity = await this.conn.findOne(filter).exec();
-    if (!foundCity) {
-      return null;
-    }
-    return this.mapper.toDomain(foundCity);
-  }
-  //
+	async delete(filter: Filter): Promise<void> {
+		await this.conn.deleteOne(filter).exec();
+	}
+	//
+
+	async findOne(filter: Filter): Promise<Entity | null> {
+		const foundCity = await this.conn.findOne(filter).exec();
+		if (foundCity == null) {
+			return null;
+		}
+		return this.mapper.toDomain(foundCity);
+	}
+	//
 }

@@ -3,12 +3,16 @@ import { Product as Aggregate } from '@domain/aggregates-root';
 import { Product as Schema } from '@infra/product/entities/product.schema';
 import { UniqueEntityID } from 'types-ddd';
 import { CommentId, ProductCategory, Tag } from '@domain/entities';
-import { Currency, ImageValueObject } from '@domain/value-objects';
-import { MonetaryValueObject } from '@domain/value-objects';
-import { ProductDescriptionValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { ProductInfoValueObject } from '@domain/value-objects';
-import { ExchangeFactorValueObject } from '@domain/value-objects';
+import {
+	Currency,
+	ImageValueObject,
+	MonetaryValueObject,
+	ProductDescriptionValueObject,
+	QuantityAvailableValueObject,
+	ProductInfoValueObject,
+	ExchangeFactorValueObject
+} from '@domain/value-objects';
+
 import { ProductMapper } from './product.mapper';
 import { EmbedProductCategoryMapper } from './embed-category.mapper';
 import { TagMapper } from '@infra/product/mapper/tag.mapper';
@@ -23,15 +27,17 @@ describe('product.mapper', () => {
 		domain = Aggregate.create(
 			{
 				description:
-					ProductDescriptionValueObject.create('valid_description').getResult(),
+					ProductDescriptionValueObject.create(
+						'valid_description'
+					).getResult(),
 				exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 				unitOfMeasurement:
 					UnitOfMeasurementValueObject.create('UN').getResult(),
 				category: ProductCategory.create(
 					{
-						description: 'valid_description',
+						description: 'valid_description'
 					},
-					new UniqueEntityID('valid_id'),
+					new UniqueEntityID('valid_id')
 				).getResult(),
 				info: ProductInfoValueObject.create('valid_info').getResult(),
 				isActive: true,
@@ -40,29 +46,30 @@ describe('product.mapper', () => {
 				ratingAverage: 8,
 				commentIds: [
 					CommentId.create(new UniqueEntityID('valid_id')),
-					CommentId.create(new UniqueEntityID('valid_id')),
+					CommentId.create(new UniqueEntityID('valid_id'))
 				],
 				tags: [
 					Tag.create(
 						{ description: 'valid_description' },
-						new UniqueEntityID('valid_id'),
+						new UniqueEntityID('valid_id')
 					).getResult(),
 					Tag.create(
 						{ description: 'valid_description' },
-						new UniqueEntityID('valid_id'),
-					).getResult(),
+						new UniqueEntityID('valid_id')
+					).getResult()
 				],
 				price: MonetaryValueObject.create(
-					Currency.create(100).getResult(),
+					Currency.create(100).getResult()
 				).getResult(),
-				quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
+				quantityAvailable:
+					QuantityAvailableValueObject.create(10).getResult(),
 				image: ImageValueObject.create(
-					'https://aws.s3.bucket/OIPOUERT.589ASD89/image.jpeg',
+					'https://aws.s3.bucket/OIPOUERT.589ASD89/image.jpeg'
 				).getResult(),
 				createdAt: currentDate,
-				updatedAt: currentDate,
+				updatedAt: currentDate
 			},
-			new UniqueEntityID('valid_id'),
+			new UniqueEntityID('valid_id')
 		).getResult();
 		//
 		persistence = {
@@ -72,7 +79,7 @@ describe('product.mapper', () => {
 			unitOfMeasurement: 'UN',
 			category: {
 				id: 'valid_id',
-				description: 'valid_description',
+				description: 'valid_description'
 			},
 			isActive: true,
 			isSpecial: false,
@@ -80,7 +87,7 @@ describe('product.mapper', () => {
 			price: {
 				locale: 'pt-BR',
 				symbol: 'BRL',
-				value: 100,
+				value: 100
 			},
 			quantityAvailable: 10,
 			ratingAverage: 8,
@@ -90,15 +97,15 @@ describe('product.mapper', () => {
 			tags: [
 				{
 					id: 'valid_id',
-					description: 'valid_description',
+					description: 'valid_description'
 				},
 				{
 					id: 'valid_id',
-					description: 'valid_description',
-				},
+					description: 'valid_description'
+				}
 			],
 			createdAt: currentDate,
-			updatedAt: currentDate,
+			updatedAt: currentDate
 		};
 	});
 	//

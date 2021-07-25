@@ -4,5 +4,8 @@ import { GetUsersFilter, Pagination } from './query-filter.interface';
 
 export interface UserQueryInterface {
 	getMyProfile: (id: string) => Promise<User>;
-	getUsers: (filter: GetUsersFilter, pagination: Pagination) => Promise<GetUsersPayload>;
+	getUsers: (
+		filter: GetUsersFilter,
+		pagination: Pagination
+	) => Promise<GetUsersPayload>;
 }

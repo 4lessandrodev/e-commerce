@@ -11,49 +11,63 @@ import { UpdateBasketItemsDto } from '@app/update-basket-items-use-case/update-b
 @Injectable()
 export class BasketRepository implements BasketRepositoryInterface {
 	//
-	constructor (
+	constructor(
 		@InjectModel(Basket.name) private readonly conn: Model<BasketDocument>,
-		@Inject(BasketMapper) private readonly mapper: BasketMapper,
-	) { }
+		@Inject(BasketMapper) private readonly mapper: BasketMapper
+	) {}
+
 	//
-	async deactivateManyBaskets (ids?: string[]): Promise<void> {
-		if (ids) {
+	async deactivateManyBaskets(ids?: string[]): Promise<void> {
+		if (ids != null) {
 			await this.conn
-				.updateMany({ id: { $in: ids } }, { isActive: false }, { multi: true })
+				.updateMany(
+					{ id: { $in: ids } },
+					{ isActive: false },
+					{ multi: true }
+				)
 				.exec();
 			return;
 		}
 
 		await this.conn
-			.updateMany({ isActive: true }, { isActive: false }, { multi: true })
+			.updateMany(
+				{ isActive: true },
+				{ isActive: false },
+				{ multi: true }
+			)
 			.exec();
 	}
+
 	//
-	async find (filter: Filter): Promise<Basket[] | null> {
+	async find(filter: Filter): Promise<Basket[] | null> {
 		const foundBaskets = await this.conn.find(filter).exec();
 		if (foundBaskets.length === 0) {
 			return null;
 		}
 		return foundBaskets.map((basket) => this.mapper.toDomain(basket));
 	}
+
 	//
-	async findOne (filter: Filter): Promise<Basket | null> {
+	async findOne(filter: Filter): Promise<Basket | null> {
 		const foundBasket = await this.conn.findOne(filter).exec();
-		if (!foundBasket) {
+		if (foundBasket == null) {
 			return null;
 		}
 		return this.mapper.toDomain(foundBasket);
 	}
+
 	//
-	async delete (filter: Filter): Promise<void> {
+	async delete(filter: Filter): Promise<void> {
 		await this.conn.deleteOne(filter).exec();
 	}
+
 	//
-	async exists (filter: Filter): Promise<boolean> {
+	async exists(filter: Filter): Promise<boolean> {
 		return await this.conn.exists(filter);
 	}
+
 	//
-	async save (target: Basket): Promise<void> {
+	async save(target: Basket): Promise<void> {
 		const persistence = this.mapper.toPersistence(target);
 		await this.conn
 			.updateOne({ id: persistence.id }, persistence, { upsert: true })
@@ -61,13 +75,13 @@ export class BasketRepository implements BasketRepositoryInterface {
 	}
 	//
 
-	async updateAllBasketItemByProductId (
-		item: UpdateBasketItemsDto,
+	async updateAllBasketItemByProductId(
+		item: UpdateBasketItemsDto
 	): Promise<void> {
 		await this.conn
 			.updateMany(
 				{
-					'items.productId': item.productId,
+					'items.productId': item.productId
 				},
 				{
 					$set: {
@@ -75,21 +89,21 @@ export class BasketRepository implements BasketRepositoryInterface {
 						'items.$[].description': item.description,
 						'items.$[].exchangeFactor': item.exchangeFactor,
 						'items.$[].unitOfMeasurement': item.unitOfMeasurement,
-						'items.$[].image': item.image,
-					},
+						'items.$[].image': item.image
+					}
 				},
-				{ multi: true },
+				{ multi: true }
 			)
 			.exec();
 	}
 
-	async resetStockOnBasketItems (productIds?: string[]): Promise<void> {
-		if (productIds) {
+	async resetStockOnBasketItems(productIds?: string[]): Promise<void> {
+		if (productIds != null) {
 			await this.conn
 				.updateMany(
 					{ 'items.productId': { $in: productIds } },
 					{ $set: { 'items.$[].availableStock': 0 } },
-					{ multi: true },
+					{ multi: true }
 				)
 				.exec();
 			return;
@@ -99,7 +113,7 @@ export class BasketRepository implements BasketRepositoryInterface {
 			.updateMany(
 				{ 'items.availableStock': { $gt: 0 } },
 				{ $set: { 'items.$[].availableStock': 0 } },
-				{ multi: true },
+				{ multi: true }
 			)
 			.exec();
 

@@ -1,5 +1,11 @@
 import { Role, Roles } from '@domain/aggregates-root';
-import { IsOptional, IsEmail, IsEnum, IsBooleanString, IsNumberString } from 'class-validator';
+import {
+	IsOptional,
+	IsEmail,
+	IsEnum,
+	IsBooleanString,
+	IsNumberString
+} from 'class-validator';
 
 export class GetUsersDto {
 	@IsOptional()

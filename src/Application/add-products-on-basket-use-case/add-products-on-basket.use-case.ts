@@ -9,7 +9,7 @@ import { BasketDomainService } from '@domain/services/basket.domain-service';
 export class AddProductsOnBasketUseCase
 	implements IUseCase<AddProductsOnBasketDto, Result<void>>
 {
-	constructor (
+	constructor(
 		@Inject('ProductRepository')
 		private readonly productRepo: ProductRepositoryInterface,
 
@@ -17,13 +17,16 @@ export class AddProductsOnBasketUseCase
 		private readonly basketRepo: BasketRepositoryInterface,
 
 		@Inject(BasketDomainService)
-		private readonly basketDomainService: BasketDomainService,
-	) { }
+		private readonly basketDomainService: BasketDomainService
+	) {}
+
 	//
-	async execute (dto: AddProductsOnBasketDto): Promise<Result<void>> {
+	async execute(dto: AddProductsOnBasketDto): Promise<Result<void>> {
 		try {
 			//
-			const basketExists = await this.basketRepo.findOne({ id: dto.basketId });
+			const basketExists = await this.basketRepo.findOne({
+				id: dto.basketId
+			});
 
 			if (!basketExists) {
 				return Result.fail<void>('Basket does not exists');
@@ -32,17 +35,20 @@ export class AddProductsOnBasketUseCase
 			const productsIds = dto.items.map((item) => item.productId);
 
 			// Check if basket already has some provided product
-			const productsAlreadyOnBasket = basketExists.products.some((
-				{ value }) => productsIds.includes(value.productId.id.toString()),
+			const productsAlreadyOnBasket = basketExists.products.some(
+				({ value }) =>
+					productsIds.includes(value.productId.id.toString())
 			);
 
 			if (productsAlreadyOnBasket) {
 				return Result.fail<void>(
-					'Product already on basket, change quantity instead add new one',
+					'Product already on basket, change quantity instead add new one'
 				);
 			}
 
-			const products = await this.productRepo.findProductsByIds(productsIds);
+			const products = await this.productRepo.findProductsByIds(
+				productsIds
+			);
 
 			if (!products) {
 				return Result.fail<void>('Products does not exists');
@@ -51,7 +57,7 @@ export class AddProductsOnBasketUseCase
 			this.basketDomainService.addItemsOnBasket(
 				dto.items,
 				basketExists,
-				products,
+				products
 			);
 
 			await this.basketRepo.save(basketExists);
@@ -61,7 +67,7 @@ export class AddProductsOnBasketUseCase
 		} catch (error) {
 			//
 			return Result.fail<void>(
-				'Internal Server Error on Add Products on Baskets Use Case',
+				'Internal Server Error on Add Products on Baskets Use Case'
 			);
 		}
 	}

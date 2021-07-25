@@ -1,3 +1,3 @@
 export interface DeactivateManyProductsDto {
-  productsIds?: string[];
+	productsIds?: string[];
 }

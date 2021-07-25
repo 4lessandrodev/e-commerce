@@ -12,14 +12,14 @@ describe('tag', () => {
 		//
 		domain = Aggregate.create(
 			{
-				description: 'valid_description',
+				description: 'valid_description'
 			},
-			new UniqueEntityID('valid_id'),
+			new UniqueEntityID('valid_id')
 		).getResult();
 		//
 		persistence = {
 			id: 'valid_id',
-			description: 'valid_description',
+			description: 'valid_description'
 		};
 	});
 	//

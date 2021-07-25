@@ -4,7 +4,7 @@ import {
 	ExchangeFactorValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { Item as Schema } from '../entities/basket.schema';
 import { ProductId } from '@domain/aggregates-root';
@@ -14,12 +14,14 @@ describe('basket-item.mapper', () => {
 	//
 	const domain: Aggregate = Aggregate.create({
 		description:
-			ProductDescriptionValueObject.create('valid_description').getResult(),
+			ProductDescriptionValueObject.create(
+				'valid_description'
+			).getResult(),
 		exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
 		productId: ProductId.create(new UniqueEntityID('valid_id')),
 		quantity: QuantityAvailableValueObject.create(7).getResult(),
 		availableStock: QuantityAvailableValueObject.create(10).getResult(),
-		unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+		unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult()
 	}).getResult();
 	//
 	const persistence: Schema = {
@@ -28,7 +30,7 @@ describe('basket-item.mapper', () => {
 		productId: 'valid_id',
 		unitOfMeasurement: 'CX',
 		quantity: 7,
-		availableStock: 10,
+		availableStock: 10
 	};
 	//
 	it('should be defined', () => {

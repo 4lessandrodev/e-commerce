@@ -1,20 +1,19 @@
 import {
 	BasketItemValueObject,
-	QuantityAvailableValueObject,
+	QuantityAvailableValueObject
 } from '@domain/value-objects';
 import { Result } from 'types-ddd';
-import { CustomBasket } from '@domain/aggregates-root';
-import { Order } from '@domain/aggregates-root';
+import { CustomBasket, Order } from '@domain/aggregates-root';
 
 export interface AddProps {
-	order: Order,
+	order: Order;
 	item: BasketItemValueObject;
 	quantityToAdd: QuantityAvailableValueObject;
 	customBasket: CustomBasket;
 }
 
 export interface RemoveProps {
-	order: Order,
+	order: Order;
 	item: BasketItemValueObject;
 	quantityToRemove: QuantityAvailableValueObject;
 	customBasket: CustomBasket;

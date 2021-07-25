@@ -8,8 +8,10 @@ export interface hasClientOpenedOrderProps {
 }
 
 export interface OrderRepositoryInterface extends IBaseRepository<Order> {
-	hasClientOpenedOrder: (props: hasClientOpenedOrderProps) => Promise<boolean>;
+	hasClientOpenedOrder: (
+		props: hasClientOpenedOrderProps
+	) => Promise<boolean>;
 	getClientOpenedOrder: (
-		props: hasClientOpenedOrderProps,
+		props: hasClientOpenedOrderProps
 	) => Promise<Order | null>;
 }

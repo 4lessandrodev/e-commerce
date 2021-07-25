@@ -4,17 +4,20 @@ import { OrderRepositoryInterface } from '@repo/order-repository.interface';
 import { Order, UserId } from '@domain/aggregates-root';
 import { ClientRepositoryInterface } from '@repo/client-repository.interface';
 import { RegionRepositoryInterface } from '@repo/region-repository.interface';
-import { Currency } from '@domain/value-objects';
-import { OrderStatusValueObject } from '@domain/value-objects';
-import { OrderIdValueObject } from '@domain/value-objects';
-import { MonetaryValueObject } from '@domain/value-objects';
+import {
+	Currency,
+	OrderStatusValueObject,
+	OrderIdValueObject,
+	MonetaryValueObject
+} from '@domain/value-objects';
+
 import { EcobagRepositoryInterface } from '@repo/ecobag.repository.interface';
 import { Ecobag } from '@domain/entities';
 import { OpenOrderDto } from './open-order-use-case.dto';
 
 @Injectable()
 export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
-	constructor (
+	constructor(
 		@Inject('OrderRepository')
 		private readonly orderRepo: OrderRepositoryInterface,
 
@@ -25,9 +28,10 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 		private readonly regionRepo: RegionRepositoryInterface,
 
 		@Inject('EcobagRepository')
-		private readonly ecobagRepo: EcobagRepositoryInterface,
-	) { }
-	async execute (dto: OpenOrderDto): Promise<Result<void>> {
+		private readonly ecobagRepo: EcobagRepositoryInterface
+	) {}
+
+	async execute(dto: OpenOrderDto): Promise<Result<void>> {
 		try {
 			//
 			const client = await this.clientRepo.findOne({ id: dto.userId });
@@ -39,7 +43,7 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 			const clientAlreadyHasPendingOrder =
 				await this.orderRepo.hasClientOpenedOrder({
 					clientId: client.id.toString(),
-					status: 'PENDING',
+					status: 'PENDING'
 				});
 
 			if (clientAlreadyHasPendingOrder) {
@@ -47,7 +51,7 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 			}
 
 			const clientMainAddress = client.addresses.find(
-				({ isMainAddress }) => isMainAddress,
+				({ isMainAddress }) => isMainAddress
 			);
 
 			if (!clientMainAddress) {
@@ -57,24 +61,29 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 			const clientRegionId = clientMainAddress.regionId.id.toString();
 
 			const clientRegion = await this.regionRepo.findOne({
-				id: clientRegionId,
+				id: clientRegionId
 			});
 
 			if (!clientRegion) {
-				return Result.fail<void>('Client region is not available for delivery');
+				return Result.fail<void>(
+					'Client region is not available for delivery'
+				);
 			}
 
 			if (!clientRegion.isActive) {
 				return Result.fail<void>(
-					'The client region is not active for delivery',
+					'The client region is not active for delivery'
 				);
 			}
 
 			const ecoBagPrice = Currency.create(0).getResult();
-			const ecoBagFee = MonetaryValueObject.create(ecoBagPrice).getResult();
+			const ecoBagFee =
+				MonetaryValueObject.create(ecoBagPrice).getResult();
 
 			if (client.hasEcobag) {
-				const ecobagPriceDb = await this.ecobagRepo.getPrice(Ecobag.id());
+				const ecobagPriceDb = await this.ecobagRepo.getPrice(
+					Ecobag.id()
+				);
 				ecoBagPrice.sum(ecobagPriceDb.value);
 			}
 
@@ -93,7 +102,7 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 				isTheOrderForCollection: false,
 				orderNumber,
 				separateProducts: [],
-				status,
+				status
 			});
 
 			if (orderOrError.isFailure) {
@@ -105,7 +114,9 @@ export class OpenOrderUseCase implements IUseCase<any, Result<void>> {
 			return Result.ok<void>();
 			//
 		} catch (error) {
-			return Result.fail<void>('Internal Server Error on Open Order Use Case');
+			return Result.fail<void>(
+				'Internal Server Error on Open Order Use Case'
+			);
 		}
 	}
 }

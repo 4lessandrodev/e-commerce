@@ -1,13 +1,13 @@
 const _Object = {};
 
 interface paramsKey {
-  key: string;
-  enum: typeof _Object;
+	key: string;
+	enum: typeof _Object;
 }
 
 interface paramsValue {
-  value: string;
-  enum: typeof _Object;
+	value: string;
+	enum: typeof _Object;
 }
 
 /**
@@ -19,7 +19,7 @@ interface paramsValue {
  * @returns boolean `true`if enum includes provided key and `false` if not
  */
 export const validateEnumIncludesKey = (props: paramsKey): boolean =>
-  Object.keys(props.enum).includes(props.key.toUpperCase());
+	Object.keys(props.enum).includes(props.key.toUpperCase());
 
 /**
  *
@@ -29,4 +29,4 @@ export const validateEnumIncludesKey = (props: paramsKey): boolean =>
  * @returns boolean `true`if enum includes provided value and `false` if not
  */
 export const validateEnumIncludesValue = (props: paramsValue): boolean =>
-  Object.values(props.enum).includes(props.value);
+	Object.values(props.enum).includes(props.value);
