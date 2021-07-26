@@ -5,7 +5,7 @@ import {
 	AddressComplementValueObject,
 	AddressNumberValueObject,
 	StreetNameValueObject,
-	ZipCodeValueObject,
+	ZipCodeValueObject
 } from '@domain/value-objects';
 import { RegionId } from '@domain/aggregates-root';
 import { Injectable } from '@nestjs/common';
@@ -13,25 +13,27 @@ import { Region } from '@infra/region/entities/region.schema';
 
 @Injectable()
 export class AddressMapper implements IMapper<Entity, Schema> {
-	toDomain (target: Schema): Entity {
+	toDomain(target: Schema): Entity {
 		return Entity.create(
 			{
 				complement: AddressComplementValueObject.create(
-					target.street,
+					target.street
 				).getResult(),
 				isMainAddress: target.isMainAddress,
-				number: AddressNumberValueObject.create(target.number).getResult(),
+				number: AddressNumberValueObject.create(
+					target.number
+				).getResult(),
 				regionId: RegionId.create(new UniqueEntityID(target.region.id)),
 				street: StreetNameValueObject.create(target.street).getResult(),
 				zipCode: ZipCodeValueObject.create(target.zipCode).getResult(),
 				createdAt: target.createdAt,
-				updatedAt: target.updatedAt,
+				updatedAt: target.updatedAt
 			},
-			new UniqueEntityID(target.id),
+			new UniqueEntityID(target.id)
 		).getResult();
 	}
 
-	toPersistence (target: Entity): Schema {
+	toPersistence(target: Entity): Schema {
 		//
 		const region = new Region();
 		region.id = target.regionId.id.toString();
@@ -45,7 +47,7 @@ export class AddressMapper implements IMapper<Entity, Schema> {
 			street: target.street.value,
 			zipCode: target.zipCode.value,
 			updatedAt: target.updatedAt,
-			createdAt: target.createdAt,
+			createdAt: target.createdAt
 		};
 	}
 }

@@ -5,7 +5,7 @@ import {
 	ImageValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { Item } from '../entities/custom-basket-item.schema';
 import { ProductId } from '@domain/aggregates-root';
@@ -15,38 +15,38 @@ import { Injectable } from '@nestjs/common';
 export class CustomBasketItemMapper
 	implements IMapper<BasketItemValueObject, Item>
 {
-	toDomain (target: Item): BasketItemValueObject {
+	toDomain(target: Item): BasketItemValueObject {
 		return BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(
-				target.quantity,
+				target.quantity
 			).getResult(),
 			description: ProductDescriptionValueObject.create(
-				target.description,
+				target.description
 			).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(
-				target.exchangeFactor,
+				target.exchangeFactor
 			).getResult(),
 			productId: ProductId.create(new UniqueEntityID(target.productId)),
 			quantity: QuantityAvailableValueObject.create(
-				target.quantity,
+				target.quantity
 			).getResult(),
 			unitOfMeasurement: UnitOfMeasurementValueObject.create(
-				target.unitOfMeasurement,
+				target.unitOfMeasurement
 			).getResult(),
 			image: target.image
 				? ImageValueObject.create(target.image).getResult()
-				: undefined,
+				: undefined
 		}).getResult();
 	}
 
-	toPersistence (target: BasketItemValueObject): Item {
+	toPersistence(target: BasketItemValueObject): Item {
 		return {
 			description: target.value.description.value,
 			exchangeFactor: target.value.exchangeFactor.value,
 			image: target.value.image?.value,
 			productId: target.value.productId.id.toString(),
 			quantity: target.value.quantity.value,
-			unitOfMeasurement: target.value.unitOfMeasurement.value,
+			unitOfMeasurement: target.value.unitOfMeasurement.value
 		};
 	}
 }

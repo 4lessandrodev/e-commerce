@@ -18,8 +18,8 @@ import { ClientService } from './client.service';
 		UserModule,
 		MongooseModule.forFeature([
 			{ name: Client.name, schema: ClientSchema },
-			{ name: Region.name, schema: RegionSchema },
-		]),
+			{ name: Region.name, schema: RegionSchema }
+		])
 	],
 	providers: [
 		CityMapper,
@@ -30,16 +30,16 @@ import { ClientService } from './client.service';
 		RegionRepository,
 		{
 			provide: 'ClientRepository',
-			useClass: ClientRepository,
+			useClass: ClientRepository
 		},
 		{
 			provide: 'RegionRepository',
-			useClass: RegionRepository,
+			useClass: RegionRepository
 		},
 		RegisterClientUseCase,
-		ClientService,
+		ClientService
 	],
 	controllers: [ClientController],
 	exports: ['ClientRepository']
 })
-export class ClientModule { }
+export class ClientModule {}

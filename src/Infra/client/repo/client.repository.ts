@@ -10,12 +10,12 @@ import { ClientMapper } from '../mapper/client.mapper';
 @Injectable()
 export class ClientRepository implements ClientRepositoryInterface {
 	//
-	constructor (
+	constructor(
 		@InjectModel(Client.name) private readonly conn: Model<ClientDocument>,
-		@Inject(ClientMapper) private readonly mapper: ClientMapper,
-	) { }
+		@Inject(ClientMapper) private readonly mapper: ClientMapper
+	) {}
 
-	async find (filter: Filter): Promise<Aggregate[] | null> {
+	async find(filter: Filter): Promise<Aggregate[] | null> {
 		const clientsFound = await this.conn.find(filter).exec();
 
 		if (!clientsFound) {
@@ -25,25 +25,25 @@ export class ClientRepository implements ClientRepositoryInterface {
 		return clientsFound.map(this.mapper.toDomain);
 	}
 
-	async findOne (filter: Filter): Promise<Aggregate | null> {
+	async findOne(filter: Filter): Promise<Aggregate | null> {
 		const clientFound = await this.conn.findOne(filter).exec();
 
-		if (!clientFound) {
+		if (clientFound == null) {
 			return null;
 		}
 
 		return this.mapper.toDomain(clientFound);
 	}
 
-	async delete (filter: Filter): Promise<void> {
+	async delete(filter: Filter): Promise<void> {
 		await this.conn.deleteOne(filter).exec();
 	}
 
-	async exists (filter: Filter): Promise<boolean> {
+	async exists(filter: Filter): Promise<boolean> {
 		return await this.conn.exists(filter);
 	}
 
-	async save (target: Aggregate): Promise<void> {
+	async save(target: Aggregate): Promise<void> {
 		const schema = this.mapper.toPersistence(target);
 		await this.conn
 			.updateOne({ id: schema.id }, schema, { upsert: true })

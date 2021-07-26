@@ -20,7 +20,7 @@ export const GetUserAgent = createParamDecorator(
 			browser: result?.browser?.name ?? 'Chrome',
 			ip: '0.0.0.0.0',
 			os: result?.os?.name ?? 'Mobile',
-			termVersion: '1.0',
+			termVersion: '1.0'
 		};
-	},
+	}
 );

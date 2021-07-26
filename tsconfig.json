@@ -12,7 +12,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
-    "baseUrl": "src",
+	"baseUrl": "src",
     "paths": {
       "@domain/*": [
         "Domain/*"

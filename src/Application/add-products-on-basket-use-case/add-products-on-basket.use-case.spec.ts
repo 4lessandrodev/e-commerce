@@ -12,7 +12,7 @@ import {
 	MonetaryValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd';
 
@@ -23,7 +23,7 @@ describe('add-products-on-basket.use-case', () => {
 	const domainService = new BasketDomainService();
 	//
 	const price = MonetaryValueObject.create(
-		Currency.create(10).getResult(),
+		Currency.create(10).getResult()
 	).getResult();
 
 	// Mock basket
@@ -31,32 +31,38 @@ describe('add-products-on-basket.use-case', () => {
 		{
 			category: BasketCategory.create({
 				changesLimit: ChangesLimitValueObject.create(1).getResult(),
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			isActive: true,
-			price,
+			price
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 
 	// Mock product
 	const product = Product.create(
 		{
 			category: ProductCategory.create({
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 			isActive: true,
 			isSpecial: false,
 			price,
-			quantityAvailable: QuantityAvailableValueObject.create(20).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+			quantityAvailable:
+				QuantityAvailableValueObject.create(20).getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('CX').getResult()
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 	//
 	beforeEach(() => {
@@ -68,7 +74,7 @@ describe('add-products-on-basket.use-case', () => {
 			save: jest.fn(),
 			deactivateManyBaskets: jest.fn(),
 			updateAllBasketItemByProductId: jest.fn(),
-			resetStockOnBasketItems: jest.fn(),
+			resetStockOnBasketItems: jest.fn()
 		};
 		productRepo = {
 			delete: jest.fn(),
@@ -79,7 +85,7 @@ describe('add-products-on-basket.use-case', () => {
 			findProductsByIds: jest.fn(),
 			deactivateManyProducts: jest.fn(),
 			resetStock: jest.fn(),
-			findAllProductsOrFilteredByIds: jest.fn(),
+			findAllProductsOrFilteredByIds: jest.fn()
 		};
 	});
 	//
@@ -87,7 +93,7 @@ describe('add-products-on-basket.use-case', () => {
 		const useCase = new AddProductsOnBasketUseCase(
 			productRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 		expect(useCase).toBeDefined();
 	});
@@ -99,12 +105,12 @@ describe('add-products-on-basket.use-case', () => {
 		const useCase = new AddProductsOnBasketUseCase(
 			productRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			basketId: 'invalid_basket_id',
-			items: [],
+			items: []
 		});
 		expect(result.isFailure).toBe(true);
 		expect(result.error).toBe('Basket does not exists');
@@ -113,17 +119,19 @@ describe('add-products-on-basket.use-case', () => {
 	it('should fail if products does not exists', async () => {
 		// Mock repo
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
-		jest.spyOn(productRepo, 'findProductsByIds').mockResolvedValueOnce(null);
+		jest.spyOn(productRepo, 'findProductsByIds').mockResolvedValueOnce(
+			null
+		);
 
 		const useCase = new AddProductsOnBasketUseCase(
 			productRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			basketId: 'valid_id',
-			items: [{ productId: 'invalid_id', quantity: 1 }],
+			items: [{ productId: 'invalid_id', quantity: 1 }]
 		});
 		expect(result.isFailure).toBe(true);
 		expect(result.error).toBe('Products does not exists');
@@ -133,19 +141,19 @@ describe('add-products-on-basket.use-case', () => {
 		// Mock repo
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
 		// Mock product
-		jest
-			.spyOn(productRepo, 'findProductsByIds')
-			.mockResolvedValueOnce([product]);
+		jest.spyOn(productRepo, 'findProductsByIds').mockResolvedValueOnce([
+			product
+		]);
 
 		const useCase = new AddProductsOnBasketUseCase(
 			productRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			basketId: 'valid_id',
-			items: [{ productId: 'valid_id', quantity: 1 }],
+			items: [{ productId: 'valid_id', quantity: 1 }]
 		});
 		expect(result.isSuccess).toBe(true);
 	});
@@ -154,23 +162,23 @@ describe('add-products-on-basket.use-case', () => {
 		// Mock repo
 		jest.spyOn(basketRepo, 'findOne').mockResolvedValueOnce(basket);
 		// Mock product
-		jest
-			.spyOn(productRepo, 'findProductsByIds')
-			.mockResolvedValueOnce([product]);
+		jest.spyOn(productRepo, 'findProductsByIds').mockResolvedValueOnce([
+			product
+		]);
 
 		const useCase = new AddProductsOnBasketUseCase(
 			productRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			basketId: 'valid_id',
-			items: [{ productId: 'valid_id', quantity: 1 }],
+			items: [{ productId: 'valid_id', quantity: 1 }]
 		});
 		expect(result.isFailure).toBe(true);
 		expect(result.error).toBe(
-			'Product already on basket, change quantity instead add new one',
+			'Product already on basket, change quantity instead add new one'
 		);
 	});
 });

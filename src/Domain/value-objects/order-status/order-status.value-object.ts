@@ -1,37 +1,37 @@
-export const MAX_ORDER_STATUS_LENGTH = 40;
-export const MIN_ORDER_STATUS_LENGTH = 2;
-
 import {
-  ERROR_ORDER_STATUS_INVALID,
-  ERROR_ORDER_STATUS_INVALID_LENGTH,
+	ERROR_ORDER_STATUS_INVALID,
+	ERROR_ORDER_STATUS_INVALID_LENGTH
 } from './order-status-errors.domain';
 import { Result, ValueObject } from 'types-ddd';
 import {
-  validateEnumIncludesValue,
-  validateStringLengthBetweenMaxAndMin,
+	validateEnumIncludesValue,
+	validateStringLengthBetweenMaxAndMin
 } from '@domain/utils';
 
+export const MAX_ORDER_STATUS_LENGTH = 40;
+export const MIN_ORDER_STATUS_LENGTH = 2;
+
 export enum AvailableOrderStatus {
-  'PENDING',
-  'IN_PREPARATION',
-  'OUT_FOR_DELIVERY',
-  'AWAITING_PAYMENT',
-  'AWAITING_FULFILLMENT',
-  'AWAITING_SHIPMENT',
-  'AWAITING_PICKUP',
-  'PARTIALLY_SHIPPED',
-  'COMPLETED',
-  'CANCELLED',
-  'DECLINED',
-  'REFUNDED',
-  'MANUAL_VERIFICATION_REQUIRED',
-  'PARTIALLY_REFUNDED',
+	'PENDING',
+	'IN_PREPARATION',
+	'OUT_FOR_DELIVERY',
+	'AWAITING_PAYMENT',
+	'AWAITING_FULFILLMENT',
+	'AWAITING_SHIPMENT',
+	'AWAITING_PICKUP',
+	'PARTIALLY_SHIPPED',
+	'COMPLETED',
+	'CANCELLED',
+	'DECLINED',
+	'REFUNDED',
+	'MANUAL_VERIFICATION_REQUIRED',
+	'PARTIALLY_REFUNDED'
 }
 
 export type AvailableOrderStatusType = keyof typeof AvailableOrderStatus;
 
 export interface OrderStatusProps {
-  value: AvailableOrderStatusType;
+	value: AvailableOrderStatusType;
 }
 
 /**
@@ -124,48 +124,54 @@ export interface OrderStatusProps {
  * Seller has partially refunded the order.
  */
 export class OrderStatusValueObject extends ValueObject<OrderStatusProps> {
-  private constructor(props: OrderStatusProps) {
-    super(props);
-  }
+	private constructor(props: OrderStatusProps) {
+		super(props);
+	}
 
-  get value(): AvailableOrderStatusType {
-    return this.props.value;
-  }
+	get value(): AvailableOrderStatusType {
+		return this.props.value;
+	}
 
-  private static isValidInitial = (initial: AvailableOrderStatusType) => {
-    return initial in AvailableOrderStatus;
-  };
+	private static readonly isValidInitial = (
+		initial: AvailableOrderStatusType
+	) => {
+		return initial in AvailableOrderStatus;
+	};
 
-  public static create(
-    status: AvailableOrderStatusType,
-  ): Result<OrderStatusValueObject> {
-    const isValidString = validateStringLengthBetweenMaxAndMin({
-      text: status,
-      maxLength: MAX_ORDER_STATUS_LENGTH,
-      minLength: MIN_ORDER_STATUS_LENGTH,
-    });
+	public static create(
+		status: AvailableOrderStatusType
+	): Result<OrderStatusValueObject> {
+		const isValidString = validateStringLengthBetweenMaxAndMin({
+			text: status,
+			maxLength: MAX_ORDER_STATUS_LENGTH,
+			minLength: MIN_ORDER_STATUS_LENGTH
+		});
 
-    if (!isValidString) {
-      return Result.fail<OrderStatusValueObject>(
-        ERROR_ORDER_STATUS_INVALID_LENGTH,
-      );
-    }
+		if (!isValidString) {
+			return Result.fail<OrderStatusValueObject>(
+				ERROR_ORDER_STATUS_INVALID_LENGTH
+			);
+		}
 
-    const isValid = validateEnumIncludesValue({
-      enum: AvailableOrderStatus,
-      value: status,
-    });
+		const isValid = validateEnumIncludesValue({
+			enum: AvailableOrderStatus,
+			value: status
+		});
 
-    if (!isValid) {
-      return Result.fail<OrderStatusValueObject>(ERROR_ORDER_STATUS_INVALID);
-    }
+		if (!isValid) {
+			return Result.fail<OrderStatusValueObject>(
+				ERROR_ORDER_STATUS_INVALID
+			);
+		}
 
-    if (!this.isValidInitial(status)) {
-      return Result.fail<OrderStatusValueObject>(ERROR_ORDER_STATUS_INVALID);
-    }
+		if (!this.isValidInitial(status)) {
+			return Result.fail<OrderStatusValueObject>(
+				ERROR_ORDER_STATUS_INVALID
+			);
+		}
 
-    return Result.ok<OrderStatusValueObject>(
-      new OrderStatusValueObject({ value: status }),
-    );
-  }
+		return Result.ok<OrderStatusValueObject>(
+			new OrderStatusValueObject({ value: status })
+		);
+	}
 }

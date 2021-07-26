@@ -1,12 +1,12 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Post,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
+	Body,
+	Controller,
+	Get,
+	Inject,
+	Post,
+	UseGuards,
+	UsePipes,
+	ValidationPipe
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { RegisterCityDto } from './dto/register-city.dto';
@@ -19,28 +19,28 @@ import { RegionService } from './region.service';
 @UsePipes(new ValidationPipe())
 @UseGuards(AuthGuard())
 export class RegionController {
-  //
-  constructor(
-    @Inject(RegionService) private readonly regionService: RegionService,
-  ) {}
+	//
+	constructor (
+		@Inject(RegionService) private readonly regionService: RegionService
+	) { }
 
-  @Post()
-  registerRegion(@Body() dto: RegisterRegionDto): Promise<void> {
-    return this.regionService.registerRegion(dto);
-  }
+	@Post()
+	async registerRegion (@Body() dto: RegisterRegionDto): Promise<void> {
+		return await this.regionService.registerRegion(dto);
+	}
 
-  @Post('city')
-  registerCity(@Body() dto: RegisterCityDto): Promise<void> {
-    return this.regionService.registerCity(dto);
-  }
+	@Post('city')
+	async registerCity (@Body() dto: RegisterCityDto): Promise<void> {
+		return await this.regionService.registerCity(dto);
+	}
 
-  @Get('city')
-  getCities(): Promise<City[]> {
-    return this.regionService.getCities();
-  }
+	@Get('city')
+	async getCities (): Promise<City[]> {
+		return await this.regionService.getCities();
+	}
 
-  @Get()
-  getRegions(): Promise<Region[]> {
-    return this.regionService.getRegions();
-  }
+	@Get()
+	async getRegions (): Promise<Region[]> {
+		return await this.regionService.getRegions();
+	}
 }

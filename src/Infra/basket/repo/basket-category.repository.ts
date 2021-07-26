@@ -8,39 +8,41 @@ import { Model } from 'mongoose';
 import { Inject } from '@nestjs/common';
 
 export class BasketCategoryRepository
-	implements BasketCategoryRepositoryInterface {
-	constructor (
+	implements BasketCategoryRepositoryInterface
+{
+	constructor(
 		@InjectModel(BasketCategory.name)
 		private readonly conn: Model<BasketCategoryDocument>,
 
 		@Inject(BasketCategoryMapper)
-		private readonly mapper: BasketCategoryMapper,
-	) { }
+		private readonly mapper: BasketCategoryMapper
+	) {}
+
 	//
-	async exists (filter: Filter): Promise<boolean> {
+	async exists(filter: Filter): Promise<boolean> {
 		return await this.conn.exists(filter);
 	}
 
 	//
-	async save (target: BasketCategory): Promise<void> {
+	async save(target: BasketCategory): Promise<void> {
 		const persistence = this.mapper.toPersistence(target);
 		await this.conn
 			.updateOne({ id: persistence.id }, persistence, {
-				upsert: true,
+				upsert: true
 			})
 			.exec();
 	}
 
 	//
-	async delete (filter: Filter): Promise<void> {
+	async delete(filter: Filter): Promise<void> {
 		await this.conn.deleteOne(filter).exec();
 	}
 
 	//
-	async findOne (filter: Filter): Promise<BasketCategory | null> {
+	async findOne(filter: Filter): Promise<BasketCategory | null> {
 		const foundCategory = await this.conn.findOne(filter).exec();
 
-		if (!foundCategory) {
+		if (foundCategory == null) {
 			return null;
 		}
 

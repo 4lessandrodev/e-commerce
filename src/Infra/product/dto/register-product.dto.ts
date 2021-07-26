@@ -1,63 +1,63 @@
 import { File } from '@shared/services/upload-files/interfaces/uploader.interface';
 import {
-  Units,
-  UnitTypes,
+	Units,
+	UnitTypes
 } from '@domain/value-objects/unit-of-measurement/unit-of-measurement.value-objects';
 import {
-  IsBoolean,
-  IsEnum,
-  IsOptional,
-  IsPositive,
-  IsString,
-  IsUUID,
-  Length,
-  Max,
-  MaxLength,
-  Min,
+	IsBoolean,
+	IsEnum,
+	IsOptional,
+	IsPositive,
+	IsString,
+	IsUUID,
+	Length,
+	Max,
+	MaxLength,
+	Min
 } from 'class-validator';
 import {
-  MAX_EXCHANGE_FACTOR_VALUE,
-  MAX_PRODUCT_DESCRIPTION_LENGTH,
-  MAX_PRODUCT_INFO_LENGTH,
-  MIN_EXCHANGE_FACTOR_VALUE,
-  MIN_PRODUCT_DESCRIPTION_LENGTH,
+	MAX_EXCHANGE_FACTOR_VALUE,
+	MAX_PRODUCT_DESCRIPTION_LENGTH,
+	MAX_PRODUCT_INFO_LENGTH,
+	MIN_EXCHANGE_FACTOR_VALUE,
+	MIN_PRODUCT_DESCRIPTION_LENGTH
 } from '@domain/value-objects';
 
 export class RegisterProductDto {
-  @IsString()
-  @Length(MIN_PRODUCT_DESCRIPTION_LENGTH, MAX_PRODUCT_DESCRIPTION_LENGTH)
-  description!: string;
+	@IsString()
+	@Length(MIN_PRODUCT_DESCRIPTION_LENGTH, MAX_PRODUCT_DESCRIPTION_LENGTH)
+	description!: string;
 
-  @IsPositive()
-  @Min(MIN_EXCHANGE_FACTOR_VALUE)
-  @Max(MAX_EXCHANGE_FACTOR_VALUE)
-  exchangeFactor!: number;
+	@IsPositive()
+	@Min(MIN_EXCHANGE_FACTOR_VALUE)
+	@Max(MAX_EXCHANGE_FACTOR_VALUE)
+	exchangeFactor!: number;
 
-  @IsUUID()
-  categoryId!: string;
+	@IsUUID()
+	categoryId!: string;
 
-  @IsEnum(Units)
-  unitOfMeasurement!: UnitTypes;
+	@IsEnum(Units)
+	unitOfMeasurement!: UnitTypes;
 
-  @IsBoolean()
-  isSpecial!: boolean;
+	@IsBoolean()
+	isSpecial!: boolean;
 
-  @IsPositive()
-  price!: number;
+	@IsPositive()
+	price!: number;
 
-  @IsBoolean()
-  isActive!: boolean;
+	@IsBoolean()
+	isActive!: boolean;
 
-  @IsPositive()
-  quantityAvailable!: number;
+	@IsPositive()
+	quantityAvailable!: number;
 
-  image?: File;
+	image?: File;
 
-  @IsString()
-  @MaxLength(MAX_PRODUCT_INFO_LENGTH)
-  info?: string;
+	@IsString()
+	@MaxLength(MAX_PRODUCT_INFO_LENGTH)
+	info?: string;
 
-  @IsOptional()
-  @IsUUID('4', { each: true })
-  tagsIds?: string[];
+	@IsOptional()
+	@IsUUID('4', { each: true })
+	tagsIds?: string[];
 }

@@ -5,16 +5,17 @@ import { Model } from 'mongoose';
 import {
 	GetProductsPayload,
 	PageInfo,
-	ProductQueryInterface,
+	ProductQueryInterface
 } from '../interfaces/product.query.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductQuery implements ProductQueryInterface {
-	constructor (
-		@InjectModel(Product.name) private readonly conn: Model<ProductDocument>,
-	) { }
-	async getProducts (filter: ProductFilter): Promise<GetProductsPayload> {
+	constructor(
+		@InjectModel(Product.name) private readonly conn: Model<ProductDocument>
+	) {}
+
+	async getProducts(filter: ProductFilter): Promise<GetProductsPayload> {
 		//
 		const { search = '', limit = 10, offset = 0 } = filter;
 		const limitNumber = parseInt(String(limit), 10);
@@ -33,7 +34,7 @@ export class ProductQuery implements ProductQueryInterface {
 			const products = await this.conn
 				.find(
 					{ isActive: true },
-					{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 },
+					{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 }
 				)
 				.skip(skipNumber)
 				.limit(limitNumber)
@@ -42,12 +43,12 @@ export class ProductQuery implements ProductQueryInterface {
 			const pageInfo: PageInfo = {
 				hasNextPage: skipNumber + limitNumber < totalOfRegisters,
 				hasPreviousPage: skipNumber > 0,
-				totalOfRegisters,
+				totalOfRegisters
 			};
 
 			return {
 				pageInfo,
-				products,
+				products
 			};
 		}
 
@@ -58,7 +59,7 @@ export class ProductQuery implements ProductQueryInterface {
 					$search: search,
 					$caseSensitive: false
 				},
-				isActive: true,
+				isActive: true
 			})
 			.countDocuments();
 
@@ -70,15 +71,15 @@ export class ProductQuery implements ProductQueryInterface {
 						$search: search,
 						$caseSensitive: false
 					},
-					isActive: true,
+					isActive: true
 				},
 				{
 					score: { $meta: 'textScore' },
 					_id: 0,
 					__v: 0,
 					updatedAt: 0,
-					createdAt: 0,
-				},
+					createdAt: 0
+				}
 			)
 			.sort({ score: { $meta: 'textScore' } })
 			.skip(skipNumber)
@@ -87,15 +88,16 @@ export class ProductQuery implements ProductQueryInterface {
 		const pageInfo: PageInfo = {
 			hasNextPage: skipNumber + limitNumber < totalOfRegisters,
 			hasPreviousPage: skipNumber > 0,
-			totalOfRegisters,
+			totalOfRegisters
 		};
 
 		return { pageInfo, products };
 	}
 
-	async getProductsByCategoryId (categoryId: string, filter: ProductFilter):
-		Promise<GetProductsPayload> {
-
+	async getProductsByCategoryId(
+		categoryId: string,
+		filter: ProductFilter
+	): Promise<GetProductsPayload> {
 		const { limit = 10, offset = 0 } = filter;
 		const limitNumber = parseInt(String(limit), 10);
 		const skipNumber = parseInt(String(offset), 10);
@@ -108,20 +110,24 @@ export class ProductQuery implements ProductQueryInterface {
 		const pageInfo: PageInfo = {
 			hasNextPage: skipNumber + limitNumber < totalOfRegisters,
 			hasPreviousPage: skipNumber > 0,
-			totalOfRegisters,
+			totalOfRegisters
 		};
 
 		const products = await this.conn
-			.find({ 'category.id': categoryId },
-				{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 },
-			).skip(skipNumber).limit(limitNumber);;
+			.find(
+				{ 'category.id': categoryId },
+				{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 }
+			)
+			.skip(skipNumber)
+			.limit(limitNumber);
 
 		return { pageInfo, products };
 	}
 
-	async getProductsByTagId (tag: string, filter: ProductFilter):
-		Promise<GetProductsPayload> {
-
+	async getProductsByTagId(
+		tag: string,
+		filter: ProductFilter
+	): Promise<GetProductsPayload> {
 		const { limit = 10, offset = 0 } = filter;
 		const limitNumber = parseInt(String(limit), 10);
 		const skipNumber = parseInt(String(offset), 10);
@@ -134,13 +140,16 @@ export class ProductQuery implements ProductQueryInterface {
 		const pageInfo: PageInfo = {
 			hasNextPage: skipNumber + limitNumber < totalOfRegisters,
 			hasPreviousPage: skipNumber > 0,
-			totalOfRegisters,
+			totalOfRegisters
 		};
 
-		const products = await this.conn.find(
-			{ tags: { $elemMatch: { id: tag } } },
-			{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 },
-		).skip(skipNumber).limit(limitNumber);;
+		const products = await this.conn
+			.find(
+				{ tags: { $elemMatch: { id: tag } } },
+				{ _id: 0, __v: 0, updatedAt: 0, createdAt: 0 }
+			)
+			.skip(skipNumber)
+			.limit(limitNumber);
 
 		return { pageInfo, products };
 	}

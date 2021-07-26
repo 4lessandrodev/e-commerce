@@ -3,9 +3,8 @@ import { Region } from '@domain/aggregates-root';
 import { Region as Schema } from '../entities/region.schema';
 import { CityMapper } from './city.mapper';
 import {
-	AvailableLocale,
 	Currency,
-	MonetaryValueObject,
+	MonetaryValueObject
 } from '@domain/value-objects';
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -13,23 +12,25 @@ import { Inject, Injectable } from '@nestjs/common';
 export class RegionMapper implements IMapper<Region, Schema> {
 	constructor (
 		@Inject(CityMapper)
-		private readonly cityMapper: CityMapper,
-	) { }
+		private readonly cityMapper: CityMapper
+	) {}
+
 	toDomain (target: Schema): Region {
 		return Region.create(
 			{
 				city: this.cityMapper.toDomain(target.city),
 				description: target.description,
 				freightPrice: MonetaryValueObject.create(
-					Currency.create(target.freightPrice.value).getResult(),
+					Currency.create(target.freightPrice.value).getResult()
 				).getResult(),
 				isActive: target.isActive,
 				createdAt: target.createdAt,
-				updatedAt: target.updatedAt,
+				updatedAt: target.updatedAt
 			},
-			new UniqueEntityID(target.id),
+			new UniqueEntityID(target.id)
 		).getResult();
 	}
+
 	toPersistence (target: Region): Schema {
 		return {
 			id: target.id.toString(),
@@ -37,12 +38,12 @@ export class RegionMapper implements IMapper<Region, Schema> {
 			createdAt: target.createdAt,
 			description: target.description,
 			freightPrice: {
-				locale: target.freightPrice.currency.locale as AvailableLocale,
+				locale: target.freightPrice.currency.locale,
 				symbol: target.freightPrice.currency.symbol,
-				value: target.freightPrice.currency.value,
+				value: target.freightPrice.currency.value
 			},
 			isActive: target.isActive,
-			updatedAt: target.updatedAt,
+			updatedAt: target.updatedAt
 		};
 	}
 }

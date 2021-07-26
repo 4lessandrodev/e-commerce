@@ -8,7 +8,7 @@ import {
 	ImageValueObject,
 	RegionNameValueObject,
 	StreetNameValueObject,
-	ZipCodeValueObject,
+	ZipCodeValueObject
 } from '@domain/value-objects';
 
 describe('cliente-domain-aggregate-root', () => {
@@ -17,23 +17,31 @@ describe('cliente-domain-aggregate-root', () => {
 			{
 				addresses: [
 					Address.create({
-						complement: AddressComplementValueObject.create(
-							'complement street',
-						).getResult(),
+						complement:
+							AddressComplementValueObject.create(
+								'complement street'
+							).getResult(),
 						isMainAddress: true,
-						number: AddressNumberValueObject.create('777').getResult(),
+						number: AddressNumberValueObject.create(
+							'777'
+						).getResult(),
 						regionId: RegionId.create(),
-						street: StreetNameValueObject.create('valid street').getResult(),
-						zipCode: ZipCodeValueObject.create('75520140').getResult(),
-					}).getResult(),
+						street: StreetNameValueObject.create(
+							'valid street'
+						).getResult(),
+						zipCode:
+							ZipCodeValueObject.create('75520140').getResult()
+					}).getResult()
 				],
 				avatar: ImageValueObject.create(
-					'http://aws.s3.bucket/LIOEWR-5S65DF0/image.jpeg',
+					'http://aws.s3.bucket/LIOEWR-5S65DF0/image.jpeg'
 				).getResult(),
 				hasEcobag: true,
-				name: RegionNameValueObject.create('valid region name').getResult(),
+				name: RegionNameValueObject.create(
+					'valid region name'
+				).getResult()
 			},
-			DomainId.create().id,
+			DomainId.create().id
 		);
 		expect(client.isSuccess).toBe(true);
 	});

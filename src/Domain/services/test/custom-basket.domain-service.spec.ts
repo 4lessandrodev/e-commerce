@@ -8,7 +8,7 @@ import {
 	MonetaryValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { BasketId, CustomBasket, ProductId } from '@domain/aggregates-root';
 import { CustomBasketDomainService } from '../custom-basket.domain-service';
@@ -26,11 +26,14 @@ describe('custom-basket.domain-service', () => {
 		item = BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(10).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 			productId: ProductId.create(),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('CX').getResult()
 		}).getResult();
 
 		//
@@ -38,18 +41,20 @@ describe('custom-basket.domain-service', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				changesLimit: ChangesLimitValueObject.create(7).getResult(),
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			currentItems: [item],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [item],
 			price: MonetaryValueObject.create(
-				Currency.create(100).getResult(),
+				Currency.create(100).getResult()
 			).getResult(),
 			quantity: QuantityAvailableValueObject.create(10).getResult(),
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		//
@@ -70,7 +75,7 @@ describe('custom-basket.domain-service', () => {
 		service.removeItemFromCustomBasket({
 			customBasket,
 			item,
-			quantityToRemove,
+			quantityToRemove
 		});
 
 		expect(customBasket.exchangesFactorAvailable).toBe(1);
@@ -78,13 +83,13 @@ describe('custom-basket.domain-service', () => {
 		const resultSuccess = service.addItemToCustomBasket({
 			customBasket,
 			item,
-			quantityToAdd,
+			quantityToAdd
 		});
 
 		const resultFailure = service.addItemToCustomBasket({
 			customBasket,
 			item,
-			quantityToAdd,
+			quantityToAdd
 		});
 
 		expect(resultSuccess.isSuccess).toBe(true);

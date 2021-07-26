@@ -1,7 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AvailableCurrency, AvailableLocale } from '@domain/value-objects';
-import { AvailableOrderStatusType } from '@domain/value-objects';
+import {
+	AvailableCurrency,
+	AvailableLocale,
+	AvailableOrderStatusType
+} from '@domain/value-objects';
+
 import { OrderAddress } from './order-address.schema';
 
 // ------------------------------------------------------
@@ -31,7 +35,7 @@ export class Order {
 		index: true,
 		type: String,
 		immutable: true,
-		required: true,
+		required: true
 	})
 	id!: string;
 
@@ -40,7 +44,7 @@ export class Order {
 		index: true,
 		type: String,
 		immutable: true,
-		required: true,
+		required: true
 	})
 	orderNumber!: string;
 

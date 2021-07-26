@@ -8,71 +8,74 @@ import { CityRepositoryInterface } from '@repo/city.repository.interface';
 
 @Injectable()
 export class RegisterRegionUseCase
-  implements IUseCase<RegisterRegionDto, Result<void>>
+	implements IUseCase<RegisterRegionDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('RegionRepository')
-    private readonly regionRepo: RegionRepositoryInterface,
+	//
+	constructor(
+		@Inject('RegionRepository')
+		private readonly regionRepo: RegionRepositoryInterface,
 
-    @Inject('CityRepository')
-    private readonly cityRepo: CityRepositoryInterface,
-  ) {}
-  //
-  async execute(dto: RegisterRegionDto): Promise<Result<void>> {
-    //
+		@Inject('CityRepository')
+		private readonly cityRepo: CityRepositoryInterface
+	) {}
 
-    const currencyOrError = Currency.create(dto.freightPrice);
+	//
+	async execute(dto: RegisterRegionDto): Promise<Result<void>> {
+		//
 
-    if (currencyOrError.isFailure) {
-      return Result.fail<void>(currencyOrError.error as string);
-    }
+		const currencyOrError = Currency.create(dto.freightPrice);
 
-    const currency = currencyOrError.getResult();
-    const monetaryValueOrError = MonetaryValueObject.create(currency);
+		if (currencyOrError.isFailure) {
+			return Result.fail<void>(currencyOrError.error as string);
+		}
 
-    if (monetaryValueOrError.isFailure) {
-      return Result.fail<void>(monetaryValueOrError.error as string);
-    }
+		const currency = currencyOrError.getResult();
+		const monetaryValueOrError = MonetaryValueObject.create(currency);
 
-    const freightPrice = monetaryValueOrError.getResult();
+		if (monetaryValueOrError.isFailure) {
+			return Result.fail<void>(monetaryValueOrError.error as string);
+		}
 
-    try {
-      const alreadyExistRegion = await this.regionRepo.exists({
-        description: dto.description,
-      });
-      if (alreadyExistRegion) {
-        return Result.fail<void>('Already exist region with provided name');
-      }
-      //
-      const existCity = await this.cityRepo.findOne({ id: dto.cityId });
+		const freightPrice = monetaryValueOrError.getResult();
 
-      if (!existCity) {
-        return Result.fail<void>('City does not exist');
-      }
-      //
+		try {
+			const alreadyExistRegion = await this.regionRepo.exists({
+				description: dto.description
+			});
+			if (alreadyExistRegion) {
+				return Result.fail<void>(
+					'Already exist region with provided name'
+				);
+			}
+			//
+			const existCity = await this.cityRepo.findOne({ id: dto.cityId });
 
-      const regionOrError = Region.create({
-        city: existCity,
-        freightPrice,
-        description: dto.description,
-        isActive: dto.isActive,
-      });
+			if (!existCity) {
+				return Result.fail<void>('City does not exist');
+			}
+			//
 
-      if (regionOrError.isFailure) {
-        return Result.fail<void>(regionOrError.error as string);
-      }
+			const regionOrError = Region.create({
+				city: existCity,
+				freightPrice,
+				description: dto.description,
+				isActive: dto.isActive
+			});
 
-      const region = regionOrError.getResult();
+			if (regionOrError.isFailure) {
+				return Result.fail<void>(regionOrError.error as string);
+			}
 
-      await this.regionRepo.save(region);
+			const region = regionOrError.getResult();
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      return Result.fail<void>(
-        'Internal Server Error on Register Region Use Case',
-      );
-    }
-  }
+			await this.regionRepo.save(region);
+
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			return Result.fail<void>(
+				'Internal Server Error on Register Region Use Case'
+			);
+		}
+	}
 }

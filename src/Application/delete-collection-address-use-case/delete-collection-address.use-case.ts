@@ -5,27 +5,30 @@ import { CollectionAddressRepositoryInterface } from '@repo/collection-address-r
 
 @Injectable()
 export class DeleteCollectionAddressUseCase
-  implements IUseCase<DeleteCollectionAddressDto, Result<void>>
+	implements IUseCase<DeleteCollectionAddressDto, Result<void>>
 {
-  constructor(
-    @Inject('CollectionAddressRepository')
-    private readonly collectionAddressRepo: CollectionAddressRepositoryInterface,
-  ) {}
-  async execute(dto: DeleteCollectionAddressDto): Promise<Result<void>> {
-    const id = dto.id;
-    try {
-      const addressExists = await this.collectionAddressRepo.exists({ id });
+	constructor(
+		@Inject('CollectionAddressRepository')
+		private readonly collectionAddressRepo: CollectionAddressRepositoryInterface
+	) {}
 
-      if (!addressExists) {
-        return Result.fail<void>('Address does not exists');
-      }
+	async execute(dto: DeleteCollectionAddressDto): Promise<Result<void>> {
+		const id = dto.id;
+		try {
+			const addressExists = await this.collectionAddressRepo.exists({
+				id
+			});
 
-      await this.collectionAddressRepo.delete({ id });
-      return Result.ok<void>();
-    } catch (error) {
-      return Result.fail<void>(
-        'Internal Server Error on Delete Collection Address Use Case',
-      );
-    }
-  }
+			if (!addressExists) {
+				return Result.fail<void>('Address does not exists');
+			}
+
+			await this.collectionAddressRepo.delete({ id });
+			return Result.ok<void>();
+		} catch (error) {
+			return Result.fail<void>(
+				'Internal Server Error on Delete Collection Address Use Case'
+			);
+		}
+	}
 }

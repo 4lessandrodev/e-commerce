@@ -6,133 +6,149 @@ import { Basket } from '@domain/aggregates-root';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { IUseCase, Result } from 'types-ddd';
 import { Inject, Injectable } from '@nestjs/common';
-import { Currency, MonetaryValueObject } from '@domain/value-objects';
-import { BasketDescriptionValueObject } from '@domain/value-objects';
-import { BasketInfoValueObject } from '@domain/value-objects';
+import {
+	Currency,
+	MonetaryValueObject,
+	BasketDescriptionValueObject,
+	BasketInfoValueObject
+} from '@domain/value-objects';
+
 import { BasketDomainService } from '@domain/services/basket.domain-service';
 
 @Injectable()
 export class RegisterBasketUseCase
-  implements IUseCase<RegisterBasketDto, Result<void>>
+	implements IUseCase<RegisterBasketDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('BasketCategoryRepository')
-    private readonly basketCategoryRepo: BasketCategoryRepositoryInterface,
+	//
+	constructor(
+		@Inject('BasketCategoryRepository')
+		private readonly basketCategoryRepo: BasketCategoryRepositoryInterface,
 
-    @Inject('ProductRepository')
-    private readonly productRepo: ProductRepositoryInterface,
+		@Inject('ProductRepository')
+		private readonly productRepo: ProductRepositoryInterface,
 
-    @Inject('TagRepository')
-    private readonly tagRepo: TagRepositoryInterface,
+		@Inject('TagRepository')
+		private readonly tagRepo: TagRepositoryInterface,
 
-    @Inject('BasketRepository')
-    private readonly basketRepo: BasketRepositoryInterface,
+		@Inject('BasketRepository')
+		private readonly basketRepo: BasketRepositoryInterface,
 
-    @Inject(BasketDomainService)
-    private readonly domainService: BasketDomainService,
-  ) {}
-  //
-  async execute(dto: RegisterBasketDto): Promise<Result<void>> {
-    //
-    const currencyOrError = Currency.create(dto.price);
+		@Inject(BasketDomainService)
+		private readonly domainService: BasketDomainService
+	) {}
 
-    if (currencyOrError.isFailure) {
-      return Result.fail<void>(currencyOrError.error.toString());
-    }
-    const currency = currencyOrError.getResult();
+	//
+	async execute(dto: RegisterBasketDto): Promise<Result<void>> {
+		//
+		const currencyOrError = Currency.create(dto.price);
 
-    //
-    const priceOrError = MonetaryValueObject.create(currency);
-    //
-    if (priceOrError.isFailure) {
-      return Result.fail<void>(priceOrError.error.toString());
-    }
+		if (currencyOrError.isFailure) {
+			return Result.fail<void>(currencyOrError.error.toString());
+		}
+		const currency = currencyOrError.getResult();
 
-    const price = priceOrError.getResult();
+		//
+		const priceOrError = MonetaryValueObject.create(currency);
+		//
+		if (priceOrError.isFailure) {
+			return Result.fail<void>(priceOrError.error.toString());
+		}
 
-    try {
-      const category = await this.basketCategoryRepo.findOne({
-        id: dto.categoryId,
-      });
+		const price = priceOrError.getResult();
 
-      if (!category) {
-        return Result.fail<void>('Does not exist category for provided id');
-      }
+		try {
+			const category = await this.basketCategoryRepo.findOne({
+				id: dto.categoryId
+			});
 
-      const basketAlreadyExistsForDescription = await this.basketRepo.findOne({
-        description: dto.description.toLowerCase(),
-      });
-      //
-      if (basketAlreadyExistsForDescription) {
-        return Result.fail<void>(
-          'Basket already exists for provided description',
-        );
-      }
+			if (!category) {
+				return Result.fail<void>(
+					'Does not exist category for provided id'
+				);
+			}
 
-      const infoOrErrorOrUndefined = dto.info
-        ? BasketInfoValueObject.create(dto.info)
-        : undefined;
+			const basketAlreadyExistsForDescription =
+				await this.basketRepo.findOne({
+					description: dto.description.toLowerCase()
+				});
+			//
+			if (basketAlreadyExistsForDescription) {
+				return Result.fail<void>(
+					'Basket already exists for provided description'
+				);
+			}
 
-      if (infoOrErrorOrUndefined?.isFailure) {
-        return Result.fail<void>(infoOrErrorOrUndefined.error.toString());
-      }
+			const infoOrErrorOrUndefined = dto.info
+				? BasketInfoValueObject.create(dto.info)
+				: undefined;
 
-      const info = infoOrErrorOrUndefined?.getResult();
+			if (infoOrErrorOrUndefined?.isFailure) {
+				return Result.fail<void>(
+					infoOrErrorOrUndefined.error.toString()
+				);
+			}
 
-      const descriptionOrError = BasketDescriptionValueObject.create(
-        dto.description,
-      );
+			const info = infoOrErrorOrUndefined?.getResult();
 
-      if (descriptionOrError.isFailure) {
-        return Result.fail<void>(descriptionOrError.error.toString());
-      }
+			const descriptionOrError = BasketDescriptionValueObject.create(
+				dto.description
+			);
 
-      const description = descriptionOrError.getResult();
+			if (descriptionOrError.isFailure) {
+				return Result.fail<void>(descriptionOrError.error.toString());
+			}
 
-      const basketOrError = Basket.create({
-        price,
-        category,
-        info,
-        description,
-        isActive: dto.isActive,
-      });
-      //-------------------------------------------------------------
-      if (basketOrError.isFailure) {
-        return Result.fail<void>(basketOrError.error.toString());
-      }
-      const basket = basketOrError.getResult();
+			const description = descriptionOrError.getResult();
 
-      //-------------------------------------------------------------
-      if (dto.tagsIds) {
-        const foundTags = await this.tagRepo.findTagsById(dto.tagsIds);
-        this.domainService.addTagsOnBasket(foundTags, basket);
-      }
+			const basketOrError = Basket.create({
+				price,
+				category,
+				info,
+				description,
+				isActive: dto.isActive
+			});
+			// -------------------------------------------------------------
+			if (basketOrError.isFailure) {
+				return Result.fail<void>(basketOrError.error.toString());
+			}
+			const basket = basketOrError.getResult();
 
-      //-------------------------------------------------------------
-      if (dto.items) {
-        const ids = dto.items.map(({ productId }) => productId);
-        const foundProducts = await this.productRepo.findProductsByIds(ids);
-        if (foundProducts) {
-          this.domainService.addItemsOnBasket(dto.items, basket, foundProducts);
-        }
-      }
+			// -------------------------------------------------------------
+			if (dto.tagsIds != null) {
+				const foundTags = await this.tagRepo.findTagsById(dto.tagsIds);
+				this.domainService.addTagsOnBasket(foundTags, basket);
+			}
 
-      /**
-       * @todo: add image uploader service
-       */
+			// -------------------------------------------------------------
+			if (dto.items != null) {
+				const ids = dto.items.map(({ productId }) => productId);
+				const foundProducts = await this.productRepo.findProductsByIds(
+					ids
+				);
+				if (foundProducts) {
+					this.domainService.addItemsOnBasket(
+						dto.items,
+						basket,
+						foundProducts
+					);
+				}
+			}
 
-      await this.basketRepo.save(basket);
+			/**
+			 * @todo: add image uploader service
+			 */
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
-      console.log(error);
+			await this.basketRepo.save(basket);
 
-      return Result.fail<void>(
-        'Internal Server Error on Register Basket Use Case',
-      );
-    }
-  }
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+			console.log(error);
+
+			return Result.fail<void>(
+				'Internal Server Error on Register Basket Use Case'
+			);
+		}
+	}
 }

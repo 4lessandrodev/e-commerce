@@ -14,8 +14,9 @@ import {
 	MonetaryValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
-import { UnitOfMeasurementValueObject } from '@domain/value-objects';
+
 import { ERROR_BASKET_INFO_MAX_LENGTH } from '@domain/value-objects/basket-info/basket-info-errors.domain';
 import { ERROR_BASKET_DESCRIPTION_LENGTH } from '@domain/value-objects/basket-description/basket-description-errors.domain';
 
@@ -32,30 +33,30 @@ describe('register-basket.use-case', () => {
 		{
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 			category: ProductCategory.create({
-				description: 'valid_description',
+				description: 'valid_description'
 			}).getResult(),
 			description:
 				ProductDescriptionValueObject.create('valid_description').getResult(),
 			isActive: true,
 			isSpecial: false,
 			price: MonetaryValueObject.create(
-				Currency.create(100).getResult(),
+				Currency.create(100).getResult()
 			).getResult(),
 			quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult(),
+			unitOfMeasurement: UnitOfMeasurementValueObject.create('KG').getResult()
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 	//
 	// fake category
 	const category = BasketCategory.create({
 		changesLimit: ChangesLimitValueObject.create(2).getResult(),
-		description: 'valid_description',
+		description: 'valid_description'
 	}).getResult();
 	//
 	// fake tag
 	const tag = Tag.create({
-		description: 'valid_description',
+		description: 'valid_description'
 	}).getResult();
 
 	beforeEach(() => {
@@ -63,7 +64,7 @@ describe('register-basket.use-case', () => {
 			delete: jest.fn(),
 			exists: jest.fn(),
 			findOne: jest.fn(),
-			save: jest.fn(),
+			save: jest.fn()
 		};
 		//
 		productRepo = {
@@ -75,13 +76,13 @@ describe('register-basket.use-case', () => {
 			save: jest.fn(),
 			deactivateManyProducts: jest.fn(),
 			resetStock: jest.fn(),
-			findAllProductsOrFilteredByIds: jest.fn(),
+			findAllProductsOrFilteredByIds: jest.fn()
 		};
 		//
 		tagRepo = {
 			exists: jest.fn(),
 			findTagsById: jest.fn(),
-			updateOrCreate: jest.fn(),
+			updateOrCreate: jest.fn()
 		};
 		//
 		basketRepo = {
@@ -92,7 +93,7 @@ describe('register-basket.use-case', () => {
 			save: jest.fn(),
 			deactivateManyBaskets: jest.fn(),
 			updateAllBasketItemByProductId: jest.fn(),
-			resetStockOnBasketItems: jest.fn(),
+			resetStockOnBasketItems: jest.fn()
 		};
 		//
 		domainService = new BasketDomainService();
@@ -105,7 +106,7 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		expect(useCase).toBeDefined();
@@ -119,14 +120,14 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			categoryId: 'valid_category_id',
 			description: 'valid_description',
 			isActive: true,
-			price: '80a' as unknown as number,
+			price: '80a' as unknown as number
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -141,14 +142,14 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
 			categoryId: 'invalid_category_id',
 			description: 'valid_description',
 			isActive: true,
-			price: 50,
+			price: 50
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -166,7 +167,7 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
@@ -174,7 +175,7 @@ describe('register-basket.use-case', () => {
 			description: 'valid_description',
 			isActive: true,
 			price: 50,
-			tagsIds: ['valid_id'],
+			tagsIds: ['valid_id']
 		});
 
 		expect(result.isSuccess).toBe(true);
@@ -195,7 +196,7 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
@@ -203,7 +204,7 @@ describe('register-basket.use-case', () => {
 			description: 'valid_description',
 			info: 'invalid_info_length'.repeat(30),
 			isActive: true,
-			price: 50,
+			price: 50
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -225,7 +226,7 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
@@ -233,7 +234,7 @@ describe('register-basket.use-case', () => {
 			description: 'invalid_description'.repeat(5),
 			info: 'valid_info_length',
 			isActive: true,
-			price: 50,
+			price: 50
 		});
 
 		expect(result.isFailure).toBe(true);
@@ -255,7 +256,7 @@ describe('register-basket.use-case', () => {
 			productRepo,
 			tagRepo,
 			basketRepo,
-			domainService,
+			domainService
 		);
 
 		const result = await useCase.execute({
@@ -267,8 +268,8 @@ describe('register-basket.use-case', () => {
 			items: [
 				{ productId: 'valid_id', quantity: 3 },
 				{ productId: 'valid_id', quantity: 1 },
-				{ productId: 'valid_id', quantity: 2 },
-			],
+				{ productId: 'valid_id', quantity: 2 }
+			]
 		});
 
 		expect(result.isSuccess).toBe(true);

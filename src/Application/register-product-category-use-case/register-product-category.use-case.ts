@@ -6,42 +6,44 @@ import { ProductCategory } from '@domain/entities';
 
 @Injectable()
 export class RegisterProductCategoryUseCase
-  implements IUseCase<RegisterProductCategoryDto, Result<void>> {
-  constructor(
-    @Inject('ProductCategoryRepository')
-    private readonly categoryRepo: ProductCategoryRepositoryInterface,
-  ) {}
-  async execute(dto: RegisterProductCategoryDto): Promise<Result<void>> {
-    //
-    const categoryOrError = ProductCategory.create({
-      description: dto.description,
-    });
+	implements IUseCase<RegisterProductCategoryDto, Result<void>>
+{
+	constructor(
+		@Inject('ProductCategoryRepository')
+		private readonly categoryRepo: ProductCategoryRepositoryInterface
+	) {}
 
-    if (categoryOrError.isFailure) {
-      return Result.fail<void>(categoryOrError.error as string);
-    }
-    //
-    try {
-      const alreadyExistCategory = await this.categoryRepo.exists({
-        description: dto.description,
-      });
+	async execute(dto: RegisterProductCategoryDto): Promise<Result<void>> {
+		//
+		const categoryOrError = ProductCategory.create({
+			description: dto.description
+		});
 
-      if (alreadyExistCategory) {
-        return Result.fail<void>('Category already exists');
-      }
+		if (categoryOrError.isFailure) {
+			return Result.fail<void>(categoryOrError.error as string);
+		}
+		//
+		try {
+			const alreadyExistCategory = await this.categoryRepo.exists({
+				description: dto.description
+			});
 
-      const category = categoryOrError.getResult();
+			if (alreadyExistCategory) {
+				return Result.fail<void>('Category already exists');
+			}
 
-      await this.categoryRepo.save(category);
+			const category = categoryOrError.getResult();
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
+			await this.categoryRepo.save(category);
 
-      return Result.fail<void>(
-        'Internal Server Error on Register Product Category Use Case',
-      );
-    }
-  }
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+
+			return Result.fail<void>(
+				'Internal Server Error on Register Product Category Use Case'
+			);
+		}
+	}
 }

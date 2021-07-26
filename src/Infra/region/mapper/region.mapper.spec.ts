@@ -6,7 +6,7 @@ import { City } from '@domain/entities';
 import {
 	Currency,
 	InitialStateValueObject,
-	MonetaryValueObject,
+	MonetaryValueObject
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd';
 
@@ -23,7 +23,7 @@ describe('region.mapper', () => {
 			freightPrice: {
 				locale: 'pt-BR',
 				symbol: 'BRL',
-				value: 200,
+				value: 200
 			},
 			isActive: true,
 			city: {
@@ -32,16 +32,16 @@ describe('region.mapper', () => {
 				stateInitial: 'RJ',
 				geoCode: 960,
 				createdAt: currentDate,
-				updatedAt: currentDate,
+				updatedAt: currentDate
 			},
 			createdAt: currentDate,
-			updatedAt: currentDate,
+			updatedAt: currentDate
 		};
 		domain = Region.create(
 			{
 				description: 'valid_description',
 				freightPrice: MonetaryValueObject.create(
-					Currency.create(200).getResult(),
+					Currency.create(200).getResult()
 				).getResult(),
 				isActive: true,
 				createdAt: currentDate,
@@ -50,14 +50,15 @@ describe('region.mapper', () => {
 					{
 						geoCode: 960,
 						name: 'valid_name',
-						stateInitial: InitialStateValueObject.create('RJ').getResult(),
+						stateInitial:
+							InitialStateValueObject.create('RJ').getResult(),
 						createdAt: currentDate,
-						updatedAt: currentDate,
+						updatedAt: currentDate
 					},
-					new UniqueEntityID('valid_id'),
-				).getResult(),
+					new UniqueEntityID('valid_id')
+				).getResult()
 			},
-			new UniqueEntityID('valid_id'),
+			new UniqueEntityID('valid_id')
 		).getResult();
 	});
 

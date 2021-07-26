@@ -6,60 +6,60 @@ import { Product } from '@domain/aggregates-root';
 
 @Injectable()
 export class ResetProductStockUseCase
-  implements IUseCase<ResetProductStockDto, Result<void>>
+	implements IUseCase<ResetProductStockDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('ProductRepository')
-    private readonly productRepo: ProductRepositoryInterface,
-  ) {}
+	//
+	constructor(
+		@Inject('ProductRepository')
+		private readonly productRepo: ProductRepositoryInterface
+	) {}
 
-  async execute(dto: ResetProductStockDto): Promise<Result<void>> {
-    try {
-      //
-      const hasIds = (dto?.productsIds?.length ?? 0) > 0;
+	async execute(dto: ResetProductStockDto): Promise<Result<void>> {
+		try {
+			//
+			const hasIds = (dto?.productsIds?.length ?? 0) > 0;
 
-      const ids = hasIds ? dto.productsIds : undefined;
+			const ids = hasIds ? dto.productsIds : undefined;
 
-      const productsExists =
-        await this.productRepo.findAllProductsOrFilteredByIds(ids);
+			const productsExists =
+				await this.productRepo.findAllProductsOrFilteredByIds(ids);
 
-      if (!productsExists) {
-        return Result.fail<void>('Products does not exists');
-      }
+			if (!productsExists) {
+				return Result.fail<void>('Products does not exists');
+			}
 
-      const FirstProduct = productsExists[0];
+			const FirstProduct = productsExists[0];
 
-      // Add domain event on first aggregate.
-      // It is not necessary to put event on all products
-      // This is only to have an aggregate to dispatch domain event
-      const product = Product.create(
-        {
-          category: FirstProduct.category,
-          description: FirstProduct.description,
-          exchangeFactor: FirstProduct.exchangeFactor,
-          isActive: FirstProduct.isActive,
-          isSpecial: FirstProduct.isSpecial,
-          price: FirstProduct.price,
-          quantityAvailable: FirstProduct.quantityAvailable,
-          unitOfMeasurement: FirstProduct.unitOfMeasurement,
-        },
-        // Do not change this id
-        new UniqueEntityID('PRODUCT_ONLY_FOR_DOMAIN_EVENT'),
-      ).getResult();
+			// Add domain event on first aggregate.
+			// It is not necessary to put event on all products
+			// This is only to have an aggregate to dispatch domain event
+			const product = Product.create(
+				{
+					category: FirstProduct.category,
+					description: FirstProduct.description,
+					exchangeFactor: FirstProduct.exchangeFactor,
+					isActive: FirstProduct.isActive,
+					isSpecial: FirstProduct.isSpecial,
+					price: FirstProduct.price,
+					quantityAvailable: FirstProduct.quantityAvailable,
+					unitOfMeasurement: FirstProduct.unitOfMeasurement
+				},
+				// Do not change this id
+				new UniqueEntityID('PRODUCT_ONLY_FOR_DOMAIN_EVENT')
+			).getResult();
 
-      product.resetStockQuantityForProducts(ids);
+			product.resetStockQuantityForProducts(ids);
 
-      await this.productRepo.resetStock(ids);
+			await this.productRepo.resetStock(ids);
 
-      return Result.ok<void>();
+			return Result.ok<void>();
 
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>(
-        'Internal Server Error on Reset Product Stock Use Case',
-      );
-    }
-  }
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>(
+				'Internal Server Error on Reset Product Stock Use Case'
+			);
+		}
+	}
 }

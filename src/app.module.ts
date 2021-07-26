@@ -24,6 +24,6 @@ import { OrderModule } from './Infra/order/order.module';
 		OrderModule
 	],
 	controllers: [],
-	providers: [],
+	providers: []
 })
-export class AppModule { }
+export class AppModule {}

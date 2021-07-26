@@ -2,102 +2,108 @@ import { Inject } from '@nestjs/common';
 import { IUseCase, Result } from 'types-ddd';
 import { BasketRepositoryInterface } from '@repo/basket-repository.interface';
 import { UpdateBasketDto } from './update-basket.dto';
-import { Currency, MonetaryValueObject } from '@domain/value-objects';
-import { BasketInfoValueObject } from '@domain/value-objects';
-import { BasketDescriptionValueObject } from '@domain/value-objects';
+import {
+	Currency,
+	MonetaryValueObject,
+	BasketInfoValueObject,
+	BasketDescriptionValueObject
+} from '@domain/value-objects';
 
 export class UpdateBasketUseCase
-  implements IUseCase<UpdateBasketDto, Result<void>>
+	implements IUseCase<UpdateBasketDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('BasketRepository')
-    private readonly basketRepo: BasketRepositoryInterface,
-  ) {}
+	//
+	constructor(
+		@Inject('BasketRepository')
+		private readonly basketRepo: BasketRepositoryInterface
+	) {}
 
-  async execute(dto: UpdateBasketDto): Promise<Result<void>> {
-    //
+	async execute(dto: UpdateBasketDto): Promise<Result<void>> {
+		//
 
-    const descriptionOrError = BasketDescriptionValueObject.create(
-      dto.description,
-    );
+		const descriptionOrError = BasketDescriptionValueObject.create(
+			dto.description
+		);
 
-    if (descriptionOrError.isFailure) {
-      return Result.fail<void>(descriptionOrError.error.toString());
-    }
+		if (descriptionOrError.isFailure) {
+			return Result.fail<void>(descriptionOrError.error.toString());
+		}
 
-    const description = descriptionOrError.getResult();
+		const description = descriptionOrError.getResult();
 
-    //---------------------------------------------------------
-    const infoOrError = dto.info
-      ? BasketInfoValueObject.create(dto.info)
-      : undefined;
+		// ---------------------------------------------------------
+		const infoOrError = dto.info
+			? BasketInfoValueObject.create(dto.info)
+			: undefined;
 
-    if (infoOrError?.isFailure) {
-      return Result.fail<void>(infoOrError.error.toString());
-    }
-    const info = infoOrError?.getResult();
+		if (infoOrError?.isFailure) {
+			return Result.fail<void>(infoOrError.error.toString());
+		}
+		const info = infoOrError?.getResult();
 
-    //---------------------------------------------------------
-    const currencyOrError = Currency.create(dto.price);
+		// ---------------------------------------------------------
+		const currencyOrError = Currency.create(dto.price);
 
-    if (currencyOrError.isFailure) {
-      return Result.fail<void>(currencyOrError.error.toString());
-    }
+		if (currencyOrError.isFailure) {
+			return Result.fail<void>(currencyOrError.error.toString());
+		}
 
-    const currency = currencyOrError.getResult();
+		const currency = currencyOrError.getResult();
 
-    //---------------------------------------------------------
+		// ---------------------------------------------------------
 
-    const priceOrError = MonetaryValueObject.create(currency);
+		const priceOrError = MonetaryValueObject.create(currency);
 
-    if (priceOrError.isFailure) {
-      return Result.fail<void>(priceOrError.error.toString());
-    }
+		if (priceOrError.isFailure) {
+			return Result.fail<void>(priceOrError.error.toString());
+		}
 
-    const price = priceOrError.getResult();
+		const price = priceOrError.getResult();
 
-    //---------------------------------------------------------
-    const keepActive = dto.isActive;
+		// ---------------------------------------------------------
+		const keepActive = dto.isActive;
 
-    try {
-      //
-      const alreadyExistsBasketWithDescription = await this.basketRepo.exists({
-        description: dto.description.toLowerCase(),
-      });
+		try {
+			//
+			const alreadyExistsBasketWithDescription =
+				await this.basketRepo.exists({
+					description: dto.description.toLowerCase()
+				});
 
-      if (alreadyExistsBasketWithDescription) {
-        return Result.fail<void>(
-          `Already exists a basket with description: ${dto.description}`,
-        );
-      }
-      //
-      const basketExist = await this.basketRepo.findOne({ id: dto.basketId });
+			if (alreadyExistsBasketWithDescription) {
+				return Result.fail<void>(
+					`Already exists a basket with description: ${dto.description}`
+				);
+			}
+			//
+			const basketExist = await this.basketRepo.findOne({
+				id: dto.basketId
+			});
 
-      if (!basketExist) {
-        return Result.fail<void>('Basket does not exists');
-      }
+			if (!basketExist) {
+				return Result.fail<void>('Basket does not exists');
+			}
 
-      const basket = basketExist;
+			const basket = basketExist;
 
-      basket.changeDescription(description);
-      basket.changePrice(price);
+			basket.changeDescription(description);
+			basket.changePrice(price);
 
-      keepActive ? basket.activate() : basket.deactivate();
+			keepActive ? basket.activate() : basket.deactivate();
 
-      basket.changeInfo(info);
+			basket.changeInfo(info);
 
-      await this.basketRepo.save(basket);
+			await this.basketRepo.save(basket);
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
-      console.log(error);
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+			console.log(error);
 
-      return Result.fail<void>(
-        'Internal Server Error on Update Basket Use Case',
-      );
-    }
-  }
+			return Result.fail<void>(
+				'Internal Server Error on Update Basket Use Case'
+			);
+		}
+	}
 }

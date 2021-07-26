@@ -1,3 +1,3 @@
 export interface DeactivateManyBasketsDto {
-  basketsIds?: string[];
+	basketsIds?: string[];
 }

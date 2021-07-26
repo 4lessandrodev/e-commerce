@@ -6,15 +6,15 @@ interface ZipCodeValueObjectProps {
 }
 
 export class ZipCodeValueObject extends ValueObject<ZipCodeValueObjectProps> {
-	private constructor (props: ZipCodeValueObjectProps) {
+	private constructor(props: ZipCodeValueObjectProps) {
 		super(props);
 	}
 
-	get value (): string {
+	get value(): string {
 		return this.props.value;
 	}
 
-	public static create (zipCode: string): Result<ZipCodeValueObject> {
+	public static create(zipCode: string): Result<ZipCodeValueObject> {
 		//
 		const isValidZipCode = /^[0-9]{5}[0-9]{3}$/g.test(zipCode);
 
@@ -23,7 +23,7 @@ export class ZipCodeValueObject extends ValueObject<ZipCodeValueObjectProps> {
 		}
 
 		return Result.ok<ZipCodeValueObject>(
-			new ZipCodeValueObject({ value: zipCode }),
+			new ZipCodeValueObject({ value: zipCode })
 		);
 	}
 }

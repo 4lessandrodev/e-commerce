@@ -4,5 +4,5 @@
  * Returns `true` if value is greater or equal to zero and `false`if not
  */
 export const validateNumberGreaterOrEqualToZero = (value: number): boolean => {
-  return value >= 0;
+	return value >= 0;
 };

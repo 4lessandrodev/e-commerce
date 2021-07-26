@@ -1,9 +1,13 @@
-import { MonetaryValueObject } from '@domain/value-objects';
+import {
+	MonetaryValueObject,
+	OrderStatusValueObject,
+	OrderIdValueObject,
+	UserNameValueObject
+} from '@domain/value-objects';
 import { UserId } from '@domain/aggregates-root';
-import { OrderStatusValueObject } from '@domain/value-objects';
+
 import { DeliveryOrCollectionAddress } from '@domain/entities';
-import { OrderIdValueObject } from '@domain/value-objects';
-import { UserNameValueObject } from '@domain/value-objects';
+
 import { DomainId } from 'types-ddd';
 
 export interface OrderProps {

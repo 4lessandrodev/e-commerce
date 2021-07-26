@@ -30,7 +30,7 @@ export class Product {
 		index: true,
 		type: String,
 		immutable: true,
-		required: true,
+		required: true
 	})
 	id!: string;
 
@@ -38,7 +38,7 @@ export class Product {
 		type: String,
 		index: true,
 		required: true,
-		text: true,
+		text: true
 	})
 	description!: string;
 
@@ -94,7 +94,7 @@ ProductSchema.virtual('Category', {
 	ref: 'ProductCategory',
 	localField: 'category.id',
 	foreignField: 'id',
-	justOne: true,
+	justOne: true
 });
 
 // Hooks to call domain event to update details on basket item

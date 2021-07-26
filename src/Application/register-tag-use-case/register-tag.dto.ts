@@ -1,3 +1,3 @@
 export interface RegisterTagDto {
-  description: string;
+	description: string;
 }

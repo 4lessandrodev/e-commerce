@@ -5,7 +5,7 @@ import {
 	ChangesLimitValueObject,
 	Currency,
 	MonetaryValueObject,
-	QuantityAvailableValueObject,
+	QuantityAvailableValueObject
 } from '@domain/value-objects';
 import { CustomBasketMapper } from '../mapper/custom-basket.mapper';
 import { CustomBasket as Schema } from '../entities/custom-basket.schema';
@@ -17,28 +17,30 @@ describe('custom-basket-item.mapper', () => {
 			basketId: BasketId.create(new UniqueEntityID('valid_basket_id')),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(1).getResult(),
+				changesLimit: ChangesLimitValueObject.create(1).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(20).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 
 	const persistence: Schema = {
 		basketId: 'valid_basket_id',
 		category: {
 			changesLimit: 1,
-			description: 'valid_description',
+			description: 'valid_description'
 		},
 		changesLimitAvailable: 1,
 		description: 'valid_description',
@@ -51,10 +53,10 @@ describe('custom-basket-item.mapper', () => {
 		price: {
 			locale: 'pt-BR',
 			symbol: 'BRL',
-			value: 10,
+			value: 10
 		},
 		quantity: 20,
-		image: undefined,
+		image: undefined
 	};
 
 	const itemMapper = new BasketItemMapper();

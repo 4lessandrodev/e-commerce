@@ -2,11 +2,11 @@ import { IMapper, UniqueEntityID } from 'types-ddd';
 import {
 	BasketItemValueObject as Aggregate,
 	ImageValueObject,
+	UnitOfMeasurementValueObject,
+	ExchangeFactorValueObject,
+	QuantityAvailableValueObject, ProductDescriptionValueObject
 } from '@domain/value-objects';
-import { UnitOfMeasurementValueObject } from '@domain/value-objects';
-import { ExchangeFactorValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { ProductDescriptionValueObject } from '@domain/value-objects';
+
 import { Item as Schema } from '../entities/basket.schema';
 import { ProductId } from '@domain/aggregates-root';
 import { Injectable } from '@nestjs/common';
@@ -16,26 +16,27 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
 	toDomain (target: Schema): Aggregate {
 		return Aggregate.create({
 			description: ProductDescriptionValueObject.create(
-				target.description,
+				target.description
 			).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(
-				target.exchangeFactor,
+				target.exchangeFactor
 			).getResult(),
 			productId: ProductId.create(new UniqueEntityID(target.productId)),
 			quantity: QuantityAvailableValueObject.create(
-				target.quantity,
+				target.quantity
 			).getResult(),
 			availableStock: QuantityAvailableValueObject.create(
-				target.availableStock,
+				target.availableStock
 			).getResult(),
 			unitOfMeasurement: UnitOfMeasurementValueObject.create(
-				target.unitOfMeasurement,
+				target.unitOfMeasurement
 			).getResult(),
 			image: target?.image
 				? ImageValueObject.create(target.image).getResult()
-				: undefined,
+				: undefined
 		}).getResult();
 	}
+
 	//
 	toPersistence (target: Aggregate): Schema {
 		return {
@@ -45,7 +46,7 @@ export class BasketItemMapper implements IMapper<Aggregate, Schema> {
 			quantity: target.value.quantity.value,
 			availableStock: target.value.availableStock.value,
 			unitOfMeasurement: target.value.unitOfMeasurement.value,
-			image: target.value.image?.value,
+			image: target.value.image?.value
 		};
 	}
 }

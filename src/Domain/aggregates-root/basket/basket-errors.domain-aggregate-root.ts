@@ -1,2 +1,2 @@
 export const ERROR_BASKET_PRICE =
-  'Basket Price Should be greater or equal to 0';
+	'Basket Price Should be greater or equal to 0';

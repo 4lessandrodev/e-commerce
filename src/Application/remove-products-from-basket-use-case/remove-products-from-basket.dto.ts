@@ -1,4 +1,4 @@
 export interface RemoveProductsFromBasketDto {
-  basketId: string;
-  productIds: string[];
+	basketId: string;
+	productIds: string[];
 }

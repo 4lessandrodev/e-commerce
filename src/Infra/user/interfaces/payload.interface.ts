@@ -1,3 +1,3 @@
 export interface Payload {
-  token: string;
+	token: string;
 }

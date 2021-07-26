@@ -3,21 +3,21 @@ import { UnitTypes } from '@domain/value-objects';
 
 @Schema({ autoIndex: true })
 export class Item {
-  @Prop()
-  exchangeFactor!: number;
+	@Prop()
+	exchangeFactor!: number;
 
-  @Prop()
-  productId!: string;
+	@Prop()
+	productId!: string;
 
-  @Prop()
-  quantity!: number;
+	@Prop()
+	quantity!: number;
 
-  @Prop()
-  description!: string;
+	@Prop()
+	description!: string;
 
-  @Prop()
-  unitOfMeasurement!: UnitTypes;
+	@Prop()
+	unitOfMeasurement!: UnitTypes;
 
-  @Prop()
-  image?: string;
+	@Prop()
+	image?: string;
 }

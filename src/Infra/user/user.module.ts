@@ -14,31 +14,31 @@ import { SignInUseCase } from '@app/sign-in-use-case/sign-in.use-case';
 import { UserQuery } from './query/user.query';
 
 @Module({
-  imports: [
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
-    JwtModule.register({
-      secret: JWT_SECRET,
-      signOptions: {
-        expiresIn: `${JWT_EXPIRATION_IN_HOURS}h`,
-      },
-    }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
-  controllers: [UserController],
-  providers: [
-    UserMapper,
-    JwtStrategy,
-    SignUpUseCase,
-    SignInUseCase,
-    {
-      provide: 'UserRepository',
-      useClass: UserRepository,
-    },
-    UserQuery,
-    UserService,
-  ],
-  exports: [JwtStrategy, PassportModule],
+	imports: [
+		PassportModule.register({
+			defaultStrategy: 'jwt'
+		}),
+		JwtModule.register({
+			secret: JWT_SECRET,
+			signOptions: {
+				expiresIn: `${JWT_EXPIRATION_IN_HOURS}h`
+			}
+		}),
+		MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
+	],
+	controllers: [UserController],
+	providers: [
+		UserMapper,
+		JwtStrategy,
+		SignUpUseCase,
+		SignInUseCase,
+		{
+			provide: 'UserRepository',
+			useClass: UserRepository
+		},
+		UserQuery,
+		UserService
+	],
+	exports: [JwtStrategy, PassportModule]
 })
 export class UserModule {}

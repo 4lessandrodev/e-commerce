@@ -6,18 +6,24 @@ export type CategoryDocument = Category & Document;
 
 @Schema({ autoCreate: true, autoIndex: true })
 export class Category {
-  @Prop({
-    type: String,
-    required: true,
-    index: true,
-  })
-  id!: string;
+	@Prop({
+		type: String,
+		required: true,
+		index: true
+	})
+	id!: string;
 
-  @Prop({ type: String, index: true, text: true, required: true, unique: true })
-  description!: string;
+	@Prop({
+		type: String,
+		index: true,
+		text: true,
+		required: true,
+		unique: true
+	})
+	description!: string;
 
-  @Prop({ type: Number, max: MAX_CHANGES_LIMIT_VALUE })
-  changesLimit!: number;
+	@Prop({ type: Number, max: MAX_CHANGES_LIMIT_VALUE })
+	changesLimit!: number;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

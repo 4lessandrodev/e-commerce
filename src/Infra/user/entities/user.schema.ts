@@ -28,7 +28,7 @@ export class User {
 		required: true,
 		index: true,
 		immutable: true,
-		unique: true,
+		unique: true
 	})
 	readonly id!: string;
 
@@ -54,7 +54,7 @@ export class User {
 	updatedAt!: Date;
 
 	@Prop({ type: [{ type: Object }] })
-	terms!: Array<Term>;
+	terms!: Term[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

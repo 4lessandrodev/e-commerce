@@ -8,26 +8,27 @@ import { Tag, TagDocument } from '../entities/tag.schema';
 import { Filter } from 'types-ddd';
 
 export class TagRepository implements TagRepositoryInterface {
-  //
-  constructor(
-    @InjectModel(Tag.name) private readonly conn: Model<TagDocument>,
-    @Inject(TagMapper) private readonly mapper: TagMapper,
-  ) {}
-  //
-  async updateOrCreate(tag: Aggregate): Promise<void> {
-    const persistence = this.mapper.toPersistence(tag);
+	//
+	constructor(
+		@InjectModel(Tag.name) private readonly conn: Model<TagDocument>,
+		@Inject(TagMapper) private readonly mapper: TagMapper
+	) {}
 
-    await this.conn.updateOne({ id: persistence.id }, persistence, {
-      upsert: true,
-    });
-  }
+	//
+	async updateOrCreate(tag: Aggregate): Promise<void> {
+		const persistence = this.mapper.toPersistence(tag);
 
-  async exists(filter: Filter): Promise<boolean> {
-    return await this.conn.exists(filter);
-  }
+		await this.conn.updateOne({ id: persistence.id }, persistence, {
+			upsert: true
+		});
+	}
 
-  async findTagsById(ids: string[]): Promise<Aggregate[]> {
-    const foundTags = await this.conn.find({ id: { $in: ids } });
-    return foundTags.map(this.mapper.toDomain);
-  }
+	async exists(filter: Filter): Promise<boolean> {
+		return await this.conn.exists(filter);
+	}
+
+	async findTagsById(ids: string[]): Promise<Aggregate[]> {
+		const foundTags = await this.conn.find({ id: { $in: ids } });
+		return foundTags.map(this.mapper.toDomain);
+	}
 }

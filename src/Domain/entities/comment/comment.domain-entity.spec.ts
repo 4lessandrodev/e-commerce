@@ -1,7 +1,7 @@
 import { UniqueEntityID } from 'types-ddd';
 import {
 	Comment,
-	COMMENT_MIN_QUANTITY_TO_DELETE,
+	COMMENT_MIN_QUANTITY_TO_DELETE
 } from './comment.domain-entity';
 import { CommentProps } from './comment.domain-entity-interface';
 import { ERROR_COMMENT_TEXT_LENGTH } from './comment-errors.domain-entity';
@@ -14,16 +14,16 @@ describe('Comment.domain-entity', () => {
 			{
 				text: props?.text ?? 'lorem ipsum a comment valid comment',
 				likes: props?.likes,
-				reportedCommentQuantity: props?.reportedCommentQuantity,
+				reportedCommentQuantity: props?.reportedCommentQuantity
 			},
-			id,
+			id
 		);
 	};
 
 	it('Should create a valid comment', () => {
 		const createdComment = makeSut();
 		expect(createdComment.getResult().text).toBe(
-			'lorem ipsum a comment valid comment',
+			'lorem ipsum a comment valid comment'
 		);
 		expect(createdComment.isFailure).toBe(false);
 	});
@@ -31,7 +31,7 @@ describe('Comment.domain-entity', () => {
 	it('Should fail if provide a long comment', async () => {
 		const text = 'lorem ipsum a comment invalid comment'.repeat(10);
 		const createdComment = makeSut({
-			text,
+			text
 		});
 		expect(createdComment.error).toBe(ERROR_COMMENT_TEXT_LENGTH);
 		expect(createdComment.isFailure).toBe(true);
@@ -40,7 +40,7 @@ describe('Comment.domain-entity', () => {
 	it('Should fail if provide a short comment', async () => {
 		const text = '';
 		const createdComment = makeSut({
-			text,
+			text
 		});
 		expect(createdComment.error).toBe(ERROR_COMMENT_TEXT_LENGTH);
 		expect(createdComment.isFailure).toBe(true);
@@ -60,9 +60,9 @@ describe('Comment.domain-entity', () => {
 		for (let index = 0; index <= COMMENT_MIN_QUANTITY_TO_DELETE; index++) {
 			createdComment.getResult().incrementCommentReport();
 		}
-		expect(createdComment.getResult().reportedCommentQuantity).toBeGreaterThan(
-			COMMENT_MIN_QUANTITY_TO_DELETE,
-		);
+		expect(
+			createdComment.getResult().reportedCommentQuantity
+		).toBeGreaterThan(COMMENT_MIN_QUANTITY_TO_DELETE);
 		expect(createdComment.isFailure).toBe(false);
 		expect(createdComment.getResult().isDeleted).toBe(true);
 	});
@@ -71,21 +71,23 @@ describe('Comment.domain-entity', () => {
 		const createdId = CommentId.create().id;
 		const createdComment = makeSut(
 			{
-				text: lorem.words(2),
+				text: lorem.words(2)
 			},
-			createdId,
+			createdId
 		);
 		expect(createdComment.isFailure).toBe(false);
-		expect(createdComment.getResult().id.toString()).toBe(createdId.toString());
+		expect(createdComment.getResult().id.toString()).toBe(
+			createdId.toString()
+		);
 	});
 
 	it('Should fail if provide a text greatter than 250 char', () => {
 		const createdId = CommentId.create().id;
 		const createdComment = makeSut(
 			{
-				text: lorem.words(250),
+				text: lorem.words(250)
 			},
-			createdId,
+			createdId
 		);
 		expect(createdComment.isFailure).toBe(true);
 		expect(createdComment.error).toBe(ERROR_COMMENT_TEXT_LENGTH);

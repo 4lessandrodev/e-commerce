@@ -1,4 +1,4 @@
 export interface RegisterBasketCategoryDto {
-  description: string;
-  changesLimit: number;
+	description: string;
+	changesLimit: number;
 }

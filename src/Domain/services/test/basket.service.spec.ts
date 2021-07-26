@@ -10,18 +10,18 @@ import {
 	MonetaryValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { UniqueEntityID } from 'types-ddd';
 
 describe('basket.service', () => {
 	//
 	const category: ProductCategory = ProductCategory.create({
-		description: 'valid_description',
+		description: 'valid_description'
 	}).getResult();
 	//
 	const price: MonetaryValueObject = MonetaryValueObject.create(
-		Currency.create(10).getResult(),
+		Currency.create(10).getResult()
 	).getResult();
 	//
 	const unitOfMeasurement: UnitOfMeasurementValueObject =
@@ -32,32 +32,37 @@ describe('basket.service', () => {
 			category,
 			exchangeFactor: ExchangeFactorValueObject.create(1).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			isActive: true,
 			isSpecial: false,
 			price,
-			quantityAvailable: QuantityAvailableValueObject.create(10).getResult(),
-			unitOfMeasurement,
+			quantityAvailable:
+				QuantityAvailableValueObject.create(10).getResult(),
+			unitOfMeasurement
 		},
-		new UniqueEntityID('valid_id'),
+		new UniqueEntityID('valid_id')
 	).getResult();
 
 	const itemDto: ItemDto = {
 		productId: 'valid_id',
-		quantity: 3,
+		quantity: 3
 	};
 	//
 	const basketCategory: BasketCategory = BasketCategory.create({
 		changesLimit: ChangesLimitValueObject.create(2).getResult(),
-		description: 'valid_description',
+		description: 'valid_description'
 	}).getResult();
 	//
 	const basket: Basket = Basket.create({
 		category: basketCategory,
 		description:
-			BasketDescriptionValueObject.create('valid_description').getResult(),
+			BasketDescriptionValueObject.create(
+				'valid_description'
+			).getResult(),
 		isActive: true,
-		price,
+		price
 	}).getResult();
 	//
 
@@ -75,7 +80,10 @@ describe('basket.service', () => {
 
 	it('should add products if provide valid ids', () => {
 		const service = new BasketDomainService();
-		service.addItemsOnBasket([itemDto, itemDto], basket, [product, product]);
+		service.addItemsOnBasket([itemDto, itemDto], basket, [
+			product,
+			product
+		]);
 		expect(basket.products.length).toBe(3);
 		expect(basket.products[0].value.exchangeFactor.value).toBe(1);
 	});

@@ -26,44 +26,41 @@ import { GetUsersDto } from './dto/get-users.dto';
 @Controller('v1/auth')
 @UsePipes(new ValidationPipe())
 export class UserController {
-	constructor (private readonly userService: UserService) { }
+	constructor (private readonly userService: UserService) {}
 
 	@Post('signin')
-	signIn (@Body() dto: SignInDto): Promise<Payload> {
-		return this.userService.signIn(dto);
+	async signIn (@Body() dto: SignInDto): Promise<Payload> {
+		return await this.userService.signIn(dto);
 	}
 
 	@Post('signup')
-	signUp (
+	async signUp (
 		@GetUserAgent() term: Term,
 		@Ip() ip: string,
-		@Body() dto: SignUpDto,
+		@Body() dto: SignUpDto
 	): Promise<void> {
-		//
 		term.ip = ip;
 		dto.term = term;
-		return this.userService.SignUp(dto);
+		return await this.userService.SignUp(dto);
 	}
 
 	@Get('me')
 	@UseGuards(AuthGuard())
-	getMyProfile (@GetUser() user: JwtPayload): Promise<User> {
-		return this.userService.getMyProfile(user.id);
+	async getMyProfile (@GetUser() user: JwtPayload): Promise<User> {
+		return await this.userService.getMyProfile(user.id);
 	}
 
 	@Get('users')
 	@UseGuards(AuthGuard())
-	getUsers (@Query() dto: GetUsersDto): Promise<GetUsersPayload> {
+	async getUsers (@Query() dto: GetUsersDto): Promise<GetUsersPayload> {
 		const converted = objectKeysToCamelCaseV2(dto);
 
-		return this.userService.getUsers(
-			{ ...converted }, { ...dto }
-		);
+		return await this.userService.getUsers({ ...converted }, { ...dto });
 	}
 
 	@Get('users/:id')
 	@UseGuards(AuthGuard())
-	getUserById (@Param('id') id: string): Promise<User | null> {
-		return this.userService.getUserById(id);
+	async getUserById (@Param('id') id: string): Promise<User | null> {
+		return await this.userService.getUserById(id);
 	}
 }

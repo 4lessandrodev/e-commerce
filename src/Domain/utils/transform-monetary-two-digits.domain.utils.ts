@@ -1,3 +1,3 @@
 export const transformMonetaryValueInTwoDecimalsValue = (
-  value: number,
+	value: number
 ): number => Number.parseFloat(value.toFixed(2));

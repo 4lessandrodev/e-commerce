@@ -1,8 +1,11 @@
 import { BaseDomainEntity, Entity, Result, UniqueEntityID } from 'types-ddd';
-import { AddressComplementValueObject } from '@domain/value-objects';
-import { AddressNumberValueObject } from '@domain/value-objects';
-import { StreetNameValueObject } from '@domain/value-objects';
-import { ZipCodeValueObject } from '@domain/value-objects';
+import {
+	AddressComplementValueObject,
+	AddressNumberValueObject,
+	StreetNameValueObject,
+	ZipCodeValueObject
+} from '@domain/value-objects';
+
 import { RegionId } from '@domain/aggregates-root';
 
 export interface DeliveryAddressProps extends BaseDomainEntity {
@@ -14,40 +17,40 @@ export interface DeliveryAddressProps extends BaseDomainEntity {
 }
 
 export class DeliveryOrCollectionAddress extends Entity<DeliveryAddressProps> {
-	private constructor (props: DeliveryAddressProps, id?: UniqueEntityID) {
+	private constructor(props: DeliveryAddressProps, id?: UniqueEntityID) {
 		super(props, id);
 	}
 
-	get id (): UniqueEntityID {
+	get id(): UniqueEntityID {
 		return this._id;
 	}
 
-	get zipCode (): ZipCodeValueObject {
+	get zipCode(): ZipCodeValueObject {
 		return this.props.zipCode;
 	}
 
-	get street (): StreetNameValueObject {
+	get street(): StreetNameValueObject {
 		return this.props.street;
 	}
 
-	get number (): AddressNumberValueObject {
+	get number(): AddressNumberValueObject {
 		return this.props.number;
 	}
 
-	get complement (): AddressComplementValueObject {
+	get complement(): AddressComplementValueObject {
 		return this.props.complement;
 	}
 
-	get regionId (): RegionId {
+	get regionId(): RegionId {
 		return this.props.regionId;
 	}
 
-	public static create (
+	public static create(
 		props: DeliveryAddressProps,
-		id?: UniqueEntityID,
+		id?: UniqueEntityID
 	): Result<DeliveryOrCollectionAddress> {
 		return Result.ok<DeliveryOrCollectionAddress>(
-			new DeliveryOrCollectionAddress(props, id),
+			new DeliveryOrCollectionAddress(props, id)
 		);
 	}
 }

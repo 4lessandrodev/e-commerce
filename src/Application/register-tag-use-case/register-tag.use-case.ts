@@ -6,42 +6,44 @@ import { TagRepositoryInterface } from '@repo/tag.repository.interface';
 
 @Injectable()
 export class RegisterTagUseCase
-  implements IUseCase<RegisterTagDto, Result<void>>
+	implements IUseCase<RegisterTagDto, Result<void>>
 {
-  //
-  constructor(
-    @Inject('TagRepository') private readonly tagRepo: TagRepositoryInterface,
-  ) {}
-  //
-  async execute(dto: RegisterTagDto): Promise<Result<void>> {
-    //
+	//
+	constructor(
+		@Inject('TagRepository')
+		private readonly tagRepo: TagRepositoryInterface
+	) {}
 
-    const tagOrError = Tag.create({ description: dto.description });
+	//
+	async execute(dto: RegisterTagDto): Promise<Result<void>> {
+		//
 
-    if (tagOrError.isFailure) {
-      return Result.fail<void>(tagOrError.error.toString());
-    }
+		const tagOrError = Tag.create({ description: dto.description });
 
-    try {
-      const tagAlreadyExist = await this.tagRepo.exists({
-        description: dto.description,
-      });
+		if (tagOrError.isFailure) {
+			return Result.fail<void>(tagOrError.error.toString());
+		}
 
-      if (tagAlreadyExist) {
-        return Result.fail<void>('Tag already exist');
-      }
+		try {
+			const tagAlreadyExist = await this.tagRepo.exists({
+				description: dto.description
+			});
 
-      const tag = tagOrError.getResult();
-      //
-      await this.tagRepo.updateOrCreate(tag);
-      //
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>(
-        'Internal Server Error on Register Tag Use Case',
-      );
-    }
-  }
+			if (tagAlreadyExist) {
+				return Result.fail<void>('Tag already exist');
+			}
+
+			const tag = tagOrError.getResult();
+			//
+			await this.tagRepo.updateOrCreate(tag);
+			//
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>(
+				'Internal Server Error on Register Tag Use Case'
+			);
+		}
+	}
 }

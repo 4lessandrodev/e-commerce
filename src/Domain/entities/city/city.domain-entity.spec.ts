@@ -11,9 +11,9 @@ describe('City.domain-entity', () => {
 			{
 				name: props?.name ?? 'Santa Catarina',
 				geoCode: 0,
-				stateInitial: InitialStateValueObject.create('RJ').getResult(),
+				stateInitial: InitialStateValueObject.create('RJ').getResult()
 			},
-			id,
+			id
 		);
 	};
 
@@ -27,7 +27,7 @@ describe('City.domain-entity', () => {
 		const validCity = makeSut({
 			name: '',
 			stateInitial: InitialStateValueObject.create('RJ').getResult(),
-			geoCode: 0,
+			geoCode: 0
 		});
 		expect(validCity.isFailure).toBe(true);
 		expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
@@ -37,7 +37,7 @@ describe('City.domain-entity', () => {
 		const validCity = makeSut({
 			name: 'a',
 			stateInitial: InitialStateValueObject.create('RJ').getResult(),
-			geoCode: 0,
+			geoCode: 0
 		});
 		expect(validCity.isFailure).toBe(true);
 		expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
@@ -47,7 +47,7 @@ describe('City.domain-entity', () => {
 		const validCity = City.create({
 			name: 'this-is-a-long-city-invalid-name-to-check-the-validation',
 			stateInitial: InitialStateValueObject.create('RJ').getResult(),
-			geoCode: 0,
+			geoCode: 0
 		});
 		expect(validCity.isFailure).toBe(true);
 		expect(validCity.errorValue()).toBe(ERROR_CITY_LENGTH_NAME);
@@ -60,9 +60,9 @@ describe('City.domain-entity', () => {
 				name: 'Valid name',
 
 				stateInitial: InitialStateValueObject.create('RJ').getResult(),
-				geoCode: 0,
+				geoCode: 0
 			},
-			createdId,
+			createdId
 		);
 		expect(validCity.isFailure).toBe(false);
 		expect(validCity.getResult().id.toString()).toBe(createdId.toString());

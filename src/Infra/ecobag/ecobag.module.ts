@@ -11,7 +11,7 @@ import { UserModule } from '../user/user.module';
 @Module({
 	imports: [
 		UserModule,
-		MongooseModule.forFeature([{ name: Ecobag.name, schema: EcobagSchema }]),
+		MongooseModule.forFeature([{ name: Ecobag.name, schema: EcobagSchema }])
 	],
 	controllers: [EcobagController],
 	providers: [
@@ -20,9 +20,9 @@ import { UserModule } from '../user/user.module';
 		EcobagMapper,
 		{
 			provide: 'EcobagRepository',
-			useClass: EcobagRepository,
-		},
+			useClass: EcobagRepository
+		}
 	],
 	exports: ['EcobagRepository']
 })
-export class EcobagModule { }
+export class EcobagModule {}

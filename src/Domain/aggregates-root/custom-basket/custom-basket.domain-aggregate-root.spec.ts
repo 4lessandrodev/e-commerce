@@ -8,7 +8,7 @@ import {
 	MonetaryValueObject,
 	ProductDescriptionValueObject,
 	QuantityAvailableValueObject,
-	UnitOfMeasurementValueObject,
+	UnitOfMeasurementValueObject
 } from '@domain/value-objects';
 import { BasketCategory } from '../../entities/basket-category/basketCategory.domain-entity';
 import { CustomBasket } from './custom-basket.domain-aggregate-root';
@@ -20,11 +20,14 @@ describe('custom-basket.domain-entity', () => {
 		item = BasketItemValueObject.create({
 			availableStock: QuantityAvailableValueObject.create(20).getResult(),
 			description:
-				ProductDescriptionValueObject.create('valid_description').getResult(),
+				ProductDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			exchangeFactor: ExchangeFactorValueObject.create(2).getResult(),
 			productId: ProductId.create(),
 			quantity: QuantityAvailableValueObject.create(1).getResult(),
-			unitOfMeasurement: UnitOfMeasurementValueObject.create('CX').getResult(),
+			unitOfMeasurement:
+				UnitOfMeasurementValueObject.create('CX').getResult()
 		}).getResult();
 	});
 
@@ -33,19 +36,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(1).getResult(),
+				changesLimit: ChangesLimitValueObject.create(1).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		});
 
 		expect(customBasket.getResult()).toBeDefined();
@@ -56,19 +61,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(5).getResult(),
+				changesLimit: ChangesLimitValueObject.create(5).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [item, item, item],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		expect(customBasket.changesLimitAvailable).toBe(2);
@@ -79,19 +86,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(5).getResult(),
+				changesLimit: ChangesLimitValueObject.create(5).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [item, item, item],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		expect(customBasket.exchangesFactorAvailable).toBe(6);
@@ -102,19 +111,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(5).getResult(),
+				changesLimit: ChangesLimitValueObject.create(5).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [item],
 			itemsRemoved: [item, item, item],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		expect(customBasket.exchangesFactorAvailable).toBe(4);
@@ -125,19 +136,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(5).getResult(),
+				changesLimit: ChangesLimitValueObject.create(5).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		expect(customBasket.exchangesFactorAvailable).toBe(0);
@@ -148,19 +161,21 @@ describe('custom-basket.domain-entity', () => {
 			basketId: BasketId.create(),
 			category: BasketCategory.create({
 				description: 'valid_description',
-				changesLimit: ChangesLimitValueObject.create(5).getResult(),
+				changesLimit: ChangesLimitValueObject.create(5).getResult()
 			}).getResult(),
 			currentItems: [],
 			description:
-				BasketDescriptionValueObject.create('valid_description').getResult(),
+				BasketDescriptionValueObject.create(
+					'valid_description'
+				).getResult(),
 			itemsAdded: [],
 			itemsRemoved: [],
 			quantity: QuantityAvailableValueObject.create(2).getResult(),
 			price: MonetaryValueObject.create(
-				Currency.create(10).getResult(),
+				Currency.create(10).getResult()
 			).getResult(),
 			image: undefined,
-			isDraft: true,
+			isDraft: true
 		}).getResult();
 
 		expect(customBasket.subTotal.value).toBe(20);

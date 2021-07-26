@@ -1,56 +1,59 @@
 import { IMapper, UniqueEntityID } from 'types-ddd';
 import { BasketCategory } from '@domain/entities';
-import { CustomBasket as Aggregate } from '@domain/aggregates-root';
+import { CustomBasket as Aggregate, BasketId } from '@domain/aggregates-root';
 import { CustomBasket } from '../entities/custom-basket.schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { CustomBasketItemMapper } from './custom-basket-item.mapper';
-import { Currency, ImageValueObject } from '@domain/value-objects';
-import { BasketDescriptionValueObject } from '@domain/value-objects';
-import { ChangesLimitValueObject } from '@domain/value-objects';
-import { QuantityAvailableValueObject } from '@domain/value-objects';
-import { MonetaryValueObject } from '@domain/value-objects';
-import { BasketId } from '@domain/aggregates-root';
+import {
+	Currency,
+	ImageValueObject,
+	BasketDescriptionValueObject,
+	ChangesLimitValueObject,
+	QuantityAvailableValueObject,
+	MonetaryValueObject
+} from '@domain/value-objects';
 
 @Injectable()
 export class CustomBasketMapper implements IMapper<Aggregate, CustomBasket> {
-	constructor (
+	constructor(
 		@Inject(CustomBasketItemMapper)
-		private readonly itemMapper: CustomBasketItemMapper,
-	) { }
-	toDomain (target: CustomBasket): Aggregate {
+		private readonly itemMapper: CustomBasketItemMapper
+	) {}
+
+	toDomain(target: CustomBasket): Aggregate {
 		return Aggregate.create({
 			basketId: BasketId.create(new UniqueEntityID(target.basketId)),
 			category: BasketCategory.create({
 				changesLimit: ChangesLimitValueObject.create(
-					target.category.changesLimit,
+					target.category.changesLimit
 				).getResult(),
-				description: target.category.description,
+				description: target.category.description
 			}).getResult(),
 			description: BasketDescriptionValueObject.create(
-				target.description,
+				target.description
 			).getResult(),
 			isDraft: target.isDraft,
 			itemsAdded: target.itemsAdded.map(this.itemMapper.toDomain),
 			itemsRemoved: target.itemsRemoved.map(this.itemMapper.toDomain),
 			currentItems: target.items.map(this.itemMapper.toDomain),
 			price: MonetaryValueObject.create(
-				Currency.create(target.price.value).getResult(),
+				Currency.create(target.price.value).getResult()
 			).getResult(),
 			quantity: QuantityAvailableValueObject.create(
-				target.quantity,
+				target.quantity
 			).getResult(),
 			image: target.image
 				? ImageValueObject.create(target.image).getResult()
-				: undefined,
+				: undefined
 		}).getResult();
 	}
 
-	toPersistence (target: Aggregate): CustomBasket {
+	toPersistence(target: Aggregate): CustomBasket {
 		return {
 			basketId: target.basketId.id.toString(),
 			category: {
 				changesLimit: target.category.changesLimit.value,
-				description: target.category.description,
+				description: target.category.description
 			},
 			changesLimitAvailable: target.changesLimitAvailable,
 			description: target.description.value,
@@ -60,13 +63,15 @@ export class CustomBasketMapper implements IMapper<Aggregate, CustomBasket> {
 			isDraft: target.isDraft,
 			items: target.currentItems.map(this.itemMapper.toPersistence),
 			itemsAdded: target.itemsAdded.map(this.itemMapper.toPersistence),
-			itemsRemoved: target.itemsRemoved.map(this.itemMapper.toPersistence),
+			itemsRemoved: target.itemsRemoved.map(
+				this.itemMapper.toPersistence
+			),
 			price: {
 				locale: target.price.currency.locale,
 				symbol: target.price.currency.symbol,
-				value: target.price.currency.value,
+				value: target.price.currency.value
 			},
-			quantity: target.quantity.value,
+			quantity: target.quantity.value
 		};
 	}
 }

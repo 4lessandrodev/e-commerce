@@ -5,30 +5,30 @@ import { DeactivateManyBasketsDto } from './deactivate-many-baskets.dto';
 
 @Injectable()
 export class DeactivateManyBasketsUseCase
-  implements IUseCase<DeactivateManyBasketsDto, Result<void>>
+	implements IUseCase<DeactivateManyBasketsDto, Result<void>>
 {
-  constructor(
-    @Inject('BasketRepository')
-    private readonly basketRepo: BasketRepositoryInterface,
-  ) {}
+	constructor(
+		@Inject('BasketRepository')
+		private readonly basketRepo: BasketRepositoryInterface
+	) {}
 
-  async execute(dto: DeactivateManyBasketsDto): Promise<Result<void>> {
-    try {
-      //
-      const hasIds = (dto?.basketsIds?.length ?? 0) > 0;
+	async execute(dto: DeactivateManyBasketsDto): Promise<Result<void>> {
+		try {
+			//
+			const hasIds = (dto?.basketsIds?.length ?? 0) > 0;
 
-      const ids = hasIds ? dto.basketsIds : undefined;
+			const ids = hasIds ? dto.basketsIds : undefined;
 
-      await this.basketRepo.deactivateManyBaskets(ids);
+			await this.basketRepo.deactivateManyBaskets(ids);
 
-      return Result.ok<void>();
+			return Result.ok<void>();
 
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>(
-        'Internal Server Error on Deactivate Many Baskets Use Case',
-      );
-    }
-  }
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>(
+				'Internal Server Error on Deactivate Many Baskets Use Case'
+			);
+		}
+	}
 }

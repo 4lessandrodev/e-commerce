@@ -7,57 +7,58 @@ import { User } from '@domain/aggregates-root';
 
 @Injectable()
 export class SignUpUseCase implements IUseCase<SignUpDto, Result<void>> {
-  constructor(
-    @Inject('UserRepository')
-    private readonly userRepo: UserRepositoryInterface,
-  ) {}
-  async execute(dto: SignUpDto) {
-    //
-    const acceptedTerm = dto.acceptedTerm;
-    if (!acceptedTerm) {
-      return Result.fail<void>('You must accept the terms');
-    }
+	constructor(
+		@Inject('UserRepository')
+		private readonly userRepo: UserRepositoryInterface
+	) {}
 
-    const emailOrError = EmailValueObject.create(dto.email);
-    const passwordOrError = PasswordValueObject.create(dto.password);
+	async execute(dto: SignUpDto) {
+		//
+		const acceptedTerm = dto.acceptedTerm;
+		if (!acceptedTerm) {
+			return Result.fail<void>('You must accept the terms');
+		}
 
-    const checkResults = Result.combine([emailOrError, passwordOrError]);
+		const emailOrError = EmailValueObject.create(dto.email);
+		const passwordOrError = PasswordValueObject.create(dto.password);
 
-    if (checkResults.isFailure) {
-      return Result.fail<void>(checkResults.error);
-    }
+		const checkResults = Result.combine([emailOrError, passwordOrError]);
 
-    try {
-      const isEmailAlreadyInUse: boolean = await this.userRepo.exists({
-        email: dto.email,
-      });
+		if (checkResults.isFailure) {
+			return Result.fail<void>(checkResults.error);
+		}
 
-      if (isEmailAlreadyInUse) {
-        return Result.fail<void>('Email Already in use');
-      }
+		try {
+			const isEmailAlreadyInUse: boolean = await this.userRepo.exists({
+				email: dto.email
+			});
 
-      const email = emailOrError.getResult();
-      const password = passwordOrError.getResult();
+			if (isEmailAlreadyInUse) {
+				return Result.fail<void>('Email Already in use');
+			}
 
-      // Encrypt password before save
-      await password.encryptPassword();
+			const email = emailOrError.getResult();
+			const password = passwordOrError.getResult();
 
-      const user = User.create({
-        email,
-        password,
-        isActive: true,
-        isTheEmailConfirmed: false,
-        role: 'CLIENT',
-        terms: [dto.term],
-      }).getResult();
+			// Encrypt password before save
+			await password.encryptPassword();
 
-      await this.userRepo.save(user);
+			const user = User.create({
+				email,
+				password,
+				isActive: true,
+				isTheEmailConfirmed: false,
+				role: 'CLIENT',
+				terms: [dto.term]
+			}).getResult();
 
-      return Result.ok<void>();
-      //
-    } catch (error) {
-      //
-      return Result.fail<void>('Internal Server Error on SignUp UseCase');
-    }
-  }
+			await this.userRepo.save(user);
+
+			return Result.ok<void>();
+			//
+		} catch (error) {
+			//
+			return Result.fail<void>('Internal Server Error on SignUp UseCase');
+		}
+	}
 }

@@ -2,7 +2,7 @@ import {
 	AddressComplementValueObject,
 	AddressNumberValueObject,
 	StreetNameValueObject,
-	ZipCodeValueObject,
+	ZipCodeValueObject
 } from '@domain/value-objects';
 import { RegionId } from '@domain/aggregates-root';
 import { Address } from './address.domain-entity';
@@ -16,7 +16,7 @@ describe('Address.domain-entity', () => {
 			number: AddressNumberValueObject.create('7').getResult(),
 			regionId: RegionId.create(),
 			street: StreetNameValueObject.create('valid_street').getResult(),
-			zipCode: ZipCodeValueObject.create('75520140').getResult(),
+			zipCode: ZipCodeValueObject.create('75520140').getResult()
 		});
 		expect(address).toBeDefined();
 		expect(address.isSuccess).toBe(true);
