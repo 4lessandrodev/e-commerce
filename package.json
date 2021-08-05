@@ -43,7 +43,7 @@
 		"currency.js": "^2.0.4",
 		"date-fns": "^2.21.2",
 		"env-var": "^7.0.0",
-		"keys-converter": "3.0.0",
+		"keys-converter": "3.0.1",
 		"module-alias": "^2.2.2",
 		"mongoose": "^5.12.7",
 		"mongoose-autopopulate": "^0.14.0",

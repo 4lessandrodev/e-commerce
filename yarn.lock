@@ -4133,10 +4133,10 @@ kareem@2.3.2:
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.2.tgz#78c4508894985b8d38a0dc15e1a8e11078f2ca93"
   integrity sha512-STHz9P7X2L4Kwn72fA4rGyqyXdmrMSdxqHx9IXon/FXluXieaFA6KJ2upcHAHxQPQ0LeM/OjLrhFxifHewOALQ==
 
-keys-converter@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/keys-converter/-/keys-converter-3.0.0.tgz#af0322450cc8281a6829c609f382ec98d0b45758"
-  integrity sha512-SPIOr5thtvdI06l2wZXzb5pQhSF92Id01S5JY50CopZ0/z1sTVpuAAR4e7Xd5myq8u+7AGvFpqdhGmt++e729A==
+keys-converter@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/keys-converter/-/keys-converter-3.0.1.tgz#fdebd4deaf681c5a2ab1d46c2faef72937672f4c"
+  integrity sha512-VZ3sHfSCB25HArDC1gRB2uLsl8faufXqfDxOjKI/6ZF/kOb3CKX2O5S5FVpK++YUPNttWiGiEhLA3anKrif2Ug==
 
 kleur@^3.0.3:
   version "3.0.3"
