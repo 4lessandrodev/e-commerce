@@ -52,7 +52,7 @@
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "<6.6.8",
-		"types-ddd": "1.0.1",
+		"types-ddd": "1.0.2",
 		"ua-parser-js": "^0.7.28",
 		"uuid": "^8.3.1"
 	},
