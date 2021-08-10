@@ -6137,12 +6137,10 @@ typedoc@^0.20.36:
     shiki "^0.9.3"
     typedoc-default-themes "^0.12.10"
 
-types-ddd@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/types-ddd/-/types-ddd-1.0.1.tgz#5873dc6bcb789c21b7a00bdc4c06de7ab329ba93"
-  integrity sha512-vlRPnavrRr1jmgdGUL9lKG2h3Yq5mOLdJliokeWLajALk7gGO9jGF23L+d6zR/1Z9maGp604UqhVc91cjrEhrA==
-  dependencies:
-    uuid "^8.3.2"
+types-ddd@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/types-ddd/-/types-ddd-1.0.2.tgz#34716538dabab157c233d89f62cb82f27877b9cc"
+  integrity sha512-1HLPAukxI1nLIaiMncb4wD2tl7VuAiRzNN+lEWyQ0WVreb1hg12MRRZGgNfukqrYl5SFpXgn3iyFaQKPjYO05g==
 
 typescript@4.2.3:
   version "4.2.3"
@@ -6219,7 +6217,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@8.3.2, uuid@^8.3.1, uuid@^8.3.2:
+uuid@8.3.2, uuid@^8.3.1:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
