@@ -6142,10 +6142,10 @@ typedoc@^0.20.36:
     shiki "^0.9.3"
     typedoc-default-themes "^0.12.10"
 
-types-ddd@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/types-ddd/-/types-ddd-1.0.2.tgz#34716538dabab157c233d89f62cb82f27877b9cc"
-  integrity sha512-1HLPAukxI1nLIaiMncb4wD2tl7VuAiRzNN+lEWyQ0WVreb1hg12MRRZGgNfukqrYl5SFpXgn3iyFaQKPjYO05g==
+types-ddd@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/types-ddd/-/types-ddd-1.0.3.tgz#edc7d7a94255fcd336dd05edf0d8171bba23ac6b"
+  integrity sha512-g4B3gCO0WE5BKzCKGw2RrT6NG+5gEMDyeaoCiY+pymo8dNbfl3LPNHjzsvZbfXn/30LB6kVBU5jkdG0q/LhuPA==
 
 typescript@4.2.3:
   version "4.2.3"
